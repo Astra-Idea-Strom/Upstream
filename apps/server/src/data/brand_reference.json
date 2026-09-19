@@ -1,0 +1,1889 @@
+{
+  "version": "1.0.0",
+  "description": "Structured Design Metadata, Visual DNA, and Prompt Blueprints for 26 Brand Logos Across 7 Archetypes",
+  "archetypes": {
+    "abstract": {
+      "id": "abstract",
+      "name": "Abstract",
+      "tagline": "Conceptual geometric symbolism",
+      "description": "Communicates conceptual ideas through non-representational geometric shapes and mathematical balance.",
+      "brandCount": 4,
+      "brands": [
+        {
+          "id": "chase-bank",
+          "name": "Chase Bank",
+          "archetype": "abstract",
+          "imageFile": "Chase-logo.jpg",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#117ACA (30% - Octagonal geometric motif), #231F20 (45% - Bold sans-serif typography), #FFFFFF (25% - Negative space square and canvas backdrop)",
+            "hexCodes": [
+              "#117ACA",
+              "#231F20",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Geometric Sans-Serif (customized modern grotesque). Heavy bold weight, uppercase casing, wide proportional tracking, with softened rounded terminal corners on 'C' and 'S'. Typography is positioned as a horizontal independent anchor to the left of the abstract icon.",
+            "composition": "As an Abstract logo, the primary visual anchor is a non-literal geometric octagon created from four identical rotated trapezoids framing a square central negative space. It relies on mathematical rotation and conceptual geometry rather than any physical bank or currency imagery.",
+            "complexityAndGeometry": "Minimalist. Line weight is uniform across all four trapezoidal segments; aspect ratio of the icon is 1:1; 4-fold rotational symmetry (90-degree rotational invariance); the central square cutout creates a focal illusion of dynamic containment and security.",
+            "textureAndFinish": "Flat 2D vector graphic. Pure solid color fills without gradients, drop shadows, or beveling; crisp contour definitions designed for high legibility across small digital screens and physical signage."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Trustworthy, Institutional, Secure, Ultra-modern",
+            "personalityTraits": [
+              "Trustworthy",
+              "Institutional",
+              "Secure",
+              "Ultra-modern"
+            ],
+            "targetAudience": "Global consumer and commercial banking, fintech, investment management, and enterprise financial services.",
+            "symbolism": "The four interlocking geometric quadrants resemble a high-security vault door or fortress wall, while the open central aperture symbolizes financial liquidity, opportunity, and continuous forward circulation."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A minimalist abstract vector logo for a corporate institution named '[BRAND]'. The icon features a strictly geometric, non-representational symbol composed of four symmetrical rotating geometric facets arranged in a 90-degree rotational symmetry around a crisp square negative space, paired with bold, clean geometric sans-serif uppercase typography reading '[BRAND]'. Flat 2D vector art, solid corporate blue (#117ACA) and dark slate (#231F20) fill, perfectly balanced proportions, high contrast, isolated on a pure white or transparent background --no literal objects, coins, buildings, 3d bevels, drop shadows, gradients, realistic textures.",
+            "basePrompt": "A minimalist abstract vector logo for a corporate institution named '[BRAND]'. The icon features a strictly geometric, non-representational symbol composed of four symmetrical rotating geometric facets arranged in a 90-degree rotational symmetry around a crisp square negative space, paired with bold, clean geometric sans-serif uppercase typography reading '[BRAND]'. Flat 2D vector art, solid corporate blue (#117ACA) and dark slate (#231F20) fill, perfectly balanced proportions, high contrast, isolated on a pure white or transparent background",
+            "negativeConstraints": "literal objects, coins, buildings, 3d bevels, drop shadows, gradients, realistic textures.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "mastercard",
+          "name": "MasterCard",
+          "archetype": "abstract",
+          "imageFile": "MasterCard-Logo.png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#EB001B (42% - Left primary red circle), #F79E1B (42% - Right primary yellow-orange circle), #FFFFFF (12% - Foreground italicized wordmark), #0A1172 (4% - Typography drop shadow / edge accent)",
+            "hexCodes": [
+              "#EB001B",
+              "#F79E1B",
+              "#FFFFFF",
+              "#0A1172"
+            ],
+            "typographyStyle": "Neo-Grotesque Sans-Serif (customized Helvetica Neue / Univers derivative). Medium-bold weight, title casing with internal capital 'C' (camelCase \"MasterCard\"), tight tracking, distinct rightward italic slant (-12 degrees). Wordmark is horizontally centered directly across the intersection of the two circles.",
+            "composition": "As an Abstract logo, the design utilizes pure fundamental Euclidean geometry—two overlapping chromatic circular discs. It conveys connectivity, transaction, and synergy without depicting tangible plastic cards, currency, or payment terminals.",
+            "complexityAndGeometry": "Balanced. Two identical intersecting circles with an overlapping horizontal Venn diagram intersection comprised of alternating striated teeth (horizontal scanning bars); bilateral horizontal symmetry across the central axis; exact 1:1 circle diameter ratio.",
+            "textureAndFinish": "Flat 2D vector graphic with striated geometric bar intersections. Solid chromatic fills; crisp typography overlay with subtle dark contrast drop-shadow to separate white text from high-luminance yellow and red discs."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Universal, Dynamic, Accessible, Established",
+            "personalityTraits": [
+              "Universal",
+              "Dynamic",
+              "Accessible",
+              "Established"
+            ],
+            "targetAudience": "Global digital commerce, consumer credit cards, merchant processing, cross-border payment networks, and fintech infrastructure.",
+            "symbolism": "The two intersecting primary circles represent the seamless handshake and connection between consumer and merchant, East and West, purchasing power and financial fulfillment."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A classic abstract chromatic vector logo for a global commerce brand. The design consists of two intersecting geometric circular discs forming a Venn-diagram relationship with horizontal interlocking striated bands in the overlapping core. Overlaying the center is crisp, modern italicized sans-serif typography reading '[BRAND]'. Flat 2D vector graphic, vibrant pure red (#EB001B) and warm amber-orange (#F79E1B) solid fills, bold high-contrast white text, isolated on a clean transparent background, masterclass in geometric simplicity --no photorealistic elements, credit cards, complex gradients, photorealism, glossy plastic finishes, ornate details.",
+            "basePrompt": "A classic abstract chromatic vector logo for a global commerce brand. The design consists of two intersecting geometric circular discs forming a Venn-diagram relationship with horizontal interlocking striated bands in the overlapping core. Overlaying the center is crisp, modern italicized sans-serif typography reading '[BRAND]'. Flat 2D vector graphic, vibrant pure red (#EB001B) and warm amber-orange (#F79E1B) solid fills, bold high-contrast white text, isolated on a clean transparent background, masterclass in geometric simplicity",
+            "negativeConstraints": "photorealistic elements, credit cards, complex gradients, photorealism, glossy plastic finishes, ornate details.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "spotify",
+          "name": "Spotify",
+          "archetype": "abstract",
+          "imageFile": "Spotify-logo.jpeg",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#1ED760 (70% - High-chroma electric green roundel and wordmark), #000000 (30% - Acoustic wave cutouts and background field)",
+            "hexCodes": [
+              "#1ED760",
+              "#000000"
+            ],
+            "typographyStyle": "Geometric Humanist Sans-Serif (modified Gotham derivative). Bold weight, lowercase casing except initial 'S', neutral tracking with subtle optical kerning, friendly circular letterforms with slight organic tilt on the 'i' dot. Positioned horizontally beside the abstract mark.",
+            "composition": "As an Abstract logo, the core symbol consists of a solid circle punctured by three curved, ascending concentric line arcs. It distills the invisible phenomenon of acoustic waves and streaming resonance into pure, non-literal minimalist vectors.",
+            "complexityAndGeometry": "Minimalist. Three ascending curved arcs of varying thickness and length, intentionally rotated at an asymmetric ~15-degree counterclockwise angle to evoke fluidity and human warmth rather than rigid mechanical Wi-Fi signals.",
+            "textureAndFinish": "Flat 2D vector artwork. High-contrast solid neon green fill over deep matte black field; razor-sharp vector curves optimized for responsive digital app icons and micro-favicons."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Vibrant, Disruptive, Youthful, Fluid",
+            "personalityTraits": [
+              "Vibrant",
+              "Disruptive",
+              "Youthful",
+              "Fluid"
+            ],
+            "targetAudience": "Digital streaming media, Gen Z and Millennial music and podcast enthusiasts, mobile audio entertainment, and creator economy platforms.",
+            "symbolism": "The radiating soundwave lines inside the circular boundary symbolize sound beaming outward into the universe, connectivity, algorithmic discovery, and the rhythm of music."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A vibrant minimalist abstract vector logo for a modern audio streaming service. The icon is a solid high-chroma electric green (#1ED760) circular medallion containing three curved horizontal acoustic wave stripes cut out in negative space, tilted with a subtle organic offset angle. Beside the medallion is clean geometric humanist sans-serif typography reading '[BRAND]'. Flat 2D vector aesthetic, solid fills, maximum high-contrast on a clean background, mathematically precise curves --no realistic headphones, musical notes, microphones, 3d glossy spheres, metallic textures, skeuomorphism.",
+            "basePrompt": "A vibrant minimalist abstract vector logo for a modern audio streaming service. The icon is a solid high-chroma electric green (#1ED760) circular medallion containing three curved horizontal acoustic wave stripes cut out in negative space, tilted with a subtle organic offset angle. Beside the medallion is clean geometric humanist sans-serif typography reading '[BRAND]'. Flat 2D vector aesthetic, solid fills, maximum high-contrast on a clean background, mathematically precise curves",
+            "negativeConstraints": "realistic headphones, musical notes, microphones, 3d glossy spheres, metallic textures, skeuomorphism.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "toyota",
+          "name": "Toyota",
+          "archetype": "abstract",
+          "imageFile": "Toyota-logo.png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#EB0A1E (45% - Primary bold wordmark red), #D1D5DB (30% - Chrome metallic highlight silver), #374151 (15% - Shadow silver/charcoal contour), #FFFFFF (10% - Specular light reflections & canvas)",
+            "hexCodes": [
+              "#EB0A1E",
+              "#D1D5DB",
+              "#374151",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Extended Industrial Sans-Serif. Extra-bold weight, full uppercase casing, wide proportional tracking, squared-off stroke terminals and uniform line thickness. Centered horizontally beneath the abstract emblem.",
+            "composition": "As an Abstract logo, the emblem combines three distinct ellipses intersecting in three-dimensional coordinate planes to form a stylized letter 'T' and steering wheel without explicitly drawing a vehicle or engine component.",
+            "complexityAndGeometry": "Balanced to Complex. Strict bilateral vertical symmetry; composed of an outer horizontal ellipse containing two inner perpendicular overlapping ellipses. The line weights vary smoothly along the elliptical perimeters to convey depth and perspective.",
+            "textureAndFinish": "Skeuomorphic metallic chrome 3D bevel finish on the emblem, with polished silver gradients, bevel shadows, and specular highlights; juxtaposed against a completely flat 2D solid red vector wordmark below."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Reliable, Innovative, Engineered, Global",
+            "personalityTraits": [
+              "Reliable",
+              "Innovative",
+              "Engineered",
+              "Global"
+            ],
+            "targetAudience": "Global automotive industry, hybrid and electric mobility, fleet logistics, and mass-market consumer transportation.",
+            "symbolism": "The two inner overlapping perpendicular ellipses represent the unified hearts of the customer and the company, intersecting within the grand outer ellipse which symbolizes the boundless expansion and technological future of the brand. Together, they simultaneously form a stylized 'T' and a steering wheel."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "An iconic abstract automotive logo for a forward-thinking mobility manufacturer. The mark consists of three interlocking, mathematically precise concentric ellipses symmetrically forming an abstract letter 'T' motif, rendered in a polished liquid chrome metallic finish with subtle silver bevel gradients and reflections. Positioned beneath is a bold, wide, solid red (#EB0A1E) uppercase industrial sans-serif wordmark reading '[BRAND]'. High contrast, premium automotive badge aesthetic, isolated on a pure white background --no full cars, wheels, tires, flames, complex landscapes, photorealistic scenery.",
+            "basePrompt": "An iconic abstract automotive logo for a forward-thinking mobility manufacturer. The mark consists of three interlocking, mathematically precise concentric ellipses symmetrically forming an abstract letter 'T' motif, rendered in a polished liquid chrome metallic finish with subtle silver bevel gradients and reflections. Positioned beneath is a bold, wide, solid red (#EB0A1E) uppercase industrial sans-serif wordmark reading '[BRAND]'. High contrast, premium automotive badge aesthetic, isolated on a pure white background",
+            "negativeConstraints": "full cars, wheels, tires, flames, complex landscapes, photorealistic scenery.",
+            "hasBrandPlaceholder": true
+          }
+        }
+      ]
+    },
+    "combination": {
+      "id": "combination",
+      "name": "Combination",
+      "tagline": "Unified mark and typography",
+      "description": "Fuses an iconic symbol with custom typography, working either in unison or as standalone brand assets.",
+      "brandCount": 3,
+      "brands": [
+        {
+          "id": "amazon",
+          "name": "Amazon",
+          "archetype": "combination",
+          "imageFile": "Amazon-Logo.png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#000000 (80% - Primary wordmark typography), #FF9900 (20% - Iconic directional smile arrow), #FFFFFF (Transparent/Canvas backdrop)",
+            "hexCodes": [
+              "#000000",
+              "#FF9900",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Humanist Sans-Serif (customized Officina Sans derivative). Bold weight, lowercase casing throughout, optical kerning with comfortable tracking. The letterforms feature softened internal curves and distinct terminal cuts.",
+            "composition": "As a Combination logo, it perfectly pairs a complete typographic wordmark (\"amazon\") with an integrated graphic symbol (the vibrant orange curved arrow). The symbol originates below the first 'a' and arcs smoothly beneath the letters to terminate in a stylized arrowhead that dimples into the lower bowl of the letter 'z'.",
+            "complexityAndGeometry": "Minimalist to Balanced. Fluid single-bezier quadratic curve spanning horizontally across five letter stems; asymmetric directional dynamic (left-to-right motion); balanced visual weight ensuring the arrow anchors the text without overpowering it.",
+            "textureAndFinish": "Flat 2D vector graphic. Solid monochrome black typography combined with a flat chromatic orange vector arrow; zero gradients or shadows, optimized for infinite scalability and alpha transparency."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Customer-Centric, Omnipresent, Friendly, Efficient",
+            "personalityTraits": [
+              "Customer-Centric",
+              "Omnipresent",
+              "Friendly",
+              "Efficient"
+            ],
+            "targetAudience": "Global e-commerce, cloud computing infrastructure (AWS), digital streaming, logistics, and consumer smart devices.",
+            "symbolism": "The curved orange arrow carries a brilliant dual metaphor: it visually forms a warm, welcoming customer smile, while its vector path connects 'a' to 'z', signifying that the company delivers literally everything from A to Z."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A clean, modern combination vector logo for a global commerce brand. The design features lowercase bold humanist sans-serif typography reading '[BRAND]' in solid black, seamlessly integrated with a vibrant curved smile-shaped directional arrow underneath in saturated orange (#FF9900) that sweeps from the first letter to the last. Flat 2D vector art, solid color fills, isolated on a clean transparent background, crisp contours, high contrast, balanced proportions --no photorealism, glossy 3d textures, complex gradient meshes, intricate borders, drop shadows.",
+            "basePrompt": "A clean, modern combination vector logo for a global commerce brand. The design features lowercase bold humanist sans-serif typography reading '[BRAND]' in solid black, seamlessly integrated with a vibrant curved smile-shaped directional arrow underneath in saturated orange (#FF9900) that sweeps from the first letter to the last. Flat 2D vector art, solid color fills, isolated on a clean transparent background, crisp contours, high contrast, balanced proportions",
+            "negativeConstraints": "photorealism, glossy 3d textures, complex gradient meshes, intricate borders, drop shadows.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "huawei",
+          "name": "Huawei",
+          "archetype": "combination",
+          "imageFile": "Huawei-logo.jpeg",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#CF0A2C (65% - Vibrant radiant crimson petal fan), #231F20 (35% - Solid charcoal-black uppercase wordmark), #FFFFFF (Transparent/White field)",
+            "hexCodes": [
+              "#CF0A2C",
+              "#231F20",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Modern Geometric Sans-Serif. Medium-bold weight, strict uppercase casing, generous tracking, featuring sharp angled terminals on the crossbar of the letter 'A' and symmetrical vertical stems. Positioned horizontally beneath the radial symbol.",
+            "composition": "As a Combination logo, it stacks a powerful radial symbol above a stabilized uppercase wordmark. The mark consists of eight symmetrical radiating petals/rays fanning out in a semi-circular burst above the centralized typographic base.",
+            "complexityAndGeometry": "Balanced. Bilateral vertical symmetry across the central vertical axis; 8 geometric petal leaves radiating outward from a unified origin point; smooth convex outer arcs and concave lower cuts create an illusion of blossoming upward energy.",
+            "textureAndFinish": "Flat 2D vector with subtle dimensional top-lighting gradient on petals. Saturated crimson red fill fading gently into an illuminated top edge, grounded by a flat solid black wordmark."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Ambitious, Technological, Prestigious, Harmonious",
+            "personalityTraits": [
+              "Ambitious",
+              "Technological",
+              "Prestigious",
+              "Harmonious"
+            ],
+            "targetAudience": "Global telecommunications, 5G wireless infrastructure, enterprise cloud hardware, consumer smartphones, and smart electronics.",
+            "symbolism": "The radiating petals symbolize blooming flower petals or the radiant rays of the rising morning sun, embodying warmth, collective innovation, and technological connectivity expanding into the global horizon."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A sophisticated combination vector logo for an advanced telecommunications technology corporation. The design showcases an iconic radial symbol composed of eight symmetrical petal-shaped rays fanning upward like a blooming flower or rising sun in rich crimson red (#CF0A2C), positioned directly above a centered, highly balanced uppercase geometric sans-serif wordmark reading '[BRAND]' in solid dark charcoal. Flat 2D vector style with subtle luminous gradient highlights on petal crests, isolated on a pristine white background, strict axial symmetry, pristine corporate elegance --no circuit board patterns, microchips, complex photographic textures, heavy 3d embossing.",
+            "basePrompt": "A sophisticated combination vector logo for an advanced telecommunications technology corporation. The design showcases an iconic radial symbol composed of eight symmetrical petal-shaped rays fanning upward like a blooming flower or rising sun in rich crimson red (#CF0A2C), positioned directly above a centered, highly balanced uppercase geometric sans-serif wordmark reading '[BRAND]' in solid dark charcoal. Flat 2D vector style with subtle luminous gradient highlights on petal crests, isolated on a pristine white background, strict axial symmetry, pristine corporate elegance",
+            "negativeConstraints": "circuit board patterns, microchips, complex photographic textures, heavy 3d embossing.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "puma",
+          "name": "Puma",
+          "archetype": "combination",
+          "imageFile": "Puma-Logo..png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#000000 (100% - Solid pitch black silhouette and typography), #FFFFFF (Transparent/Canvas field)",
+            "hexCodes": [
+              "#000000",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Ultra-Heavy Slab Geometric Sans-Serif. Extra-bold / Black weight, uppercase casing, extremely tight tracking, square-proportioned glyphs with generous rounded outer corners and narrow interior counters. Placed horizontally beneath the jumping mascot mark.",
+            "composition": "As a Combination logo, the design pairs a heavy architectural typographic foundation (\"PUMA\") with a dynamic silhouette of a jumping predator cat positioned over the upper right quadrant of the wordmark, leaping energetically forward.",
+            "complexityAndGeometry": "Balanced. The typography provides an unyielding, grounded rectangular base, contrasted against the organic, agile, aerodynamic curve of the airborne feline silhouette; asymmetric focal weight moving dynamically from bottom-left to top-right.",
+            "textureAndFinish": "Pure Flat 2D vector silhouette. High-density solid black ink fill with zero gradients, outlines, or internal shading; razor-sharp vector bezier contours optimized for transparent sportswear fabrics and high-contrast digital media."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Athletic, Fierce, Energetic, Iconic",
+            "personalityTraits": [
+              "Athletic",
+              "Fierce",
+              "Energetic",
+              "Iconic"
+            ],
+            "targetAudience": "Global athletic footwear, technical sportswear, lifestyle streetwear, motorsport apparel, and professional athletics.",
+            "symbolism": "The leaping cougar embodies raw speed, agility, predatory precision, and boundless athletic power, while the heavy block typography establishes permanence, durability, and athletic authority."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "An iconic athletic combination vector logo for a high-performance sportswear company. The mark features an ultra-heavy, bold geometric uppercase sans-serif wordmark reading '[BRAND]', surmounted on the upper right by a sleek, aerodynamic silhouette of a wild panther leaping aggressively forward into the air. Pure solid monochrome black fill on a clean transparent background, flat 2D vector art, powerful high contrast, athletic vigor, razor-sharp contours, masterclass in silhouette balance --no facial details, fur texture, claw marks, gradients, 3d bevels, drop shadows, color clutter.",
+            "basePrompt": "An iconic athletic combination vector logo for a high-performance sportswear company. The mark features an ultra-heavy, bold geometric uppercase sans-serif wordmark reading '[BRAND]', surmounted on the upper right by a sleek, aerodynamic silhouette of a wild panther leaping aggressively forward into the air. Pure solid monochrome black fill on a clean transparent background, flat 2D vector art, powerful high contrast, athletic vigor, razor-sharp contours, masterclass in silhouette balance",
+            "negativeConstraints": "facial details, fur texture, claw marks, gradients, 3d bevels, drop shadows, color clutter.",
+            "hasBrandPlaceholder": true
+          }
+        }
+      ]
+    },
+    "emblems": {
+      "id": "emblems",
+      "name": "Emblem",
+      "tagline": "Encapsulated heraldic crests & badges",
+      "description": "Encloses iconography and typography within an unified frame, crest, shield, or geometric boundary.",
+      "brandCount": 4,
+      "brands": [
+        {
+          "id": "nivea",
+          "name": "Nivea",
+          "archetype": "emblems",
+          "imageFile": "Nivea-logo.png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#002B66 (82% - Deep iconic Nivea cobalt blue circular badge), #FFFFFF (18% - Crisp stark white uppercase typography)",
+            "hexCodes": [
+              "#002B66",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Architectural Geometric Sans-Serif (customized Eagle Bold derivative). Heavy bold weight, uppercase casing, neutral-to-wide tracking, with distinctive sharp angled diagonal cuts on the apex of the letter 'N' and crossbars. The text is horizontally centered and completely locked within the circular container.",
+            "composition": "As an Emblem, the entire brand expression is permanently self-contained inside a pure geometric circle that evokes the physical lid of the historic blue cosmetic cream tin. There are no loose external components.",
+            "complexityAndGeometry": "Minimalist. Perfect 1:1 circular aspect ratio; centered horizontal text alignment; pristine mathematical geometry with generous negative space margins insulating the text from the circular perimeter.",
+            "textureAndFinish": "Pure Flat 2D vector graphic. High-opacity solid cobalt blue background with solid white typography; completely devoid of highlights, shadows, or gradients, preserving maximum brand purity across print and packaging."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Pure, Caring, Timeless, Trusted",
+            "personalityTraits": [
+              "Pure",
+              "Caring",
+              "Timeless",
+              "Trusted"
+            ],
+            "targetAudience": "Global dermatological skincare, personal care products, mass consumer health and beauty, family wellness.",
+            "symbolism": "The deep blue circle represents the timeless, universally recognizable blue tin container first introduced in 1925, while the pristine white typography symbolizes purity, snow-white skin cream (\"Nivea\" derived from the Latin *niveus* meaning snow-white), and clinical trust."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A minimalist circular emblem logo for a premium dermatological skincare company. The design is a solid circular badge in rich deep cobalt blue (#002B66) enclosing bold, clean, architectural geometric sans-serif uppercase typography reading '[BRAND]' in solid stark white (#FFFFFF), precisely centered with balanced negative margins. Flat 2D vector art, pure solid fills, isolated on a clean transparent background, high contrast, timeless corporate simplicity --no skin drops, leaves, floral patterns, gradients, 3d lid rims, glossy plastic textures, drop shadows.",
+            "basePrompt": "A minimalist circular emblem logo for a premium dermatological skincare company. The design is a solid circular badge in rich deep cobalt blue (#002B66) enclosing bold, clean, architectural geometric sans-serif uppercase typography reading '[BRAND]' in solid stark white (#FFFFFF), precisely centered with balanced negative margins. Flat 2D vector art, pure solid fills, isolated on a clean transparent background, high contrast, timeless corporate simplicity",
+            "negativeConstraints": "skin drops, leaves, floral patterns, gradients, 3d lid rims, glossy plastic textures, drop shadows.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "porsche",
+          "name": "Porsche",
+          "archetype": "emblems",
+          "imageFile": "Porsche-Logo.png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#D4AF37 (45% - Gilded gold metallic crest field & horns), #000000 (30% - Jet black enamel bars, prancing stallion, and contour strokes), #C8102E (20% - Crimson red textured field bars), #FFFFFF (5% - Specular chrome highlights)",
+            "hexCodes": [
+              "#D4AF37",
+              "#000000",
+              "#C8102E",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Distinctive Arched Extended Sans-Serif. Medium-bold weight, uppercase casing, wide tracking, with letters mapped to follow the arched convex crown of the shield. A secondary sans-serif typeface spells \"STUTTGART\" in uppercase above the central horse.",
+            "composition": "As an Emblem, the design is a classical European heraldic escutcheon (coat of arms). Every iconographic element—the top nameplate banner, the four partitioned quarters, the Württemberg antler pairs, the red-and-black flag bands, and the central inescutcheon shield—is fused into a single heraldic crest.",
+            "complexityAndGeometry": "Complex. Multi-tiered heraldic geometry; vertically divided four-quadrant layout with an overlaid central mini-shield; intricate antler branches; fine honeycomb micro-mesh pattern embossed within the red quadrants.",
+            "textureAndFinish": "Skeuomorphic metallic enamel and brushed gold finish. Raised 3D relief edges, embossed contours, subtle metallic reflections, and textured recessed enamel fills that replicate a hand-crafted automotive hood badge."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Luxurious, Hereditary, High-Performance, Aristocratic",
+            "personalityTraits": [
+              "Luxurious",
+              "Hereditary",
+              "High-Performance",
+              "Aristocratic"
+            ],
+            "targetAudience": "Ultra-luxury sports cars, high-performance automotive engineering, motorsport racing, and luxury lifestyle connoisseurs.",
+            "symbolism": "The outer shield and black/red stripes honor the Free People's State of Württemberg, the six black antlers celebrate the historical crest of Württemberg, and the central prancing black stallion honors the city of Stuttgart (founded as a cavalry breeding stud garden, *Stutengarten*), uniting automotive horsepower with noble lineage."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "An intricate heraldic crest emblem logo for a world-class luxury sports car manufacturer. The design takes the shape of a golden medieval coat-of-arms shield badge with a curved top banner containing uppercase arched typography reading '[BRAND]'. The shield is divided into four heraldic quadrants featuring stylized black antler horns and red-and-black enamel stripes with subtle micro-honeycomb embossing, centered with an inner golden escutcheon displaying a rearing black prancing stallion. Premium embossed gold metal finish, fine contour lines, luxury automotive badge craftsmanship, isolated on a clean white background --no complete cars, wheels, tachometers, realistic photographic background, cartoon features.",
+            "basePrompt": "An intricate heraldic crest emblem logo for a world-class luxury sports car manufacturer. The design takes the shape of a golden medieval coat-of-arms shield badge with a curved top banner containing uppercase arched typography reading '[BRAND]'. The shield is divided into four heraldic quadrants featuring stylized black antler horns and red-and-black enamel stripes with subtle micro-honeycomb embossing, centered with an inner golden escutcheon displaying a rearing black prancing stallion. Premium embossed gold metal finish, fine contour lines, luxury automotive badge craftsmanship, isolated on a clean white background",
+            "negativeConstraints": "complete cars, wheels, tachometers, realistic photographic background, cartoon features.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "warner-bros-pictures",
+          "name": "Warner Bros. Pictures",
+          "archetype": "emblems",
+          "imageFile": "Warner-Brothers-Logo.jpg",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#002D72 (55% - Deep royal blue shield interior), #EAAA00 (40% - Rich golden yellow shield border, letters, and banner), #FFFFFF (5% - Canvas backdrop)",
+            "hexCodes": [
+              "#002D72",
+              "#EAAA00",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Custom Bold Geometric Monogram combined with Modern Sans-Serif Banner Typography. The prominent \"WB\" monogram is extra-bold, customized to taper and conform to the shield contours. The horizontal banner features medium-weight condensed sans-serif uppercase lettering reading \"WARNER BROS. PICTURES\".",
+            "composition": "As an Emblem, the logo utilizes an architectural stepped shield container with an overlapping convex three-dimensional ribbon banner wrapped horizontally across the lower third, permanently integrating monogram, insignia, and brand name into a singular emblem.",
+            "complexityAndGeometry": "Balanced to Complex. Multi-tiered stepped shield profile with stepped upper shoulders; bilateral symmetry on the outer shield frame; customized asymmetric letterform distortion where the 'W' and 'B' share overlapping structural strokes.",
+            "textureAndFinish": "Flat 2D vector with subtle dimensional edge outlines. Solid color fills in royal blue and warm gold; crisp vector lines providing a cinematic, dignified presentation."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Cinematic, Legendary, Prestigious, Imaginative",
+            "personalityTraits": [
+              "Cinematic",
+              "Legendary",
+              "Prestigious",
+              "Imaginative"
+            ],
+            "targetAudience": "Global motion picture entertainment, theatrical film distribution, streaming media, television production, and entertainment franchises.",
+            "symbolism": "The fortified golden shield symbolizes cinematic grandeur, enduring storytelling legacy, and the safeguarding of cultural myths, while the golden ribbon proudly presents the theatrical studio masthead."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A classic cinematic shield emblem logo for a world-renowned film production studio. The mark is a traditional stepped heraldic shield with a rich royal blue (#002D72) field and a bold golden-yellow (#EAAA00) border, containing a prominent customized interlocking monogram '[BRAND]' in polished gold. A three-dimensional curved golden ribbon banner wraps gracefully across the lower front of the shield bearing crisp condensed blue uppercase lettering. Classic Hollywood studio insignia aesthetic, flat 2D vector art with clean geometric lines, isolated on a clean transparent background --no film reels, movie cameras, clapperboards, 3d lens flare, photorealistic studio sets.",
+            "basePrompt": "A classic cinematic shield emblem logo for a world-renowned film production studio. The mark is a traditional stepped heraldic shield with a rich royal blue (#002D72) field and a bold golden-yellow (#EAAA00) border, containing a prominent customized interlocking monogram '[BRAND]' in polished gold. A three-dimensional curved golden ribbon banner wraps gracefully across the lower front of the shield bearing crisp condensed blue uppercase lettering. Classic Hollywood studio insignia aesthetic, flat 2D vector art with clean geometric lines, isolated on a clean transparent background",
+            "negativeConstraints": "film reels, movie cameras, clapperboards, 3d lens flare, photorealistic studio sets.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "harley-davidson",
+          "name": "Harley-Davidson",
+          "archetype": "emblems",
+          "imageFile": "harley-davidson-logo.png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#FF6600 (50% - Iconic high-octane Harley orange fields), #000000 (40% - Bold black borders and shield background), #FFFFFF (10% - High-contrast white typography)",
+            "hexCodes": [
+              "#FF6600",
+              "#000000",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Heavy Condensed Gothic / Block Industrial Sans-Serif. Ultra-bold weight, full uppercase casing, tight tracking, with vertically elongated glyphs designed for maximum punch. Upper shield features arched orange text \"MOTOR\", lower shield features angled text \"CYCLES\", and the central horizontal bar contains bold white text \"HARLEY-DAVIDSON\".",
+            "composition": "As an Emblem, the design is the world-famous \"Bar & Shield\". It fuses an elongated horizontal rectangular bar through the midpoint of a traditional notched crest shield, locking all typographic elements into a rugged, unassailable industrial badge.",
+            "complexityAndGeometry": "Balanced. Bilateral vertical symmetry; multi-line contour offset nesting (black inner line, orange middle, black outer border); distinct angular crest points at top and bottom.",
+            "textureAndFinish": "Pure Flat 2D vector graphic. High-contrast solid color fills with crisp multi-stroke borders; engineered for heavy-duty reproduction on metal motorcycle gas tanks, embroidered leather jackets, and chrome decals."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Rebellious, Rugged, Authentic, American Heritage",
+            "personalityTraits": [
+              "Rebellious",
+              "Rugged",
+              "Authentic",
+              "American Heritage"
+            ],
+            "targetAudience": "Heavyweight cruiser motorcycles, powersports, custom chopper culture, outdoor open-road touring, and heritage leather gear.",
+            "symbolism": "The sturdy combination of an unyielding iron bar bolted across a fortified shield conveys indomitable American industrial power, mechanical grit, open-highway freedom, and brotherhood."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A rugged bar-and-shield motorcycle emblem logo for a heritage powersports brand. The design features a classic heraldic shield with stepped angular corners intersected horizontally through its center by an elongated rectangular bar. The central bar features bold condensed white uppercase gothic lettering reading '[BRAND]', with the upper shield section displaying 'MOTOR' and the lower shield displaying 'CYCLES' in bold high-visibility orange (#FF6600). Thick black and orange multi-line outline borders, flat 2D vector badge art, high contrast, industrial power aesthetic, isolated on a clean transparent background --no motorcycle wheels, chrome engines, flames, skull graphics, photorealistic metal textures.",
+            "basePrompt": "A rugged bar-and-shield motorcycle emblem logo for a heritage powersports brand. The design features a classic heraldic shield with stepped angular corners intersected horizontally through its center by an elongated rectangular bar. The central bar features bold condensed white uppercase gothic lettering reading '[BRAND]', with the upper shield section displaying 'MOTOR' and the lower shield displaying 'CYCLES' in bold high-visibility orange (#FF6600). Thick black and orange multi-line outline borders, flat 2D vector badge art, high contrast, industrial power aesthetic, isolated on a clean transparent background",
+            "negativeConstraints": "motorcycle wheels, chrome engines, flames, skull graphics, photorealistic metal textures.",
+            "hasBrandPlaceholder": true
+          }
+        }
+      ]
+    },
+    "lettermark": {
+      "id": "lettermark",
+      "name": "Lettermark",
+      "tagline": "Monograms & typographic initials",
+      "description": "Transforms brand initials into an iconic typographic ligature or architectural monogram.",
+      "brandCount": 4,
+      "brands": [
+        {
+          "id": "hbo",
+          "name": "HBO",
+          "archetype": "lettermark",
+          "imageFile": "HBO-logo.png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#FFFFFF (100% - Monogram letterforms), #000000 (Transparent/Black background canvas field)",
+            "hexCodes": [
+              "#FFFFFF",
+              "#000000"
+            ],
+            "typographyStyle": "Ultra-Heavy Geometric Grotesque Sans-Serif. Extra-bold / Black weight, uppercase casing (\"HBO\"), negative tracking where the circular glyph 'O' is tightly nested and docked directly into the right vertical bowl of the letter 'B'.",
+            "composition": "As a Lettermark, the logo consists purely of the three initials representing \"Home Box Office\". There are no accompanying icon badges or descriptive wordmarks; the entire visual power resides in the customized typographic ligature and the integrated camera/aperture motif.",
+            "complexityAndGeometry": "Minimalist. Massive, blocky rectangular stems for 'H' and 'B' contrasted against a perfectly circular outer ring for 'O'. An inner circular target/bullseye dot sits centered inside the 'O' negative space, mimicking a camera lens or broadcast focus target.",
+            "textureAndFinish": "Pure Flat 2D vector graphic. High-contrast solid white glyphs against a deep black field; zero gradients or shadows, optimized for broadcast screen bugs and digital streaming splash screens."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Premium, Cinematic, Authoritative, Bold",
+            "personalityTraits": [
+              "Premium",
+              "Cinematic",
+              "Authoritative",
+              "Bold"
+            ],
+            "targetAudience": "Premium television networks, subscription video-on-demand (SVOD), cinematic storytelling, Emmy-winning drama production.",
+            "symbolism": "The bullseye nested inside the letter 'O' evokes a camera lens, a broadcast transmission beam, and a bullseye of cinematic excellence, while the nested letterforms convey seamless integration and prestige entertainment delivered directly into the home."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A minimalist, ultra-bold typographic monogram lettermark logo for an elite premium television network. The mark features massive, heavy geometric sans-serif uppercase letters reading '[BRAND]', with the letter 'O' nested directly into the adjacent letter with zero kerning gap. Inside the circular counter of the 'O' is a clean concentric circular bullseye dot evoking a camera lens aperture. Flat 2D vector graphic, stark high-contrast monochrome solid white lettering on a pure black background, razor-sharp edges, cinematic authority --no TV sets, antennas, gradients, drop shadows, 3d chrome, glossy reflections.",
+            "basePrompt": "A minimalist, ultra-bold typographic monogram lettermark logo for an elite premium television network. The mark features massive, heavy geometric sans-serif uppercase letters reading '[BRAND]', with the letter 'O' nested directly into the adjacent letter with zero kerning gap. Inside the circular counter of the 'O' is a clean concentric circular bullseye dot evoking a camera lens aperture. Flat 2D vector graphic, stark high-contrast monochrome solid white lettering on a pure black background, razor-sharp edges, cinematic authority",
+            "negativeConstraints": "TV sets, antennas, gradients, drop shadows, 3d chrome, glossy reflections.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "hm",
+          "name": "H&M",
+          "archetype": "lettermark",
+          "imageFile": "Hennes-logo.jpg",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#E50010 (100% - Vivid high-energy crimson fashion red), #FFFFFF (Transparent/White backdrop)",
+            "hexCodes": [
+              "#E50010",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Custom Expressive Brush Script / Calligraphic Display. Heavy dry-brush weight with visible calligraphic texture, uppercase initials 'H' and 'M' flanking a smaller centered ampersand '&'. Aggressive rightward italic slant (~25 degrees), wide energetic stance.",
+            "composition": "As a Lettermark, it abbreviates \"Hennes & Mauritz\" into its iconic three-character monogram (\"H&M\"). It completely avoids neutral corporate typography in favor of an artistic, hand-drawn brush gesture that reflects the fast-paced, ever-changing nature of the fashion world.",
+            "complexityAndGeometry": "Balanced. Asymmetrical dynamic rhythm; the crossbar of the 'H' is rendered as a sweeping diagonal stroke that projects beyond the vertical stems; the ampersand serves as an optical anchor between the larger, dynamic flanking letterforms.",
+            "textureAndFinish": "Flat 2D vector graphic with hand-brushed calligraphic edge contours. Saturated pure red solid fill with microscopic bristle cutouts on stroke terminals; optimized for high-impact shopping bags, store facades, and clothing tags."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Fast-Fashion, Trendy, Energetic, Accessible",
+            "personalityTraits": [
+              "Fast-Fashion",
+              "Trendy",
+              "Energetic",
+              "Accessible"
+            ],
+            "targetAudience": "Global fast-fashion retail, trendy Gen Z and Millennial lifestyle apparel, everyday streetwear, and designer collaborations.",
+            "symbolism": "The rapid, raw brush strokes suggest spontaneous fashion sketching, runway velocity, accessibility, and youth culture, transforming a traditional retail name into an international emblem of contemporary style."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A dynamic, expressive fashion monogram lettermark logo for a fast-fashion clothing retailer. The design features bold, hand-drawn brush-stroke calligraphic typography reading '[BRAND]', slanted aggressively to the right with energetic flair and dry-brush stroke character. Pure vivid crimson red (#E50010) solid fill on a clean white transparent background, flat 2D vector illustration, high visual rhythm, stylish runway spontaneity --no shopping bags, hangers, needle and thread, garments, gradients, bevels, 3d effects.",
+            "basePrompt": "A dynamic, expressive fashion monogram lettermark logo for a fast-fashion clothing retailer. The design features bold, hand-drawn brush-stroke calligraphic typography reading '[BRAND]', slanted aggressively to the right with energetic flair and dry-brush stroke character. Pure vivid crimson red (#E50010) solid fill on a clean white transparent background, flat 2D vector illustration, high visual rhythm, stylish runway spontaneity",
+            "negativeConstraints": "shopping bags, hangers, needle and thread, garments, gradients, bevels, 3d effects.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "unilever",
+          "name": "Unilever",
+          "archetype": "lettermark",
+          "imageFile": "Unilever-logo.jpg",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#1F36C7 (85% - Vibrant royal blue monogram & wordmark), #FFFFFF (15% - Intricate negative space gaps & canvas)",
+            "hexCodes": [
+              "#1F36C7",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Dual Typographic System: An ornate illustrative mosaic monogram 'U' paired beneath with a custom fluid script wordmark (\"Unilever\") featuring smooth rounded terminals and rhythmic cursive baseline connections.",
+            "composition": "As a Lettermark, the visual champion is the monumental uppercase letter 'U'. Rather than a solid stroke, the entire letterform is meticulously sculpted from 25 individual, distinct micro-symbols representing diverse aspects of life, vitality, nutrition, and sustainability.",
+            "complexityAndGeometry": "Highly Complex. The global envelope forms a perfectly balanced, symmetrical U-curve, but internally it contains dozens of organic micro-silhouettes (a sun, a bird, a palm tree, a fish, a droplet, a flower, a hand, DNA strands, etc.) harmonized through uniform stroke thickness and negative-space channels.",
+            "textureAndFinish": "Flat 2D vector graphic. High-precision vector silhouettes in uniform solid royal blue; flawless micro-contouring engineered for crisp high-resolution reproduction across millions of consumer product packages worldwide."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Sustainable, Vital, Diverse, Human-Centric",
+            "personalityTraits": [
+              "Sustainable",
+              "Vital",
+              "Diverse",
+              "Human-Centric"
+            ],
+            "targetAudience": "Global fast-moving consumer goods (FMCG), beauty & personal care, food & refreshments, home hygiene, environmental sustainability.",
+            "symbolism": "The mosaic 'U' functions as an encyclopedic visual universe: each embedded icon tells a specific brand story (e.g., the sun represents vitality, the bird represents freedom from daily chores, the leaf represents natural ingredients, the droplet represents clean water). Together, they synthesize the brand's purpose of \"making sustainable living commonplace.\""
+          },
+          "generationBlueprint": {
+            "rawPrompt": "An intricate, beautifully composed mosaic lettermark monogram logo for a global consumer goods conglomerate. The hero mark is a large uppercase letter '[BRAND]' whose entire silhouette is masterfully composed of 20 to 25 miniature organic vector icons (birds, blooming leaves, sunbursts, water drops, palm fronds, human hands) separated by delicate negative space channels. Positioned beneath is friendly, fluid handwritten cursive typography reading '[BRAND]'. Uniform royal blue (#1F36C7) solid fill, flat 2D vector art, isolated on a pristine white background, exquisite craftsmanship, harmonious balance --no gradients, drop shadows, 3d bevels, photorealistic textures, clashing colors.",
+            "basePrompt": "An intricate, beautifully composed mosaic lettermark monogram logo for a global consumer goods conglomerate. The hero mark is a large uppercase letter '[BRAND]' whose entire silhouette is masterfully composed of 20 to 25 miniature organic vector icons (birds, blooming leaves, sunbursts, water drops, palm fronds, human hands) separated by delicate negative space channels. Positioned beneath is friendly, fluid handwritten cursive typography reading '[BRAND]'. Uniform royal blue (#1F36C7) solid fill, flat 2D vector art, isolated on a pristine white background, exquisite craftsmanship, harmonious balance",
+            "negativeConstraints": "gradients, drop shadows, 3d bevels, photorealistic textures, clashing colors.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "mcdonalds",
+          "name": "McDonald's",
+          "archetype": "lettermark",
+          "imageFile": "images.png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#FFC72C (55% - Iconic golden yellow arches), #DA291C (35% - Appetite-stimulating crimson red rounded badge), #FFFFFF (10% - Foreground centered wordmark)",
+            "hexCodes": [
+              "#FFC72C",
+              "#DA291C",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Dual Typographic Treatment: The monumental golden 'M' monogram features soaring parabolic arches with soft rounded crests and vertical outer pillars. Overlaid horizontally across its lower third is bold geometric sans-serif title-cased typography reading \"McDonald's\" in crisp solid white.",
+            "composition": "As a Lettermark, the primary global identifier is the letter 'M' (\"Golden Arches\"). Here, it is staged inside a squircle (rounded rectangular red container) with the company name overlaid across the arch stems, creating an instantly recognizable monogram emblem.",
+            "complexityAndGeometry": "Balanced. Bilateral vertical symmetry across the double arches; parabolic curve geometry derived from mid-century roadside architecture; golden ratio proportions in arch height to base width.",
+            "textureAndFinish": "Pure Flat 2D vector graphic. High-saturation solid color fills in pure fast-food red and golden yellow; zero gradients, shadows, or outlines; calibrated for maximum roadside visibility from high-speed highways and mobile app touch targets."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Welcoming, Joyful, Universal, Golden Heritage",
+            "personalityTraits": [
+              "Welcoming",
+              "Joyful",
+              "Universal",
+              "Golden Heritage"
+            ],
+            "targetAudience": "Global quick-service restaurants (QSR), family casual dining, fast-food breakfast and burgers, youth and children culture.",
+            "symbolism": "The golden arches originated from the literal yellow architectural arches that framed the original 1953 roadside restaurant buildings, symbolizing a golden gateway of hospitality, affordable happiness, and a familiar haven for hungry travelers."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "An iconic fast-food monogram lettermark logo for a world-famous family restaurant. The design features a monumental, perfectly symmetrical double-arch letter 'M' in vibrant golden yellow (#FFC72C), set against a soft rounded-corner red square shield (#DA291C). Centered across the lower third of the golden arches is clean, bold white geometric sans-serif typography reading '[BRAND]'. Pure flat 2D vector graphic, high saturation, high contrast, warm appetite-appeal colors, isolated on a clean background --no realistic burgers, fries, drinks, complex shading, 3d plastic gloss, photorealism.",
+            "basePrompt": "An iconic fast-food monogram lettermark logo for a world-famous family restaurant. The design features a monumental, perfectly symmetrical double-arch letter 'M' in vibrant golden yellow (#FFC72C), set against a soft rounded-corner red square shield (#DA291C). Centered across the lower third of the golden arches is clean, bold white geometric sans-serif typography reading '[BRAND]'. Pure flat 2D vector graphic, high saturation, high contrast, warm appetite-appeal colors, isolated on a clean background",
+            "negativeConstraints": "realistic burgers, fries, drinks, complex shading, 3d plastic gloss, photorealism.",
+            "hasBrandPlaceholder": true
+          }
+        }
+      ]
+    },
+    "mascot": {
+      "id": "mascot",
+      "name": "Mascot",
+      "tagline": "Illustrated character & persona",
+      "description": "Personifies the brand through an illustrated character, figure, or ambassador creating emotional connection.",
+      "brandCount": 4,
+      "brands": [
+        {
+          "id": "kfc",
+          "name": "KFC",
+          "archetype": "mascot",
+          "imageFile": "KFC-logo.png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#A3080C (55% - Deep Kentucky red medallion background and apron accents), #000000 (25% - Bold character line art, glasses, and bow tie), #FDF3E7 (12% - Warm vintage skin tone fill), #FFFFFF (8% - Hair, goatee, shirt, and wordmark)",
+            "hexCodes": [
+              "#A3080C",
+              "#000000",
+              "#FDF3E7",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Dynamic Slanted Industrial Sans-Serif. Bold weight, uppercase casing (\"KFC\"), tight tracking, with a forward italic slant (-10 degrees) that conveys modern momentum. Placed to the right of the character portrait.",
+            "composition": "As a Mascot logo, the undeniable centerpiece is the stylized portrait of founder Colonel Harland Sanders. The character illustration is framed within an angled circular roundel, featuring his signature spectacles, black string tie, friendly smile, and white apron with red vertical culinary stripes.",
+            "complexityAndGeometry": "Balanced to Complex. Harmonious blend of thick, expressive comic-style vector line weights outlining facial features with flat color-blocked fills; circular background disc cropped dynamically at the bottom by the Colonel's shoulders.",
+            "textureAndFinish": "Flat 2D vector character illustration. Solid vector fills with bold black boundary outlines; engineered to provide instant recognition across roadside bucket packaging, store architecture, and digital interfaces."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Hospitable, Authentic, Secret-Recipe Heritage, Personable",
+            "personalityTraits": [
+              "Hospitable",
+              "Authentic",
+              "Secret-Recipe Heritage",
+              "Personable"
+            ],
+            "targetAudience": "Quick-service poultry dining, family meal sharing, comfort food lovers, mass consumer casual dining.",
+            "symbolism": "The Colonel mascot embodies Southern hospitality, old-school culinary craftsmanship, authenticity, and the legendary 11 herbs and spices recipe developed by the founder himself."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A charismatic illustrated human mascot logo for a heritage culinary brand. The character is a warm, smiling, distinguished elderly founder with white swept-back hair, neat goatee, black-rimmed glasses, wearing a traditional black string bow tie and a red-striped chef's apron. The portrait is framed within a solid deep crimson (#A3080C) circular medallion, accompanied by bold, forward-slanted uppercase sans-serif typography reading '[BRAND]'. Flat 2D vector character art, thick expressive black line art, clean solid color fills, isolated on a white background --no realistic photographs, rendered 3d clay, fried chicken pieces, grease textures, hyper-detailed skin pores.",
+            "basePrompt": "A charismatic illustrated human mascot logo for a heritage culinary brand. The character is a warm, smiling, distinguished elderly founder with white swept-back hair, neat goatee, black-rimmed glasses, wearing a traditional black string bow tie and a red-striped chef's apron. The portrait is framed within a solid deep crimson (#A3080C) circular medallion, accompanied by bold, forward-slanted uppercase sans-serif typography reading '[BRAND]'. Flat 2D vector character art, thick expressive black line art, clean solid color fills, isolated on a white background",
+            "negativeConstraints": "realistic photographs, rendered 3d clay, fried chicken pieces, grease textures, hyper-detailed skin pores.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "mailchimp",
+          "name": "Mailchimp",
+          "archetype": "mascot",
+          "imageFile": "Mailchimp-logo.png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#FFE01B (48% - Cavendish bright yellow mascot circular disc), #000000 (45% - Mascot linework, cap, and lowercase wordmark), #FFFFFF (7% - Mascot ear and cap trim highlights)",
+            "hexCodes": [
+              "#FFE01B",
+              "#000000",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Friendly Geometric Grotesque Sans-Serif. Heavy medium-bold weight, strict lowercase casing (\"mailchimp\"), neutral tracking with open counters and rounded punctuation dots. Positioned horizontally beneath the mascot medallion.",
+            "composition": "As a Mascot logo, the focal point is \"Freddie\" the chimpanzee. The mascot is staged within a solid circular sunshine yellow disc, showcasing Freddie's face in three-quarters profile, winking mischievously while wearing a vintage mail-carrier bellhop cap.",
+            "complexityAndGeometry": "Minimalist. Stripped of unnecessary cartoon detail; simplified to pure geometric arcs, a circular boundary, and bold single-weight contour lines that retain full legibility down to 16x16 pixel favicons.",
+            "textureAndFinish": "Pure Flat 2D vector art. High-contrast solid monochrome black vector linework over a vibrant yellow circle; completely flat aesthetic that blends tech minimalism with playful whimsy."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Playful, Empowering, Quirky, Approachable",
+            "personalityTraits": [
+              "Playful",
+              "Empowering",
+              "Quirky",
+              "Approachable"
+            ],
+            "targetAudience": "Small business owners, digital marketing agencies, e-commerce entrepreneurs, newsletter creators, and creative SaaS platforms.",
+            "symbolism": "Freddie the friendly mail chimp symbolizes effortless communication, removing the intimidation factor from digital marketing, and delivering emails with a wink and a smile."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A minimalist, playful mascot vector logo for a modern creative SaaS platform. The design features a simplified, charming cartoon character face of a friendly chimpanzee wearing a vintage postal worker cap, winking cheerfully in three-quarter profile, enclosed within a solid sunny yellow (#FFE01B) circular disc. Below the medallion is clean, friendly geometric sans-serif lowercase typography reading '[BRAND]' in solid black. Flat 2D vector illustration, bold clean black outlines, high contrast, warm humorous personality, isolated on a clean transparent background --no complex fur gradients, realistic ape textures, 3d rendered models, shadows.",
+            "basePrompt": "A minimalist, playful mascot vector logo for a modern creative SaaS platform. The design features a simplified, charming cartoon character face of a friendly chimpanzee wearing a vintage postal worker cap, winking cheerfully in three-quarter profile, enclosed within a solid sunny yellow (#FFE01B) circular disc. Below the medallion is clean, friendly geometric sans-serif lowercase typography reading '[BRAND]' in solid black. Flat 2D vector illustration, bold clean black outlines, high contrast, warm humorous personality, isolated on a clean transparent background",
+            "negativeConstraints": "complex fur gradients, realistic ape textures, 3d rendered models, shadows.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "michelin",
+          "name": "Michelin",
+          "archetype": "mascot",
+          "imageFile": "Michelin-logo.png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#004C97 (50% - Primary royal blue italic wordmark), #FFE300 (15% - High-visibility yellow horizon divider), #000000 (15% - Mascot contour outlines & eyes), #FFFFFF (20% - Pneumatic tire body segments)",
+            "hexCodes": [
+              "#004C97",
+              "#FFE300",
+              "#000000",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "High-Performance Italic Industrial Sans-Serif. Extra-bold weight, uppercase casing (\"MICHELIN\"), tight tracking, aggressive forward italic slant (-14 degrees) evoking high-speed road travel. Positioned directly beneath the mascot and yellow horizon bar.",
+            "composition": "As a Mascot logo, the design is crowned by \"Bibendum\" (The Michelin Man). The friendly mascot is depicted from the torso up, made entirely of stacked white tire rings, enthusiastically raising and waving his right hand in warm greeting over a horizontal brand divider bar.",
+            "complexityAndGeometry": "Balanced. Playful curvilinear character anatomy juxtaposed with rigid horizontal and angular typography below; asymmetric character pose creating dynamic interaction with the viewer.",
+            "textureAndFinish": "Flat 2D vector character art. Clean black contour lines defining each segmented rubber tire roll, solid white fills, and bold primary color blocks engineered for industrial tire sidewalls, motorsport race tracks, and roadside signage."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Trustworthy, Hospitable, Champion, Energetic",
+            "personalityTraits": [
+              "Trustworthy",
+              "Hospitable",
+              "Champion",
+              "Energetic"
+            ],
+            "targetAudience": "Global automotive tires, motorsports racing, heavy commercial transport, gourmet culinary travel guides (Michelin Guide).",
+            "symbolism": "Bibendum embodies tire durability and safety—a literal creature made of tires who greets motorists as a loyal road companion, promising safety, hospitality, and performance on every journey."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "An iconic industrial mascot vector logo for an automotive performance manufacturer. The design features a friendly, robust character constructed entirely of rounded, stacked white tire segments, waving warmly with an open hand from behind a vibrant yellow (#FFE300) horizontal divider bar. Directly below is an aggressive, forward-leaning italicized uppercase industrial sans-serif wordmark reading '[BRAND]' in deep royal blue (#004C97). Flat 2D vector art, bold clean black boundary strokes, solid color fills, high roadside visibility, isolated on a transparent background --no complex road photography, asphalt textures, 3d glossy highlights, gradients.",
+            "basePrompt": "An iconic industrial mascot vector logo for an automotive performance manufacturer. The design features a friendly, robust character constructed entirely of rounded, stacked white tire segments, waving warmly with an open hand from behind a vibrant yellow (#FFE300) horizontal divider bar. Directly below is an aggressive, forward-leaning italicized uppercase industrial sans-serif wordmark reading '[BRAND]' in deep royal blue (#004C97). Flat 2D vector art, bold clean black boundary strokes, solid color fills, high roadside visibility, isolated on a transparent background",
+            "negativeConstraints": "complex road photography, asphalt textures, 3d glossy highlights, gradients.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "pringles",
+          "name": "Pringles",
+          "archetype": "mascot",
+          "imageFile": "Pringles-logo.png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#FF0000 (35% - Snappy red bow tie & snack appetite appeal), #FDB913 (30% - Golden potato chip yellow wordmark), #794100 (18% - Rich auburn brown hair and handlebar mustache), #FFFFFF (12% - Character face oval & canvas), #000000 (5% - Heavy comic contour strokes)",
+            "hexCodes": [
+              "#FF0000",
+              "#FDB913",
+              "#794100",
+              "#FFFFFF",
+              "#000000"
+            ],
+            "typographyStyle": "Bubbly Comic Display Serif. Ultra-bold weight, title-cased lettering, customized bounce baseline with overlapping characters, and a dramatic arched convex baseline. Characters are filled with warm yellow and bounded by a heavy black outer offset contour.",
+            "composition": "As a Mascot logo, the mark showcases the face of \"Julius Pringles\" (Mr. P). His stylized potato-chip-shaped oval head features brown parted hair, beady cartoon eyes, a massive flowing handlebar mustache, and a sharp red bowtie that neatly overlaps the ascending stem of the letter 'P' in the wordmark below.",
+            "complexityAndGeometry": "Balanced to Complex. Organic rounded forms in the character head balanced against the dynamic, hand-drawn bounce of the arched typography; the bowtie acts as a vital structural lock linking character head to the wordmark.",
+            "textureAndFinish": "2D vector cartoon illustration. Flat solid fills bounded by thick, smooth vector strokes; high-chroma primary colors calibrated for iconic cylindrical snack packaging and impulse retail displays."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Playful, Irresistible, Jovial, Snackable",
+            "personalityTraits": [
+              "Playful",
+              "Irresistible",
+              "Jovial",
+              "Snackable"
+            ],
+            "targetAudience": "Packaged consumer snack foods, potato crisps, party foods, teen and family casual snacking.",
+            "symbolism": "The jolly, mustachioed gentleman character evokes Victorian-era fairground confectioners and nostalgic hospitality, while the curved mustache subtly mimics the hyperbolic paraboloid shape of a Pringles potato crisp."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A whimsical, vintage-inspired snack mascot logo for a packaged food brand. The mascot is a jolly cartoon gentleman's head shaped like a smooth rounded oval, featuring rich brown parted hair, friendly beady black eyes, a prominent sweeping brown handlebar mustache, and a bright red bowtie. Anchoring the character from below is an arched, playful bubble-lettering wordmark reading '[BRAND]' in vibrant golden yellow (#FDB913) with thick black comic outlines. Flat 2D cartoon vector illustration, bold outlines, vivid solid color fills, high impulse-buy shelf appeal, isolated on a clean white background --no photographic chips, salt grains, complex drop shadows, 3d plastic CGI.",
+            "basePrompt": "A whimsical, vintage-inspired snack mascot logo for a packaged food brand. The mascot is a jolly cartoon gentleman's head shaped like a smooth rounded oval, featuring rich brown parted hair, friendly beady black eyes, a prominent sweeping brown handlebar mustache, and a bright red bowtie. Anchoring the character from below is an arched, playful bubble-lettering wordmark reading '[BRAND]' in vibrant golden yellow (#FDB913) with thick black comic outlines. Flat 2D cartoon vector illustration, bold outlines, vivid solid color fills, high impulse-buy shelf appeal, isolated on a clean white background",
+            "negativeConstraints": "photographic chips, salt grains, complex drop shadows, 3d plastic CGI.",
+            "hasBrandPlaceholder": true
+          }
+        }
+      ]
+    },
+    "pictorial": {
+      "id": "pictorial",
+      "name": "Pictorial",
+      "tagline": "Literal & stylized visual symbols",
+      "description": "Employs an instantly recognizable real-world object or creature distilled into an iconic symbol.",
+      "brandCount": 4,
+      "brands": [
+        {
+          "id": "apple",
+          "name": "Apple",
+          "archetype": "pictorial",
+          "imageFile": "Apple-Logo.png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#000000 (100% - Solid black silhouette), #FFFFFF (Transparent/Canvas field)",
+            "hexCodes": [
+              "#000000",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Independent / Standalone (The pictorial mark operates completely devoid of typography, achieving universal wordless recognition).",
+            "composition": "As a Pictorial logo, it depicts a clear, universally identifiable physical object—an apple. The mark strips away all internal botanical anatomy, reducing the fruit to a masterfully simplified solid silhouette featuring a single crescent bite mark taken from the right side and a tilted elliptical leaf floating just above the stem cavity.",
+            "complexityAndGeometry": "Minimalist. World-renowned application of golden ratio proportions; composed entirely of precise intersecting circular arcs (Fibonacci spiral curvatures); seamless organic contour balance between the curved fruit body and the leaf.",
+            "textureAndFinish": "Pure Flat 2D vector silhouette. High-density solid black ink fill with zero gradients, drop shadows, or outlines; razor-sharp vector contours engineered for micro-favicons, smartphone hardware backings, and monumental architectural storefronts."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Innovative, Elegant, Visionary, Intuitive",
+            "personalityTraits": [
+              "Innovative",
+              "Elegant",
+              "Visionary",
+              "Intuitive"
+            ],
+            "targetAudience": "Premium consumer electronics, personal computing, mobile operating systems, wearable technology, and digital creative services.",
+            "symbolism": "The bitten apple carries deep cultural layers: biblical knowledge and discovery, Sir Isaac Newton's revelation of gravity, Alan Turing's legendary foundation of computer science, and a clever visual pun on digital data (\"bite\" / \"byte\") that also distinguishes the silhouette from a common cherry."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "An iconic minimalist pictorial silhouette logo for a high-end personal technology company named '[BRAND]'. The mark is a pristine, mathematically proportioned flat 2D silhouette of an apple with a clean, smooth circular bite taken out of its right flank, crowned by a single elegant elliptical leaf hovering gracefully above the stem indentation. Pure solid monochrome black fill on a pristine transparent background, flawless golden-ratio curves, ultimate graphic reduction, timeless luxury minimalism --no other text, words, stems, seeds, fruit texture, glossy highlights, 3d bevels, drop shadows.",
+            "basePrompt": "An iconic minimalist pictorial silhouette logo for a high-end personal technology company named '[BRAND]'. The mark is a pristine, mathematically proportioned flat 2D silhouette of an apple with a clean, smooth circular bite taken out of its right flank, crowned by a single elegant elliptical leaf hovering gracefully above the stem indentation. Pure solid monochrome black fill on a pristine transparent background, flawless golden-ratio curves, ultimate graphic reduction, timeless luxury minimalism",
+            "negativeConstraints": "other text, words, stems, seeds, fruit texture, glossy highlights, 3d bevels, drop shadows.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "lacoste",
+          "name": "Lacoste",
+          "archetype": "pictorial",
+          "imageFile": "Lacoste-logo.jpg",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#005930 (60% - Deep heritage crocodile green), #E31B23 (15% - Snapping red tongue & jaws), #FFFFFF (15% - Textured scale pattern & white teeth), #000000 (10% - Heavy bold uppercase typography)",
+            "hexCodes": [
+              "#005930",
+              "#E31B23",
+              "#FFFFFF",
+              "#000000"
+            ],
+            "typographyStyle": "Extended Modern Sans-Serif. Heavy bold weight, uppercase casing (\"LACOSTE\"), wide tracking, squared terminal endings, and solid ink coverage. Positioned horizontally beneath the reptile mark.",
+            "composition": "As a Pictorial logo, it depicts a literal living creature—a menacing yet stylized crocodile. The reptile is shown in full lateral profile facing right, with its tail curled gracefully upward and its jaws open in an active predatory snap.",
+            "complexityAndGeometry": "Balanced to Complex. Organic reptilian contouring balanced by geometric repetition: the animal's back is decorated with an array of identical white inverted triangle scales that follow the natural spine curve; open serrated jaws reveal a distinctive bright red tongue.",
+            "textureAndFinish": "2D stylized vector illustration. Solid flat color blocks combined with interior geometric scale cutouts; famously engineered to be embroidered as a raised textile patch on the left chest of luxury polo shirts."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Sporty, Prestigious, Tenacious, French Heritage",
+            "personalityTraits": [
+              "Sporty",
+              "Prestigious",
+              "Tenacious",
+              "French Heritage"
+            ],
+            "targetAudience": "Luxury tennis apparel, golf lifestyle clothing, premium casual footwear, French sportswear, and upscale accessories.",
+            "symbolism": "The crocodile directly honors founder René Lacoste, the French tennis champion nicknamed \"The Alligator\" by the American press for his legendary tenacity on the court. It symbolizes unyielding athletic grit, elegance, and French sportswear pedigree."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A distinguished pictorial vector logo for a luxury sports apparel brand. The design depicts a stylized, iconic crocodile in full profile facing right, rendered in deep forest green (#005930) with an arched tail, textured with neat rows of geometric white triangular scales along its back, and snapping jaws open to reveal a bright red tongue (#E31B23). Below the reptile is a solid, wide, uppercase black sans-serif wordmark reading '[BRAND]'. Flat 2D vector style, clean embroidery-ready contours, heritage sportswear prestige, isolated on a white background --no photorealistic lizard skin, mud, swamp water, complex gradients, 3d shading.",
+            "basePrompt": "A distinguished pictorial vector logo for a luxury sports apparel brand. The design depicts a stylized, iconic crocodile in full profile facing right, rendered in deep forest green (#005930) with an arched tail, textured with neat rows of geometric white triangular scales along its back, and snapping jaws open to reveal a bright red tongue (#E31B23). Below the reptile is a solid, wide, uppercase black sans-serif wordmark reading '[BRAND]'. Flat 2D vector style, clean embroidery-ready contours, heritage sportswear prestige, isolated on a white background",
+            "negativeConstraints": "photorealistic lizard skin, mud, swamp water, complex gradients, 3d shading.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "shell",
+          "name": "Shell",
+          "archetype": "pictorial",
+          "imageFile": "Shell-Logo.jpg",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#DD1D21 (45% - High-visibility fiery red outer rim & typography), #FBCE07 (45% - Vibrant sunshine yellow radiating shell fan), #FFFFFF (10% - Canvas field)",
+            "hexCodes": [
+              "#DD1D21",
+              "#FBCE07",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Industrial Geometric Grotesque Sans-Serif. Heavy bold weight, title casing (\"Shell\"), neutral tracking, with distinct horizontal terminals. Placed horizontally beneath the shell symbol.",
+            "composition": "As a Pictorial logo, the visual anchor is a stylized pecten scallop seashell (*Pecten maximus*). The shell is presented in an elevated, frontal geometric view, featuring a fluted fan of seven radiating vertical ribs framed within a bold scalloped red border.",
+            "complexityAndGeometry": "Balanced. Strict bilateral vertical symmetry; seven fluted ridges tapering down toward the narrow shell hinge; bold red perimeter contour containing the yellow fluted interior like a heraldic emblem.",
+            "textureAndFinish": "Pure Flat 2D vector graphic. High-chroma solid red and yellow fills without gradients or drop shadows; designed by legendary industrial designer Raymond Loewy for instantaneous recognition by motorists traveling at highway speeds."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Industrial, Energy, Enduring, High-Visibility",
+            "personalityTraits": [
+              "Industrial",
+              "Energy",
+              "Enduring",
+              "High-Visibility"
+            ],
+            "targetAudience": "Global energy production, petroleum retail stations, natural gas, renewable energy logistics, and automotive lubricants.",
+            "symbolism": "The shell pays homage to the company's 19th-century origins when Marcus Samuel imported decorative seashells from the Far East to London, evolving into a universally recognized symbol of natural resources and energy exploration."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A bold, high-visibility pictorial vector logo for an international energy conglomerate. The emblem is a stylized pecten scallop seashell viewed head-on with strict bilateral symmetry, composed of seven bright sunshine-yellow (#FBCE07) radiating fluted ribs bounded by a thick, scalloped fiery-red (#DD1D21) outer border. Directly below is a strong, bold red industrial sans-serif wordmark reading '[BRAND]'. Flat 2D vector art, solid vibrant color fills, razor-sharp geometric contours, high roadside contrast, isolated on a clean white background --no real ocean waves, sand, photorealistic seashells, glossy plastic finishes, gradients, drop shadows.",
+            "basePrompt": "A bold, high-visibility pictorial vector logo for an international energy conglomerate. The emblem is a stylized pecten scallop seashell viewed head-on with strict bilateral symmetry, composed of seven bright sunshine-yellow (#FBCE07) radiating fluted ribs bounded by a thick, scalloped fiery-red (#DD1D21) outer border. Directly below is a strong, bold red industrial sans-serif wordmark reading '[BRAND]'. Flat 2D vector art, solid vibrant color fills, razor-sharp geometric contours, high roadside contrast, isolated on a clean white background",
+            "negativeConstraints": "real ocean waves, sand, photorealistic seashells, glossy plastic finishes, gradients, drop shadows.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "wwf",
+          "name": "WWF",
+          "archetype": "pictorial",
+          "imageFile": "WWF-logo.png",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#000000 (100% - Solid black patches & typography), #FFFFFF (Transparent/White negative space panda silhouette)",
+            "hexCodes": [
+              "#000000",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Heavy Rounded Geometric Sans-Serif. Extra-bold weight, full uppercase casing (\"WWF\"), tight kerning, featuring soft pill-shaped stroke terminals that visually echo the organic roundness of the panda's paws. Positioned directly beneath the animal mark.",
+            "composition": "As a Pictorial logo, the design illustrates a giant panda bear (*Ailuropoda melanoleuca*). It is renowned worldwide as a pinnacle of Gestalt design: the white body, head, and back of the panda are not drawn with outlines at all; they are entirely formed by the white negative space framed by black patches.",
+            "complexityAndGeometry": "Minimalist to Balanced. Masterclass in Gestalt closure; human eye automatically completes the white boundary lines of the panda's head and spine; organic rounded patches arranged in a harmonious seated posture.",
+            "textureAndFinish": "Pure Flat 2D vector silhouette. High-density solid black ink fills against negative space; no half-tones, outlines, or gradients; designed to communicate universal conservation without relying on written language."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Compassionate, Urgent, Global, Iconic",
+            "personalityTraits": [
+              "Compassionate",
+              "Urgent",
+              "Global",
+              "Iconic"
+            ],
+            "targetAudience": "Global wildlife conservation, environmental advocacy, biodiversity protection, eco-philanthropy, and climate policy organizations.",
+            "symbolism": "The giant panda—an endangered flagship species—evokes empathy, fragility, and the urgent need to protect the natural world. Its stark black-and-white simplicity ensures borderless cross-cultural emotional resonance."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A masterclass minimalist pictorial vector logo for a global wildlife conservation organization. The mark is a stylized giant panda bear illustration rendered purely through high-contrast black patches and Gestalt negative space, where the white contours of the panda's back and head are formed naturally by the white background without any bounding outlines. Centered underneath is a heavy, bold rounded uppercase sans-serif wordmark reading '[BRAND]'. Flat 2D vector art, pure solid monochrome black fill on a clean white or transparent background, emotive wildlife minimalism --no bamboo leaves, jungle trees, fur textures, grey shading, gradients, 3d effects.",
+            "basePrompt": "A masterclass minimalist pictorial vector logo for a global wildlife conservation organization. The mark is a stylized giant panda bear illustration rendered purely through high-contrast black patches and Gestalt negative space, where the white contours of the panda's back and head are formed naturally by the white background without any bounding outlines. Centered underneath is a heavy, bold rounded uppercase sans-serif wordmark reading '[BRAND]'. Flat 2D vector art, pure solid monochrome black fill on a clean white or transparent background, emotive wildlife minimalism",
+            "negativeConstraints": "bamboo leaves, jungle trees, fur textures, grey shading, gradients, 3d effects.",
+            "hasBrandPlaceholder": true
+          }
+        }
+      ]
+    },
+    "wordmark": {
+      "id": "wordmark",
+      "name": "Wordmark",
+      "tagline": "Pure custom typographic logotypes",
+      "description": "Relies exclusively on distinctive, custom-designed typographic letterforms without a standalone symbol.",
+      "brandCount": 3,
+      "brands": [
+        {
+          "id": "coca-cola",
+          "name": "Coca-Cola",
+          "archetype": "wordmark",
+          "imageFile": "Coca-Cola-logo.jpg",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#F40009 (100% - World-famous Coca-Cola Red script typography), #FFFFFF (Transparent/White backdrop canvas)",
+            "hexCodes": [
+              "#F40009",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Spencerian Script Calligraphy (historic 19th-century American cursive handwriting). Flowing calligraphic weight with dramatic contrast between thick downstrokes and hair-thin upstrokes, continuous cursive ligatures, distinctive flourishing swooshes extending beneath and through the letterforms.",
+            "composition": "As a Wordmark, the design relies 100% on custom stylized script typography. There is no external crest, shield, or icon; the words \"Coca-Cola\" are joined by an optical hyphen and anchored by elongated dynamic swashes extending from the uppercase letters 'C'.",
+            "complexityAndGeometry": "Balanced to Complex. Continuous calligraphic rhythm; the first 'C' features a sweeping lower swash that swoops under the \"oca\" syllable, while the second 'C' projects a soaring ribbon swash that loops over the \"ola\" syllable, establishing continuous horizontal momentum.",
+            "textureAndFinish": "Pure Flat 2D vector script. Vivid solid red ink fill with smooth bezier transitions along the flourishes; engineered for universal application across glass contour bottles, aluminum cans, illuminated billboards, and delivery trucks."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Nostalgic, Refreshing, Authentic, Universally Joyful",
+            "personalityTraits": [
+              "Nostalgic",
+              "Refreshing",
+              "Authentic",
+              "Universally Joyful"
+            ],
+            "targetAudience": "Global non-alcoholic beverages, carbonated soft drinks, fountain refreshments, restaurant partnerships, and mass-market consumer celebration.",
+            "symbolism": "The flowing, handcrafted Spencerian script evokes warmth, human connection, timeless refreshment, and authentic American craftsmanship, remaining practically unchanged for well over a century as an enduring symbol of happiness."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A timeless vintage cursive wordmark logo for a world-famous beverage brand. The design features elegant, flowing Spencerian script typography reading '[BRAND]', with dramatic contrast between thick calligraphic strokes and delicate upstrokes, characterized by long sweeping ribbon swashes looping gracefully above and beneath the letters. Vibrant pure crimson red (#F40009) solid fill, flat 2D vector typography, isolated on a clean white or transparent background, perfect rhythmic kerning, nostalgic heritage elegance --no bottles, glasses, bubbles, ice cubes, drop shadows, 3d gradients, icons, emblems, badges.",
+            "basePrompt": "A timeless vintage cursive wordmark logo for a world-famous beverage brand. The design features elegant, flowing Spencerian script typography reading '[BRAND]', with dramatic contrast between thick calligraphic strokes and delicate upstrokes, characterized by long sweeping ribbon swashes looping gracefully above and beneath the letters. Vibrant pure crimson red (#F40009) solid fill, flat 2D vector typography, isolated on a clean white or transparent background, perfect rhythmic kerning, nostalgic heritage elegance",
+            "negativeConstraints": "bottles, glasses, bubbles, ice cubes, drop shadows, 3d gradients, icons, emblems, badges.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "lego",
+          "name": "LEGO",
+          "archetype": "wordmark",
+          "imageFile": "Logo-lego.jpg",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#FFFFFF (40% - Core bubble lettering glyphs), #000000 (20% - Inner comic outline stroke), #FFE500 (20% - Outer halo border contour), #D11013 (20% - Vivid toy-box red background field)",
+            "hexCodes": [
+              "#FFFFFF",
+              "#000000",
+              "#FFE500",
+              "#D11013"
+            ],
+            "typographyStyle": "Custom Chubby Bubble Display Typography. Ultra-heavy bold weight, uppercase casing (\"LEGO\"), tight interlocking tracking where glyphs overlap and touch, distinct forward italic tilt (-8 degrees), rounded bubble-like terminals.",
+            "composition": "As a Wordmark, the entire mark is anchored around the brand name rendered in high-volume puffy letterforms. The letters are bound together by a specialized dual-stroke offset contour (inner black outline, outer yellow contour) that fuses the four glyphs into a unified, tactile badge.",
+            "complexityAndGeometry": "Balanced. Playful bubble geometry with uniform stroke inflation; the letters are nested closely together to minimize negative gaps, framed inside a friendly square container with a red brick stud micro-texture.",
+            "textureAndFinish": "2D vector typography with dual contour offset strokes over a subtle red modular brick stud texture. High-contrast solid color fills in pure primary colors calibrated to trigger playful dopamine and creative excitement in children and adults alike."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Creative, Playful, Imaginative, Systematic Joy",
+            "personalityTraits": [
+              "Creative",
+              "Playful",
+              "Imaginative",
+              "Systematic Joy"
+            ],
+            "targetAudience": "Children's building toys, educational brick construction, adult hobbyists (AFOL - Adult Fans of LEGO), digital video games, and theme parks.",
+            "symbolism": "The rounded, puffy letters resemble colorful plastic toys and interlocking modular brick shapes, embodying boundless creativity, hands-on building joy, and family friendly entertainment."
+          },
+          "generationBlueprint": {
+            "rawPrompt": "A playful, high-energy bubble wordmark logo for a creative toy and building block brand. The design features ultra-chubby, rounded italicized uppercase typography reading '[BRAND]' in solid stark white (#FFFFFF), outlined by a bold black inner stroke and an outer yellow (#FFE500) contour stroke that binds the letters together. Set against a rich primary toy-box red background (#D11013). Clean flat 2D vector art, bold primary colors, maximum child-friendly appeal, tactile warmth --no complex 3d CGI renders, plastic shine reflections, drop shadows, photorealistic toys, disconnected icons.",
+            "basePrompt": "A playful, high-energy bubble wordmark logo for a creative toy and building block brand. The design features ultra-chubby, rounded italicized uppercase typography reading '[BRAND]' in solid stark white (#FFFFFF), outlined by a bold black inner stroke and an outer yellow (#FFE500) contour stroke that binds the letters together. Set against a rich primary toy-box red background (#D11013). Clean flat 2D vector art, bold primary colors, maximum child-friendly appeal, tactile warmth",
+            "negativeConstraints": "complex 3d CGI renders, plastic shine reflections, drop shadows, photorealistic toys, disconnected icons.",
+            "hasBrandPlaceholder": true
+          }
+        },
+        {
+          "id": "disney",
+          "name": "Disney",
+          "archetype": "wordmark",
+          "imageFile": "images.jpeg",
+          "visualAttributes": {
+            "dominantPaletteRaw": "#000000 (100% - Solid black signature script), #FFFFFF (Transparent/White backdrop canvas)",
+            "hexCodes": [
+              "#000000",
+              "#FFFFFF"
+            ],
+            "typographyStyle": "Customized Whimsical Autograph Script (Walt Disney Signature font family). Fluid brush script, mixed casing with a towering uppercase 'D' featuring an exaggerated enclosed oval loop, whimsical lowercase glyphs with dancing ascenders, and a stylized curled dot on the letter 'i'.",
+            "composition": "As a Wordmark, the logo consists entirely of Walt Disney's artistic, exaggerated signature. It relies on the lyrical cadence of handwriting and whimsical calligraphic curls to establish instant brand magic without needing castles, fairy wands, or mascot silhouettes.",
+            "complexityAndGeometry": "Balanced to Complex. Highly expressive, idiosyncratic calligraphy; the monumental loop of the 'D' anchors the left visual weight, while the long descending tail of the 'y' balances the right flank; dancing baseline with organic, non-uniform letter sizing.",
+            "textureAndFinish": "Pure Flat 2D vector script. Solid black vector stroke fills with fluid bezier curvature along every organic loop and flourish; pristine vector clarity engineered for theatrical opening credits, animation title cards, theme park marquees, and digital app icons."
+          },
+          "strategicVibe": {
+            "personalityRaw": "Magical, Whimsical, Nostalgic, Storytelling Wonder",
+            "personalityTraits": [
+              "Magical",
+              "Whimsical",
+              "Nostalgic",
+              "Storytelling Wonder"
+            ],
+            "targetAudience": "Global family entertainment, animated feature films, fantasy storytelling, theme parks and resorts, children and multi-generational fans worldwide.",
+            "symbolism": "The signature serves as the personal personal seal of Walt Disney himself, conveying personal imagination, handwritten storytelling artistry, childlike wonder, and the magical promise that \"dreams come true.\""
+          },
+          "generationBlueprint": {
+            "rawPrompt": "An iconic whimsical signature wordmark logo for a world-renowned fantasy entertainment studio. The design is a custom, artistic handwritten script reading '[BRAND]', featuring a monumental flowing uppercase 'D' with an exaggerated looping swirl, playful dancing lowercase letterforms, and an artistic descending tail on the final letter. Pure monochrome solid black fill on a pristine white or transparent background, flat 2D vector typography, authentic calligraphic ink flow, magical childlike charm --no fairytale castles, fireworks, magic wands, stars, cartoon characters, gradients, drop shadows, 3d bevels.",
+            "basePrompt": "An iconic whimsical signature wordmark logo for a world-renowned fantasy entertainment studio. The design is a custom, artistic handwritten script reading '[BRAND]', featuring a monumental flowing uppercase 'D' with an exaggerated looping swirl, playful dancing lowercase letterforms, and an artistic descending tail on the final letter. Pure monochrome solid black fill on a pristine white or transparent background, flat 2D vector typography, authentic calligraphic ink flow, magical childlike charm",
+            "negativeConstraints": "fairytale castles, fireworks, magic wands, stars, cartoon characters, gradients, drop shadows, 3d bevels.",
+            "hasBrandPlaceholder": true
+          }
+        }
+      ]
+    }
+  },
+  "catalog": [
+    {
+      "id": "chase-bank",
+      "name": "Chase Bank",
+      "archetype": "abstract",
+      "imageFile": "Chase-logo.jpg",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#117ACA (30% - Octagonal geometric motif), #231F20 (45% - Bold sans-serif typography), #FFFFFF (25% - Negative space square and canvas backdrop)",
+        "hexCodes": [
+          "#117ACA",
+          "#231F20",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Geometric Sans-Serif (customized modern grotesque). Heavy bold weight, uppercase casing, wide proportional tracking, with softened rounded terminal corners on 'C' and 'S'. Typography is positioned as a horizontal independent anchor to the left of the abstract icon.",
+        "composition": "As an Abstract logo, the primary visual anchor is a non-literal geometric octagon created from four identical rotated trapezoids framing a square central negative space. It relies on mathematical rotation and conceptual geometry rather than any physical bank or currency imagery.",
+        "complexityAndGeometry": "Minimalist. Line weight is uniform across all four trapezoidal segments; aspect ratio of the icon is 1:1; 4-fold rotational symmetry (90-degree rotational invariance); the central square cutout creates a focal illusion of dynamic containment and security.",
+        "textureAndFinish": "Flat 2D vector graphic. Pure solid color fills without gradients, drop shadows, or beveling; crisp contour definitions designed for high legibility across small digital screens and physical signage."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Trustworthy, Institutional, Secure, Ultra-modern",
+        "personalityTraits": [
+          "Trustworthy",
+          "Institutional",
+          "Secure",
+          "Ultra-modern"
+        ],
+        "targetAudience": "Global consumer and commercial banking, fintech, investment management, and enterprise financial services.",
+        "symbolism": "The four interlocking geometric quadrants resemble a high-security vault door or fortress wall, while the open central aperture symbolizes financial liquidity, opportunity, and continuous forward circulation."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A minimalist abstract vector logo for a corporate institution named '[BRAND]'. The icon features a strictly geometric, non-representational symbol composed of four symmetrical rotating geometric facets arranged in a 90-degree rotational symmetry around a crisp square negative space, paired with bold, clean geometric sans-serif uppercase typography reading '[BRAND]'. Flat 2D vector art, solid corporate blue (#117ACA) and dark slate (#231F20) fill, perfectly balanced proportions, high contrast, isolated on a pure white or transparent background --no literal objects, coins, buildings, 3d bevels, drop shadows, gradients, realistic textures.",
+        "basePrompt": "A minimalist abstract vector logo for a corporate institution named '[BRAND]'. The icon features a strictly geometric, non-representational symbol composed of four symmetrical rotating geometric facets arranged in a 90-degree rotational symmetry around a crisp square negative space, paired with bold, clean geometric sans-serif uppercase typography reading '[BRAND]'. Flat 2D vector art, solid corporate blue (#117ACA) and dark slate (#231F20) fill, perfectly balanced proportions, high contrast, isolated on a pure white or transparent background",
+        "negativeConstraints": "literal objects, coins, buildings, 3d bevels, drop shadows, gradients, realistic textures.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "mastercard",
+      "name": "MasterCard",
+      "archetype": "abstract",
+      "imageFile": "MasterCard-Logo.png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#EB001B (42% - Left primary red circle), #F79E1B (42% - Right primary yellow-orange circle), #FFFFFF (12% - Foreground italicized wordmark), #0A1172 (4% - Typography drop shadow / edge accent)",
+        "hexCodes": [
+          "#EB001B",
+          "#F79E1B",
+          "#FFFFFF",
+          "#0A1172"
+        ],
+        "typographyStyle": "Neo-Grotesque Sans-Serif (customized Helvetica Neue / Univers derivative). Medium-bold weight, title casing with internal capital 'C' (camelCase \"MasterCard\"), tight tracking, distinct rightward italic slant (-12 degrees). Wordmark is horizontally centered directly across the intersection of the two circles.",
+        "composition": "As an Abstract logo, the design utilizes pure fundamental Euclidean geometry—two overlapping chromatic circular discs. It conveys connectivity, transaction, and synergy without depicting tangible plastic cards, currency, or payment terminals.",
+        "complexityAndGeometry": "Balanced. Two identical intersecting circles with an overlapping horizontal Venn diagram intersection comprised of alternating striated teeth (horizontal scanning bars); bilateral horizontal symmetry across the central axis; exact 1:1 circle diameter ratio.",
+        "textureAndFinish": "Flat 2D vector graphic with striated geometric bar intersections. Solid chromatic fills; crisp typography overlay with subtle dark contrast drop-shadow to separate white text from high-luminance yellow and red discs."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Universal, Dynamic, Accessible, Established",
+        "personalityTraits": [
+          "Universal",
+          "Dynamic",
+          "Accessible",
+          "Established"
+        ],
+        "targetAudience": "Global digital commerce, consumer credit cards, merchant processing, cross-border payment networks, and fintech infrastructure.",
+        "symbolism": "The two intersecting primary circles represent the seamless handshake and connection between consumer and merchant, East and West, purchasing power and financial fulfillment."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A classic abstract chromatic vector logo for a global commerce brand. The design consists of two intersecting geometric circular discs forming a Venn-diagram relationship with horizontal interlocking striated bands in the overlapping core. Overlaying the center is crisp, modern italicized sans-serif typography reading '[BRAND]'. Flat 2D vector graphic, vibrant pure red (#EB001B) and warm amber-orange (#F79E1B) solid fills, bold high-contrast white text, isolated on a clean transparent background, masterclass in geometric simplicity --no photorealistic elements, credit cards, complex gradients, photorealism, glossy plastic finishes, ornate details.",
+        "basePrompt": "A classic abstract chromatic vector logo for a global commerce brand. The design consists of two intersecting geometric circular discs forming a Venn-diagram relationship with horizontal interlocking striated bands in the overlapping core. Overlaying the center is crisp, modern italicized sans-serif typography reading '[BRAND]'. Flat 2D vector graphic, vibrant pure red (#EB001B) and warm amber-orange (#F79E1B) solid fills, bold high-contrast white text, isolated on a clean transparent background, masterclass in geometric simplicity",
+        "negativeConstraints": "photorealistic elements, credit cards, complex gradients, photorealism, glossy plastic finishes, ornate details.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "spotify",
+      "name": "Spotify",
+      "archetype": "abstract",
+      "imageFile": "Spotify-logo.jpeg",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#1ED760 (70% - High-chroma electric green roundel and wordmark), #000000 (30% - Acoustic wave cutouts and background field)",
+        "hexCodes": [
+          "#1ED760",
+          "#000000"
+        ],
+        "typographyStyle": "Geometric Humanist Sans-Serif (modified Gotham derivative). Bold weight, lowercase casing except initial 'S', neutral tracking with subtle optical kerning, friendly circular letterforms with slight organic tilt on the 'i' dot. Positioned horizontally beside the abstract mark.",
+        "composition": "As an Abstract logo, the core symbol consists of a solid circle punctured by three curved, ascending concentric line arcs. It distills the invisible phenomenon of acoustic waves and streaming resonance into pure, non-literal minimalist vectors.",
+        "complexityAndGeometry": "Minimalist. Three ascending curved arcs of varying thickness and length, intentionally rotated at an asymmetric ~15-degree counterclockwise angle to evoke fluidity and human warmth rather than rigid mechanical Wi-Fi signals.",
+        "textureAndFinish": "Flat 2D vector artwork. High-contrast solid neon green fill over deep matte black field; razor-sharp vector curves optimized for responsive digital app icons and micro-favicons."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Vibrant, Disruptive, Youthful, Fluid",
+        "personalityTraits": [
+          "Vibrant",
+          "Disruptive",
+          "Youthful",
+          "Fluid"
+        ],
+        "targetAudience": "Digital streaming media, Gen Z and Millennial music and podcast enthusiasts, mobile audio entertainment, and creator economy platforms.",
+        "symbolism": "The radiating soundwave lines inside the circular boundary symbolize sound beaming outward into the universe, connectivity, algorithmic discovery, and the rhythm of music."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A vibrant minimalist abstract vector logo for a modern audio streaming service. The icon is a solid high-chroma electric green (#1ED760) circular medallion containing three curved horizontal acoustic wave stripes cut out in negative space, tilted with a subtle organic offset angle. Beside the medallion is clean geometric humanist sans-serif typography reading '[BRAND]'. Flat 2D vector aesthetic, solid fills, maximum high-contrast on a clean background, mathematically precise curves --no realistic headphones, musical notes, microphones, 3d glossy spheres, metallic textures, skeuomorphism.",
+        "basePrompt": "A vibrant minimalist abstract vector logo for a modern audio streaming service. The icon is a solid high-chroma electric green (#1ED760) circular medallion containing three curved horizontal acoustic wave stripes cut out in negative space, tilted with a subtle organic offset angle. Beside the medallion is clean geometric humanist sans-serif typography reading '[BRAND]'. Flat 2D vector aesthetic, solid fills, maximum high-contrast on a clean background, mathematically precise curves",
+        "negativeConstraints": "realistic headphones, musical notes, microphones, 3d glossy spheres, metallic textures, skeuomorphism.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "toyota",
+      "name": "Toyota",
+      "archetype": "abstract",
+      "imageFile": "Toyota-logo.png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#EB0A1E (45% - Primary bold wordmark red), #D1D5DB (30% - Chrome metallic highlight silver), #374151 (15% - Shadow silver/charcoal contour), #FFFFFF (10% - Specular light reflections & canvas)",
+        "hexCodes": [
+          "#EB0A1E",
+          "#D1D5DB",
+          "#374151",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Extended Industrial Sans-Serif. Extra-bold weight, full uppercase casing, wide proportional tracking, squared-off stroke terminals and uniform line thickness. Centered horizontally beneath the abstract emblem.",
+        "composition": "As an Abstract logo, the emblem combines three distinct ellipses intersecting in three-dimensional coordinate planes to form a stylized letter 'T' and steering wheel without explicitly drawing a vehicle or engine component.",
+        "complexityAndGeometry": "Balanced to Complex. Strict bilateral vertical symmetry; composed of an outer horizontal ellipse containing two inner perpendicular overlapping ellipses. The line weights vary smoothly along the elliptical perimeters to convey depth and perspective.",
+        "textureAndFinish": "Skeuomorphic metallic chrome 3D bevel finish on the emblem, with polished silver gradients, bevel shadows, and specular highlights; juxtaposed against a completely flat 2D solid red vector wordmark below."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Reliable, Innovative, Engineered, Global",
+        "personalityTraits": [
+          "Reliable",
+          "Innovative",
+          "Engineered",
+          "Global"
+        ],
+        "targetAudience": "Global automotive industry, hybrid and electric mobility, fleet logistics, and mass-market consumer transportation.",
+        "symbolism": "The two inner overlapping perpendicular ellipses represent the unified hearts of the customer and the company, intersecting within the grand outer ellipse which symbolizes the boundless expansion and technological future of the brand. Together, they simultaneously form a stylized 'T' and a steering wheel."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "An iconic abstract automotive logo for a forward-thinking mobility manufacturer. The mark consists of three interlocking, mathematically precise concentric ellipses symmetrically forming an abstract letter 'T' motif, rendered in a polished liquid chrome metallic finish with subtle silver bevel gradients and reflections. Positioned beneath is a bold, wide, solid red (#EB0A1E) uppercase industrial sans-serif wordmark reading '[BRAND]'. High contrast, premium automotive badge aesthetic, isolated on a pure white background --no full cars, wheels, tires, flames, complex landscapes, photorealistic scenery.",
+        "basePrompt": "An iconic abstract automotive logo for a forward-thinking mobility manufacturer. The mark consists of three interlocking, mathematically precise concentric ellipses symmetrically forming an abstract letter 'T' motif, rendered in a polished liquid chrome metallic finish with subtle silver bevel gradients and reflections. Positioned beneath is a bold, wide, solid red (#EB0A1E) uppercase industrial sans-serif wordmark reading '[BRAND]'. High contrast, premium automotive badge aesthetic, isolated on a pure white background",
+        "negativeConstraints": "full cars, wheels, tires, flames, complex landscapes, photorealistic scenery.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "amazon",
+      "name": "Amazon",
+      "archetype": "combination",
+      "imageFile": "Amazon-Logo.png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#000000 (80% - Primary wordmark typography), #FF9900 (20% - Iconic directional smile arrow), #FFFFFF (Transparent/Canvas backdrop)",
+        "hexCodes": [
+          "#000000",
+          "#FF9900",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Humanist Sans-Serif (customized Officina Sans derivative). Bold weight, lowercase casing throughout, optical kerning with comfortable tracking. The letterforms feature softened internal curves and distinct terminal cuts.",
+        "composition": "As a Combination logo, it perfectly pairs a complete typographic wordmark (\"amazon\") with an integrated graphic symbol (the vibrant orange curved arrow). The symbol originates below the first 'a' and arcs smoothly beneath the letters to terminate in a stylized arrowhead that dimples into the lower bowl of the letter 'z'.",
+        "complexityAndGeometry": "Minimalist to Balanced. Fluid single-bezier quadratic curve spanning horizontally across five letter stems; asymmetric directional dynamic (left-to-right motion); balanced visual weight ensuring the arrow anchors the text without overpowering it.",
+        "textureAndFinish": "Flat 2D vector graphic. Solid monochrome black typography combined with a flat chromatic orange vector arrow; zero gradients or shadows, optimized for infinite scalability and alpha transparency."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Customer-Centric, Omnipresent, Friendly, Efficient",
+        "personalityTraits": [
+          "Customer-Centric",
+          "Omnipresent",
+          "Friendly",
+          "Efficient"
+        ],
+        "targetAudience": "Global e-commerce, cloud computing infrastructure (AWS), digital streaming, logistics, and consumer smart devices.",
+        "symbolism": "The curved orange arrow carries a brilliant dual metaphor: it visually forms a warm, welcoming customer smile, while its vector path connects 'a' to 'z', signifying that the company delivers literally everything from A to Z."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A clean, modern combination vector logo for a global commerce brand. The design features lowercase bold humanist sans-serif typography reading '[BRAND]' in solid black, seamlessly integrated with a vibrant curved smile-shaped directional arrow underneath in saturated orange (#FF9900) that sweeps from the first letter to the last. Flat 2D vector art, solid color fills, isolated on a clean transparent background, crisp contours, high contrast, balanced proportions --no photorealism, glossy 3d textures, complex gradient meshes, intricate borders, drop shadows.",
+        "basePrompt": "A clean, modern combination vector logo for a global commerce brand. The design features lowercase bold humanist sans-serif typography reading '[BRAND]' in solid black, seamlessly integrated with a vibrant curved smile-shaped directional arrow underneath in saturated orange (#FF9900) that sweeps from the first letter to the last. Flat 2D vector art, solid color fills, isolated on a clean transparent background, crisp contours, high contrast, balanced proportions",
+        "negativeConstraints": "photorealism, glossy 3d textures, complex gradient meshes, intricate borders, drop shadows.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "huawei",
+      "name": "Huawei",
+      "archetype": "combination",
+      "imageFile": "Huawei-logo.jpeg",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#CF0A2C (65% - Vibrant radiant crimson petal fan), #231F20 (35% - Solid charcoal-black uppercase wordmark), #FFFFFF (Transparent/White field)",
+        "hexCodes": [
+          "#CF0A2C",
+          "#231F20",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Modern Geometric Sans-Serif. Medium-bold weight, strict uppercase casing, generous tracking, featuring sharp angled terminals on the crossbar of the letter 'A' and symmetrical vertical stems. Positioned horizontally beneath the radial symbol.",
+        "composition": "As a Combination logo, it stacks a powerful radial symbol above a stabilized uppercase wordmark. The mark consists of eight symmetrical radiating petals/rays fanning out in a semi-circular burst above the centralized typographic base.",
+        "complexityAndGeometry": "Balanced. Bilateral vertical symmetry across the central vertical axis; 8 geometric petal leaves radiating outward from a unified origin point; smooth convex outer arcs and concave lower cuts create an illusion of blossoming upward energy.",
+        "textureAndFinish": "Flat 2D vector with subtle dimensional top-lighting gradient on petals. Saturated crimson red fill fading gently into an illuminated top edge, grounded by a flat solid black wordmark."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Ambitious, Technological, Prestigious, Harmonious",
+        "personalityTraits": [
+          "Ambitious",
+          "Technological",
+          "Prestigious",
+          "Harmonious"
+        ],
+        "targetAudience": "Global telecommunications, 5G wireless infrastructure, enterprise cloud hardware, consumer smartphones, and smart electronics.",
+        "symbolism": "The radiating petals symbolize blooming flower petals or the radiant rays of the rising morning sun, embodying warmth, collective innovation, and technological connectivity expanding into the global horizon."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A sophisticated combination vector logo for an advanced telecommunications technology corporation. The design showcases an iconic radial symbol composed of eight symmetrical petal-shaped rays fanning upward like a blooming flower or rising sun in rich crimson red (#CF0A2C), positioned directly above a centered, highly balanced uppercase geometric sans-serif wordmark reading '[BRAND]' in solid dark charcoal. Flat 2D vector style with subtle luminous gradient highlights on petal crests, isolated on a pristine white background, strict axial symmetry, pristine corporate elegance --no circuit board patterns, microchips, complex photographic textures, heavy 3d embossing.",
+        "basePrompt": "A sophisticated combination vector logo for an advanced telecommunications technology corporation. The design showcases an iconic radial symbol composed of eight symmetrical petal-shaped rays fanning upward like a blooming flower or rising sun in rich crimson red (#CF0A2C), positioned directly above a centered, highly balanced uppercase geometric sans-serif wordmark reading '[BRAND]' in solid dark charcoal. Flat 2D vector style with subtle luminous gradient highlights on petal crests, isolated on a pristine white background, strict axial symmetry, pristine corporate elegance",
+        "negativeConstraints": "circuit board patterns, microchips, complex photographic textures, heavy 3d embossing.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "puma",
+      "name": "Puma",
+      "archetype": "combination",
+      "imageFile": "Puma-Logo..png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#000000 (100% - Solid pitch black silhouette and typography), #FFFFFF (Transparent/Canvas field)",
+        "hexCodes": [
+          "#000000",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Ultra-Heavy Slab Geometric Sans-Serif. Extra-bold / Black weight, uppercase casing, extremely tight tracking, square-proportioned glyphs with generous rounded outer corners and narrow interior counters. Placed horizontally beneath the jumping mascot mark.",
+        "composition": "As a Combination logo, the design pairs a heavy architectural typographic foundation (\"PUMA\") with a dynamic silhouette of a jumping predator cat positioned over the upper right quadrant of the wordmark, leaping energetically forward.",
+        "complexityAndGeometry": "Balanced. The typography provides an unyielding, grounded rectangular base, contrasted against the organic, agile, aerodynamic curve of the airborne feline silhouette; asymmetric focal weight moving dynamically from bottom-left to top-right.",
+        "textureAndFinish": "Pure Flat 2D vector silhouette. High-density solid black ink fill with zero gradients, outlines, or internal shading; razor-sharp vector bezier contours optimized for transparent sportswear fabrics and high-contrast digital media."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Athletic, Fierce, Energetic, Iconic",
+        "personalityTraits": [
+          "Athletic",
+          "Fierce",
+          "Energetic",
+          "Iconic"
+        ],
+        "targetAudience": "Global athletic footwear, technical sportswear, lifestyle streetwear, motorsport apparel, and professional athletics.",
+        "symbolism": "The leaping cougar embodies raw speed, agility, predatory precision, and boundless athletic power, while the heavy block typography establishes permanence, durability, and athletic authority."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "An iconic athletic combination vector logo for a high-performance sportswear company. The mark features an ultra-heavy, bold geometric uppercase sans-serif wordmark reading '[BRAND]', surmounted on the upper right by a sleek, aerodynamic silhouette of a wild panther leaping aggressively forward into the air. Pure solid monochrome black fill on a clean transparent background, flat 2D vector art, powerful high contrast, athletic vigor, razor-sharp contours, masterclass in silhouette balance --no facial details, fur texture, claw marks, gradients, 3d bevels, drop shadows, color clutter.",
+        "basePrompt": "An iconic athletic combination vector logo for a high-performance sportswear company. The mark features an ultra-heavy, bold geometric uppercase sans-serif wordmark reading '[BRAND]', surmounted on the upper right by a sleek, aerodynamic silhouette of a wild panther leaping aggressively forward into the air. Pure solid monochrome black fill on a clean transparent background, flat 2D vector art, powerful high contrast, athletic vigor, razor-sharp contours, masterclass in silhouette balance",
+        "negativeConstraints": "facial details, fur texture, claw marks, gradients, 3d bevels, drop shadows, color clutter.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "nivea",
+      "name": "Nivea",
+      "archetype": "emblems",
+      "imageFile": "Nivea-logo.png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#002B66 (82% - Deep iconic Nivea cobalt blue circular badge), #FFFFFF (18% - Crisp stark white uppercase typography)",
+        "hexCodes": [
+          "#002B66",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Architectural Geometric Sans-Serif (customized Eagle Bold derivative). Heavy bold weight, uppercase casing, neutral-to-wide tracking, with distinctive sharp angled diagonal cuts on the apex of the letter 'N' and crossbars. The text is horizontally centered and completely locked within the circular container.",
+        "composition": "As an Emblem, the entire brand expression is permanently self-contained inside a pure geometric circle that evokes the physical lid of the historic blue cosmetic cream tin. There are no loose external components.",
+        "complexityAndGeometry": "Minimalist. Perfect 1:1 circular aspect ratio; centered horizontal text alignment; pristine mathematical geometry with generous negative space margins insulating the text from the circular perimeter.",
+        "textureAndFinish": "Pure Flat 2D vector graphic. High-opacity solid cobalt blue background with solid white typography; completely devoid of highlights, shadows, or gradients, preserving maximum brand purity across print and packaging."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Pure, Caring, Timeless, Trusted",
+        "personalityTraits": [
+          "Pure",
+          "Caring",
+          "Timeless",
+          "Trusted"
+        ],
+        "targetAudience": "Global dermatological skincare, personal care products, mass consumer health and beauty, family wellness.",
+        "symbolism": "The deep blue circle represents the timeless, universally recognizable blue tin container first introduced in 1925, while the pristine white typography symbolizes purity, snow-white skin cream (\"Nivea\" derived from the Latin *niveus* meaning snow-white), and clinical trust."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A minimalist circular emblem logo for a premium dermatological skincare company. The design is a solid circular badge in rich deep cobalt blue (#002B66) enclosing bold, clean, architectural geometric sans-serif uppercase typography reading '[BRAND]' in solid stark white (#FFFFFF), precisely centered with balanced negative margins. Flat 2D vector art, pure solid fills, isolated on a clean transparent background, high contrast, timeless corporate simplicity --no skin drops, leaves, floral patterns, gradients, 3d lid rims, glossy plastic textures, drop shadows.",
+        "basePrompt": "A minimalist circular emblem logo for a premium dermatological skincare company. The design is a solid circular badge in rich deep cobalt blue (#002B66) enclosing bold, clean, architectural geometric sans-serif uppercase typography reading '[BRAND]' in solid stark white (#FFFFFF), precisely centered with balanced negative margins. Flat 2D vector art, pure solid fills, isolated on a clean transparent background, high contrast, timeless corporate simplicity",
+        "negativeConstraints": "skin drops, leaves, floral patterns, gradients, 3d lid rims, glossy plastic textures, drop shadows.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "porsche",
+      "name": "Porsche",
+      "archetype": "emblems",
+      "imageFile": "Porsche-Logo.png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#D4AF37 (45% - Gilded gold metallic crest field & horns), #000000 (30% - Jet black enamel bars, prancing stallion, and contour strokes), #C8102E (20% - Crimson red textured field bars), #FFFFFF (5% - Specular chrome highlights)",
+        "hexCodes": [
+          "#D4AF37",
+          "#000000",
+          "#C8102E",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Distinctive Arched Extended Sans-Serif. Medium-bold weight, uppercase casing, wide tracking, with letters mapped to follow the arched convex crown of the shield. A secondary sans-serif typeface spells \"STUTTGART\" in uppercase above the central horse.",
+        "composition": "As an Emblem, the design is a classical European heraldic escutcheon (coat of arms). Every iconographic element—the top nameplate banner, the four partitioned quarters, the Württemberg antler pairs, the red-and-black flag bands, and the central inescutcheon shield—is fused into a single heraldic crest.",
+        "complexityAndGeometry": "Complex. Multi-tiered heraldic geometry; vertically divided four-quadrant layout with an overlaid central mini-shield; intricate antler branches; fine honeycomb micro-mesh pattern embossed within the red quadrants.",
+        "textureAndFinish": "Skeuomorphic metallic enamel and brushed gold finish. Raised 3D relief edges, embossed contours, subtle metallic reflections, and textured recessed enamel fills that replicate a hand-crafted automotive hood badge."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Luxurious, Hereditary, High-Performance, Aristocratic",
+        "personalityTraits": [
+          "Luxurious",
+          "Hereditary",
+          "High-Performance",
+          "Aristocratic"
+        ],
+        "targetAudience": "Ultra-luxury sports cars, high-performance automotive engineering, motorsport racing, and luxury lifestyle connoisseurs.",
+        "symbolism": "The outer shield and black/red stripes honor the Free People's State of Württemberg, the six black antlers celebrate the historical crest of Württemberg, and the central prancing black stallion honors the city of Stuttgart (founded as a cavalry breeding stud garden, *Stutengarten*), uniting automotive horsepower with noble lineage."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "An intricate heraldic crest emblem logo for a world-class luxury sports car manufacturer. The design takes the shape of a golden medieval coat-of-arms shield badge with a curved top banner containing uppercase arched typography reading '[BRAND]'. The shield is divided into four heraldic quadrants featuring stylized black antler horns and red-and-black enamel stripes with subtle micro-honeycomb embossing, centered with an inner golden escutcheon displaying a rearing black prancing stallion. Premium embossed gold metal finish, fine contour lines, luxury automotive badge craftsmanship, isolated on a clean white background --no complete cars, wheels, tachometers, realistic photographic background, cartoon features.",
+        "basePrompt": "An intricate heraldic crest emblem logo for a world-class luxury sports car manufacturer. The design takes the shape of a golden medieval coat-of-arms shield badge with a curved top banner containing uppercase arched typography reading '[BRAND]'. The shield is divided into four heraldic quadrants featuring stylized black antler horns and red-and-black enamel stripes with subtle micro-honeycomb embossing, centered with an inner golden escutcheon displaying a rearing black prancing stallion. Premium embossed gold metal finish, fine contour lines, luxury automotive badge craftsmanship, isolated on a clean white background",
+        "negativeConstraints": "complete cars, wheels, tachometers, realistic photographic background, cartoon features.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "warner-bros-pictures",
+      "name": "Warner Bros. Pictures",
+      "archetype": "emblems",
+      "imageFile": "Warner-Brothers-Logo.jpg",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#002D72 (55% - Deep royal blue shield interior), #EAAA00 (40% - Rich golden yellow shield border, letters, and banner), #FFFFFF (5% - Canvas backdrop)",
+        "hexCodes": [
+          "#002D72",
+          "#EAAA00",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Custom Bold Geometric Monogram combined with Modern Sans-Serif Banner Typography. The prominent \"WB\" monogram is extra-bold, customized to taper and conform to the shield contours. The horizontal banner features medium-weight condensed sans-serif uppercase lettering reading \"WARNER BROS. PICTURES\".",
+        "composition": "As an Emblem, the logo utilizes an architectural stepped shield container with an overlapping convex three-dimensional ribbon banner wrapped horizontally across the lower third, permanently integrating monogram, insignia, and brand name into a singular emblem.",
+        "complexityAndGeometry": "Balanced to Complex. Multi-tiered stepped shield profile with stepped upper shoulders; bilateral symmetry on the outer shield frame; customized asymmetric letterform distortion where the 'W' and 'B' share overlapping structural strokes.",
+        "textureAndFinish": "Flat 2D vector with subtle dimensional edge outlines. Solid color fills in royal blue and warm gold; crisp vector lines providing a cinematic, dignified presentation."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Cinematic, Legendary, Prestigious, Imaginative",
+        "personalityTraits": [
+          "Cinematic",
+          "Legendary",
+          "Prestigious",
+          "Imaginative"
+        ],
+        "targetAudience": "Global motion picture entertainment, theatrical film distribution, streaming media, television production, and entertainment franchises.",
+        "symbolism": "The fortified golden shield symbolizes cinematic grandeur, enduring storytelling legacy, and the safeguarding of cultural myths, while the golden ribbon proudly presents the theatrical studio masthead."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A classic cinematic shield emblem logo for a world-renowned film production studio. The mark is a traditional stepped heraldic shield with a rich royal blue (#002D72) field and a bold golden-yellow (#EAAA00) border, containing a prominent customized interlocking monogram '[BRAND]' in polished gold. A three-dimensional curved golden ribbon banner wraps gracefully across the lower front of the shield bearing crisp condensed blue uppercase lettering. Classic Hollywood studio insignia aesthetic, flat 2D vector art with clean geometric lines, isolated on a clean transparent background --no film reels, movie cameras, clapperboards, 3d lens flare, photorealistic studio sets.",
+        "basePrompt": "A classic cinematic shield emblem logo for a world-renowned film production studio. The mark is a traditional stepped heraldic shield with a rich royal blue (#002D72) field and a bold golden-yellow (#EAAA00) border, containing a prominent customized interlocking monogram '[BRAND]' in polished gold. A three-dimensional curved golden ribbon banner wraps gracefully across the lower front of the shield bearing crisp condensed blue uppercase lettering. Classic Hollywood studio insignia aesthetic, flat 2D vector art with clean geometric lines, isolated on a clean transparent background",
+        "negativeConstraints": "film reels, movie cameras, clapperboards, 3d lens flare, photorealistic studio sets.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "harley-davidson",
+      "name": "Harley-Davidson",
+      "archetype": "emblems",
+      "imageFile": "harley-davidson-logo.png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#FF6600 (50% - Iconic high-octane Harley orange fields), #000000 (40% - Bold black borders and shield background), #FFFFFF (10% - High-contrast white typography)",
+        "hexCodes": [
+          "#FF6600",
+          "#000000",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Heavy Condensed Gothic / Block Industrial Sans-Serif. Ultra-bold weight, full uppercase casing, tight tracking, with vertically elongated glyphs designed for maximum punch. Upper shield features arched orange text \"MOTOR\", lower shield features angled text \"CYCLES\", and the central horizontal bar contains bold white text \"HARLEY-DAVIDSON\".",
+        "composition": "As an Emblem, the design is the world-famous \"Bar & Shield\". It fuses an elongated horizontal rectangular bar through the midpoint of a traditional notched crest shield, locking all typographic elements into a rugged, unassailable industrial badge.",
+        "complexityAndGeometry": "Balanced. Bilateral vertical symmetry; multi-line contour offset nesting (black inner line, orange middle, black outer border); distinct angular crest points at top and bottom.",
+        "textureAndFinish": "Pure Flat 2D vector graphic. High-contrast solid color fills with crisp multi-stroke borders; engineered for heavy-duty reproduction on metal motorcycle gas tanks, embroidered leather jackets, and chrome decals."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Rebellious, Rugged, Authentic, American Heritage",
+        "personalityTraits": [
+          "Rebellious",
+          "Rugged",
+          "Authentic",
+          "American Heritage"
+        ],
+        "targetAudience": "Heavyweight cruiser motorcycles, powersports, custom chopper culture, outdoor open-road touring, and heritage leather gear.",
+        "symbolism": "The sturdy combination of an unyielding iron bar bolted across a fortified shield conveys indomitable American industrial power, mechanical grit, open-highway freedom, and brotherhood."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A rugged bar-and-shield motorcycle emblem logo for a heritage powersports brand. The design features a classic heraldic shield with stepped angular corners intersected horizontally through its center by an elongated rectangular bar. The central bar features bold condensed white uppercase gothic lettering reading '[BRAND]', with the upper shield section displaying 'MOTOR' and the lower shield displaying 'CYCLES' in bold high-visibility orange (#FF6600). Thick black and orange multi-line outline borders, flat 2D vector badge art, high contrast, industrial power aesthetic, isolated on a clean transparent background --no motorcycle wheels, chrome engines, flames, skull graphics, photorealistic metal textures.",
+        "basePrompt": "A rugged bar-and-shield motorcycle emblem logo for a heritage powersports brand. The design features a classic heraldic shield with stepped angular corners intersected horizontally through its center by an elongated rectangular bar. The central bar features bold condensed white uppercase gothic lettering reading '[BRAND]', with the upper shield section displaying 'MOTOR' and the lower shield displaying 'CYCLES' in bold high-visibility orange (#FF6600). Thick black and orange multi-line outline borders, flat 2D vector badge art, high contrast, industrial power aesthetic, isolated on a clean transparent background",
+        "negativeConstraints": "motorcycle wheels, chrome engines, flames, skull graphics, photorealistic metal textures.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "hbo",
+      "name": "HBO",
+      "archetype": "lettermark",
+      "imageFile": "HBO-logo.png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#FFFFFF (100% - Monogram letterforms), #000000 (Transparent/Black background canvas field)",
+        "hexCodes": [
+          "#FFFFFF",
+          "#000000"
+        ],
+        "typographyStyle": "Ultra-Heavy Geometric Grotesque Sans-Serif. Extra-bold / Black weight, uppercase casing (\"HBO\"), negative tracking where the circular glyph 'O' is tightly nested and docked directly into the right vertical bowl of the letter 'B'.",
+        "composition": "As a Lettermark, the logo consists purely of the three initials representing \"Home Box Office\". There are no accompanying icon badges or descriptive wordmarks; the entire visual power resides in the customized typographic ligature and the integrated camera/aperture motif.",
+        "complexityAndGeometry": "Minimalist. Massive, blocky rectangular stems for 'H' and 'B' contrasted against a perfectly circular outer ring for 'O'. An inner circular target/bullseye dot sits centered inside the 'O' negative space, mimicking a camera lens or broadcast focus target.",
+        "textureAndFinish": "Pure Flat 2D vector graphic. High-contrast solid white glyphs against a deep black field; zero gradients or shadows, optimized for broadcast screen bugs and digital streaming splash screens."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Premium, Cinematic, Authoritative, Bold",
+        "personalityTraits": [
+          "Premium",
+          "Cinematic",
+          "Authoritative",
+          "Bold"
+        ],
+        "targetAudience": "Premium television networks, subscription video-on-demand (SVOD), cinematic storytelling, Emmy-winning drama production.",
+        "symbolism": "The bullseye nested inside the letter 'O' evokes a camera lens, a broadcast transmission beam, and a bullseye of cinematic excellence, while the nested letterforms convey seamless integration and prestige entertainment delivered directly into the home."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A minimalist, ultra-bold typographic monogram lettermark logo for an elite premium television network. The mark features massive, heavy geometric sans-serif uppercase letters reading '[BRAND]', with the letter 'O' nested directly into the adjacent letter with zero kerning gap. Inside the circular counter of the 'O' is a clean concentric circular bullseye dot evoking a camera lens aperture. Flat 2D vector graphic, stark high-contrast monochrome solid white lettering on a pure black background, razor-sharp edges, cinematic authority --no TV sets, antennas, gradients, drop shadows, 3d chrome, glossy reflections.",
+        "basePrompt": "A minimalist, ultra-bold typographic monogram lettermark logo for an elite premium television network. The mark features massive, heavy geometric sans-serif uppercase letters reading '[BRAND]', with the letter 'O' nested directly into the adjacent letter with zero kerning gap. Inside the circular counter of the 'O' is a clean concentric circular bullseye dot evoking a camera lens aperture. Flat 2D vector graphic, stark high-contrast monochrome solid white lettering on a pure black background, razor-sharp edges, cinematic authority",
+        "negativeConstraints": "TV sets, antennas, gradients, drop shadows, 3d chrome, glossy reflections.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "hm",
+      "name": "H&M",
+      "archetype": "lettermark",
+      "imageFile": "Hennes-logo.jpg",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#E50010 (100% - Vivid high-energy crimson fashion red), #FFFFFF (Transparent/White backdrop)",
+        "hexCodes": [
+          "#E50010",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Custom Expressive Brush Script / Calligraphic Display. Heavy dry-brush weight with visible calligraphic texture, uppercase initials 'H' and 'M' flanking a smaller centered ampersand '&'. Aggressive rightward italic slant (~25 degrees), wide energetic stance.",
+        "composition": "As a Lettermark, it abbreviates \"Hennes & Mauritz\" into its iconic three-character monogram (\"H&M\"). It completely avoids neutral corporate typography in favor of an artistic, hand-drawn brush gesture that reflects the fast-paced, ever-changing nature of the fashion world.",
+        "complexityAndGeometry": "Balanced. Asymmetrical dynamic rhythm; the crossbar of the 'H' is rendered as a sweeping diagonal stroke that projects beyond the vertical stems; the ampersand serves as an optical anchor between the larger, dynamic flanking letterforms.",
+        "textureAndFinish": "Flat 2D vector graphic with hand-brushed calligraphic edge contours. Saturated pure red solid fill with microscopic bristle cutouts on stroke terminals; optimized for high-impact shopping bags, store facades, and clothing tags."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Fast-Fashion, Trendy, Energetic, Accessible",
+        "personalityTraits": [
+          "Fast-Fashion",
+          "Trendy",
+          "Energetic",
+          "Accessible"
+        ],
+        "targetAudience": "Global fast-fashion retail, trendy Gen Z and Millennial lifestyle apparel, everyday streetwear, and designer collaborations.",
+        "symbolism": "The rapid, raw brush strokes suggest spontaneous fashion sketching, runway velocity, accessibility, and youth culture, transforming a traditional retail name into an international emblem of contemporary style."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A dynamic, expressive fashion monogram lettermark logo for a fast-fashion clothing retailer. The design features bold, hand-drawn brush-stroke calligraphic typography reading '[BRAND]', slanted aggressively to the right with energetic flair and dry-brush stroke character. Pure vivid crimson red (#E50010) solid fill on a clean white transparent background, flat 2D vector illustration, high visual rhythm, stylish runway spontaneity --no shopping bags, hangers, needle and thread, garments, gradients, bevels, 3d effects.",
+        "basePrompt": "A dynamic, expressive fashion monogram lettermark logo for a fast-fashion clothing retailer. The design features bold, hand-drawn brush-stroke calligraphic typography reading '[BRAND]', slanted aggressively to the right with energetic flair and dry-brush stroke character. Pure vivid crimson red (#E50010) solid fill on a clean white transparent background, flat 2D vector illustration, high visual rhythm, stylish runway spontaneity",
+        "negativeConstraints": "shopping bags, hangers, needle and thread, garments, gradients, bevels, 3d effects.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "unilever",
+      "name": "Unilever",
+      "archetype": "lettermark",
+      "imageFile": "Unilever-logo.jpg",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#1F36C7 (85% - Vibrant royal blue monogram & wordmark), #FFFFFF (15% - Intricate negative space gaps & canvas)",
+        "hexCodes": [
+          "#1F36C7",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Dual Typographic System: An ornate illustrative mosaic monogram 'U' paired beneath with a custom fluid script wordmark (\"Unilever\") featuring smooth rounded terminals and rhythmic cursive baseline connections.",
+        "composition": "As a Lettermark, the visual champion is the monumental uppercase letter 'U'. Rather than a solid stroke, the entire letterform is meticulously sculpted from 25 individual, distinct micro-symbols representing diverse aspects of life, vitality, nutrition, and sustainability.",
+        "complexityAndGeometry": "Highly Complex. The global envelope forms a perfectly balanced, symmetrical U-curve, but internally it contains dozens of organic micro-silhouettes (a sun, a bird, a palm tree, a fish, a droplet, a flower, a hand, DNA strands, etc.) harmonized through uniform stroke thickness and negative-space channels.",
+        "textureAndFinish": "Flat 2D vector graphic. High-precision vector silhouettes in uniform solid royal blue; flawless micro-contouring engineered for crisp high-resolution reproduction across millions of consumer product packages worldwide."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Sustainable, Vital, Diverse, Human-Centric",
+        "personalityTraits": [
+          "Sustainable",
+          "Vital",
+          "Diverse",
+          "Human-Centric"
+        ],
+        "targetAudience": "Global fast-moving consumer goods (FMCG), beauty & personal care, food & refreshments, home hygiene, environmental sustainability.",
+        "symbolism": "The mosaic 'U' functions as an encyclopedic visual universe: each embedded icon tells a specific brand story (e.g., the sun represents vitality, the bird represents freedom from daily chores, the leaf represents natural ingredients, the droplet represents clean water). Together, they synthesize the brand's purpose of \"making sustainable living commonplace.\""
+      },
+      "generationBlueprint": {
+        "rawPrompt": "An intricate, beautifully composed mosaic lettermark monogram logo for a global consumer goods conglomerate. The hero mark is a large uppercase letter '[BRAND]' whose entire silhouette is masterfully composed of 20 to 25 miniature organic vector icons (birds, blooming leaves, sunbursts, water drops, palm fronds, human hands) separated by delicate negative space channels. Positioned beneath is friendly, fluid handwritten cursive typography reading '[BRAND]'. Uniform royal blue (#1F36C7) solid fill, flat 2D vector art, isolated on a pristine white background, exquisite craftsmanship, harmonious balance --no gradients, drop shadows, 3d bevels, photorealistic textures, clashing colors.",
+        "basePrompt": "An intricate, beautifully composed mosaic lettermark monogram logo for a global consumer goods conglomerate. The hero mark is a large uppercase letter '[BRAND]' whose entire silhouette is masterfully composed of 20 to 25 miniature organic vector icons (birds, blooming leaves, sunbursts, water drops, palm fronds, human hands) separated by delicate negative space channels. Positioned beneath is friendly, fluid handwritten cursive typography reading '[BRAND]'. Uniform royal blue (#1F36C7) solid fill, flat 2D vector art, isolated on a pristine white background, exquisite craftsmanship, harmonious balance",
+        "negativeConstraints": "gradients, drop shadows, 3d bevels, photorealistic textures, clashing colors.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "mcdonalds",
+      "name": "McDonald's",
+      "archetype": "lettermark",
+      "imageFile": "images.png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#FFC72C (55% - Iconic golden yellow arches), #DA291C (35% - Appetite-stimulating crimson red rounded badge), #FFFFFF (10% - Foreground centered wordmark)",
+        "hexCodes": [
+          "#FFC72C",
+          "#DA291C",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Dual Typographic Treatment: The monumental golden 'M' monogram features soaring parabolic arches with soft rounded crests and vertical outer pillars. Overlaid horizontally across its lower third is bold geometric sans-serif title-cased typography reading \"McDonald's\" in crisp solid white.",
+        "composition": "As a Lettermark, the primary global identifier is the letter 'M' (\"Golden Arches\"). Here, it is staged inside a squircle (rounded rectangular red container) with the company name overlaid across the arch stems, creating an instantly recognizable monogram emblem.",
+        "complexityAndGeometry": "Balanced. Bilateral vertical symmetry across the double arches; parabolic curve geometry derived from mid-century roadside architecture; golden ratio proportions in arch height to base width.",
+        "textureAndFinish": "Pure Flat 2D vector graphic. High-saturation solid color fills in pure fast-food red and golden yellow; zero gradients, shadows, or outlines; calibrated for maximum roadside visibility from high-speed highways and mobile app touch targets."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Welcoming, Joyful, Universal, Golden Heritage",
+        "personalityTraits": [
+          "Welcoming",
+          "Joyful",
+          "Universal",
+          "Golden Heritage"
+        ],
+        "targetAudience": "Global quick-service restaurants (QSR), family casual dining, fast-food breakfast and burgers, youth and children culture.",
+        "symbolism": "The golden arches originated from the literal yellow architectural arches that framed the original 1953 roadside restaurant buildings, symbolizing a golden gateway of hospitality, affordable happiness, and a familiar haven for hungry travelers."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "An iconic fast-food monogram lettermark logo for a world-famous family restaurant. The design features a monumental, perfectly symmetrical double-arch letter 'M' in vibrant golden yellow (#FFC72C), set against a soft rounded-corner red square shield (#DA291C). Centered across the lower third of the golden arches is clean, bold white geometric sans-serif typography reading '[BRAND]'. Pure flat 2D vector graphic, high saturation, high contrast, warm appetite-appeal colors, isolated on a clean background --no realistic burgers, fries, drinks, complex shading, 3d plastic gloss, photorealism.",
+        "basePrompt": "An iconic fast-food monogram lettermark logo for a world-famous family restaurant. The design features a monumental, perfectly symmetrical double-arch letter 'M' in vibrant golden yellow (#FFC72C), set against a soft rounded-corner red square shield (#DA291C). Centered across the lower third of the golden arches is clean, bold white geometric sans-serif typography reading '[BRAND]'. Pure flat 2D vector graphic, high saturation, high contrast, warm appetite-appeal colors, isolated on a clean background",
+        "negativeConstraints": "realistic burgers, fries, drinks, complex shading, 3d plastic gloss, photorealism.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "kfc",
+      "name": "KFC",
+      "archetype": "mascot",
+      "imageFile": "KFC-logo.png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#A3080C (55% - Deep Kentucky red medallion background and apron accents), #000000 (25% - Bold character line art, glasses, and bow tie), #FDF3E7 (12% - Warm vintage skin tone fill), #FFFFFF (8% - Hair, goatee, shirt, and wordmark)",
+        "hexCodes": [
+          "#A3080C",
+          "#000000",
+          "#FDF3E7",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Dynamic Slanted Industrial Sans-Serif. Bold weight, uppercase casing (\"KFC\"), tight tracking, with a forward italic slant (-10 degrees) that conveys modern momentum. Placed to the right of the character portrait.",
+        "composition": "As a Mascot logo, the undeniable centerpiece is the stylized portrait of founder Colonel Harland Sanders. The character illustration is framed within an angled circular roundel, featuring his signature spectacles, black string tie, friendly smile, and white apron with red vertical culinary stripes.",
+        "complexityAndGeometry": "Balanced to Complex. Harmonious blend of thick, expressive comic-style vector line weights outlining facial features with flat color-blocked fills; circular background disc cropped dynamically at the bottom by the Colonel's shoulders.",
+        "textureAndFinish": "Flat 2D vector character illustration. Solid vector fills with bold black boundary outlines; engineered to provide instant recognition across roadside bucket packaging, store architecture, and digital interfaces."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Hospitable, Authentic, Secret-Recipe Heritage, Personable",
+        "personalityTraits": [
+          "Hospitable",
+          "Authentic",
+          "Secret-Recipe Heritage",
+          "Personable"
+        ],
+        "targetAudience": "Quick-service poultry dining, family meal sharing, comfort food lovers, mass consumer casual dining.",
+        "symbolism": "The Colonel mascot embodies Southern hospitality, old-school culinary craftsmanship, authenticity, and the legendary 11 herbs and spices recipe developed by the founder himself."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A charismatic illustrated human mascot logo for a heritage culinary brand. The character is a warm, smiling, distinguished elderly founder with white swept-back hair, neat goatee, black-rimmed glasses, wearing a traditional black string bow tie and a red-striped chef's apron. The portrait is framed within a solid deep crimson (#A3080C) circular medallion, accompanied by bold, forward-slanted uppercase sans-serif typography reading '[BRAND]'. Flat 2D vector character art, thick expressive black line art, clean solid color fills, isolated on a white background --no realistic photographs, rendered 3d clay, fried chicken pieces, grease textures, hyper-detailed skin pores.",
+        "basePrompt": "A charismatic illustrated human mascot logo for a heritage culinary brand. The character is a warm, smiling, distinguished elderly founder with white swept-back hair, neat goatee, black-rimmed glasses, wearing a traditional black string bow tie and a red-striped chef's apron. The portrait is framed within a solid deep crimson (#A3080C) circular medallion, accompanied by bold, forward-slanted uppercase sans-serif typography reading '[BRAND]'. Flat 2D vector character art, thick expressive black line art, clean solid color fills, isolated on a white background",
+        "negativeConstraints": "realistic photographs, rendered 3d clay, fried chicken pieces, grease textures, hyper-detailed skin pores.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "mailchimp",
+      "name": "Mailchimp",
+      "archetype": "mascot",
+      "imageFile": "Mailchimp-logo.png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#FFE01B (48% - Cavendish bright yellow mascot circular disc), #000000 (45% - Mascot linework, cap, and lowercase wordmark), #FFFFFF (7% - Mascot ear and cap trim highlights)",
+        "hexCodes": [
+          "#FFE01B",
+          "#000000",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Friendly Geometric Grotesque Sans-Serif. Heavy medium-bold weight, strict lowercase casing (\"mailchimp\"), neutral tracking with open counters and rounded punctuation dots. Positioned horizontally beneath the mascot medallion.",
+        "composition": "As a Mascot logo, the focal point is \"Freddie\" the chimpanzee. The mascot is staged within a solid circular sunshine yellow disc, showcasing Freddie's face in three-quarters profile, winking mischievously while wearing a vintage mail-carrier bellhop cap.",
+        "complexityAndGeometry": "Minimalist. Stripped of unnecessary cartoon detail; simplified to pure geometric arcs, a circular boundary, and bold single-weight contour lines that retain full legibility down to 16x16 pixel favicons.",
+        "textureAndFinish": "Pure Flat 2D vector art. High-contrast solid monochrome black vector linework over a vibrant yellow circle; completely flat aesthetic that blends tech minimalism with playful whimsy."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Playful, Empowering, Quirky, Approachable",
+        "personalityTraits": [
+          "Playful",
+          "Empowering",
+          "Quirky",
+          "Approachable"
+        ],
+        "targetAudience": "Small business owners, digital marketing agencies, e-commerce entrepreneurs, newsletter creators, and creative SaaS platforms.",
+        "symbolism": "Freddie the friendly mail chimp symbolizes effortless communication, removing the intimidation factor from digital marketing, and delivering emails with a wink and a smile."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A minimalist, playful mascot vector logo for a modern creative SaaS platform. The design features a simplified, charming cartoon character face of a friendly chimpanzee wearing a vintage postal worker cap, winking cheerfully in three-quarter profile, enclosed within a solid sunny yellow (#FFE01B) circular disc. Below the medallion is clean, friendly geometric sans-serif lowercase typography reading '[BRAND]' in solid black. Flat 2D vector illustration, bold clean black outlines, high contrast, warm humorous personality, isolated on a clean transparent background --no complex fur gradients, realistic ape textures, 3d rendered models, shadows.",
+        "basePrompt": "A minimalist, playful mascot vector logo for a modern creative SaaS platform. The design features a simplified, charming cartoon character face of a friendly chimpanzee wearing a vintage postal worker cap, winking cheerfully in three-quarter profile, enclosed within a solid sunny yellow (#FFE01B) circular disc. Below the medallion is clean, friendly geometric sans-serif lowercase typography reading '[BRAND]' in solid black. Flat 2D vector illustration, bold clean black outlines, high contrast, warm humorous personality, isolated on a clean transparent background",
+        "negativeConstraints": "complex fur gradients, realistic ape textures, 3d rendered models, shadows.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "michelin",
+      "name": "Michelin",
+      "archetype": "mascot",
+      "imageFile": "Michelin-logo.png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#004C97 (50% - Primary royal blue italic wordmark), #FFE300 (15% - High-visibility yellow horizon divider), #000000 (15% - Mascot contour outlines & eyes), #FFFFFF (20% - Pneumatic tire body segments)",
+        "hexCodes": [
+          "#004C97",
+          "#FFE300",
+          "#000000",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "High-Performance Italic Industrial Sans-Serif. Extra-bold weight, uppercase casing (\"MICHELIN\"), tight tracking, aggressive forward italic slant (-14 degrees) evoking high-speed road travel. Positioned directly beneath the mascot and yellow horizon bar.",
+        "composition": "As a Mascot logo, the design is crowned by \"Bibendum\" (The Michelin Man). The friendly mascot is depicted from the torso up, made entirely of stacked white tire rings, enthusiastically raising and waving his right hand in warm greeting over a horizontal brand divider bar.",
+        "complexityAndGeometry": "Balanced. Playful curvilinear character anatomy juxtaposed with rigid horizontal and angular typography below; asymmetric character pose creating dynamic interaction with the viewer.",
+        "textureAndFinish": "Flat 2D vector character art. Clean black contour lines defining each segmented rubber tire roll, solid white fills, and bold primary color blocks engineered for industrial tire sidewalls, motorsport race tracks, and roadside signage."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Trustworthy, Hospitable, Champion, Energetic",
+        "personalityTraits": [
+          "Trustworthy",
+          "Hospitable",
+          "Champion",
+          "Energetic"
+        ],
+        "targetAudience": "Global automotive tires, motorsports racing, heavy commercial transport, gourmet culinary travel guides (Michelin Guide).",
+        "symbolism": "Bibendum embodies tire durability and safety—a literal creature made of tires who greets motorists as a loyal road companion, promising safety, hospitality, and performance on every journey."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "An iconic industrial mascot vector logo for an automotive performance manufacturer. The design features a friendly, robust character constructed entirely of rounded, stacked white tire segments, waving warmly with an open hand from behind a vibrant yellow (#FFE300) horizontal divider bar. Directly below is an aggressive, forward-leaning italicized uppercase industrial sans-serif wordmark reading '[BRAND]' in deep royal blue (#004C97). Flat 2D vector art, bold clean black boundary strokes, solid color fills, high roadside visibility, isolated on a transparent background --no complex road photography, asphalt textures, 3d glossy highlights, gradients.",
+        "basePrompt": "An iconic industrial mascot vector logo for an automotive performance manufacturer. The design features a friendly, robust character constructed entirely of rounded, stacked white tire segments, waving warmly with an open hand from behind a vibrant yellow (#FFE300) horizontal divider bar. Directly below is an aggressive, forward-leaning italicized uppercase industrial sans-serif wordmark reading '[BRAND]' in deep royal blue (#004C97). Flat 2D vector art, bold clean black boundary strokes, solid color fills, high roadside visibility, isolated on a transparent background",
+        "negativeConstraints": "complex road photography, asphalt textures, 3d glossy highlights, gradients.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "pringles",
+      "name": "Pringles",
+      "archetype": "mascot",
+      "imageFile": "Pringles-logo.png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#FF0000 (35% - Snappy red bow tie & snack appetite appeal), #FDB913 (30% - Golden potato chip yellow wordmark), #794100 (18% - Rich auburn brown hair and handlebar mustache), #FFFFFF (12% - Character face oval & canvas), #000000 (5% - Heavy comic contour strokes)",
+        "hexCodes": [
+          "#FF0000",
+          "#FDB913",
+          "#794100",
+          "#FFFFFF",
+          "#000000"
+        ],
+        "typographyStyle": "Bubbly Comic Display Serif. Ultra-bold weight, title-cased lettering, customized bounce baseline with overlapping characters, and a dramatic arched convex baseline. Characters are filled with warm yellow and bounded by a heavy black outer offset contour.",
+        "composition": "As a Mascot logo, the mark showcases the face of \"Julius Pringles\" (Mr. P). His stylized potato-chip-shaped oval head features brown parted hair, beady cartoon eyes, a massive flowing handlebar mustache, and a sharp red bowtie that neatly overlaps the ascending stem of the letter 'P' in the wordmark below.",
+        "complexityAndGeometry": "Balanced to Complex. Organic rounded forms in the character head balanced against the dynamic, hand-drawn bounce of the arched typography; the bowtie acts as a vital structural lock linking character head to the wordmark.",
+        "textureAndFinish": "2D vector cartoon illustration. Flat solid fills bounded by thick, smooth vector strokes; high-chroma primary colors calibrated for iconic cylindrical snack packaging and impulse retail displays."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Playful, Irresistible, Jovial, Snackable",
+        "personalityTraits": [
+          "Playful",
+          "Irresistible",
+          "Jovial",
+          "Snackable"
+        ],
+        "targetAudience": "Packaged consumer snack foods, potato crisps, party foods, teen and family casual snacking.",
+        "symbolism": "The jolly, mustachioed gentleman character evokes Victorian-era fairground confectioners and nostalgic hospitality, while the curved mustache subtly mimics the hyperbolic paraboloid shape of a Pringles potato crisp."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A whimsical, vintage-inspired snack mascot logo for a packaged food brand. The mascot is a jolly cartoon gentleman's head shaped like a smooth rounded oval, featuring rich brown parted hair, friendly beady black eyes, a prominent sweeping brown handlebar mustache, and a bright red bowtie. Anchoring the character from below is an arched, playful bubble-lettering wordmark reading '[BRAND]' in vibrant golden yellow (#FDB913) with thick black comic outlines. Flat 2D cartoon vector illustration, bold outlines, vivid solid color fills, high impulse-buy shelf appeal, isolated on a clean white background --no photographic chips, salt grains, complex drop shadows, 3d plastic CGI.",
+        "basePrompt": "A whimsical, vintage-inspired snack mascot logo for a packaged food brand. The mascot is a jolly cartoon gentleman's head shaped like a smooth rounded oval, featuring rich brown parted hair, friendly beady black eyes, a prominent sweeping brown handlebar mustache, and a bright red bowtie. Anchoring the character from below is an arched, playful bubble-lettering wordmark reading '[BRAND]' in vibrant golden yellow (#FDB913) with thick black comic outlines. Flat 2D cartoon vector illustration, bold outlines, vivid solid color fills, high impulse-buy shelf appeal, isolated on a clean white background",
+        "negativeConstraints": "photographic chips, salt grains, complex drop shadows, 3d plastic CGI.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "apple",
+      "name": "Apple",
+      "archetype": "pictorial",
+      "imageFile": "Apple-Logo.png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#000000 (100% - Solid black silhouette), #FFFFFF (Transparent/Canvas field)",
+        "hexCodes": [
+          "#000000",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Independent / Standalone (The pictorial mark operates completely devoid of typography, achieving universal wordless recognition).",
+        "composition": "As a Pictorial logo, it depicts a clear, universally identifiable physical object—an apple. The mark strips away all internal botanical anatomy, reducing the fruit to a masterfully simplified solid silhouette featuring a single crescent bite mark taken from the right side and a tilted elliptical leaf floating just above the stem cavity.",
+        "complexityAndGeometry": "Minimalist. World-renowned application of golden ratio proportions; composed entirely of precise intersecting circular arcs (Fibonacci spiral curvatures); seamless organic contour balance between the curved fruit body and the leaf.",
+        "textureAndFinish": "Pure Flat 2D vector silhouette. High-density solid black ink fill with zero gradients, drop shadows, or outlines; razor-sharp vector contours engineered for micro-favicons, smartphone hardware backings, and monumental architectural storefronts."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Innovative, Elegant, Visionary, Intuitive",
+        "personalityTraits": [
+          "Innovative",
+          "Elegant",
+          "Visionary",
+          "Intuitive"
+        ],
+        "targetAudience": "Premium consumer electronics, personal computing, mobile operating systems, wearable technology, and digital creative services.",
+        "symbolism": "The bitten apple carries deep cultural layers: biblical knowledge and discovery, Sir Isaac Newton's revelation of gravity, Alan Turing's legendary foundation of computer science, and a clever visual pun on digital data (\"bite\" / \"byte\") that also distinguishes the silhouette from a common cherry."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "An iconic minimalist pictorial silhouette logo for a high-end personal technology company named '[BRAND]'. The mark is a pristine, mathematically proportioned flat 2D silhouette of an apple with a clean, smooth circular bite taken out of its right flank, crowned by a single elegant elliptical leaf hovering gracefully above the stem indentation. Pure solid monochrome black fill on a pristine transparent background, flawless golden-ratio curves, ultimate graphic reduction, timeless luxury minimalism --no other text, words, stems, seeds, fruit texture, glossy highlights, 3d bevels, drop shadows.",
+        "basePrompt": "An iconic minimalist pictorial silhouette logo for a high-end personal technology company named '[BRAND]'. The mark is a pristine, mathematically proportioned flat 2D silhouette of an apple with a clean, smooth circular bite taken out of its right flank, crowned by a single elegant elliptical leaf hovering gracefully above the stem indentation. Pure solid monochrome black fill on a pristine transparent background, flawless golden-ratio curves, ultimate graphic reduction, timeless luxury minimalism",
+        "negativeConstraints": "other text, words, stems, seeds, fruit texture, glossy highlights, 3d bevels, drop shadows.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "lacoste",
+      "name": "Lacoste",
+      "archetype": "pictorial",
+      "imageFile": "Lacoste-logo.jpg",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#005930 (60% - Deep heritage crocodile green), #E31B23 (15% - Snapping red tongue & jaws), #FFFFFF (15% - Textured scale pattern & white teeth), #000000 (10% - Heavy bold uppercase typography)",
+        "hexCodes": [
+          "#005930",
+          "#E31B23",
+          "#FFFFFF",
+          "#000000"
+        ],
+        "typographyStyle": "Extended Modern Sans-Serif. Heavy bold weight, uppercase casing (\"LACOSTE\"), wide tracking, squared terminal endings, and solid ink coverage. Positioned horizontally beneath the reptile mark.",
+        "composition": "As a Pictorial logo, it depicts a literal living creature—a menacing yet stylized crocodile. The reptile is shown in full lateral profile facing right, with its tail curled gracefully upward and its jaws open in an active predatory snap.",
+        "complexityAndGeometry": "Balanced to Complex. Organic reptilian contouring balanced by geometric repetition: the animal's back is decorated with an array of identical white inverted triangle scales that follow the natural spine curve; open serrated jaws reveal a distinctive bright red tongue.",
+        "textureAndFinish": "2D stylized vector illustration. Solid flat color blocks combined with interior geometric scale cutouts; famously engineered to be embroidered as a raised textile patch on the left chest of luxury polo shirts."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Sporty, Prestigious, Tenacious, French Heritage",
+        "personalityTraits": [
+          "Sporty",
+          "Prestigious",
+          "Tenacious",
+          "French Heritage"
+        ],
+        "targetAudience": "Luxury tennis apparel, golf lifestyle clothing, premium casual footwear, French sportswear, and upscale accessories.",
+        "symbolism": "The crocodile directly honors founder René Lacoste, the French tennis champion nicknamed \"The Alligator\" by the American press for his legendary tenacity on the court. It symbolizes unyielding athletic grit, elegance, and French sportswear pedigree."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A distinguished pictorial vector logo for a luxury sports apparel brand. The design depicts a stylized, iconic crocodile in full profile facing right, rendered in deep forest green (#005930) with an arched tail, textured with neat rows of geometric white triangular scales along its back, and snapping jaws open to reveal a bright red tongue (#E31B23). Below the reptile is a solid, wide, uppercase black sans-serif wordmark reading '[BRAND]'. Flat 2D vector style, clean embroidery-ready contours, heritage sportswear prestige, isolated on a white background --no photorealistic lizard skin, mud, swamp water, complex gradients, 3d shading.",
+        "basePrompt": "A distinguished pictorial vector logo for a luxury sports apparel brand. The design depicts a stylized, iconic crocodile in full profile facing right, rendered in deep forest green (#005930) with an arched tail, textured with neat rows of geometric white triangular scales along its back, and snapping jaws open to reveal a bright red tongue (#E31B23). Below the reptile is a solid, wide, uppercase black sans-serif wordmark reading '[BRAND]'. Flat 2D vector style, clean embroidery-ready contours, heritage sportswear prestige, isolated on a white background",
+        "negativeConstraints": "photorealistic lizard skin, mud, swamp water, complex gradients, 3d shading.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "shell",
+      "name": "Shell",
+      "archetype": "pictorial",
+      "imageFile": "Shell-Logo.jpg",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#DD1D21 (45% - High-visibility fiery red outer rim & typography), #FBCE07 (45% - Vibrant sunshine yellow radiating shell fan), #FFFFFF (10% - Canvas field)",
+        "hexCodes": [
+          "#DD1D21",
+          "#FBCE07",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Industrial Geometric Grotesque Sans-Serif. Heavy bold weight, title casing (\"Shell\"), neutral tracking, with distinct horizontal terminals. Placed horizontally beneath the shell symbol.",
+        "composition": "As a Pictorial logo, the visual anchor is a stylized pecten scallop seashell (*Pecten maximus*). The shell is presented in an elevated, frontal geometric view, featuring a fluted fan of seven radiating vertical ribs framed within a bold scalloped red border.",
+        "complexityAndGeometry": "Balanced. Strict bilateral vertical symmetry; seven fluted ridges tapering down toward the narrow shell hinge; bold red perimeter contour containing the yellow fluted interior like a heraldic emblem.",
+        "textureAndFinish": "Pure Flat 2D vector graphic. High-chroma solid red and yellow fills without gradients or drop shadows; designed by legendary industrial designer Raymond Loewy for instantaneous recognition by motorists traveling at highway speeds."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Industrial, Energy, Enduring, High-Visibility",
+        "personalityTraits": [
+          "Industrial",
+          "Energy",
+          "Enduring",
+          "High-Visibility"
+        ],
+        "targetAudience": "Global energy production, petroleum retail stations, natural gas, renewable energy logistics, and automotive lubricants.",
+        "symbolism": "The shell pays homage to the company's 19th-century origins when Marcus Samuel imported decorative seashells from the Far East to London, evolving into a universally recognized symbol of natural resources and energy exploration."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A bold, high-visibility pictorial vector logo for an international energy conglomerate. The emblem is a stylized pecten scallop seashell viewed head-on with strict bilateral symmetry, composed of seven bright sunshine-yellow (#FBCE07) radiating fluted ribs bounded by a thick, scalloped fiery-red (#DD1D21) outer border. Directly below is a strong, bold red industrial sans-serif wordmark reading '[BRAND]'. Flat 2D vector art, solid vibrant color fills, razor-sharp geometric contours, high roadside contrast, isolated on a clean white background --no real ocean waves, sand, photorealistic seashells, glossy plastic finishes, gradients, drop shadows.",
+        "basePrompt": "A bold, high-visibility pictorial vector logo for an international energy conglomerate. The emblem is a stylized pecten scallop seashell viewed head-on with strict bilateral symmetry, composed of seven bright sunshine-yellow (#FBCE07) radiating fluted ribs bounded by a thick, scalloped fiery-red (#DD1D21) outer border. Directly below is a strong, bold red industrial sans-serif wordmark reading '[BRAND]'. Flat 2D vector art, solid vibrant color fills, razor-sharp geometric contours, high roadside contrast, isolated on a clean white background",
+        "negativeConstraints": "real ocean waves, sand, photorealistic seashells, glossy plastic finishes, gradients, drop shadows.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "wwf",
+      "name": "WWF",
+      "archetype": "pictorial",
+      "imageFile": "WWF-logo.png",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#000000 (100% - Solid black patches & typography), #FFFFFF (Transparent/White negative space panda silhouette)",
+        "hexCodes": [
+          "#000000",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Heavy Rounded Geometric Sans-Serif. Extra-bold weight, full uppercase casing (\"WWF\"), tight kerning, featuring soft pill-shaped stroke terminals that visually echo the organic roundness of the panda's paws. Positioned directly beneath the animal mark.",
+        "composition": "As a Pictorial logo, the design illustrates a giant panda bear (*Ailuropoda melanoleuca*). It is renowned worldwide as a pinnacle of Gestalt design: the white body, head, and back of the panda are not drawn with outlines at all; they are entirely formed by the white negative space framed by black patches.",
+        "complexityAndGeometry": "Minimalist to Balanced. Masterclass in Gestalt closure; human eye automatically completes the white boundary lines of the panda's head and spine; organic rounded patches arranged in a harmonious seated posture.",
+        "textureAndFinish": "Pure Flat 2D vector silhouette. High-density solid black ink fills against negative space; no half-tones, outlines, or gradients; designed to communicate universal conservation without relying on written language."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Compassionate, Urgent, Global, Iconic",
+        "personalityTraits": [
+          "Compassionate",
+          "Urgent",
+          "Global",
+          "Iconic"
+        ],
+        "targetAudience": "Global wildlife conservation, environmental advocacy, biodiversity protection, eco-philanthropy, and climate policy organizations.",
+        "symbolism": "The giant panda—an endangered flagship species—evokes empathy, fragility, and the urgent need to protect the natural world. Its stark black-and-white simplicity ensures borderless cross-cultural emotional resonance."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A masterclass minimalist pictorial vector logo for a global wildlife conservation organization. The mark is a stylized giant panda bear illustration rendered purely through high-contrast black patches and Gestalt negative space, where the white contours of the panda's back and head are formed naturally by the white background without any bounding outlines. Centered underneath is a heavy, bold rounded uppercase sans-serif wordmark reading '[BRAND]'. Flat 2D vector art, pure solid monochrome black fill on a clean white or transparent background, emotive wildlife minimalism --no bamboo leaves, jungle trees, fur textures, grey shading, gradients, 3d effects.",
+        "basePrompt": "A masterclass minimalist pictorial vector logo for a global wildlife conservation organization. The mark is a stylized giant panda bear illustration rendered purely through high-contrast black patches and Gestalt negative space, where the white contours of the panda's back and head are formed naturally by the white background without any bounding outlines. Centered underneath is a heavy, bold rounded uppercase sans-serif wordmark reading '[BRAND]'. Flat 2D vector art, pure solid monochrome black fill on a clean white or transparent background, emotive wildlife minimalism",
+        "negativeConstraints": "bamboo leaves, jungle trees, fur textures, grey shading, gradients, 3d effects.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "coca-cola",
+      "name": "Coca-Cola",
+      "archetype": "wordmark",
+      "imageFile": "Coca-Cola-logo.jpg",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#F40009 (100% - World-famous Coca-Cola Red script typography), #FFFFFF (Transparent/White backdrop canvas)",
+        "hexCodes": [
+          "#F40009",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Spencerian Script Calligraphy (historic 19th-century American cursive handwriting). Flowing calligraphic weight with dramatic contrast between thick downstrokes and hair-thin upstrokes, continuous cursive ligatures, distinctive flourishing swooshes extending beneath and through the letterforms.",
+        "composition": "As a Wordmark, the design relies 100% on custom stylized script typography. There is no external crest, shield, or icon; the words \"Coca-Cola\" are joined by an optical hyphen and anchored by elongated dynamic swashes extending from the uppercase letters 'C'.",
+        "complexityAndGeometry": "Balanced to Complex. Continuous calligraphic rhythm; the first 'C' features a sweeping lower swash that swoops under the \"oca\" syllable, while the second 'C' projects a soaring ribbon swash that loops over the \"ola\" syllable, establishing continuous horizontal momentum.",
+        "textureAndFinish": "Pure Flat 2D vector script. Vivid solid red ink fill with smooth bezier transitions along the flourishes; engineered for universal application across glass contour bottles, aluminum cans, illuminated billboards, and delivery trucks."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Nostalgic, Refreshing, Authentic, Universally Joyful",
+        "personalityTraits": [
+          "Nostalgic",
+          "Refreshing",
+          "Authentic",
+          "Universally Joyful"
+        ],
+        "targetAudience": "Global non-alcoholic beverages, carbonated soft drinks, fountain refreshments, restaurant partnerships, and mass-market consumer celebration.",
+        "symbolism": "The flowing, handcrafted Spencerian script evokes warmth, human connection, timeless refreshment, and authentic American craftsmanship, remaining practically unchanged for well over a century as an enduring symbol of happiness."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A timeless vintage cursive wordmark logo for a world-famous beverage brand. The design features elegant, flowing Spencerian script typography reading '[BRAND]', with dramatic contrast between thick calligraphic strokes and delicate upstrokes, characterized by long sweeping ribbon swashes looping gracefully above and beneath the letters. Vibrant pure crimson red (#F40009) solid fill, flat 2D vector typography, isolated on a clean white or transparent background, perfect rhythmic kerning, nostalgic heritage elegance --no bottles, glasses, bubbles, ice cubes, drop shadows, 3d gradients, icons, emblems, badges.",
+        "basePrompt": "A timeless vintage cursive wordmark logo for a world-famous beverage brand. The design features elegant, flowing Spencerian script typography reading '[BRAND]', with dramatic contrast between thick calligraphic strokes and delicate upstrokes, characterized by long sweeping ribbon swashes looping gracefully above and beneath the letters. Vibrant pure crimson red (#F40009) solid fill, flat 2D vector typography, isolated on a clean white or transparent background, perfect rhythmic kerning, nostalgic heritage elegance",
+        "negativeConstraints": "bottles, glasses, bubbles, ice cubes, drop shadows, 3d gradients, icons, emblems, badges.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "lego",
+      "name": "LEGO",
+      "archetype": "wordmark",
+      "imageFile": "Logo-lego.jpg",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#FFFFFF (40% - Core bubble lettering glyphs), #000000 (20% - Inner comic outline stroke), #FFE500 (20% - Outer halo border contour), #D11013 (20% - Vivid toy-box red background field)",
+        "hexCodes": [
+          "#FFFFFF",
+          "#000000",
+          "#FFE500",
+          "#D11013"
+        ],
+        "typographyStyle": "Custom Chubby Bubble Display Typography. Ultra-heavy bold weight, uppercase casing (\"LEGO\"), tight interlocking tracking where glyphs overlap and touch, distinct forward italic tilt (-8 degrees), rounded bubble-like terminals.",
+        "composition": "As a Wordmark, the entire mark is anchored around the brand name rendered in high-volume puffy letterforms. The letters are bound together by a specialized dual-stroke offset contour (inner black outline, outer yellow contour) that fuses the four glyphs into a unified, tactile badge.",
+        "complexityAndGeometry": "Balanced. Playful bubble geometry with uniform stroke inflation; the letters are nested closely together to minimize negative gaps, framed inside a friendly square container with a red brick stud micro-texture.",
+        "textureAndFinish": "2D vector typography with dual contour offset strokes over a subtle red modular brick stud texture. High-contrast solid color fills in pure primary colors calibrated to trigger playful dopamine and creative excitement in children and adults alike."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Creative, Playful, Imaginative, Systematic Joy",
+        "personalityTraits": [
+          "Creative",
+          "Playful",
+          "Imaginative",
+          "Systematic Joy"
+        ],
+        "targetAudience": "Children's building toys, educational brick construction, adult hobbyists (AFOL - Adult Fans of LEGO), digital video games, and theme parks.",
+        "symbolism": "The rounded, puffy letters resemble colorful plastic toys and interlocking modular brick shapes, embodying boundless creativity, hands-on building joy, and family friendly entertainment."
+      },
+      "generationBlueprint": {
+        "rawPrompt": "A playful, high-energy bubble wordmark logo for a creative toy and building block brand. The design features ultra-chubby, rounded italicized uppercase typography reading '[BRAND]' in solid stark white (#FFFFFF), outlined by a bold black inner stroke and an outer yellow (#FFE500) contour stroke that binds the letters together. Set against a rich primary toy-box red background (#D11013). Clean flat 2D vector art, bold primary colors, maximum child-friendly appeal, tactile warmth --no complex 3d CGI renders, plastic shine reflections, drop shadows, photorealistic toys, disconnected icons.",
+        "basePrompt": "A playful, high-energy bubble wordmark logo for a creative toy and building block brand. The design features ultra-chubby, rounded italicized uppercase typography reading '[BRAND]' in solid stark white (#FFFFFF), outlined by a bold black inner stroke and an outer yellow (#FFE500) contour stroke that binds the letters together. Set against a rich primary toy-box red background (#D11013). Clean flat 2D vector art, bold primary colors, maximum child-friendly appeal, tactile warmth",
+        "negativeConstraints": "complex 3d CGI renders, plastic shine reflections, drop shadows, photorealistic toys, disconnected icons.",
+        "hasBrandPlaceholder": true
+      }
+    },
+    {
+      "id": "disney",
+      "name": "Disney",
+      "archetype": "wordmark",
+      "imageFile": "images.jpeg",
+      "visualAttributes": {
+        "dominantPaletteRaw": "#000000 (100% - Solid black signature script), #FFFFFF (Transparent/White backdrop canvas)",
+        "hexCodes": [
+          "#000000",
+          "#FFFFFF"
+        ],
+        "typographyStyle": "Customized Whimsical Autograph Script (Walt Disney Signature font family). Fluid brush script, mixed casing with a towering uppercase 'D' featuring an exaggerated enclosed oval loop, whimsical lowercase glyphs with dancing ascenders, and a stylized curled dot on the letter 'i'.",
+        "composition": "As a Wordmark, the logo consists entirely of Walt Disney's artistic, exaggerated signature. It relies on the lyrical cadence of handwriting and whimsical calligraphic curls to establish instant brand magic without needing castles, fairy wands, or mascot silhouettes.",
+        "complexityAndGeometry": "Balanced to Complex. Highly expressive, idiosyncratic calligraphy; the monumental loop of the 'D' anchors the left visual weight, while the long descending tail of the 'y' balances the right flank; dancing baseline with organic, non-uniform letter sizing.",
+        "textureAndFinish": "Pure Flat 2D vector script. Solid black vector stroke fills with fluid bezier curvature along every organic loop and flourish; pristine vector clarity engineered for theatrical opening credits, animation title cards, theme park marquees, and digital app icons."
+      },
+      "strategicVibe": {
+        "personalityRaw": "Magical, Whimsical, Nostalgic, Storytelling Wonder",
+        "personalityTraits": [
+          "Magical",
+          "Whimsical",
+          "Nostalgic",
+          "Storytelling Wonder"
+        ],
+        "targetAudience": "Global family entertainment, animated feature films, fantasy storytelling, theme parks and resorts, children and multi-generational fans worldwide.",
+        "symbolism": "The signature serves as the personal personal seal of Walt Disney himself, conveying personal imagination, handwritten storytelling artistry, childlike wonder, and the magical promise that \"dreams come true.\""
+      },
+      "generationBlueprint": {
+        "rawPrompt": "An iconic whimsical signature wordmark logo for a world-renowned fantasy entertainment studio. The design is a custom, artistic handwritten script reading '[BRAND]', featuring a monumental flowing uppercase 'D' with an exaggerated looping swirl, playful dancing lowercase letterforms, and an artistic descending tail on the final letter. Pure monochrome solid black fill on a pristine white or transparent background, flat 2D vector typography, authentic calligraphic ink flow, magical childlike charm --no fairytale castles, fireworks, magic wands, stars, cartoon characters, gradients, drop shadows, 3d bevels.",
+        "basePrompt": "An iconic whimsical signature wordmark logo for a world-renowned fantasy entertainment studio. The design is a custom, artistic handwritten script reading '[BRAND]', featuring a monumental flowing uppercase 'D' with an exaggerated looping swirl, playful dancing lowercase letterforms, and an artistic descending tail on the final letter. Pure monochrome solid black fill on a pristine white or transparent background, flat 2D vector typography, authentic calligraphic ink flow, magical childlike charm",
+        "negativeConstraints": "fairytale castles, fireworks, magic wands, stars, cartoon characters, gradients, drop shadows, 3d bevels.",
+        "hasBrandPlaceholder": true
+      }
+    }
+  ]
+}

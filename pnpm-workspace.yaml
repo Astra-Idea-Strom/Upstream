@@ -4,3 +4,6 @@ packages:
 allowBuilds:
   core-js: true
   esbuild: true
+  esbuild: true
+  protobufjs: true
+  sharp: true
