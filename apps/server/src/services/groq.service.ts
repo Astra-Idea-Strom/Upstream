@@ -1,4 +1,5 @@
 import { groq, GROQ_MODEL } from '../config/groq';
+import { chatCompletion } from './chatProvider.service';
 import { checkSingleDomain } from './domain.service';
 import type { BrandInput, BrandName, VisualDirection, ColorRole } from '@upstream/shared';
 
@@ -115,18 +116,20 @@ Respond in this exact JSON structure:
   while (attempts < 2) {
     attempts++;
     try {
-      const response = await groq.chat.completions.create({
-        model: GROQ_MODEL,
+      const completion = await chatCompletion({
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
         ],
-        response_format: { type: 'json_object' },
+        jsonMode: true,
         temperature: 0.8,
-        max_tokens: 3500,
+        // Scaled to the request: a fixed 3500-token ceiling per naming call was
+        // eating the 8000 tokens/minute budget and starving the agent's tool
+        // loop of the tokens it needs to call image generation.
+        max_tokens: Math.min(3500, 900 + count * 240),
       });
 
-      const content = response.choices[0]?.message?.content;
+      const content = completion.choices[0]?.message?.content;
       if (!content) {
         throw new Error('Groq returned empty response');
       }
@@ -227,15 +230,14 @@ Guidelines:
   messages.push({ role: 'user', content: message });
 
   try {
-    const response = await groq.chat.completions.create({
-      model: GROQ_MODEL,
+    const completion = await chatCompletion({
       messages,
-      response_format: { type: 'json_object' },
+      jsonMode: true,
       temperature: 0.7,
       max_tokens: 1000,
     });
 
-    const content = response.choices[0]?.message?.content;
+    const content = completion.choices[0]?.message?.content;
     if (!content) {
       throw new Error('Groq returned an empty chat response');
     }

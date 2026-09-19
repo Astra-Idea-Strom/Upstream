@@ -19,8 +19,14 @@ const LOGO_OPTIONS: { style: LogoStyle; label: string; desc: string }[] = [
  * Step 5, choosing state — vector logo directions.
  */
 export const LogoSelectionCard: React.FC = () => {
-  const { selectedName, selectedLogoStyle, selectLogoStyle, closeLogoModal, hasConfirmedLogo } =
-    useBrandStore();
+  const {
+    selectedName,
+    selectedLogoStyle,
+    selectLogoStyle,
+    closeLogoModal,
+    hasConfirmedLogo,
+    logoImageByStyle,
+  } = useBrandStore();
 
   return (
     <CardShell
@@ -68,7 +74,7 @@ export const LogoSelectionCard: React.FC = () => {
                 )}
               >
                 <span className="grid h-24 w-24 flex-shrink-0 place-items-center rounded-2xl border border-slate-200/90 bg-slate-50 text-slate-900">
-                  <LogoArtwork brand={selectedName} style={option.style} variant="none" size="sm" />
+                  <LogoArtwork brand={selectedName} style={option.style} variant="none" size="sm" imageUrl={logoImageByStyle[option.style]} />
                 </span>
 
                 <span className="flex-1">

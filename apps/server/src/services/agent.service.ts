@@ -24,8 +24,8 @@
  * client keeps working untouched while richer consumers can read the extras.
  */
 
-import { groq } from '../config/groq';
 import { GROQ_CHAT_MODEL } from '../config/imagegen';
+import { chatCompletion } from './chatProvider.service';
 import { AGENT_TOOLS, executeTool, type ToolContext, type ToolResult } from './agentTools.service';
 import { chatWithAgent, type AgentChatParams } from './groq.service';
 
@@ -49,7 +49,7 @@ export interface AgentChatResponse {
     mission?: string;
   };
   /** Extra, additive fields — the original client ignores them. */
-  engine: 'groq-tools' | 'groq-json-fallback';
+  engine: 'groq-tools' | 'groq-json-fallback' | 'local-tool-summary';
   toolCalls?: AgentToolCallLog[];
   canvasPatch?: Record<string, unknown>;
   names?: Array<{ id: string; name: string; tagline: string; meaning: string }>;
@@ -59,42 +59,49 @@ export interface AgentChatResponse {
   exportedKit?: unknown;
 }
 
-const MAX_TOOL_ROUNDS = 4;
-const MAX_TOOL_RESULT_CHARS = 6000;
+const MAX_TOOL_ROUNDS = 2;
+const MAX_TOOL_RESULT_CHARS = 2500;
+/**
+ * Output budget for a tool-selection round.
+ *
+ * gpt-oss-120b emits `reasoning` tokens that come out of this same budget, so a
+ * tight ceiling can be consumed entirely by thinking and return NO tool call
+ * (finish_reason: "length") — which reads downstream as "the agent refused to
+ * generate an image". Low reasoning effort plus a generous ceiling keeps room
+ * for the actual call.
+ */
+const TOOL_ROUND_MAX_TOKENS = 1200;
 
-const SYSTEM_PROMPT = `You are Upstream's AI Brand Director — a creative director AND the operator of this workspace.
+/**
+ * Kept deliberately short.
+ *
+ * Groq's on-demand tier allows 8000 tokens/minute, and every round re-sends this
+ * prompt plus all tool schemas. A verbose system prompt is therefore not just
+ * cosmetic — it directly caused `429 rate_limit_exceeded`, which killed the tool
+ * loop and silently degraded to the no-tools director (so image generation was
+ * never called).
+ */
+const SYSTEM_PROMPT = `You are Upstream's AI Brand Director and the operator of this workspace. You ACT through tools; you never just advise.
 
-You do not merely advise. You ACT. You have tools that really generate brand names, really draw logo artwork with FLUX.2, really read images with a vision model, really update the brand kit, and really store assets. When the user asks for something to be done, call the matching tool and then report what came back.
+Rules:
+1. Never claim you created, changed or saved anything unless a tool call did it.
+2. Pass brand names EXACTLY as the user writes them — they are rendered into the artwork.
+3. Logo/mark/artwork requests ("make the logo", "generate the mark", "redraw it") → generate_logo_concepts. All styles at once → generate_logo_suite. Naming → generate_brand_names. Certificates → generate_brand_certificate.
+4. Images referenced by path or URL (e.g. /api/assets/generated/x.jpg) → call describe_image with that path. Never say you cannot see an image without calling describe_image first.
+5. Rename / retagline / retone → update_brand_kit (one field per call). Canvas tweaks → set_canvas_state with ONLY the changed keys; never clear existing sections.
+6. Keep assets the user wants (uploads, certificates) with save_brand_asset — but never re-save logos the generator already persisted.
+7. One well-chosen tool call beats a chain. If a tool fails, say so plainly.
 
-## Tool policy
-1. Never claim you created, changed, generated or saved anything unless a tool call actually did it.
-2. If the user gives a brand name, pass that EXACT string as \`brandName\` — spelling and casing matter, it is rendered into the artwork's wordmark.
-3. Names requested → \`generate_brand_names\`. Logos / marks / redraws → \`generate_logo_concepts\`. When the user wants the whole set of directions ("all five styles", "fill the logo chooser", "show me every direction"), call \`generate_logo_suite\` once instead of looping \`generate_logo_concepts\` — it returns one real mark per studio style, keyed by style name.
-4. Certificates, trademark credentials, authenticity documents requested → \`generate_brand_certificate\`.
-5. Images — uploaded, pasted, or referenced by path/URL (certificates, logos, screenshots, references) → ALWAYS call \`describe_image\` with that value in the \`image\` field. Paths like \`/api/assets/generated/x.jpg\` ARE readable by the tool. Never reply that you cannot see or access an image without first calling \`describe_image\`; if the tool then fails, report what it said.
-6. Renames, new taglines, tone shifts, brief edits → \`update_brand_kit\` (one field per call).
-7. Anything the user wants kept — a logo, a certificate, a palette, a reference — → \`save_brand_asset\`. Note: \`generate_logo_concepts\` already persists each concept and returns its URL, so do NOT re-save those; only call \`save_brand_asset\` for uploads, certificates or extra artefacts. When a URL already exists, pass it as \`url\` — never as \`image\`.
-8. Visual/canvas adjustments → \`set_canvas_state\`, sending ONLY the keys that change. Never clear, reset or remove canvas sections; the user's existing sections must survive every change.
-9. Prefer one well-chosen tool call over a chain. Do not re-generate something that already exists unless the user asked for a variation.
-10. If a tool reports ok:false, say plainly what failed and what you would try next. Do not silently retry more than once.
+Voice: warm, decisive, concise Markdown — lead with what you did, then real values (names, hexes, URLs). You will be asked for a final JSON object afterwards; reply with only that JSON.`;
 
-## Voice
-Warm, decisive, art-director energy. Concise Markdown with real substance: lead with what you did, then the specifics (names, palette hexes, asset URLs).
-
-After your tool work is finished, you will be asked for a final JSON object. Respond with ONLY that JSON, no code fences.`;
-
-const FINAL_FORMAT_INSTRUCTION = `Now produce the final answer as a single JSON object — no markdown fences, no preamble:
+const FINAL_FORMAT_INSTRUCTION = `Reply with a single JSON object — no fences, no preamble:
 
 {
-  "reply": "Markdown reply to the user. State concretely what you did, using the real values the tools returned (names, hexes, asset URLs). Never invent values a tool did not return.",
-  "suggestions": ["2-3 short follow-up chips the user might click"],
+  "reply": "Markdown reply stating concretely what you did, using only values the tools returned.",
+  "suggestions": ["2-3 short follow-up chips"],
   "detectedIntent": "greeting" | "new_brand" | "refine" | "question",
   "extractedBrief": {
-    "businessName": "only if the user named the brand, else empty string",
-    "industry": "clean industry label, else empty string",
-    "tone": "playful | bold | minimalist | luxurious | tech-forward | professional, else empty string",
-    "targetAudience": "else empty string",
-    "mission": "else empty string"
+    "businessName": "", "industry": "", "tone": "", "targetAudience": "", "mission": ""
   }
 }`;
 
@@ -254,6 +261,77 @@ function parseJsonLoose(raw: string): any | null {
   }
 }
 
+/**
+ * Compose the reply locally from the tool results.
+ *
+ * The tools are the expensive, valuable part of a turn — a mark that took 45s to
+ * render must never be lost because the *summarising* call hit a quota. When the
+ * model cannot answer (daily token cap, outage), we still return the real URLs
+ * in a plain, deterministic Markdown reply.
+ */
+function buildLocalReply(
+  acc: {
+    canvasPatch: Record<string, unknown>;
+    names: any[];
+    logos: any[];
+    assets: any[];
+    projectId?: string;
+    exportedKit?: unknown;
+  },
+  toolCalls: AgentToolCallLog[],
+  reason: string
+): string {
+  const lines: string[] = [];
+
+  if (toolCalls.length) {
+    lines.push(`**Done** — ${toolCalls.map((t) => `${t.name} (${t.summary})`).join(', ')}.`, '');
+  }
+
+  if (acc.logos.length) {
+    lines.push('**Logo artwork**', '');
+    for (const logo of acc.logos) {
+      lines.push(`- **${logo.style ?? 'mark'}** — ![${logo.style ?? 'mark'}](${logo.url})`);
+      lines.push(`  \`${logo.url}\``);
+    }
+    lines.push('');
+  }
+
+  if (acc.names.length) {
+    lines.push('**Names**', '');
+    for (const n of acc.names) {
+      lines.push(`- **${n.name}** — ${n.tagline || n.meaning || ''}`);
+    }
+    lines.push('');
+  }
+
+  if (acc.assets.length) {
+    lines.push('**Saved assets**', '');
+    for (const a of acc.assets) {
+      lines.push(`- ${a.kind}: ${a.label}${a.url ? ` — ${a.url}` : ''}`);
+    }
+    lines.push('');
+  }
+
+  if (Object.keys(acc.canvasPatch).length) {
+    lines.push(
+      `**Canvas updated** — ${Object.entries(acc.canvasPatch)
+        .map(([k, v]) => `${k}: ${v}`)
+        .join(', ')}`,
+      ''
+    );
+  }
+
+  if (!lines.length) {
+    lines.push(
+      `I couldn't reach the language model just now (${reason}). Nothing was changed — please try again in a moment.`
+    );
+  } else {
+    lines.push(`_(${reason} — the actions above completed and are saved.)_`);
+  }
+
+  return lines.join('\n');
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
@@ -267,35 +345,73 @@ function isToolUseFailure(err: any): boolean {
 }
 
 /**
- * One tool-enabled round trip, with a corrective nudge and retry when Groq
- * rejects the model's argument payload.
+ * Groq's on-demand tier enforces tokens-per-minute. A multi-round tool loop can
+ * trip it, and a 429 is transient — waiting is always better than degrading to
+ * the no-tools director (which is what silently stopped image generation).
+ * Groq tells us how long to wait; fall back to a fixed ladder.
+ */
+function isRateLimit(err: any): boolean {
+  const text = `${err?.message || ''} ${err?.error ? JSON.stringify(err.error) : ''}`;
+  return (
+    text.includes('rate_limit_exceeded') ||
+    text.includes('Rate limit reached') ||
+    text.includes('429')
+  );
+}
+
+function rateLimitWaitMs(err: any, attempt: number): number {
+  const match = `${err?.message || ''}`.match(/try again in ([\d.]+)s/i);
+  if (match) return Math.ceil(parseFloat(match[1]) * 1000) + 750;
+  return attempt === 1 ? 8_000 : 20_000;
+}
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * One tool-enabled round trip: retries schema rejections with a corrective
+ * nudge, and waits out rate limits instead of failing the request.
  */
 async function callGroqWithTools(messages: any[]): Promise<any> {
-  const MAX_ATTEMPTS = 3;
+  const MAX_ATTEMPTS = 4;
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     try {
-      return await groq.chat.completions.create({
-        model: GROQ_CHAT_MODEL,
+      return await chatCompletion({
         messages,
         tools: AGENT_TOOLS as any,
         tool_choice: 'auto',
         temperature: 0.6,
-        max_tokens: 1800,
-      } as any);
-    } catch (err: any) {
-      if (!isToolUseFailure(err) || attempt === MAX_ATTEMPTS) throw err;
-
-      console.warn(
-        `[Agent] Tool-call arguments rejected by Groq (attempt ${attempt}/${MAX_ATTEMPTS}) — retrying with a nudge.`
-      );
-      messages.push({
-        role: 'system',
-        content:
-          'Your previous tool call was rejected because its arguments did not match the schema. ' +
-          'Optional parameters must be OMITTED ENTIRELY — never send null, empty strings or placeholder values. ' +
-          'Re-issue the call with only the arguments you actually need.',
+        max_tokens: TOOL_ROUND_MAX_TOKENS,
+        // Keeps reasoning from eating the tool-call budget (and cuts latency).
+        reasoning_effort: 'low',
       });
+    } catch (err: any) {
+      const last = attempt === MAX_ATTEMPTS;
+
+      if (isRateLimit(err) && !last) {
+        const wait = rateLimitWaitMs(err, attempt);
+        console.warn(
+          `[Agent] Groq rate limit hit (attempt ${attempt}/${MAX_ATTEMPTS}) — waiting ${wait}ms before retrying.`
+        );
+        await sleep(wait);
+        continue;
+      }
+
+      if (isToolUseFailure(err) && !last) {
+        console.warn(
+          `[Agent] Tool-call arguments rejected by Groq (attempt ${attempt}/${MAX_ATTEMPTS}) — retrying with a nudge.`
+        );
+        messages.push({
+          role: 'system',
+          content:
+            'Your previous tool call was rejected because its arguments did not match the schema. ' +
+            'Optional parameters must be OMITTED ENTIRELY — never send null, empty strings or placeholders. ' +
+            'Re-issue the call with only the arguments you need.',
+        });
+        continue;
+      }
+
+      throw err;
     }
   }
 
@@ -315,7 +431,16 @@ export async function runAgentChat(params: AgentChatParams): Promise<AgentChatRe
     (currentContext as any).projectId ? `Project id: ${(currentContext as any).projectId}` : '',
   ].filter(Boolean);
 
-  const ctx: ToolContext = { projectId: (currentContext as any).projectId };
+  const ctx: ToolContext = {
+    projectId: (currentContext as any).projectId,
+    // Client context is forwarded so tools can act even when the model omits
+    // arguments — e.g. image generation still gets the brand name and tone.
+    selectedName: currentContext.selectedName,
+    industry: currentContext.industry,
+    tone: currentContext.tone,
+    targetAudience: currentContext.targetAudience,
+    mission: currentContext.mission,
+  };
 
   const messages: any[] = [
     { role: 'system', content: SYSTEM_PROMPT },
@@ -400,14 +525,52 @@ export async function runAgentChat(params: AgentChatParams): Promise<AgentChatRe
 
     // Low reasoning effort: this call only reformats facts the tools already
     // produced. Tool *selection* above keeps the model's default effort.
-    const finalCompletion: any = await groq.chat.completions.create({
-      model: GROQ_CHAT_MODEL,
-      messages,
-      response_format: { type: 'json_object' },
-      temperature: 0.5,
-      max_tokens: 1400,
-      reasoning_effort: 'low',
-    } as any);
+    // Same rate-limit tolerance as the tool rounds.
+    //
+    // If it still fails, the turn is NOT lost: the tool results (marks that took
+    // tens of seconds to render) are returned in a locally-composed reply rather
+    // than surfacing a 500 to the client.
+    let finalCompletion: any = null;
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        finalCompletion = await chatCompletion({
+          messages,
+          jsonMode: true,
+          temperature: 0.5,
+          max_tokens: 900,
+          reasoning_effort: 'low',
+        });
+        break;
+      } catch (err: any) {
+        const last = attempt === 3;
+        if (isRateLimit(err) && !last) {
+          const wait = Math.min(rateLimitWaitMs(err, attempt), 20_000);
+          console.warn(`[Agent] Groq rate limit on final answer — waiting ${wait}ms.`);
+          await sleep(wait);
+          continue;
+        }
+        if (last) {
+          console.warn(
+            `[Agent] Final answer unavailable (${String(err.message).slice(0, 140)}) — returning tool results directly.`
+          );
+          return {
+            reply: buildLocalReply(acc, toolCalls, 'the language model was unavailable for the summary'),
+            suggestions: ['Try again', 'Show me the brand kit'],
+            detectedIntent: 'question',
+            extractedBrief: {},
+            engine: 'local-tool-summary',
+            toolCalls: toolCalls.length ? toolCalls : undefined,
+            canvasPatch: Object.keys(acc.canvasPatch).length ? acc.canvasPatch : undefined,
+            names: acc.names.length ? acc.names : undefined,
+            logos: acc.logos.length ? acc.logos : undefined,
+            assets: acc.assets.length ? acc.assets : undefined,
+            projectId: acc.projectId,
+            exportedKit: acc.exportedKit,
+          };
+        }
+        throw err;
+      }
+    }
 
     const raw = finalCompletion?.choices?.[0]?.message?.content ?? '';
     const parsed = parseJsonLoose(raw);
@@ -456,13 +619,43 @@ export async function runAgentChat(params: AgentChatParams): Promise<AgentChatRe
     // original single-shot JSON director so chat never goes dark.
     console.warn(`[Agent] Tool loop failed (${err.message}) — falling back to JSON director.`);
 
-    const legacy = await chatWithAgent(params);
-    return {
-      ...legacy,
-      suggestions: legacy.suggestions ?? ['Show me the brand kit', 'Try a bolder direction'],
-      extractedBrief: legacy.extractedBrief ?? {},
-      engine: 'groq-json-fallback',
+    const extras = {
       toolCalls: toolCalls.length ? toolCalls : undefined,
+      canvasPatch: Object.keys(acc.canvasPatch).length ? acc.canvasPatch : undefined,
+      names: acc.names.length ? acc.names : undefined,
+      logos: acc.logos.length ? acc.logos : undefined,
+      assets: acc.assets.length ? acc.assets : undefined,
+      projectId: acc.projectId,
     };
+
+    try {
+      const legacy = await chatWithAgent(params);
+      return {
+        ...legacy,
+        suggestions: legacy.suggestions ?? ['Show me the brand kit', 'Try a bolder direction'],
+        extractedBrief: legacy.extractedBrief ?? {},
+        engine: 'groq-json-fallback',
+        ...extras,
+      };
+    } catch (secondErr: any) {
+      // Both model paths are down (e.g. the daily token cap). Anything the tools
+      // did produce is still returned — that is the difference between a user
+      // seeing their generated logo and seeing an error.
+      console.warn(
+        `[Agent] JSON director also failed (${String(secondErr.message).slice(0, 140)}) — returning tool results directly.`
+      );
+      return {
+        reply: buildLocalReply(
+          acc,
+          toolCalls,
+          'the language model is unavailable right now (quota or outage)'
+        ),
+        suggestions: ['Try again', 'Show me the brand kit'],
+        detectedIntent: 'question',
+        extractedBrief: {},
+        engine: 'local-tool-summary',
+        ...extras,
+      };
+    }
   }
 }

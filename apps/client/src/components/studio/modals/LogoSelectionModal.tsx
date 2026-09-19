@@ -13,7 +13,8 @@ const LOGO_OPTIONS: { style: LogoStyle; label: string; desc: string }[] = [
 ];
 
 export const LogoSelectionModal: React.FC = () => {
-  const { selectedName, selectedLogoStyle, selectLogoStyle, closeLogoModal } = useBrandStore();
+  const { selectedName, selectedLogoStyle, selectLogoStyle, closeLogoModal, logoImageByStyle } =
+    useBrandStore();
 
   const handleAutoPick = () => {
     selectLogoStyle('minimal');
@@ -60,7 +61,7 @@ export const LogoSelectionModal: React.FC = () => {
               >
                 <div>
                   <div className="h-32 rounded-xl bg-slate-50 border border-slate-100 p-2 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform overflow-hidden">
-                    <LogoArtwork brand={selectedName} style={opt.style} size="sm" />
+                    <LogoArtwork brand={selectedName} style={opt.style} size="sm" imageUrl={logoImageByStyle[opt.style]} />
                   </div>
 
                   <div className="flex items-center justify-between mb-1">

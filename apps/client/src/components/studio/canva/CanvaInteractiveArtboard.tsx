@@ -38,6 +38,8 @@ export const CanvaInteractiveArtboard: React.FC = () => {
     canvaLetterSpacing,
     canvaTextColor,
     canvaBgMode,
+    logoImageByStyle,
+    selectedLogo,
     updateBrandNameText,
     updateTaglineText,
     setCanvaSelectedElement,
@@ -51,6 +53,14 @@ export const CanvaInteractiveArtboard: React.FC = () => {
 
   const palette = getPalette(activePaletteIdx);
   const surface = getCanvasSurface(canvaBgMode);
+
+  /**
+   * The generated mark for the active style, if the agent has produced one.
+   *
+   * Falls back to whatever single mark exists so the canvas shows the artwork
+   * the moment it arrives, even before a per-style set exists.
+   */
+  const generatedMark = logoImageByStyle[selectedLogoStyle] || selectedLogo?.url;
 
   /**
    * Keep the edit buffers in step with the brand. They were seeded once from
@@ -135,13 +145,15 @@ export const CanvaInteractiveArtboard: React.FC = () => {
             className="mx-auto flex max-w-xl flex-col items-center justify-center gap-4 text-center"
             style={{ color: canvaTextColor }}
           >
-            {/* Mark — glyph only. The wordmark below *is* the name. */}
+            {/* Mark — generated artwork when the agent has made one, else the
+                procedural glyph. The wordmark below *is* the name. */}
             <LogoArtwork
               brand={selectedName}
               style={selectedLogoStyle}
               variant="none"
               size="lg"
               showName={false}
+              imageUrl={generatedMark}
             />
 
             {/* Editable wordmark */}

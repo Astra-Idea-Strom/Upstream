@@ -23,6 +23,12 @@ import type { BrandInput, BrandName, BrandTone } from '@upstream/shared';
 
 export interface ToolContext {
   projectId?: string;
+  /** Client-side context, so tools can still act when the model omits arguments. */
+  selectedName?: string;
+  industry?: string;
+  tone?: string;
+  targetAudience?: string;
+  mission?: string;
 }
 
 export interface ToolResult {
@@ -41,19 +47,19 @@ export const AGENT_TOOLS = [
     function: {
       name: 'generate_brand_names',
       description:
-        'Generate real brand names with meanings, taglines and full visual direction (5-colour palette + font pairing). Use whenever the user needs names, or asks for more/other/bolder/luxury names.',
+        'Generate brand names with meanings, taglines, palettes and fonts. Use for any naming request.',
       parameters: {
         type: 'object',
         properties: {
-          industry: { type: 'string', description: 'Industry or venture category.' },
-          targetAudience: { type: 'string', description: 'Who the brand serves.' },
-          mission: { type: 'string', description: 'Mission / value proposition.' },
+          industry: { type: 'string' },
+          targetAudience: { type: 'string' },
+          mission: { type: 'string' },
           tone: {
             type: 'string',
             enum: ['playful', 'professional', 'minimalist', 'bold', 'tech-forward', 'luxurious'],
           },
-          constraints: { type: 'string', description: 'Anything the names must respect.' },
-          count: { type: 'integer', description: 'How many names (1-12). Default 8.' },
+          constraints: { type: 'string' },
+          count: { type: 'integer' },
         },
         required: ['industry'],
       },
@@ -64,34 +70,21 @@ export const AGENT_TOOLS = [
     function: {
       name: 'generate_logo_concepts',
       description:
-        'Generate real logo artwork with FLUX.2 [dev]. Returns concept images with URLs. Use when the user asks to create, redraw, refine or restyle a logo mark.',
+        'Draw real logo artwork with FLUX.2. Call this for any "make/create/generate/redraw the logo or mark" request. Returns image URLs.',
       parameters: {
         type: 'object',
         properties: {
-          brandName: {
-            type: 'string',
-            description: 'Exact brand name to render in the wordmark. Required.',
-          },
+          brandName: { type: 'string', description: 'Exact brand name to render. Required.' },
           archetypeId: {
             type: 'string',
             enum: ['abstract', 'combination', 'emblems', 'lettermark', 'mascot', 'pictorial', 'wordmark'],
-            description: 'Logo archetype. Default abstract.',
           },
-          mode: {
-            type: 'string',
-            enum: ['scratch', 'template'],
-            description:
-              'scratch = invent from the archetype blueprint; template = adapt a reference mark (needs a reference image). Default scratch.',
-          },
-          preferredColors: {
-            type: 'array',
-            items: { type: 'string' },
-            description: 'Hex colours to use, e.g. ["#0F172A","#F59E0B"].',
-          },
-          styleKeywords: { type: 'string', description: 'Aesthetic cues, e.g. "minimal, geometric".' },
-          fontStyle: { type: 'string', description: 'Typography direction, e.g. "geometric sans-serif".' },
+          mode: { type: 'string', enum: ['scratch', 'template'] },
+          preferredColors: { type: 'array', items: { type: 'string' } },
+          styleKeywords: { type: 'string' },
+          fontStyle: { type: 'string' },
           industry: { type: 'string' },
-          count: { type: 'integer', description: 'Number of concepts (1-4). Default 2.' },
+          count: { type: 'integer' },
         },
         required: ['brandName'],
       },
@@ -102,24 +95,41 @@ export const AGENT_TOOLS = [
     function: {
       name: 'generate_logo_suite',
       description:
-        'Generate one real FLUX.2 [dev] mark per studio logo style in a single call, keyed by style name (minimal, wordmark, abstract, geometric, illustrative). Use this when the user wants the full set of logo directions / "all five styles" / to fill the logo chooser. Prefer it over calling generate_logo_concepts repeatedly.',
+        'Draw one mark per studio style (minimal, wordmark, abstract, geometric, illustrative) in one call. Use for "all styles" / "every direction".',
       parameters: {
         type: 'object',
         properties: {
-          brandName: { type: 'string', description: 'Exact brand name. Required.' },
+          brandName: { type: 'string' },
           styles: {
             type: 'array',
             items: {
               type: 'string',
               enum: ['minimal', 'wordmark', 'abstract', 'geometric', 'illustrative'],
             },
-            description: 'Which styles to render. Omit for all five.',
           },
           preferredColors: { type: 'array', items: { type: 'string' } },
           tagline: { type: 'string' },
           industry: { type: 'string' },
-          styleKeywords: { type: 'string' },
-          projectId: { type: 'string' },
+        },
+        required: ['brandName'],
+      },
+    },
+  },
+  {
+    type: 'function' as const,
+    function: {
+      name: 'generate_brand_certificate',
+      description: 'Render a certificate of authenticity/trademark for the brand.',
+      parameters: {
+        type: 'object',
+        properties: {
+          brandName: { type: 'string' },
+          tagline: { type: 'string' },
+          industry: { type: 'string' },
+          type: {
+            type: 'string',
+            enum: ['authenticity', 'trademark', 'founding', 'excellence'],
+          },
         },
         required: ['brandName'],
       },
@@ -130,15 +140,12 @@ export const AGENT_TOOLS = [
     function: {
       name: 'describe_image',
       description:
-        'Read an image with Qwen 3.8 27B vision (Cloudflare) and return a detailed description. Use for uploaded certificates, logos, screenshots or reference marks before acting on them.',
+        'Read an image with Qwen vision (data URI, URL or /api/assets/... path) and return a description.',
       parameters: {
         type: 'object',
         properties: {
-          image: {
-            type: 'string',
-            description: 'Image as a data URI, a public URL, or raw base64.',
-          },
-          brandName: { type: 'string', description: 'Optional brand context for the description.' },
+          image: { type: 'string' },
+          brandName: { type: 'string' },
         },
         required: ['image'],
       },
@@ -148,12 +155,10 @@ export const AGENT_TOOLS = [
     type: 'function' as const,
     function: {
       name: 'check_domain_availability',
-      description: 'Check .com/.io/.co and social handle availability for a list of candidate names.',
+      description: 'Check .com/.io/.co and social handle availability.',
       parameters: {
         type: 'object',
-        properties: {
-          names: { type: 'array', items: { type: 'string' }, description: 'Candidate names.' },
-        },
+        properties: { names: { type: 'array', items: { type: 'string' } } },
         required: ['names'],
       },
     },
@@ -163,24 +168,15 @@ export const AGENT_TOOLS = [
     function: {
       name: 'update_brand_kit',
       description:
-        'Change one field of the current brand kit. Partial update only — other fields and canvas sections are preserved. Use whenever the user asks to rename, retagline, retone or re-brief the brand.',
+        'Change ONE field of the brand kit (rename, retagline, retone, re-brief). Other fields are preserved.',
       parameters: {
         type: 'object',
         properties: {
           field: {
             type: 'string',
-            enum: [
-              'businessName',
-              'industry',
-              'targetAudience',
-              'mission',
-              'tone',
-              'constraints',
-              'tagline',
-            ],
+            enum: ['businessName', 'industry', 'targetAudience', 'mission', 'tone', 'constraints', 'tagline'],
           },
-          value: { type: 'string', description: 'New value for the field.' },
-          projectId: { type: 'string', description: 'Target project id. Optional.' },
+          value: { type: 'string' },
         },
         required: ['field', 'value'],
       },
@@ -191,7 +187,7 @@ export const AGENT_TOOLS = [
     function: {
       name: 'save_brand_asset',
       description:
-        'Store an asset against the project: a generated logo, a certificate, a reference upload, a palette or an exported kit. For an image that already has a URL (e.g. a logo you just generated) pass that URL in "url". Only use "image" for brand-new uploads (data URI or base64).',
+        'Store an asset (logo/certificate/reference/palette/kit). Pass "url" for an existing image; use "image" only for new uploads.',
       parameters: {
         type: 'object',
         properties: {
@@ -199,16 +195,10 @@ export const AGENT_TOOLS = [
             type: 'string',
             enum: ['logo', 'certificate', 'reference', 'palette', 'kit', 'other'],
           },
-          label: { type: 'string', description: 'Human-readable label.' },
-          url: {
-            type: 'string',
-            description: 'Existing image URL — use this for logos the tools already generated.',
-          },
-          image: {
-            type: 'string',
-            description: 'Data URI or base64 for a NEW upload only. Do not put URLs here.',
-          },
-          data: { type: 'object', description: 'Structured payload, e.g. certificate fields.' },
+          label: { type: 'string' },
+          url: { type: 'string' },
+          image: { type: 'string' },
+          data: { type: 'object' },
           tags: { type: 'array', items: { type: 'string' } },
         },
         required: ['kind', 'label'],
@@ -219,8 +209,7 @@ export const AGENT_TOOLS = [
     type: 'function' as const,
     function: {
       name: 'list_brand_assets',
-      description:
-        'List stored assets for the project, optionally filtered by kind. Omit "kind" entirely to list everything — never pass null.',
+      description: 'List stored assets. Omit "kind" to list all.',
       parameters: {
         type: 'object',
         properties: {
@@ -236,7 +225,7 @@ export const AGENT_TOOLS = [
     type: 'function' as const,
     function: {
       name: 'get_project_state',
-      description: 'Read the current brand kit: brief, generated names, selected name and assets.',
+      description: 'Read the current brand kit: brief, names, selected name, assets.',
       parameters: { type: 'object', properties: {} },
     },
   },
@@ -244,13 +233,10 @@ export const AGENT_TOOLS = [
     type: 'function' as const,
     function: {
       name: 'export_brand_kit',
-      description:
-        'Assemble the full brand kit (brief, name, palette, fonts, logos, assets) as JSON or Markdown. Omit "format" to get JSON — never pass null.',
+      description: 'Assemble the full brand kit as JSON or Markdown. Omit "format" for JSON.',
       parameters: {
         type: 'object',
-        properties: {
-          format: { type: 'string', enum: ['json', 'markdown'] },
-        },
+        properties: { format: { type: 'string', enum: ['json', 'markdown'] } },
       },
     },
   },
@@ -259,40 +245,18 @@ export const AGENT_TOOLS = [
     function: {
       name: 'set_canvas_state',
       description:
-        'Adjust the canvas/artboard presentation (surface, fonts, sizes, tracking, ink). Send only the keys that change — every other canvas section stays exactly as it is.',
+        'Adjust the canvas presentation. Send ONLY the keys that change; never clear existing sections.',
       parameters: {
         type: 'object',
         properties: {
           surface: { type: 'string', enum: ['light', 'linen', 'dark', 'brand'] },
           headlineFont: { type: 'string' },
-          wordmarkSize: { type: 'number', description: 'px, 12-120' },
-          taglineSize: { type: 'number', description: 'px, 8-48' },
-          fontWeight: { type: 'number', description: '100-900' },
-          letterSpacing: { type: 'number', description: 'em, -0.1 to 0.5' },
-          textColor: { type: 'string', description: 'Hex ink colour' },
+          wordmarkSize: { type: 'number' },
+          taglineSize: { type: 'number' },
+          fontWeight: { type: 'number' },
+          letterSpacing: { type: 'number' },
+          textColor: { type: 'string' },
         },
-      },
-    },
-  },
-  {
-    type: 'function' as const,
-    function: {
-      name: 'generate_brand_certificate',
-      description:
-        'Generate an official Certificate of Brand Authenticity or Trademark Registration using FLUX.2 [dev]. Creates an ornate, museum-quality certificate document image and persists it to project assets. Use when the user asks for a certificate, credentials, trademark or authentication document.',
-      parameters: {
-        type: 'object',
-        properties: {
-          brandName: { type: 'string', description: 'Brand name on certificate. Required.' },
-          tagline: { type: 'string', description: 'Brand tagline or motto.' },
-          industry: { type: 'string', description: 'Venture category.' },
-          type: {
-            type: 'string',
-            enum: ['authenticity', 'trademark', 'founding', 'excellence'],
-            description: 'Certificate type. Default authenticity.',
-          },
-        },
-        required: ['brandName'],
       },
     },
   },
@@ -434,11 +398,32 @@ async function toolGenerateBrandNames(args: any, ctx: ToolContext): Promise<Tool
 }
 
 async function toolGenerateLogoConcepts(args: any, ctx: ToolContext): Promise<ToolResult> {
-  const brandName = String(args.brandName || '').trim();
-  if (!brandName) return { ok: false, error: 'brandName is required to draw a logo.' };
-
-  const project = await ensureProject(ctx, { industry: args.industry });
+  const project = await ensureProject(ctx, { industry: args.industry || ctx.industry });
   const reference = project?.selectedName;
+
+  // The brand name is what gets rendered into the artwork, so resolve it from
+  // every available source rather than failing when the model omits it.
+  const brandName = String(
+    args.brandName || reference?.name || ctx.selectedName || ''
+  ).trim();
+  if (!brandName) {
+    return {
+      ok: false,
+      error:
+        'No brand name available to render. Ask the user for the brand name, or call generate_brand_names first.',
+    };
+  }
+
+  // Palette / aesthetic fallbacks: tool args → project's selected name → client context.
+  const preferredColors: string[] | undefined = Array.isArray(args.preferredColors) && args.preferredColors.length
+    ? args.preferredColors
+    : reference?.visualDirection?.palette?.map((c: any) => c.hex);
+
+  const styleKeywords = String(
+    args.styleKeywords || reference?.visualDirection?.styleDescription || ctx.tone || ''
+  );
+  const fontStyle = String(args.fontStyle || reference?.visualDirection?.fonts?.headline || '');
+  const industry = String(args.industry || project?.input?.industry || ctx.industry || '');
 
   const concepts = await logoService.generateLogos({
     projectId: project?.id ?? 'unassigned',
@@ -446,24 +431,24 @@ async function toolGenerateLogoConcepts(args: any, ctx: ToolContext): Promise<To
       id: 'agent_selected',
       name: brandName,
       meaning: '',
-      tagline: args.tagline || '',
+      tagline: args.tagline || reference?.tagline || '',
       domainAvailability: { com: true, io: true, co: true, handle: { twitter: true, instagram: true } },
       visualDirection: {
-        palette: (args.preferredColors ?? []).map((hex: string, i: number) => ({
+        palette: (preferredColors ?? []).map((hex: string, i: number) => ({
           hex,
           name: `Colour ${i + 1}`,
           role: (['primary', 'secondary', 'accent', 'background', 'text'] as const)[i] ?? 'primary',
         })),
         fonts: { headline: 'Outfit', body: 'Inter', headlineWeight: '700', bodyWeight: '400' },
-        styleDescription: String(args.styleKeywords || ''),
+        styleDescription: styleKeywords,
       },
     },
     mode: args.mode === 'template' ? 'template' : 'scratch',
     archetypeId: String(args.archetypeId || 'abstract'),
-    preferredColors: Array.isArray(args.preferredColors) ? args.preferredColors : undefined,
-    styleKeywords: String(args.styleKeywords || reference?.visualDirection?.styleDescription || ''),
-    fontStyle: String(args.fontStyle || reference?.visualDirection?.fonts?.headline || ''),
-    industry: String(args.industry || project?.input?.industry || ''),
+    preferredColors,
+    styleKeywords,
+    fontStyle,
+    industry,
     count: Math.max(1, Math.min(Number(args.count) || 2, 4)),
   });
 
@@ -503,22 +488,27 @@ async function toolGenerateLogoConcepts(args: any, ctx: ToolContext): Promise<To
 }
 
 async function toolGenerateLogoSuite(args: any, ctx: ToolContext): Promise<ToolResult> {
-  const brandName = String(args.brandName || '').trim();
-  if (!brandName) return { ok: false, error: 'brandName is required to build a logo suite.' };
-
-  const project = await ensureProject(ctx, { industry: args.industry });
+  const project = await ensureProject(ctx, { industry: args.industry || ctx.industry });
   const selected = project?.selectedName;
+
+  const brandName = String(args.brandName || selected?.name || ctx.selectedName || '').trim();
+  if (!brandName) {
+    return {
+      ok: false,
+      error: 'No brand name available. Ask the user for the brand name, or generate names first.',
+    };
+  }
 
   const { generateLogoSuite } = await import('./logoSuite.service');
   const suite = await generateLogoSuite({
     brandName,
     styles: Array.isArray(args.styles) ? args.styles : undefined,
-    preferredColors: Array.isArray(args.preferredColors)
+    preferredColors: Array.isArray(args.preferredColors) && args.preferredColors.length
       ? args.preferredColors
       : selected?.visualDirection?.palette?.map((c: any) => c.hex),
-    industry: String(args.industry || project?.input?.industry || ''),
+    industry: String(args.industry || project?.input?.industry || ctx.industry || ''),
     tagline: String(args.tagline || selected?.tagline || ''),
-    styleKeywords: String(args.styleKeywords || ''),
+    styleKeywords: String(args.styleKeywords || selected?.visualDirection?.styleDescription || ctx.tone || ''),
     projectId: project?.id ?? ctx.projectId ?? 'unassigned',
     countPerStyle: 1,
   });
@@ -553,12 +543,16 @@ async function toolGenerateLogoSuite(args: any, ctx: ToolContext): Promise<ToolR
 }
 
 async function toolGenerateBrandCertificate(args: any, ctx: ToolContext): Promise<ToolResult> {
-  const brandName = String(args.brandName || '').trim();
-  if (!brandName) return { ok: false, error: 'brandName is required to issue a certificate.' };
+  const project = await ensureProject(ctx, { industry: args.industry || ctx.industry });
+  const brandName = String(
+    args.brandName || project?.selectedName?.name || ctx.selectedName || ''
+  ).trim();
+  if (!brandName) {
+    return { ok: false, error: 'No brand name available to issue a certificate for.' };
+  }
 
-  const project = await ensureProject(ctx, { industry: args.industry });
   const tagline = args.tagline || project?.selectedName?.tagline || '';
-  const industry = args.industry || project?.input?.industry || '';
+  const industry = args.industry || project?.input?.industry || ctx.industry || '';
   const certType = String(args.type || 'authenticity');
 
   const prompt = `Official Certificate of Brand ${certType.toUpperCase()} for "${brandName}". ${

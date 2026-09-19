@@ -35,6 +35,8 @@ export const LogoGenerationView: React.FC = () => {
     selectedLogoStyle,
     setSelectedLogoStyle,
     setStep,
+    logoImageByStyle,
+    selectedLogo,
   } = useBrandStore();
 
   const [isGenerating, setIsGenerating] = useState(true);
@@ -280,11 +282,14 @@ export const LogoGenerationView: React.FC = () => {
                       variant={activeCanvasBg}
                       size="sm"
                       showTagline={item.style === 'wordmark'}
+                      imageUrl={logoImageByStyle[item.style]}
                     />
                   </div>
 
                   <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
-                    <span className="text-[10px] font-mono text-slate-400">SVG Ready</span>
+                    <span className="text-[10px] font-mono text-slate-400">
+                      {logoImageByStyle[item.style] ? 'AI Generated' : 'SVG Ready'}
+                    </span>
                     <span
                       className={`text-[11px] font-bold ${
                         isSelected ? 'text-brand-600' : 'text-slate-500 group-hover:text-slate-800'
@@ -343,7 +348,7 @@ export const LogoGenerationView: React.FC = () => {
               {activeMockupTab === 'app' && (
                 <div className="flex items-center gap-6">
                   <div className="w-24 h-24 rounded-3xl bg-white shadow-xl p-2 flex items-center justify-center relative">
-                    <LogoArtwork brand={selectedName} style={selectedLogoStyle} variant="light" size="sm" />
+                    <LogoArtwork brand={selectedName} style={selectedLogoStyle} variant="light" size="sm" imageUrl={logoImageByStyle[selectedLogoStyle] || selectedLogo?.url} />
                     <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-rose-500 text-white font-bold text-[10px] flex items-center justify-center">
                       1
                     </span>
@@ -363,7 +368,7 @@ export const LogoGenerationView: React.FC = () => {
                       <p className="text-[10px] text-slate-400">{selectedName.tagline}</p>
                     </div>
                     <div className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center">
-                      <LogoArtwork brand={selectedName} style={selectedLogoStyle} variant="dark" size="sm" />
+                      <LogoArtwork brand={selectedName} style={selectedLogoStyle} variant="dark" size="sm" imageUrl={logoImageByStyle[selectedLogoStyle] || selectedLogo?.url} />
                     </div>
                   </div>
                   <div className="flex items-end justify-between text-[10px] pt-3 border-t border-white/10 text-slate-400">
@@ -378,7 +383,7 @@ export const LogoGenerationView: React.FC = () => {
                   <div className="h-16 w-full" style={{ backgroundColor: primaryColor }} />
                   <div className="p-3">
                     <div className="w-12 h-12 rounded-full bg-white shadow-md -mt-9 mb-1 p-1 flex items-center justify-center border border-slate-100">
-                      <LogoArtwork brand={selectedName} style={selectedLogoStyle} variant="light" size="sm" />
+                      <LogoArtwork brand={selectedName} style={selectedLogoStyle} variant="light" size="sm" imageUrl={logoImageByStyle[selectedLogoStyle] || selectedLogo?.url} />
                     </div>
                     <h5 className="font-bold text-xs">{selectedName.name}</h5>
                     <p className="text-[10px] text-slate-500">@{selectedName.name.toLowerCase()}</p>

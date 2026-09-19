@@ -43,10 +43,17 @@ const SURFACES = [
  * sits on it.
  */
 export const LogoArtworkCard: React.FC = () => {
-  const { selectedName, selectedLogoStyle, openLogoModal } = useBrandStore();
+  const { selectedName, selectedLogoStyle, openLogoModal, logoImageByStyle, selectedLogo } =
+    useBrandStore();
   const info = STYLE_LABELS[selectedLogoStyle] ?? STYLE_LABELS.minimal;
 
-  const mark = { brand: selectedName, style: selectedLogoStyle } as const;
+  // Every surface in this card shows the real generated mark when one exists,
+  // so the confirmed artefact is the artwork the agent actually produced.
+  const mark = {
+    brand: selectedName,
+    style: selectedLogoStyle,
+    imageUrl: logoImageByStyle[selectedLogoStyle] || selectedLogo?.url,
+  } as const;
 
   return (
     <CardShell

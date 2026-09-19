@@ -18,6 +18,15 @@ interface LogoArtworkProps {
   /** Render the brand name beneath the mark. */
   showName?: boolean;
   showTagline?: boolean;
+  /**
+   * A real generated mark (FLUX.2) to show instead of the procedural glyph.
+   *
+   * When the agent generates artwork we have an actual image, and drawing a
+   * placeholder SVG on top of it made the generated mark invisible. Passing a
+   * URL here swaps the glyph for the image; everything else (surface, name line,
+   * tagline) keeps working, so callers need no other change.
+   */
+  imageUrl?: string;
 }
 
 /**
@@ -42,6 +51,7 @@ export const LogoArtwork: React.FC<LogoArtworkProps> = ({
   size = 'md',
   showName = true,
   showTagline = false,
+  imageUrl,
 }) => {
   const isBare = variant === 'none';
   const palette = brand.visualDirection?.palette ?? [];
@@ -92,7 +102,18 @@ export const LogoArtwork: React.FC<LogoArtworkProps> = ({
       {/* Mark — every style shares one glyph box so the five directions read at
           the same optical weight instead of each picking its own size. */}
       <div className={`flex flex-shrink-0 items-center justify-center ${token.glyph}`}>
-        {style === 'minimal' && (
+        {imageUrl ? (
+          /* Generated artwork — fills the glyph box and keeps the caller's
+             surface, so it reads the same as the SVG it replaces. */
+          <img
+            src={imageUrl}
+            alt={`${brand.name} mark`}
+            loading="lazy"
+            className="h-full w-full object-contain"
+          />
+        ) : (
+          <>
+            {style === 'minimal' && (
           <svg className="h-full w-full" viewBox="0 0 100 100" fill="none">
             <circle
               cx="50"
@@ -213,6 +234,8 @@ export const LogoArtwork: React.FC<LogoArtworkProps> = ({
             />
             <circle cx="50" cy="30" r="3" fill={accentColor} fillOpacity={isBare ? 0.6 : 1} />
           </svg>
+        )}
+          </>
         )}
       </div>
 
