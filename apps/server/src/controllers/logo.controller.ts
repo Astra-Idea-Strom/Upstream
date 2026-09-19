@@ -60,6 +60,63 @@ export const previewPrompt = (req: Request, res: Response): void => {
 };
 
 /**
+ * POST /api/logos/suite
+ * Generate one real FLUX.2 mark per UI logo style (minimal, wordmark, abstract,
+ * geometric, illustrative) in a single call, keyed by style name so a canvas can
+ * map each tile straight onto an image URL.
+ */
+export const generateSuite = async (req: Request, res: Response): Promise<void> => {
+  const { brandName, styles, preferredColors, industry, tagline, styleKeywords, fontStyle, projectId, countPerStyle, concurrency } =
+    req.body || {};
+
+  if (!brandName || typeof brandName !== 'string' || !brandName.trim()) {
+    res.status(400).json({
+      success: false,
+      error: 'INVALID_REQUEST',
+      message: 'brandName is required.',
+      statusCode: 400,
+    });
+    return;
+  }
+
+  const { generateLogoSuite } = await import('../services/logoSuite.service');
+  const result = await generateLogoSuite({
+    brandName,
+    styles,
+    preferredColors,
+    industry,
+    tagline,
+    styleKeywords,
+    fontStyle,
+    projectId,
+    countPerStyle,
+    concurrency,
+  });
+
+  // 207 when part of the suite could not be rendered — the caller still gets
+  // the marks that succeeded instead of an all-or-nothing failure.
+  const status = result.failures.length === 0 ? 200 : 207;
+  res.status(status).json({ success: result.failures.length === 0, data: result });
+};
+
+/**
+ * GET /api/logos/styles
+ * The UI style vocabulary and which archetype each maps to.
+ */
+export const getStyles = async (_req: Request, res: Response): Promise<void> => {
+  const { STYLE_PRESETS, UI_LOGO_STYLES } = await import('../services/logoSuite.service');
+  res.status(200).json({
+    success: true,
+    data: UI_LOGO_STYLES.map((style) => ({
+      style,
+      label: STYLE_PRESETS[style].label,
+      archetype: STYLE_PRESETS[style].archetype,
+      renderWordmark: STYLE_PRESETS[style].renderWordmark,
+    })),
+  });
+};
+
+/**
  * GET /api/logos/sample-image/:archetype/:fileName
  * Serves the reference logo image directly from Sample_Data/Images
  */

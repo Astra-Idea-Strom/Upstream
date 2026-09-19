@@ -135,6 +135,19 @@ export class LogoPromptService {
       ? `${basePrompt}. Requirements: Clean, professional vector logo design on a pure white or transparent background. Avoid: ${negativeConstraints}`
       : `${basePrompt}. Clean, professional vector logo design on a pure white or transparent background.`;
 
+    // 7. FLUX.2 [dev] prompt — natural language only, wordmark pinned
+    const fluxPrompt = this.buildFluxPrompt({
+      brandName: sanitizedBrand,
+      archetype,
+      exemplar,
+      industry,
+      userKeywords,
+      preferredColors:
+        preferredColors && preferredColors.length > 0
+          ? preferredColors
+          : exemplar.visualAttributes.hexCodes,
+    });
+
     return {
       targetBrand: sanitizedBrand,
       archetype,
@@ -147,11 +160,88 @@ export class LogoPromptService {
       negativeConstraints,
       stitchedPrompt,
       dalle3Prompt,
+      fluxPrompt,
+      wordmarkText: sanitizedBrand,
       suggestedHexPalette: preferredColors && preferredColors.length > 0 
         ? preferredColors 
         : exemplar.visualAttributes.hexCodes,
-      recommendedModel: 'Flux.1-Dev / Gemini'
+      recommendedModel: 'FLUX.2 [dev] · black-forest-labs/flux-2-dev'
     };
+  }
+
+  /**
+   * Build a prompt FLUX.2 [dev] actually understands.
+   *
+   * Three things this fixes versus the raw blueprint prompt:
+   *   1. No `--no …` flags. FLUX.2 reads natural language; flags get painted
+   *      into the image as stray text.
+   *   2. The wordmark string is quoted and pinned, and the model is told to
+   *      render no other words — this is what makes the brand name land in the
+   *      artwork instead of a misspelled approximation.
+   *   3. The blueprint's own composition and typography notes are reused so the
+   *      archetype still drives the geometry.
+   */
+  public buildFluxPrompt(args: {
+    brandName: string;
+    archetype: LogoArchetype;
+    exemplar?: BrandReferenceEntry;
+    industry?: string;
+    userKeywords?: string;
+    preferredColors?: string[];
+  }): string {
+    const { brandName, archetype, exemplar, industry, userKeywords, preferredColors } = args;
+    const blueprint = exemplar?.generationBlueprint;
+    const visual = exemplar?.visualAttributes;
+
+    const lines: string[] = [];
+
+    lines.push(
+      `Professional flat vector logo lockup for the brand "${brandName}".`,
+      `The wordmark text must read exactly "${brandName}" — spelled letter by letter, correctly, in a clean legible typeface. Render no other words, no lorem text, no watermark.`
+    );
+
+    lines.push(`Logo archetype: ${archetype} mark.`);
+    if (industry) lines.push(`Industry context: ${industry}.`);
+
+    if (visual?.composition) {
+      lines.push(`Composition to adapt: ${visual.composition}`);
+    }
+    if (visual?.complexityAndGeometry) {
+      lines.push(`Geometry: ${visual.complexityAndGeometry}`);
+    }
+    if (visual?.typographyStyle) {
+      lines.push(`Typography direction: ${visual.typographyStyle}`);
+    }
+    if (blueprint?.basePrompt) {
+      // Reuse the archetype's distilled brief, minus any placeholder tokens.
+      lines.push(`Archetype brief: ${blueprint.basePrompt.replace(/\[BRAND\]/g, brandName)}`);
+    }
+    if (userKeywords?.trim()) {
+      lines.push(`Aesthetic cues: ${userKeywords.trim()}.`);
+    }
+    if (preferredColors && preferredColors.length > 0) {
+      lines.push(`Use this exact palette: ${preferredColors.join(', ')}.`);
+    }
+
+    const exclusions = [
+      blueprint?.negativeConstraints,
+      'photorealistic rendering',
+      '3D bevels or glossy highlights',
+      'drop shadows or mockups',
+      'busy backgrounds or scenery',
+      'extra text or gibberish lettering',
+      'watermarks or signatures',
+    ]
+      .filter(Boolean)
+      .join(', ');
+
+    lines.push(
+      'Style: crisp uniform line weight, generous negative space, centered composition, ' +
+        'high contrast, pure white background, print-ready logo artwork.'
+    );
+    lines.push(`Do not include: ${exclusions}.`);
+
+    return lines.join('\n');
   }
 }
 

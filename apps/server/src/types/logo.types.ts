@@ -89,6 +89,17 @@ export interface GeneratedPromptPayload {
   stitchedPrompt: string;
   /** Clean prompt formatted for natural language prompt fields */
   dalle3Prompt: string;
+  /**
+   * Prompt tuned for FLUX.2 [dev] via the AICredits OpenAI-compatible endpoint.
+   *
+   * FLUX.2 takes natural language, NOT Midjourney flag syntax — the `--no x`
+   * suffix that `stitchedPrompt` carries would be rendered as literal text.
+   * This variant restates the exclusions as prose and pins the exact wordmark
+   * string so the brand name actually appears in the artwork.
+   */
+  fluxPrompt: string;
+  /** Exact text the artwork must render, empty for mark-only concepts. */
+  wordmarkText: string;
   suggestedHexPalette: string[];
   recommendedModel: string;
 }

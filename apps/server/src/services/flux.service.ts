@@ -1,5 +1,9 @@
-import { fal, FLUX_MODEL } from '../config/fal';
 import { promptService } from './prompt.service';
+import {
+  generateImageAssets,
+  saveImageBuffer,
+  type GeneratedImageAsset,
+} from './image.service';
 import type { LogoConcept, LogoArchetype } from '@upstream/shared';
 
 export interface GenerateScratchLogoParams {
@@ -12,22 +16,68 @@ export interface GenerateScratchLogoParams {
   count?: number;
 }
 
-/**
- * Generate a clean placeholder SVG vector logo if the external image model fails or is rate-limited
- */
-function createFallbackLogoSvg(brandName: string, primaryColor = '#3B82F6', bgColor = '#0F172A'): string {
-  const initial = (brandName || 'U').charAt(0).toUpperCase();
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <rect width="512" height="512" fill="${bgColor}" rx="48"/>
-  <circle cx="256" cy="256" r="140" fill="none" stroke="${primaryColor}" stroke-width="24" stroke-dasharray="600 200"/>
-  <text x="256" y="295" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="128" fill="#FFFFFF" text-anchor="middle">${initial}</text>
-  <text x="256" y="440" font-family="system-ui, -apple-system, sans-serif" font-weight="600" font-size="36" fill="${primaryColor}" text-anchor="middle" letter-spacing="4">${brandName.toUpperCase()}</text>
-</svg>`;
-  return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
+/** XML-escape a value before it is interpolated into SVG markup. */
+function escapeXml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
 }
 
 /**
- * Generate logo concepts from scratch using FLUX.1 [dev]
+ * Last-resort mark, drawn locally.
+ *
+ * Only used when *both* image providers are down. It is intentionally
+ * typographic: the brand name is always legible, so a degraded response still
+ * shows the right brand instead of an anonymous placeholder.
+ */
+export function createFallbackLogoSvg(
+  brandName: string,
+  primaryColor = '#3B82F6',
+  bgColor = '#0F172A'
+): GeneratedImageAsset {
+  const safeName = (brandName || 'Brand').trim();
+  const initial = escapeXml(safeName.charAt(0).toUpperCase());
+  const label = escapeXml(safeName.toUpperCase().slice(0, 18));
+  // Shrink the name line as it grows so long names do not overflow the plate.
+  const labelSize = Math.max(22, Math.min(44, Math.round(560 / Math.max(label.length, 6))));
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="${bgColor}" rx="48"/>
+  <circle cx="256" cy="232" r="132" fill="none" stroke="${primaryColor}" stroke-width="22" stroke-dasharray="600 220"/>
+  <text x="256" y="268" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="800" font-size="120" fill="#FFFFFF" text-anchor="middle">${initial}</text>
+  <text x="256" y="428" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-weight="600" font-size="${labelSize}" fill="${primaryColor}" text-anchor="middle" letter-spacing="3">${label}</text>
+</svg>`;
+
+  return saveImageBuffer(Buffer.from(svg, 'utf-8'), 'logo_fallback', 'fallback-svg', 'image/svg+xml');
+}
+
+/** Map an image asset onto the shared LogoConcept contract. */
+function toConcept(
+  asset: GeneratedImageAsset,
+  prompt: string,
+  styleKey: string,
+  mode: 'template' | 'scratch',
+  index: number
+): LogoConcept {
+  return {
+    id: `logo_${mode}_${Date.now()}_${index + 1}`,
+    // Prefer the served URL; the data URI stays available for offline clients.
+    url: asset.url || asset.dataUri,
+    prompt,
+    style: styleKey,
+    model: 'flux',
+    mode,
+  };
+}
+
+/**
+ * Generate logo concepts from scratch with FLUX.2 [dev] (AICredits).
+ *
+ * Unlike template mode there is no reference mark: the archetype blueprint in
+ * `brand_reference.json` is the only steer, so the prompt is the whole game.
  */
 export async function generateLogoFromScratch(
   params: GenerateScratchLogoParams
@@ -36,105 +86,30 @@ export async function generateLogoFromScratch(
     brandName,
     archetypeId = 'abstract',
     preferredColors = [],
+    fontStyle = '',
     styleKeywords = '',
     industry = '',
     count = 2,
   } = params;
 
-  // 1. Build rich prompt from reference blueprints
   const promptPayload = promptService.buildLogoPrompt({
     brandName,
     archetype: (archetypeId as LogoArchetype) || 'abstract',
     industry,
-    userKeywords: styleKeywords,
+    userKeywords: [styleKeywords, fontStyle].filter(Boolean).join(', '),
     preferredColors,
   });
 
-  const promptToUse = promptPayload.stitchedPrompt;
-  const concepts: LogoConcept[] = [];
+  const promptToUse = promptPayload.fluxPrompt;
 
-  const apiKey = process.env.FAL_API_KEY;
-  const pollinationsKey = process.env.POLLINATIONS_API_KEY;
-
-  // 2. Try Pollinations.ai FLUX if configured
-  if (pollinationsKey) {
-    try {
-      for (let i = 0; i < Math.min(count, 2); i++) {
-        const seed = Math.floor(Math.random() * 1000000) + i;
-        const genUrl = `https://gen.pollinations.ai/image/${encodeURIComponent(promptToUse)}?model=flux&width=1024&height=1024&seed=${seed}`;
-        const res = await fetch(genUrl, {
-          headers: { Authorization: `Bearer ${pollinationsKey}` },
-        });
-
-        if (res.ok) {
-          const buf = Buffer.from(await res.arrayBuffer());
-          concepts.push({
-            id: `logo_flux_${Date.now()}_${i + 1}`,
-            url: `data:image/jpeg;base64,${buf.toString('base64')}`,
-            prompt: promptToUse,
-            style: archetypeId,
-            model: 'flux',
-            mode: 'scratch',
-          });
-        }
-      }
-
-      if (concepts.length > 0) {
-        return concepts;
-      }
-    } catch (pollErr: any) {
-      console.warn(`[FluxService] Pollinations call failed (${pollErr.message}). Trying Fal.ai.`);
-    }
+  const assets = await generateImageAssets(promptToUse, count, 'logo_scratch');
+  if (assets.length > 0) {
+    return assets.map((asset, i) => toConcept(asset, promptToUse, archetypeId, 'scratch', i));
   }
 
-  // 3. Try Fal.ai FLUX if configured
-  if (apiKey) {
-    try {
-      const result: any = await fal.subscribe(FLUX_MODEL, {
-        input: {
-          prompt: promptToUse,
-          image_size: 'square_hd',
-          num_inference_steps: 28,
-          guidance_scale: 3.5,
-          num_images: Math.min(count, 2),
-          enable_safety_checker: true,
-        },
-        logs: false,
-      });
-
-      const images = result?.data?.images || result?.images || [];
-      for (let i = 0; i < images.length; i++) {
-        const img = images[i];
-        if (img?.url) {
-          concepts.push({
-            id: `logo_flux_${Date.now()}_${i + 1}`,
-            url: img.url,
-            prompt: promptToUse,
-            style: archetypeId,
-            model: 'flux',
-            mode: 'scratch',
-          });
-        }
-      }
-
-      if (concepts.length > 0) {
-        return concepts;
-      }
-    } catch (err: any) {
-      console.warn(`[FluxService] Fal.ai call failed (${err.message}). Generating fallback concept.`);
-    }
-  }
-
-  // Fallback if Fal.ai fails or returns empty
+  console.warn('[FluxService] All providers failed — serving local typographic fallback.');
   const primary = preferredColors[0] || '#3B82F6';
   return [
-    {
-      id: `logo_flux_${Date.now()}_1`,
-      url: createFallbackLogoSvg(brandName, primary),
-      prompt: promptToUse,
-      style: archetypeId,
-      model: 'flux',
-      mode: 'scratch',
-    },
+    toConcept(createFallbackLogoSvg(brandName, primary), promptToUse, archetypeId, 'scratch', 0),
   ];
 }

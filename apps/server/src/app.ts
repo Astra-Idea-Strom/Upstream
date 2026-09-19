@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import 'express-async-errors';
+import path from 'path';
 import express, { Express } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -13,7 +14,13 @@ import logoRoutes from './routes/logo.routes';
 const app: Express = express();
 
 // ── Security Middleware ────────────────────────────────────
-app.use(helmet());
+// crossOriginResourcePolicy is relaxed so generated artwork can be embedded
+// from the client origin (5173) while the API runs on 3001.
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+  })
+);
 
 const allowedOrigins = [
   process.env.CLIENT_URL || 'http://localhost:5173',
@@ -60,6 +67,16 @@ app.get('/api/health', (_req, res) => {
     service: '@upstream/server',
   });
 });
+
+// ── Generated artwork (logos, certificates, uploads) ───────
+// Served under /api so the Vite dev proxy (/api → :3001) resolves it from the
+// client origin without CORS. `/generated` is kept as a direct alias.
+const generatedDir = path.resolve(__dirname, '../public/generated');
+app.use(
+  '/api/assets/generated',
+  express.static(generatedDir, { maxAge: '7d', immutable: true, fallthrough: true })
+);
+app.use('/generated', express.static(generatedDir, { maxAge: '7d', fallthrough: true }));
 
 // ── Application Routes ─────────────────────────────────────
 app.use('/api/projects', projectRoutes);

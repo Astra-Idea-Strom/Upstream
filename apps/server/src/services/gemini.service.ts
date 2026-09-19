@@ -14,6 +14,23 @@ const ARCHETYPE_FOLDER_MAP: Record<string, string> = {
   wordmark: 'Wordmark',
 };
 
+/**
+ * Template-mode logo generation.
+ *
+ * The file name is historical — Gemini is no longer involved. The flow is:
+ *
+ *   reference mark (disk or upload)
+ *        │
+ *        ├─ Cloudflare Workers AI · @cf/qwen/qwen3.8-27b   ← "eyes"
+ *        │     returns a visual-grammar description
+ *        │
+ *        └─ AICredits.in · black-forest-labs/flux-2-dev   ← "hands"
+ *              draws the new mark, brand name pinned in the wordmark
+ *
+ * If the reference image cannot be resolved, or vision returns nothing, the
+ * archetype blueprint alone still produces a usable prompt.
+ */
+
 export interface GenerateTemplateLogoParams {
   brandName: string;
   archetypeId: string;
@@ -107,19 +124,15 @@ async function resolveReferenceImage(params: GenerateTemplateLogoParams): Promis
 }
 
 /**
- * Generate logo concepts using Gemini Image generation (gemini-3.1-flash-image)
+ * Generate logo concepts using Qwen 3.8 27B Vision (Cloudflare) + FLUX.2 [dev] (AICredits)
  */
 export async function generateLogoFromTemplate(
   params: GenerateTemplateLogoParams
 ): Promise<LogoConcept[]> {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    throw new Error('GEMINI_API_KEY is not configured on the server.');
-  }
-
   const {
     brandName,
     archetypeId,
+    exemplarBrandId,
     preferredColors = [],
     fontStyle = '',
     styleKeywords = '',
@@ -127,94 +140,79 @@ export async function generateLogoFromTemplate(
     count = 2,
   } = params;
 
-  // Resolve reference image
+  // 1. Resolve reference exemplar image from disk or base64 payload
   const referenceImage = await resolveReferenceImage(params);
 
-  // Build the generation prompt
-  const colorDesc = preferredColors.length > 0 ? `Palette: ${preferredColors.join(', ')}.` : '';
-  const fontDesc = fontStyle ? `Typography style: ${fontStyle}.` : '';
-  const keywordDesc = styleKeywords ? `Design aesthetic: ${styleKeywords}.` : '';
-  const industryDesc = industry ? `Industry sector: ${industry}.` : '';
-
-  const promptText = `Design a high-quality, professional vector logo for the brand named "${brandName}".
-Archetype: ${archetypeId} logo mark.
-${industryDesc}
-${colorDesc}
-${fontDesc}
-${keywordDesc}
-Compositional Rules:
-- Emulate the design balance, symmetry, and geometric abstraction of the reference logo.
-- Do NOT copy or reproduce the reference brand name or trademarked elements. Adapt only the archetypal visual grammar for "${brandName}".
-- Clean vector art on a pure white or transparent background. High contrast, crisp contours. No realistic photos, no complex gradients, no 3D textures.`;
-
-  const modelName = process.env.GEMINI_IMAGE_MODEL || 'gemini-3.1-flash-image';
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
-
-  const requestParts: any[] = [{ text: promptText }];
-  if (referenceImage) {
-    requestParts.push({
-      inlineData: {
-        mimeType: referenceImage.mimeType,
-        data: referenceImage.base64,
-      },
-    });
+  // 2. Vision: let Qwen 3.8 27B on Cloudflare read the reference mark
+  let visualGrammar = '';
+  if (referenceImage?.base64) {
+    const { describeImageWithQwen } = await import('./image.service');
+    visualGrammar = await describeImageWithQwen(
+      referenceImage.base64,
+      brandName,
+      referenceImage.mimeType
+    );
+    if (visualGrammar) {
+      console.log(
+        `[LogoService] Qwen 3.8 27B (Cloudflare) read the reference mark: "${visualGrammar.slice(0, 100)}..."`
+      );
+    } else {
+      console.warn('[LogoService] Vision returned nothing — falling back to blueprint only.');
+    }
   }
 
-  const concepts: LogoConcept[] = [];
+  // 3. Build the FLUX.2 prompt: archetype blueprint + wordmark pinning + vision notes
+  const { promptService } = await import('./prompt.service');
+  const promptPayload = promptService.buildLogoPrompt({
+    brandName,
+    archetype: (archetypeId as LogoArchetype) || 'abstract',
+    exemplarBrandId,
+    industry,
+    userKeywords: [styleKeywords, fontStyle].filter(Boolean).join(', '),
+    preferredColors,
+  });
 
-  // Generate requested number of variations
-  for (let i = 0; i < Math.min(count, 3); i++) {
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: requestParts }],
-        }),
-      });
+  const promptParts = [promptPayload.fluxPrompt];
 
-      if (!response.ok) {
-        const errText = await response.text();
-        console.warn(`[GeminiService] Gemini API returned ${response.status}:`, errText);
+  if (visualGrammar) {
+    promptParts.push(
+      `Visual grammar to adapt (from the reference mark, do not copy it literally): ${visualGrammar}`
+    );
+  }
 
-        if (response.status === 429) {
-          throw new Error('AI_QUOTA_EXCEEDED: Gemini image generation quota exceeded.');
-        }
-        throw new Error(`Gemini API error (${response.status}): ${errText}`);
-      }
+  promptParts.push(
+    `The finished artwork must clearly show the brand name "${brandName}" as the wordmark, spelled exactly and legibly, with no additional words.`
+  );
 
-      const data = await response.json();
-      const parts = data.candidates?.[0]?.content?.parts || [];
+  const promptText = promptParts.join('\n');
 
-      // Find image part
-      let imageDataUri = '';
-      for (const part of parts) {
-        if (part.inlineData?.data) {
-          const mime = part.inlineData.mimeType || 'image/png';
-          imageDataUri = `data:${mime};base64,${part.inlineData.data}`;
-          break;
-        }
-      }
+  // 4. Generate with FLUX.2 [dev] via AICredits (Pollinations as the only fallback)
+  const { generateImageAssets } = await import('./image.service');
+  const assets = await generateImageAssets(promptText, count, 'logo_template');
 
-      if (!imageDataUri) {
-        throw new Error('Gemini response did not contain an image payload.');
-      }
+  const concepts: LogoConcept[] = assets.map((asset, idx) => ({
+    id: `logo_template_${Date.now()}_${idx + 1}`,
+    url: asset.url || asset.dataUri,
+    prompt: promptText,
+    style: archetypeId,
+    model: 'flux',
+    mode: 'template',
+  }));
 
-      concepts.push({
-        id: `logo_gemini_${Date.now()}_${i + 1}`,
-        url: imageDataUri,
-        prompt: promptText,
-        style: archetypeId,
-        model: 'gemini',
-        mode: 'template',
-      });
-    } catch (err: any) {
-      console.error(`[GeminiService] Generation iteration ${i + 1} failed:`, err.message);
-      if (concepts.length === 0 && i === count - 1) {
-        throw err;
-      }
-    }
+  if (concepts.length === 0) {
+    // Fallback if image generation fails entirely
+    const { generateLogoFromScratch } = await import('./flux.service');
+    return generateLogoFromScratch({
+      brandName,
+      archetypeId,
+      preferredColors,
+      fontStyle,
+      styleKeywords,
+      industry,
+      count,
+    });
   }
 
   return concepts;
 }
+

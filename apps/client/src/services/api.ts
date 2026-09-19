@@ -11,7 +11,10 @@ import { MOCK_BRAND_NAMES, MOCK_LOGOS_BY_STYLE } from '../mock/mockData';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || '/api',
-  timeout: 45_000,
+  // The agent chat runs a multi-round tool loop on top of a reasoning model and,
+  // for logo/certificate requests, waits on FLUX.2 image generation. Observed
+  // end-to-end times run 20-100s, so 45s cut real answers off mid-flight.
+  timeout: 180_000,
 });
 
 api.interceptors.response.use(
@@ -21,6 +24,32 @@ api.interceptors.response.use(
     return Promise.reject(new Error(msg));
   }
 );
+
+export interface ChatToolCallLog {
+  name: string;
+  ok: boolean;
+  summary: string;
+}
+
+export interface ChatApiResponse {
+  reply: string;
+  suggestions?: string[];
+  detectedIntent: 'greeting' | 'new_brand' | 'refine' | 'question';
+  extractedBrief?: {
+    businessName?: string;
+    industry?: string;
+    tone?: string;
+    targetAudience?: string;
+    mission?: string;
+  };
+  toolCalls?: ChatToolCallLog[];
+  canvasPatch?: Record<string, any>;
+  names?: Array<{ id: string; name: string; tagline?: string; meaning?: string; palette?: any; fonts?: any }>;
+  logos?: Array<{ id: string; url: string; style: string; mode?: string; assetId?: string }>;
+  assets?: Array<{ id: string; kind: string; label: string; url?: string }>;
+  projectId?: string;
+  exportedKit?: any;
+}
 
 export const brandApi = {
   // Generate Brand Names, Taglines, and Visual Direction
@@ -74,23 +103,12 @@ export const brandApi = {
     }
   },
 
-  // Conversational Agent Chat powered by Groq (GPT OSS 120B)
+  // Conversational Agent Chat powered by Groq (GPT OSS 120B) with server-side tools
   chat: async (params: {
     message: string;
     history?: Array<{ sender: 'user' | 'assistant'; text: string }>;
     currentContext?: any;
-  }): Promise<{
-    reply: string;
-    suggestions?: string[];
-    detectedIntent: 'greeting' | 'new_brand' | 'refine' | 'question';
-    extractedBrief?: {
-      businessName?: string;
-      industry?: string;
-      tone?: string;
-      targetAudience?: string;
-      mission?: string;
-    };
-  }> => {
+  }): Promise<ChatApiResponse> => {
     const res = await api.post('/brand/chat', params);
     return res.data;
   },
