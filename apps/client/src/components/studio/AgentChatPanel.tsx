@@ -10,6 +10,7 @@ import {
   ChevronRight,
   RotateCcw,
   ArrowRight,
+  Plus,
 } from 'lucide-react';
 
 export const AgentChatPanel: React.FC = () => {
@@ -199,44 +200,71 @@ export const AgentChatPanel: React.FC = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Docked Prompt Bar */}
-      <div className="p-3 bg-white border-t border-slate-200 flex-shrink-0 space-y-2">
+      {/* Replit-Style Docked Prompt Bar */}
+      <div className="p-3 bg-white border-t border-slate-200/90 flex-shrink-0 space-y-2">
+        {/* Quick Suggestion Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar text-[10px]">
           <button
-            onClick={() => sendChatMessage('We are building a coffee business and looking to have a brand')}
-            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-100 hover:bg-brand-50 text-slate-700 hover:text-brand-700 transition-colors border border-slate-200/70"
+            onClick={() => sendChatMessage('We are building a coffee business named Ceramiq')}
+            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-100 hover:bg-orange-50 text-slate-700 hover:text-orange-700 transition-colors border border-slate-200/70 font-medium"
           >
-            ☕ Coffee Roastery
+            ☕ Coffee 'Ceramiq'
           </button>
           <button
-            onClick={() => sendChatMessage('Streetwear and sneaker label for urban Gen Z creators')}
-            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-100 hover:bg-brand-50 text-slate-700 hover:text-brand-700 transition-colors border border-slate-200/70"
+            onClick={() => sendChatMessage('Streetwear and sneaker label called Kinetics')}
+            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-100 hover:bg-purple-50 text-slate-700 hover:text-purple-700 transition-colors border border-slate-200/70 font-medium"
           >
-            👟 Streetwear
+            👟 Streetwear 'Kinetics'
           </button>
           <button
-            onClick={() => sendChatMessage('Autonomous AI agent cloud platform')}
-            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-100 hover:bg-brand-50 text-slate-700 hover:text-brand-700 transition-colors border border-slate-200/70"
+            onClick={() => sendChatMessage('Autonomous AI agent cloud platform named Nexa')}
+            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-700 transition-colors border border-slate-200/70 font-medium"
           >
-            ⚡ AI SaaS
+            ⚡ AI SaaS 'Nexa'
           </button>
         </div>
 
-        <form onSubmit={handleSend} className="relative">
-          <input
-            type="text"
+        {/* Replit Styled Multi-Line Card Box */}
+        <form
+          onSubmit={handleSend}
+          className="w-full bg-white rounded-2xl border-2 border-slate-200 hover:border-slate-300 focus-within:border-[#F97356] focus-within:ring-4 focus-within:ring-orange-500/10 transition-all p-2.5 shadow-2xs relative text-left"
+        >
+          <textarea
             value={inputVal}
             onChange={(e) => setInputVal(e.target.value)}
-            placeholder="Prompt Upstream Agent (e.g. We are building a coffee business...)"
-            className="w-full pl-3.5 pr-10 py-2.5 rounded-2xl bg-slate-50 border border-slate-200/90 text-xs text-slate-900 focus:outline-none focus:border-brand-500 focus:bg-white focus:ring-2 focus:ring-brand-500/10 transition-all placeholder:text-slate-400"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSend();
+              }
+            }}
+            placeholder="Build a brand for... (e.g. Specialty coffee roastery named Ceramiq, or a streetwear label)"
+            rows={2}
+            className="w-full resize-none text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none bg-transparent leading-relaxed"
           />
-          <button
-            type="submit"
-            disabled={!inputVal.trim()}
-            className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1.5 rounded-xl bg-slate-950 text-white disabled:opacity-25 hover:bg-brand-600 transition-colors shadow-2xs"
-          >
-            <Send className="w-3.5 h-3.5" />
-          </button>
+
+          {/* Bottom Actions Row inside Box */}
+          <div className="flex items-center justify-between pt-1 border-t border-slate-100 mt-1">
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+                title="Add context or attachments"
+              >
+                <Plus className="w-3.5 h-3.5" />
+              </button>
+              <span className="text-[10px] text-slate-400 font-mono">Press ↵</span>
+            </div>
+
+            <button
+              type="submit"
+              disabled={!inputVal.trim()}
+              className="w-6 h-6 rounded-full bg-[#F97356] disabled:bg-slate-200 text-white disabled:text-slate-400 flex items-center justify-center transition-all shadow-2xs hover:scale-105 active:scale-95 disabled:hover:scale-100"
+              title="Send to Upstream Agent"
+            >
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </form>
       </div>
     </div>
