@@ -1,53 +1,97 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useBrandStore } from '../../store/brandStore';
-import { ChatPane } from './ChatPane';
-import { BrandInputForm } from '../forms/BrandInputForm';
-import { BrandResultsGrid } from '../brand/BrandResultsGrid';
-import { VisualFlowGuide } from '../brand/VisualFlowGuide';
-import { LogoGenerationView } from '../brand/LogoGenerationView';
-import { BrandIdentityCard } from '../brand/BrandIdentityCard';
-import {
-  RotateCcw,
-  ArrowLeft,
-  ArrowRight,
-  RefreshCw,
-  ExternalLink,
-  Code2,
-  Eye,
-  FileText,
-  Download,
-  CheckCircle2,
-  ChevronDown,
-  Layers,
-  Sparkles,
-  SlidersHorizontal,
-} from 'lucide-react';
+import { AgentChatPanel } from './AgentChatPanel';
+import { AgentWorkspace } from './AgentWorkspace';
+import { Download, RotateCcw } from 'lucide-react';
 
 export const StudioLayout: React.FC = () => {
   const {
-    step,
-    setStep,
     input,
     selectedName,
+    hasConfirmedName,
     setViewMode,
+    isNameModalOpen,
+    isTaglineModalOpen,
+    isPaletteModalOpen,
+    isLogoModalOpen,
+    setStep,
     reset,
   } = useBrandStore();
 
-  const [previewTab, setPreviewTab] = useState<'canvas' | 'tokens' | 'export'>('canvas');
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  // Resizable Panels State with persistence
+  const [chatWidth, setChatWidth] = useState<number>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('upstream_chat_width');
+      if (saved) {
+        const parsed = parseInt(saved, 10);
+        if (!isNaN(parsed) && parsed >= 280 && parsed <= 900) {
+          return parsed;
+        }
+      }
+    }
+    return 420;
+  });
 
-  const handleRefresh = () => {
-    setIsRefreshing(true);
-    setTimeout(() => setIsRefreshing(false), 500);
-  };
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    setIsDragging(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isDragging) return;
+
+    const handleMove = (clientX: number) => {
+      const minWidth = 280;
+      const maxWidth = Math.max(minWidth, Math.min(window.innerWidth - 380, 850));
+      const newWidth = Math.max(minWidth, Math.min(clientX, maxWidth));
+      setChatWidth(newWidth);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      handleMove(e.clientX);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        handleMove(e.touches[0].clientX);
+      }
+    };
+
+    const handleEnd = () => {
+      setIsDragging(false);
+      localStorage.setItem('upstream_chat_width', chatWidth.toString());
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleEnd);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', handleEnd);
+
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleEnd);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleEnd);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+  }, [isDragging, chatWidth]);
 
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#F8F6FE] text-slate-900 font-sans">
       {/* ============================================================ */}
-      {/* REPLIT TOP IDE HEADER BAR */}
+      {/* TOP AGENT PORTAL HEADER (No top options patch) */}
       {/* ============================================================ */}
       <header className="h-12 border-b border-slate-200/90 bg-white px-4 flex items-center justify-between flex-shrink-0 z-30 select-none">
-        {/* Left: Project Brand & Status */}
         <div className="flex items-center gap-3">
           <button
             onClick={() => setViewMode('landing')}
@@ -63,54 +107,40 @@ export const StudioLayout: React.FC = () => {
 
           <div className="h-4 w-[1px] bg-slate-200" />
 
-          {/* Project & Active Name Pill */}
           <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-100/90 text-xs font-semibold text-slate-700">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="truncate max-w-[140px]">{input.industry}</span>
-            <span className="text-slate-400">/</span>
-            <strong className="text-brand-700 font-bold">{selectedName.name}</strong>
+            <span className="truncate max-w-[160px]">{input.industry || 'Brand Venture'}</span>
+            {hasConfirmedName && (
+              <>
+                <span className="text-slate-400">/</span>
+                <strong className="text-brand-700 font-bold">{selectedName.name}</strong>
+              </>
+            )}
           </div>
         </div>
 
-        {/* Center: Replit Stage Navigator Segmented Bar */}
-        <div className="hidden md:flex items-center bg-slate-100/90 rounded-full p-1 border border-slate-200/60 shadow-2xs">
-          {[
-            { s: 1, label: '1. Brief' },
-            { s: 2, label: '2. Names (5)' },
-            { s: 3, label: '3. Palette & Fonts' },
-            { s: 4, label: '4. Logos (5)' },
-            { s: 5, label: '5. Download As...' },
-          ].map((item) => (
-            <button
-              key={item.s}
-              onClick={() => {
-                setStep(item.s as any);
-                setPreviewTab('canvas');
-              }}
-              className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                step === item.s
-                  ? 'bg-slate-950 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Right: Quick Actions */}
         <div className="flex items-center gap-2">
+          {hasConfirmedName && (
+            <button
+              onClick={() => setStep(5)}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-50 hover:bg-brand-100 text-brand-700 text-xs font-bold border border-brand-200 transition-colors"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Export Kit</span>
+            </button>
+          )}
+
           <button
-            onClick={() => setStep(5)}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-50 hover:bg-brand-100 text-brand-700 text-xs font-bold border border-brand-200 transition-colors"
+            onClick={reset}
+            className="p-1.5 rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+            title="Reset Session"
           >
-            <Download className="w-3.5 h-3.5" />
-            <span>Export Card</span>
+            <RotateCcw className="w-3.5 h-3.5" />
           </button>
 
           <button
             onClick={() => setViewMode('landing')}
-            className="px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors"
+            className="px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors"
           >
             Home
           </button>
@@ -118,105 +148,49 @@ export const StudioLayout: React.FC = () => {
       </header>
 
       {/* ============================================================ */}
-      {/* MAIN TWO-PANEL WORKSPACE (REPLIT AGENT + REPLIT CANVAS) */}
+      {/* MAIN TWO-PANEL WORKSPACE (Chat Interface on Left, Workspace Cards on Right) */}
       {/* ============================================================ */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* LEFT PANEL: REPLIT AGENT CONSOLE (~38% width) */}
-        <div className="w-full md:w-[380px] lg:w-[420px] flex-shrink-0 h-full">
-          <ChatPane />
+      <div className={`flex-1 flex overflow-hidden relative ${isDragging ? 'select-none' : ''}`}>
+        {/* Left Panel: Chat Interface */}
+        <div
+          style={{ width: `${chatWidth}px` }}
+          className="max-md:!w-full flex-shrink-0 h-full overflow-hidden"
+        >
+          <AgentChatPanel />
         </div>
 
-        {/* RIGHT PANEL: REPLIT WORKSPACE PREVIEW WINDOW */}
-        <div className="flex-1 h-full flex flex-col overflow-hidden bg-slate-50/70 border-l border-slate-200/90">
-          {/* Replit Browser / Window Bar */}
-          <div className="h-10 border-b border-slate-200/90 bg-white px-3 flex items-center justify-between flex-shrink-0">
-            {/* Left: Window controls & URL Pill */}
-            <div className="flex items-center gap-2 flex-1 max-w-lg">
-              <button
-                onClick={handleRefresh}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
-                title="Reload Preview"
-              >
-                <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
-              </button>
-
-              <div className="flex-1 px-3 py-1 rounded-xl bg-slate-100/90 text-slate-600 text-[11px] font-mono flex items-center justify-between border border-slate-200/60 truncate">
-                <span className="truncate">upstream://workspace/preview/step-{step}-{['brief', 'names', 'palette', 'logos', 'export'][step - 1]}</span>
-                <span className="text-[10px] text-emerald-600 font-bold ml-2">● LIVE</span>
-              </div>
-            </div>
-
-            {/* Right: Workspace Tab Switcher */}
-            <div className="flex items-center gap-1 bg-slate-100/90 rounded-lg p-0.5 text-[11px] font-semibold text-slate-600 ml-3">
-              <button
-                onClick={() => setPreviewTab('canvas')}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-md transition-all ${
-                  previewTab === 'canvas' ? 'bg-white text-slate-900 shadow-2xs font-bold' : 'hover:text-slate-900'
-                }`}
-              >
-                <Eye className="w-3 h-3 text-brand-600" />
-                <span>Canvas</span>
-              </button>
-              <button
-                onClick={() => setPreviewTab('tokens')}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-md transition-all ${
-                  previewTab === 'tokens' ? 'bg-white text-slate-900 shadow-2xs font-bold' : 'hover:text-slate-900'
-                }`}
-              >
-                <Code2 className="w-3 h-3 text-coral-500" />
-                <span>Tokens Spec</span>
-              </button>
-              <button
-                onClick={() => {
-                  setStep(5);
-                  setPreviewTab('canvas');
-                }}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-md transition-all ${
-                  step === 5 && previewTab === 'canvas' ? 'bg-white text-slate-900 shadow-2xs font-bold' : 'hover:text-slate-900'
-                }`}
-              >
-                <FileText className="w-3 h-3 text-blue-500" />
-                <span>Export PDF</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Replit Canvas Body */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6">
-            {previewTab === 'tokens' ? (
-              /* Tokens JSON Spec View */
-              <div className="max-w-3xl mx-auto rounded-3xl bg-slate-950 text-slate-100 p-6 font-mono text-xs shadow-xl space-y-3">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-                  <span className="text-brand-400 font-bold">// Generated Design Tokens for {selectedName.name}</span>
-                  <span className="text-[10px] text-slate-500">format: JSON Spec</span>
-                </div>
-                <pre className="overflow-x-auto text-[11px] leading-relaxed text-emerald-400">
-                  {JSON.stringify(
-                    {
-                      name: selectedName.name,
-                      tagline: selectedName.tagline,
-                      industry: input.industry,
-                      palette: selectedName.visualDirection.palette,
-                      typography: selectedName.visualDirection.fonts,
-                      domains: selectedName.domainAvailability,
-                    },
-                    null,
-                    2
-                  )}
-                </pre>
-              </div>
-            ) : (
-              /* Step-by-Step Canvas View */
-              <div className="max-w-4xl mx-auto">
-                {step === 1 && <BrandInputForm />}
-                {step === 2 && <BrandResultsGrid />}
-                {step === 3 && <VisualFlowGuide />}
-                {step === 4 && <LogoGenerationView />}
-                {step === 5 && <BrandIdentityCard />}
-              </div>
-            )}
-          </div>
+        {/* Resizable Divider Handle (Visible on md+) */}
+        <div
+          onMouseDown={handleMouseDown}
+          onTouchStart={handleTouchStart}
+          onDoubleClick={() => {
+            setChatWidth(420);
+            localStorage.setItem('upstream_chat_width', '420');
+          }}
+          title="Drag to resize panels (Double-click to reset)"
+          className={`hidden md:flex items-center justify-center w-2 -ml-[1px] relative z-20 cursor-col-resize group transition-colors duration-150 flex-shrink-0 select-none ${
+            isDragging
+              ? 'bg-brand-500 ring-2 ring-brand-400/40'
+              : 'bg-slate-200/90 hover:bg-brand-400'
+          }`}
+        >
+          {/* Subtle tactile grip pill */}
+          <div
+            className={`w-0.5 h-8 rounded-full transition-colors ${
+              isDragging ? 'bg-white' : 'bg-slate-400 group-hover:bg-white'
+            }`}
+          />
         </div>
+
+        {/* Right Panel: Workspace Canvas */}
+        <div className="flex-1 h-full flex flex-col overflow-hidden min-w-[340px]">
+          <AgentWorkspace />
+        </div>
+
+        {/* Transparent overlay during dragging to prevent child pointer event interception */}
+        {isDragging && (
+          <div className="fixed inset-0 z-50 cursor-col-resize select-none" />
+        )}
       </div>
     </div>
   );

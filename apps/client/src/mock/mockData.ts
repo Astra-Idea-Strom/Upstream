@@ -505,17 +505,249 @@ export const MOCK_LOGOS_BY_STYLE: Record<string, LogoConcept[]> = {
   ],
 };
 
+export const COFFEE_BRAND_NAMES: BrandName[] = [
+  {
+    id: 'coffee_01',
+    name: 'Ceramiq',
+    meaning: 'A sleek, contemporary play on ceramic craft, evoking earthy warmth and tactile espresso precision.',
+    tagline: 'Warmth in every pour.',
+    domainAvailability: {
+      com: true,
+      io: true,
+      co: true,
+      handle: { twitter: true, instagram: true },
+    },
+    visualDirection: {
+      palette: [
+        { hex: '#D97706', name: 'Terracotta Glaze', role: 'primary' },
+        { hex: '#FDE68A', name: 'Warm Cream', role: 'secondary' },
+        { hex: '#7C3AED', name: 'Artisan Purple', role: 'accent' },
+        { hex: '#FDFBF7', name: 'Linen Paper', role: 'background' },
+        { hex: '#451A03', name: 'Dark Roast', role: 'text' },
+      ],
+      fonts: {
+        headline: 'Outfit',
+        body: 'Merriweather',
+        headlineWeight: '700',
+        bodyWeight: '400',
+      },
+      styleDescription: 'Artisanal, cozy sophistication celebrating handmade texture and organic coffee rituals.',
+    },
+  },
+  {
+    id: 'coffee_02',
+    name: 'Terroir',
+    meaning: 'Celebrating micro-lot single-origin beans, high-altitude soil, and transparent direct-trade terroir.',
+    tagline: 'Crafted from origin to cup.',
+    domainAvailability: {
+      com: false,
+      io: true,
+      co: true,
+      handle: { twitter: true, instagram: true },
+    },
+    visualDirection: {
+      palette: [
+        { hex: '#78350F', name: 'Raw Espresso', role: 'primary' },
+        { hex: '#B45309', name: 'Amber Caramel', role: 'secondary' },
+        { hex: '#10B981', name: 'Cherry Sprout', role: 'accent' },
+        { hex: '#FEFBF6', name: 'Parchment', role: 'background' },
+        { hex: '#29180C', name: 'Dark Bean', role: 'text' },
+      ],
+      fonts: {
+        headline: 'Playfair Display',
+        body: 'Inter',
+        headlineWeight: '700',
+        bodyWeight: '400',
+      },
+      styleDescription: 'Heritage roastery aesthetics with vintage stamp details and earthy organic tones.',
+    },
+  },
+  {
+    id: 'coffee_03',
+    name: 'Crema',
+    meaning: 'The golden crown of an extraction, denoting velvet mouthfeel, warmth, and daily morning luxury.',
+    tagline: 'Pure ritual, daily poured.',
+    domainAvailability: {
+      com: true,
+      io: false,
+      co: true,
+      handle: { twitter: true, instagram: false },
+    },
+    visualDirection: {
+      palette: [
+        { hex: '#92400E', name: 'Rich Crema', role: 'primary' },
+        { hex: '#FCD34D', name: 'Morning Glow', role: 'secondary' },
+        { hex: '#FB7185', name: 'Rose Hibiscus', role: 'accent' },
+        { hex: '#FFFBEB', name: 'Warm Froth', role: 'background' },
+        { hex: '#1C1917', name: 'Stoneware', role: 'text' },
+      ],
+      fonts: {
+        headline: 'Plus Jakarta Sans',
+        body: 'Inter',
+        headlineWeight: '800',
+        bodyWeight: '400',
+      },
+      styleDescription: 'Minimalist Scandinavian café atmosphere with bright warm lighting and soft tactile contrasts.',
+    },
+  },
+  {
+    id: 'coffee_04',
+    name: 'Veloce',
+    meaning: 'Inspired by Italian espresso speed and precision thermodynamics, engineered for energetic modern mornings.',
+    tagline: 'Roasted with relentless precision.',
+    domainAvailability: {
+      com: true,
+      io: true,
+      co: false,
+      handle: { twitter: true, instagram: true },
+    },
+    visualDirection: {
+      palette: [
+        { hex: '#EA580C', name: 'Electric Ochre', role: 'primary' },
+        { hex: '#3B82F6', name: 'Cold Brew Blue', role: 'secondary' },
+        { hex: '#FACC15', name: 'Citrus Zest', role: 'accent' },
+        { hex: '#F8FAFC', name: 'Clean Steam', role: 'background' },
+        { hex: '#0F172A', name: 'Cast Iron', role: 'text' },
+      ],
+      fonts: {
+        headline: 'Outfit',
+        body: 'Inter',
+        headlineWeight: '700',
+        bodyWeight: '500',
+      },
+      styleDescription: 'High-energy contemporary espresso lab with industrial lines and vibrant accents.',
+    },
+  },
+  {
+    id: 'coffee_05',
+    name: 'Amber Mill',
+    meaning: 'Echoing the gentle turning of heirloom stone mills and sunbaked parchment coffee cherries.',
+    tagline: 'Awaken the subtle nuance.',
+    domainAvailability: {
+      com: true,
+      io: true,
+      co: true,
+      handle: { twitter: false, instagram: true },
+    },
+    visualDirection: {
+      palette: [
+        { hex: '#854D0E', name: 'Sunlit Amber', role: 'primary' },
+        { hex: '#EAB308', name: 'Golden Honey', role: 'secondary' },
+        { hex: '#7C3AED', name: 'Electric Violet', role: 'accent' },
+        { hex: '#FAFAF9', name: 'Natural Kraft', role: 'background' },
+        { hex: '#1C1917', name: 'Roasted Bean', role: 'text' },
+      ],
+      fonts: {
+        headline: 'Playfair Display',
+        body: 'Merriweather',
+        headlineWeight: '700',
+        bodyWeight: '400',
+      },
+      styleDescription: 'Warm, thoughtful craftsmanship that sits gracefully on boutique kraft bags and ceramic mugs.',
+    },
+  },
+];
+
+export interface BrandTaglineOption {
+  id: string;
+  tagline: string;
+  angle: string;
+  tone: string;
+}
+
+export const MOCK_TAGLINES_BY_BRAND: Record<string, BrandTaglineOption[]> = {
+  Ceramiq: [
+    { id: 't1', tagline: 'Warmth in every pour.', angle: 'Artisanal & Cozy', tone: 'Evokes tactile stoneware mugs and single-origin comfort' },
+    { id: 't2', tagline: 'Rooted in origin, crafted in ceramic.', angle: 'Terroir & Craft', tone: 'Highlights ethical sourcing and handmade coffee rituals' },
+    { id: 't3', tagline: 'Pure heirloom extraction, daily ritual.', angle: 'Modern Minimalist', tone: 'Focuses on precision roasting and deliberate mornings' },
+    { id: 't4', tagline: 'The architecture of morning coffee.', angle: 'Design-Forward', tone: 'Sophisticated appeal for boutique roastery spaces' },
+  ],
+  Terroir: [
+    { id: 't1', tagline: 'Crafted from origin to cup.', angle: 'Heritage & Direct Trade', tone: 'Direct relationship with high-altitude growers' },
+    { id: 't2', tagline: 'Soil, altitude, climate, craft.', angle: 'Terroir Science', tone: 'Celebrates micro-climates and elevation' },
+    { id: 't3', tagline: 'Single-origin honesty in every roast.', angle: 'Ethical Purism', tone: 'Transparent, uncompromised coffee bean processing' },
+    { id: 't4', tagline: 'Taste the mountain.', angle: 'Punchy & Memorable', tone: 'Bold sensory connection with volcanic soils' },
+  ],
+  Crema: [
+    { id: 't1', tagline: 'Pure ritual, daily poured.', angle: 'Scandinavian Minimal', tone: 'Serene morning routine for specialty coffee fans' },
+    { id: 't2', tagline: 'The golden crown of your morning.', angle: 'Sensory Luxury', tone: 'Celebrates the rich velvet extraction of espresso' },
+    { id: 't3', tagline: 'Velvet extractions for curious palates.', angle: 'Craft Lab', tone: 'Experimental yet approachable roaster culture' },
+    { id: 't4', tagline: 'Crafted slow, enjoyed pure.', angle: 'Mindful Living', tone: 'Anti-rush, high-quality artisanal enjoyment' },
+  ],
+  Veloce: [
+    { id: 't1', tagline: 'Roasted with relentless precision.', angle: 'High-Precision', tone: 'Thermodynamic roasting profiles and digital consistency' },
+    { id: 't2', tagline: 'Speed, clarity, morning ignition.', angle: 'Urban Momentum', tone: 'High-energy espresso for driven innovators' },
+    { id: 't3', tagline: 'Precision espresso for unstoppable days.', angle: 'Performance Lifestyle', tone: 'Italian speed merged with third-wave standards' },
+    { id: 't4', tagline: 'Engineered for pure clarity.', angle: 'Modernist Tech', tone: 'Clean extraction without bitterness' },
+  ],
+  'Amber Mill': [
+    { id: 't1', tagline: 'Awaken the subtle nuance.', angle: 'Poetic & Sensory', tone: 'Highlights delicate florals, stone fruits, and honey notes' },
+    { id: 't2', tagline: 'Heirloom stone mills, slow-roasted beans.', angle: 'Old-World Craft', tone: 'Honoring traditional milling and sun-dried cherries' },
+    { id: 't3', tagline: 'From sunbaked cherries to golden cups.', angle: 'Natural Process', tone: 'Story of warmth and golden extraction' },
+    { id: 't4', tagline: 'Tradition ground with reverence.', angle: 'Heritage Roaster', tone: 'Resonant and trustworthy branding' },
+  ],
+  Kinetics: [
+    { id: 't1', tagline: 'Unstoppable momentum in every stride.', angle: 'Kinetic Energy', tone: 'High-impact streetwear and performance athletic posture' },
+    { id: 't2', tagline: 'Engineered for movement, built for street.', angle: 'Architectural Street', tone: 'Brutalist lines and urban durability' },
+    { id: 't3', tagline: 'Brutalist lines. Zero hesitation.', angle: 'Bold Minimal', tone: 'Short, commanding, Gen-Z resonant' },
+    { id: 't4', tagline: 'Defy the standard silhouette.', angle: 'Forward Avant-Garde', tone: 'Limited-edition drop culture and high design' },
+  ],
+  Synapse: [
+    { id: 't1', tagline: 'Where intelligence connects.', angle: 'Neural Innovation', tone: 'Next-generation AI frameworks and high-bandwidth thought' },
+    { id: 't2', tagline: 'The neural layer for autonomous work.', angle: 'Agentic Infrastructure', tone: 'Developer-first automation and orchestration' },
+    { id: 't3', tagline: 'Code at the speed of thought.', angle: 'High-Velocity Developer', tone: 'Ultra-low latency and frictionless tooling' },
+    { id: 't4', tagline: 'Cognitive power, unlocked.', angle: 'Enterprise AI', tone: 'Authoritative, scalable cloud intelligence' },
+  ],
+  Verdura: [
+    { id: 't1', tagline: 'Pure earth. Luminous skin.', angle: 'Clean Botanical', tone: 'Alpine botanical extracts and gentle daily radiance' },
+    { id: 't2', tagline: 'Wildcrafted botanicals, clinical results.', angle: 'Derm-Botanical', tone: 'Balances nature with proven active ingredients' },
+    { id: 't3', tagline: 'Skin rituals from alpine soil.', angle: 'Slow Beauty', tone: 'Tactile morning ritual and mindful packaging' },
+    { id: 't4', tagline: 'Nourish without compromise.', angle: 'Conscious Purity', tone: 'Zero-waste, cruelty-free certification' },
+  ],
+};
+
+export function getTaglinesForBrand(brandName: string, industry?: string): BrandTaglineOption[] {
+  if (MOCK_TAGLINES_BY_BRAND[brandName]) {
+    return MOCK_TAGLINES_BY_BRAND[brandName];
+  }
+  return [
+    { id: 't_def_1', tagline: `${brandName}. Designed for what matters.`, angle: 'Strategic Clarity', tone: 'Direct, modern, and memorable' },
+    { id: 't_def_2', tagline: `Redefining ${industry ? industry.split(' ')[0] : 'the category'}.`, angle: 'Category Definer', tone: 'Bold and authoritative positioning' },
+    { id: 't_def_3', tagline: `Pure craft. Zero compromise.`, angle: 'High Integrity', tone: 'Speaks to premium craftsmanship and quality' },
+    { id: 't_def_4', tagline: `Engineered for modern momentum.`, angle: 'Dynamic Innovation', tone: 'Contemporary and forward-looking' },
+  ];
+}
+
+export function getNamesForConcept(industryOrPrompt: string): BrandName[] {
+  const lower = industryOrPrompt.toLowerCase();
+  if (
+    lower.includes('coffee') ||
+    lower.includes('cofee') ||
+    lower.includes('coffe') ||
+    lower.includes('cafe') ||
+    lower.includes('roast') ||
+    lower.includes('brew') ||
+    lower.includes('espresso') ||
+    lower.includes('latte') ||
+    lower.includes('cappuccino') ||
+    lower.includes('bean')
+  ) {
+    return COFFEE_BRAND_NAMES;
+  }
+  return MOCK_BRAND_NAMES.slice(0, 5);
+}
+
 export const INITIAL_CHAT_MESSAGES = [
   {
     id: 'm1',
     sender: 'assistant' as const,
-    text: "Hello! I'm your Upstream AI Brand Co-pilot. I can help refine your business concept, suggest punchy taglines, tailor your visual palette, or critique name ideas. What are you building today?",
+    text: "Hello! I'm your Upstream Autonomous Brand Agent. Describe your business vision or startup idea (e.g. \"We are building a coffee business and looking to have a brand\"), and I will autonomously guide you step-by-step: Names ➜ Taglines ➜ Color Harmonies ➜ Visual Flow ➜ Vector Logos ➜ Investor Brand Kit.",
     timestamp: 'Just now',
     suggestions: [
-      'Give me luxury boutique name ideas',
-      'Make my brand tone more playful',
-      'Suggest a 5-color palette for Gen Z footwear',
-      'Help me craft a 6-word brand mission',
+      'We are building a coffee business and looking to have a brand',
+      'Streetwear & sneaker apparel for Gen Z',
+      'Autonomous AI cloud platform for developers',
+      'Organic botanical skincare ritual brand',
     ],
   },
 ];

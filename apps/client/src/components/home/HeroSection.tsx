@@ -56,7 +56,7 @@ export const HeroSection: React.FC = () => {
               {/* Primary Action Button: Build Identity */}
               <div className="mt-8 flex items-center gap-4">
                 <button
-                  onClick={startIdentityCreation}
+                  onClick={() => startIdentityCreation()}
                   className="px-8 py-4 rounded-full bg-slate-950 hover:bg-brand-600 text-white font-bold text-sm transition-all flex items-center gap-3 shadow-xl shadow-slate-900/15 hover:shadow-brand-500/25 group"
                 >
                   <span>Build the Identity</span>
