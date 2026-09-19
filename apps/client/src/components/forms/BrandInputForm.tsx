@@ -33,6 +33,8 @@ const TONE_OPTIONS: ToneOption[] = [
   { id: 'professional', label: 'Professional', desc: 'Trustworthy, executive, stable', icon: <ShieldCheck className="w-3.5 h-3.5 text-purple-500" /> },
 ];
 
+import { PREBUILT_THEMES } from '../../mock/mockData';
+
 export const BrandInputForm: React.FC = () => {
   const {
     input,
@@ -44,6 +46,20 @@ export const BrandInputForm: React.FC = () => {
   } = useBrandStore();
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [activePreset, setActivePreset] = useState<string | null>(null);
+
+  const handlePresetClick = (themeId: string) => {
+    const theme = PREBUILT_THEMES.find((t) => t.id === themeId);
+    if (!theme) return;
+    setActivePreset(themeId);
+    setInput({
+      industry: theme.defaultInput.industry,
+      targetAudience: theme.defaultInput.targetAudience,
+      mission: theme.defaultInput.mission,
+      tone: theme.defaultInput.tone,
+      constraints: theme.defaultInput.constraints,
+    });
+  };
 
   const validate = () => {
     const errs: Record<string, string> = {};
@@ -67,10 +83,18 @@ export const BrandInputForm: React.FC = () => {
     }, 1000);
   };
 
+  const PRESET_LABELS: Record<string, { label: string; emoji: string }> = {
+    'sustainable-productivity': { label: 'Sustainable Productivity', emoji: '🌿' },
+    'specialty-coffee': { label: 'Specialty Coffee', emoji: '☕' },
+    'clothes-shoes': { label: 'Streetwear', emoji: '👟' },
+    'tech-saas': { label: 'AI & SaaS', emoji: '🤖' },
+    'botanical-wellness': { label: 'Botanical Wellness', emoji: '🌸' },
+  };
+
   return (
     <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-xs">
       {/* Header */}
-      <div className="mb-6 pb-4 border-b border-slate-100 flex items-center justify-between">
+      <div className="mb-5 pb-4 border-b border-slate-100 flex items-center justify-between">
         <div>
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/70 text-[10px] font-bold text-brand-800 mb-1">
             <Sparkles className="w-3 h-3 text-coral-500" />
@@ -89,9 +113,44 @@ export const BrandInputForm: React.FC = () => {
           onClick={handleSubmit}
           className="px-5 py-2.5 rounded-full bg-slate-950 hover:bg-brand-600 text-white font-bold text-xs transition-all flex items-center gap-2 shadow-xs"
         >
-          <span>Generate 5 Names</span>
+          <span>Generate 12 Brand Identities</span>
           <ChevronRight className="w-3.5 h-3.5" />
         </button>
+      </div>
+
+      {/* Quick Preset Pills */}
+      <div className="mb-5">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Quick Presets</span>
+        <div className="flex flex-wrap gap-1.5">
+          {PREBUILT_THEMES.filter((t) => PRESET_LABELS[t.id]).map((theme) => {
+            const meta = PRESET_LABELS[theme.id];
+            if (!meta) return null;
+            return (
+              <button
+                key={theme.id}
+                type="button"
+                onClick={() => handlePresetClick(theme.id)}
+                className={`px-3 py-1 rounded-full text-[11px] font-semibold border transition-all ${
+                  activePreset === theme.id
+                    ? 'bg-slate-950 text-white border-slate-950'
+                    : 'bg-white text-slate-600 border-slate-200 hover:border-slate-400 hover:text-slate-900'
+                }`}
+              >
+                {meta.emoji} {meta.label}
+              </button>
+            );
+          })}
+          <button
+            type="button"
+            onClick={() => {
+              setActivePreset(null);
+              setInput({ industry: '', targetAudience: '', mission: '', tone: 'minimalist', constraints: '' });
+            }}
+            className="px-3 py-1 rounded-full text-[11px] font-medium border border-slate-200 text-slate-400 hover:text-slate-700 transition-all"
+          >
+            ✕ Clear
+          </button>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -273,7 +332,7 @@ export const BrandInputForm: React.FC = () => {
         <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
           <span className="text-xs text-slate-500 flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5 text-coral-500" />
-            <span>Generates 5 brand names, taglines, color palettes & vector logos</span>
+            <span>Generates 12 brand names, taglines, color palettes & vector logos</span>
           </span>
 
           <button
@@ -282,7 +341,7 @@ export const BrandInputForm: React.FC = () => {
             className="px-6 py-2.5 rounded-full bg-slate-950 hover:bg-brand-600 text-white font-bold text-xs transition-all flex items-center gap-2 shadow-xs"
           >
             <Wand2 className="w-3.5 h-3.5" />
-            <span>Generate 5 Names</span>
+            <span>{isLoadingNames ? 'Synthesizing…' : 'Generate 12 Brand Identities'}</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </div>

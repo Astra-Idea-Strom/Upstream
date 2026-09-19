@@ -65,6 +65,7 @@ export interface BrandName {
   name: string;                 // max 12 characters
   meaning: string;              // 1-sentence etymology / concept explanation
   tagline: string;              // 5-10 words, punchy and memorable
+  category?: 'invented' | 'descriptive' | 'evocative' | 'compound' | 'playful';
   domainAvailability: DomainAvailability;
   visualDirection: VisualDirection;
 }

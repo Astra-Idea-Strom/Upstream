@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useBrandStore } from '../../../store/brandStore';
-import type { BrandName, LogoStyle } from '@upstream/shared';
+import type { LogoStyle } from '@upstream/shared';
 import { LogoArtwork } from '../../brand/LogoArtwork';
-import { Check, ArrowRight, RefreshCw, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
+import { Check, ArrowRight, RefreshCw, Sparkles, ChevronDown, ChevronUp, Globe } from 'lucide-react';
+import { TwitterIcon, InstagramIcon } from '../../brand/SocialIcons';
+
+type FilterTab = 'all' | 'com-available' | 'invented' | 'descriptive' | 'evocative' | 'compound' | 'playful';
 
 export const NameSelectionCard: React.FC = () => {
   const {
@@ -20,6 +23,7 @@ export const NameSelectionCard: React.FC = () => {
   } = useBrandStore();
 
   const [expandedAltId, setExpandedAltId] = useState<string | null>(null);
+  const [activeFilter, setActiveFilter] = useState<FilterTab>('all');
 
   const handleToggleAlternatives = (brandId: string) => {
     if (expandedAltId === brandId) {
@@ -32,18 +36,34 @@ export const NameSelectionCard: React.FC = () => {
     }
   };
 
-  const displayedNames = brandNames.slice(0, 5);
+  const comAvailableCount = brandNames.filter((b) => b.domainAvailability.com).length;
+
+  const filteredNames = brandNames.filter((b) => {
+    if (activeFilter === 'all') return true;
+    if (activeFilter === 'com-available') return b.domainAvailability.com;
+    return (b as any).category === activeFilter;
+  });
+
+  const FILTER_TABS: { id: FilterTab; label: string }[] = [
+    { id: 'all', label: `All (${brandNames.length})` },
+    { id: 'com-available', label: `✓ .com (${comAvailableCount})` },
+    { id: 'invented', label: 'Invented' },
+    { id: 'descriptive', label: 'Descriptive' },
+    { id: 'evocative', label: 'Evocative' },
+    { id: 'compound', label: 'Compound' },
+    { id: 'playful', label: 'Playful' },
+  ];
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-7 shadow-xs text-left">
-      {/* Clean Minimal Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-5 mb-5 border-b border-slate-100 gap-3">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b border-slate-100 gap-3">
         <div>
           <h3 className="text-xl font-display font-bold text-slate-900 tracking-tight">
-            Curated Brand Names
+            {brandNames.length} Curated Brand Names
           </h3>
           <p className="text-xs text-slate-500 mt-0.5">
-            Select a candidate, or click <span className="font-semibold text-slate-700">Alternatives</span> on any card to explore specific taglines and marks.
+            Select a candidate · click <span className="font-semibold text-slate-700">Alternatives</span> to refine taglines & logo marks
           </p>
         </div>
 
@@ -67,14 +87,38 @@ export const NameSelectionCard: React.FC = () => {
         </div>
       </div>
 
+      {/* Category Filter Tabs */}
+      <div className="flex items-center gap-1 overflow-x-auto pb-3 mb-4 border-b border-slate-100">
+        {FILTER_TABS.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveFilter(tab.id)}
+            className={`px-3 py-1 rounded-full text-[11px] font-semibold whitespace-nowrap transition-all ${
+              activeFilter === tab.id
+                ? 'bg-slate-950 text-white shadow-2xs'
+                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
       {/* Candidates List */}
       <div className="space-y-3.5">
-        {displayedNames.map((brand, index) => {
+        {filteredNames.length === 0 && (
+          <p className="text-center text-xs text-slate-400 py-8">
+            No names match this filter. Try another category.
+          </p>
+        )}
+        {filteredNames.map((brand, index) => {
           const isSelected = selectedName?.id === brand.id;
           const headlineFont = brand.visualDirection?.fonts?.headline || 'Outfit';
           const palette = brand.visualDirection?.palette || [];
           const alternatives = nameAlternativesMap[brand.id];
           const isExpanded = expandedAltId === brand.id;
+          const da = brand.domainAvailability;
+          const category = (brand as any).category as string | undefined;
 
           return (
             <div
@@ -87,9 +131,10 @@ export const NameSelectionCard: React.FC = () => {
             >
               {/* Main Card Row */}
               <div className="p-4 sm:p-5">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div className="space-y-1.5 flex-1">
-                    <div className="flex items-center gap-2.5">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                  <div className="space-y-1.5 flex-1 min-w-0">
+                    {/* Name + Category Badge */}
+                    <div className="flex items-center gap-2.5 flex-wrap">
                       <span className="text-[11px] font-mono font-bold text-slate-400">
                         {String(index + 1).padStart(2, '0')}
                       </span>
@@ -99,42 +144,65 @@ export const NameSelectionCard: React.FC = () => {
                       >
                         {brand.name}
                       </h4>
-                      <span className="text-xs text-slate-500 italic font-serif">
-                        "{brand.tagline}"
-                      </span>
+                      {category && (
+                        <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">
+                          {category}
+                        </span>
+                      )}
                     </div>
 
+                    {/* Tagline */}
+                    <p className="text-xs text-slate-500 italic leading-snug">
+                      &ldquo;{brand.tagline}&rdquo;
+                    </p>
+
+                    {/* Meaning */}
                     <p className="text-xs text-slate-600 leading-relaxed font-normal">
                       {brand.meaning}
                     </p>
 
-                    <div className="flex flex-wrap items-center gap-2 pt-1">
-                      <span className="text-[10px] font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
-                        Aa {headlineFont}
-                      </span>
-
+                    {/* Domain + Social Availability Row */}
+                    <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                      {[
+                        { label: '.com', avail: da.com },
+                        { label: '.io', avail: da.io },
+                        { label: '.co', avail: da.co },
+                      ].map(({ label, avail }) => (
+                        <span
+                          key={label}
+                          className={`text-[10px] font-mono px-1.5 py-0.5 rounded font-bold border flex items-center gap-0.5 ${
+                            avail
+                              ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                              : 'bg-slate-50 text-slate-400 border-slate-200 line-through'
+                          }`}
+                        >
+                          <Globe className="w-2.5 h-2.5" />
+                          {avail ? '✓' : '✗'} {label}
+                        </span>
+                      ))}
                       <span
-                        className={`text-[10px] font-mono px-2 py-0.5 rounded font-medium border ${
-                          brand.domainAvailability.com
-                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                        className={`text-[10px] font-mono px-1.5 py-0.5 rounded border flex items-center gap-0.5 ${
+                          da.handle.twitter
+                            ? 'bg-sky-50 text-sky-700 border-sky-200'
                             : 'bg-slate-50 text-slate-400 border-slate-200'
                         }`}
                       >
-                        {brand.domainAvailability.com ? '✓ .com' : '✗ .com'}
+                        <TwitterIcon className="w-2.5 h-2.5" />
+                        {da.handle.twitter ? '✓' : '✗'} @twitter
                       </span>
-
                       <span
-                        className={`text-[10px] font-mono px-2 py-0.5 rounded font-medium border ${
-                          brand.domainAvailability.io
-                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                        className={`text-[10px] font-mono px-1.5 py-0.5 rounded border flex items-center gap-0.5 ${
+                          da.handle.instagram
+                            ? 'bg-pink-50 text-pink-700 border-pink-200'
                             : 'bg-slate-50 text-slate-400 border-slate-200'
                         }`}
                       >
-                        {brand.domainAvailability.io ? '✓ .io' : '✗ .io'}
+                        <InstagramIcon className="w-2.5 h-2.5" />
+                        {da.handle.instagram ? '✓' : '✗'} @instagram
                       </span>
 
                       {/* Mini Palette dots */}
-                      <div className="flex items-center -space-x-1 ml-2">
+                      <div className="flex items-center -space-x-1 ml-1">
                         {palette.map((swatch, sIdx) => (
                           <div
                             key={sIdx}

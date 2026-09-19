@@ -10,6 +10,7 @@ import {
   PREBUILT_THEMES,
   MOCK_BRAND_NAMES,
   COFFEE_BRAND_NAMES,
+  SUSTAINABLE_PRODUCTIVITY_NAMES,
   getNamesForConcept,
   getTaglinesForBrand,
   INITIAL_CHAT_MESSAGES,
@@ -173,15 +174,15 @@ interface BrandStore {
 
 const defaultInput: BrandInput = {
   businessName: '',
-  industry: 'Specialty Coffee Roastery & Micro-Café',
-  targetAudience: 'Third-wave coffee lovers, daily espresso purists, and design enthusiasts',
-  mission: 'Celebrating the nuanced terroir of heirloom coffee cherries roasted in small, carbon-neutral batches.',
-  tone: 'playful',
-  constraints: 'Warm, memorable, catchy, sounds great on ceramic mugs and kraft paper bags',
+  industry: 'Sustainable Productivity for Remote Teams',
+  targetAudience: 'Remote-first professionals, indie hackers, and distributed teams seeking mindful work-life balance',
+  mission: 'Helping remote workers achieve deep focus, reduce burnout, and build sustainable productivity habits through AI-assisted workflows.',
+  tone: 'minimalist',
+  constraints: 'Memorable, nature-inspired, sounds good in video call intros, works as a .com domain',
 };
 
-// 5 Curated Brand Names default
-const FIVE_CURATED_NAMES: BrandName[] = COFFEE_BRAND_NAMES.slice(0, 5);
+// 12 Curated Brand Names default
+const FIVE_CURATED_NAMES: BrandName[] = SUSTAINABLE_PRODUCTIVITY_NAMES;
 
 // Helper: Extract brand name if user explicitly specified one in prompt
 export function extractBrandName(text: string): string | null {
@@ -319,12 +320,12 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
     const botMsg: ChatMessage = {
       id: 'msg_bot_confirmed_' + Date.now(),
       sender: 'assistant',
-      text: `✨ **Industry Confirmed**: "${finalInput.industry}"\n\nI have generated the **Industry & Concept Card** on your right workspace. Now synthesizing 5 curated brand names with phonetic and domain availability checks...`,
+      text: `✨ **Industry Confirmed**: "${finalInput.industry}"\n\nI have generated the **Industry & Concept Card** on your right workspace. Now synthesizing **12 curated brand names** with phonetic and domain availability checks...`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       actionOptions: [
         {
           id: 'opt_open_names',
-          label: '✨ Inspect 5 Generated Names',
+          label: '✨ Inspect 12 Generated Names',
           actionType: 'open_names_modal',
         },
         {

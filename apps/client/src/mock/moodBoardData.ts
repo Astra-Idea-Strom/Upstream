@@ -188,18 +188,76 @@ export const MOODBOARD_DATABASE: Record<string, IndustryMoodBoard> = {
       },
     ],
   },
+  productivity: {
+    industry: 'Sustainable Productivity',
+    aestheticName: 'Serene Flora & Mindful Asynchronous Focus',
+    tagline: 'Deep forest greens, tactile paper notebooks, clean daylight, and unhurried systems',
+    items: [
+      {
+        id: 'p1',
+        title: 'Alpine Morning Canopy Mist',
+        category: 'texture',
+        imageUrl: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&q=80',
+        dominantHex: '#2D6A4F',
+        aspectRatio: 'landscape',
+        description: 'Serene mountain pine forest with morning dew and quiet stillness',
+        photographer: 'David Marcu',
+      },
+      {
+        id: 'p2',
+        title: 'Minimalist Asynchronous Workspace',
+        category: 'architecture',
+        imageUrl: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80',
+        dominantHex: '#1B4332',
+        aspectRatio: 'portrait',
+        description: 'Clean Scandinavian desk bathed in natural northern daylight',
+        photographer: 'Alesia Kazantceva',
+      },
+      {
+        id: 'p3',
+        title: 'Recycled Linen Notebook & Brass Pen',
+        category: 'packaging',
+        imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80',
+        dominantHex: '#52B788',
+        aspectRatio: 'square',
+        description: 'Unbleached natural paper journal for deliberate priority setting',
+        photographer: 'Green Chameleon',
+      },
+      {
+        id: 'p4',
+        title: 'Architectural Courtyard with Indoor Plants',
+        category: 'lifestyle',
+        imageUrl: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80',
+        dominantHex: '#081C15',
+        aspectRatio: 'landscape',
+        description: 'Biophilic indoor courtyard balancing modern geometry with living ferns',
+        photographer: 'Spacejoy',
+      },
+    ],
+  },
 };
 
 export function getMoodBoardForIndustry(industryStr: string): IndustryMoodBoard {
   const query = (industryStr || '').toLowerCase();
+  if (
+    query.includes('sustain') ||
+    query.includes('productiv') ||
+    query.includes('remote') ||
+    query.includes('focus') ||
+    query.includes('watershed') ||
+    query.includes('drift') ||
+    query.includes('compass')
+  ) {
+    return MOODBOARD_DATABASE.productivity;
+  }
   if (query.includes('coffee') || query.includes('cafe') || query.includes('roast') || query.includes('ceramiq')) {
     return MOODBOARD_DATABASE.coffee;
   }
   if (query.includes('streetwear') || query.includes('shoe') || query.includes('sneaker') || query.includes('apparel') || query.includes('cloth') || query.includes('kinetics')) {
     return MOODBOARD_DATABASE.streetwear;
   }
-  if (query.includes('tech') || query.includes('ai') || query.includes('saas') || query.includes('cloud') || query.includes('software') || query.includes('nexa')) {
+  if (query.includes('tech') || query.includes('ai') || query.includes('saas') || query.includes('cloud') || query.includes('software') || query.includes('synapse')) {
     return MOODBOARD_DATABASE.tech;
   }
-  return MOODBOARD_DATABASE.coffee;
+  return MOODBOARD_DATABASE.productivity;
 }

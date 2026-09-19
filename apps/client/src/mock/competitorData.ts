@@ -258,23 +258,88 @@ export const COMPETITOR_DATABASE: Record<string, IndustryCompetitorSet> = {
       },
     ],
   },
+  productivity: {
+    industry: 'Sustainable Productivity for Remote Teams',
+    userBrandCoords: { x: 30, y: 75 },
+    competitors: [
+      {
+        name: 'Notion',
+        tagline: 'The all-in-one workspace for your notes, tasks, and wikis',
+        category: 'Workspace Generalist Wiki',
+        positioning: 'Enterprise Tech',
+        visualStyle: 'Monochrome line icons, clean modular blocks, black & white paper aesthetic',
+        pricePoint: '$$',
+        palette: [
+          { hex: '#000000', name: 'Ink Black' },
+          { hex: '#FFFFFF', name: 'Canvas White' },
+          { hex: '#E3E2E0', name: 'Border Grey' },
+        ],
+        differentiationAgainst: 'Notion is an overwhelming blank slate with infinite configuration drag; your brand provides opinionated calm workflows and zero-friction asynchronous rituals.',
+        marketShare: 'Mass market (~35M+ users)',
+        mapCoords: { x: -30, y: -20 },
+      },
+      {
+        name: 'Linear',
+        tagline: 'The issue tracker you will actually enjoy using',
+        category: 'High-Velocity Developer Tool',
+        positioning: 'Indie Cult',
+        visualStyle: 'Dark mode, purple keyboard shortcuts, sleek sub-millisecond precision',
+        pricePoint: '$$$',
+        palette: [
+          { hex: '#5E6AD2', name: 'Linear Indigo' },
+          { hex: '#111217', name: 'Void Black' },
+          { hex: '#8792A2', name: 'Muted Slate' },
+        ],
+        differentiationAgainst: 'Linear is engineered strictly for sprint-heavy software engineering; your brand champions human-centric async team life and cognitive balance.',
+        marketShare: 'Top-tier tech startups',
+        mapCoords: { x: 70, y: 40 },
+      },
+      {
+        name: 'Sunsama',
+        tagline: 'The digital daily planner for mindful work',
+        category: 'Mindful Personal Planner',
+        positioning: 'Premium Craft',
+        visualStyle: 'Warm neutral tones, calm day-planning timeline, anti-burnout copy',
+        pricePoint: '$$$',
+        palette: [
+          { hex: '#2C5E43', name: 'Forest Green' },
+          { hex: '#F4EFE6', name: 'Warm Parchment' },
+          { hex: '#D97706', name: 'Amber Focus' },
+        ],
+        differentiationAgainst: 'Sunsama is an individual daily planner; your brand builds shared team synchronization and collective energy budgeting.',
+        marketShare: 'Niche solo professionals',
+        mapCoords: { x: -40, y: 60 },
+      },
+    ],
+  },
 };
 
 export function getCompetitorsForIndustry(industryStr: string): IndustryCompetitorSet {
   const query = (industryStr || '').toLowerCase();
+  if (
+    query.includes('sustain') ||
+    query.includes('productiv') ||
+    query.includes('remote') ||
+    query.includes('focus') ||
+    query.includes('watershed') ||
+    query.includes('drift') ||
+    query.includes('compass')
+  ) {
+    return COMPETITOR_DATABASE.productivity;
+  }
   if (query.includes('coffee') || query.includes('cafe') || query.includes('roast') || query.includes('ceramiq')) {
     return COMPETITOR_DATABASE.coffee;
   }
   if (query.includes('streetwear') || query.includes('shoe') || query.includes('sneaker') || query.includes('apparel') || query.includes('cloth') || query.includes('kinetics')) {
     return COMPETITOR_DATABASE.streetwear;
   }
-  if (query.includes('tech') || query.includes('ai') || query.includes('saas') || query.includes('cloud') || query.includes('software') || query.includes('nexa')) {
+  if (query.includes('tech') || query.includes('ai') || query.includes('saas') || query.includes('cloud') || query.includes('software') || query.includes('synapse')) {
     return COMPETITOR_DATABASE.tech;
   }
   if (query.includes('luxury') || query.includes('atelier') || query.includes('couture') || query.includes('boutique') || query.includes('fashion') || query.includes('aurae')) {
     return COMPETITOR_DATABASE.luxury;
   }
-  if (query.includes('skin') || query.includes('botanical') || query.includes('wellness') || query.includes('beauty')) {
+  if (query.includes('skin') || query.includes('botanical') || query.includes('wellness') || query.includes('beauty') || query.includes('verdura')) {
     return COMPETITOR_DATABASE.skincare;
   }
 
