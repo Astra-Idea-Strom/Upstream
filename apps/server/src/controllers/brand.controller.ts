@@ -47,3 +47,24 @@ export const generateLogos = async (req: Request, res: Response): Promise<void> 
   const response: GenerateLogosResponse = { logos };
   res.status(200).json(response);
 };
+
+/**
+ * POST /api/brand/chat
+ * Handles conversational agent chat replies using Groq (GPT OSS 120B)
+ */
+export const chatAgent = async (req: Request, res: Response): Promise<void> => {
+  const { message, history, currentContext } = req.body;
+
+  if (!message || typeof message !== 'string') {
+    res.status(400).json({
+      error: 'INVALID_REQUEST',
+      message: 'A non-empty "message" string is required.',
+      statusCode: 400,
+    });
+    return;
+  }
+
+  const { chatWithAgent } = await import('../services/groq.service');
+  const result = await chatWithAgent({ message, history, currentContext });
+  res.status(200).json(result);
+};

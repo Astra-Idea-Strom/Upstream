@@ -152,3 +152,103 @@ Respond in this exact JSON structure:
 
   throw new Error(`Failed to generate brand names with Groq: ${lastError?.message || 'Unknown error'}`);
 }
+
+export interface AgentChatParams {
+  message: string;
+  history?: Array<{ sender: 'user' | 'assistant'; text: string }>;
+  currentContext?: {
+    step?: number;
+    industry?: string;
+    tone?: string;
+    targetAudience?: string;
+    mission?: string;
+    selectedName?: string;
+  };
+}
+
+export interface AgentChatResult {
+  reply: string;
+  suggestions?: string[];
+  detectedIntent: 'greeting' | 'new_brand' | 'refine' | 'question';
+  extractedBrief?: {
+    businessName?: string;
+    industry?: string;
+    tone?: string;
+    targetAudience?: string;
+    mission?: string;
+  };
+}
+
+/**
+ * Handle conversational interactions with the Upstream AI Brand Director using Groq (GPT OSS 120B)
+ */
+export async function chatWithAgent(params: AgentChatParams): Promise<AgentChatResult> {
+  const { message, history = [], currentContext = {} } = params;
+
+  const contextStr = currentContext.industry
+    ? `\nCurrent project state:\n- Active Venture/Industry: ${currentContext.industry}\n- Tone: ${currentContext.tone || 'Not set'}\n- Selected Name: ${currentContext.selectedName || 'None'}\n- Workflow Step: ${currentContext.step || 1}`
+    : '\nNo active brand project yet.';
+
+  const systemPrompt = `You are the Upstream AI Brand Director and Creative Strategist.
+Your goal is to guide the user in crafting remarkable, distinctive brand identities (brand names, taglines, color palettes, typography, and logos).
+${contextStr}
+
+You must ALWAYS respond with valid, parseable JSON conforming strictly to this format:
+{
+  "reply": "Your helpful, creative, and professional Markdown reply directly addressing the user.",
+  "suggestions": ["2-3 short, relevant follow-up action chips"],
+  "detectedIntent": "greeting" | "new_brand" | "refine" | "question",
+  "extractedBrief": {
+    "businessName": "Brand name if user explicitly specified one, otherwise empty",
+    "industry": "Clean, descriptive industry category (e.g., Specialty Coffee Roastery, Developer Cloud Platform, Sustainable Streetwear)",
+    "tone": "playful | bold | minimalist | luxurious | tech-forward",
+    "targetAudience": "Target audience description",
+    "mission": "Core mission or value proposition"
+  }
+}
+
+Guidelines:
+1. If the user is greeting or saying hello ("hi", "hello", "hey"), set detectedIntent to "greeting", set extractedBrief fields to empty strings, and warmly ask what kind of business they are planning to launch.
+2. If the user describes a new business idea or venture, set detectedIntent to "new_brand", extract a rich brief into extractedBrief, and reply with encouraging creative direction.
+3. If the user asks for a refinement (e.g. "make it more luxury", "try darker colors", "give me bolder names"), set detectedIntent to "refine", adjust tone/brief accordingly, and explain how the identity can evolve.
+4. Keep the Markdown in "reply" engaging, clear, with good typographic hierarchy.`;
+
+  const messages: any[] = [{ role: 'system', content: systemPrompt }];
+
+  // Include recent conversation turns
+  const recentHistory = history.slice(-4);
+  for (const h of recentHistory) {
+    messages.push({
+      role: h.sender === 'user' ? 'user' : 'assistant',
+      content: h.text,
+    });
+  }
+
+  messages.push({ role: 'user', content: message });
+
+  try {
+    const response = await groq.chat.completions.create({
+      model: GROQ_MODEL,
+      messages,
+      response_format: { type: 'json_object' },
+      temperature: 0.7,
+      max_tokens: 1000,
+    });
+
+    const content = response.choices[0]?.message?.content;
+    if (!content) {
+      throw new Error('Groq returned an empty chat response');
+    }
+
+    const parsed = JSON.parse(content);
+    return {
+      reply: parsed.reply || 'How can I help you shape your brand identity today?',
+      suggestions: Array.isArray(parsed.suggestions) ? parsed.suggestions : ['Start a new brand', 'Ask for advice'],
+      detectedIntent: parsed.detectedIntent || 'question',
+      extractedBrief: parsed.extractedBrief || {},
+    };
+  } catch (err: any) {
+    console.error('[GroqService] chatWithAgent error:', err.message);
+    throw err;
+  }
+}

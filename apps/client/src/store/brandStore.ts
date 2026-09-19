@@ -14,6 +14,7 @@ import {
   getTaglinesForBrand,
   INITIAL_CHAT_MESSAGES,
 } from '../mock/mockData';
+import { brandApi } from '../services/api';
 
 export interface ChatActionOption {
   id: string;
@@ -647,7 +648,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
     }
   },
 
-  sendChatMessage: (text: string) => {
+  sendChatMessage: async (text: string) => {
     const userMsg: ChatMessage = {
       id: 'msg_' + Date.now(),
       sender: 'user',
@@ -660,131 +661,58 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       isChatTyping: true,
     }));
 
-    setTimeout(() => {
-      const lower = text.toLowerCase();
-      let reply = '';
-      let suggestions: string[] = [];
-      let actionOptions: ChatActionOption[] = [];
+    const lower = text.toLowerCase().trim();
 
-      // Check if user is asking for auto-pilot / full flow
-      if (
-        lower.includes('auto') ||
-        lower.includes('pilot') ||
-        lower.includes('all steps') ||
-        lower.includes('everything') ||
-        lower.includes('step by step')
-      ) {
-        set({ isChatTyping: false });
-        get().runFullAutonomousPipeline();
-        return;
-      }
+    // Check if user is asking for auto-pilot / full flow
+    if (
+      lower.includes('auto') ||
+      lower.includes('pilot') ||
+      lower.includes('all steps') ||
+      lower.includes('everything') ||
+      lower.includes('step by step')
+    ) {
+      set({ isChatTyping: false });
+      get().runFullAutonomousPipeline();
+      return;
+    }
 
-      // Explicit restart intent. Handled here so it never falls through to a
-      // "refinement" reply that would leave the finished brand on screen.
-      if (
-        /^(start (a )?new|new (project|brand|identity)|reset|start over)\b/i.test(text.trim())
-      ) {
-        set({ isChatTyping: false });
-        get().reset();
-        return;
-      }
+    // Explicit restart intent
+    if (/^(start (a )?new|new (project|brand|identity)|reset|start over)\b/i.test(lower)) {
+      set({ isChatTyping: false });
+      get().reset();
+      return;
+    }
 
-      // Check if user explicitly provided a brand name in their prompt (Fast-Path)
-      const explicitName = extractBrandName(text);
-
-      // Detect Concept & Venture parameters from prompt
-      let detectedTheme = 'Specialty Coffee Roastery & Micro-Café';
-      let detectedTone: BrandTone = 'playful';
-      let detectedAudience = 'Third-wave coffee lovers, daily espresso purists, and design enthusiasts';
-      let detectedMission = 'Celebrating the nuanced terroir of heirloom coffee cherries roasted in small, carbon-neutral batches.';
-
-      const isCoffee =
-        lower.includes('coffee') ||
-        lower.includes('cofee') ||
-        lower.includes('coffe') ||
-        lower.includes('cafe') ||
-        lower.includes('roast') ||
-        lower.includes('brew') ||
-        lower.includes('espresso');
-
-      const isStreetwear =
-        lower.includes('apparel') ||
-        lower.includes('shoe') ||
-        lower.includes('kicks') ||
-        lower.includes('streetwear') ||
-        lower.includes('cloth') ||
-        lower.includes('sneaker');
-
-      const isTech =
-        lower.includes('tech') ||
-        lower.includes('saas') ||
-        lower.includes('ai') ||
-        lower.includes('software') ||
-        lower.includes('cloud') ||
-        lower.includes('code');
-
-      const isSkincare =
-        lower.includes('skincare') ||
-        lower.includes('organic') ||
-        lower.includes('botanical') ||
-        lower.includes('beauty') ||
-        lower.includes('wellness');
-
-      if (isStreetwear) {
-        detectedTheme = 'Streetwear & Sneaker Apparel';
-        detectedTone = 'bold';
-        detectedAudience = 'Gen Z and urban creators aged 18-32';
-        detectedMission = 'Crafting limited-run apparel and sneakers merging architectural silhouettes with sustainable comfort.';
-      } else if (isTech) {
-        detectedTheme = 'AI & Developer Cloud Infrastructure';
-        detectedTone = 'tech-forward';
-        detectedAudience = 'Full-stack engineers, AI researchers, and fast-moving tech startups';
-        detectedMission = 'Democratizing multi-agent workflows and real-time generative intelligence through frictionless developer tools.';
-      } else if (isSkincare) {
-        detectedTheme = 'Clean Organic Skincare & Botanicals';
-        detectedTone = 'minimalist';
-        detectedAudience = 'Conscious consumers seeking pure, botanical, cruelty-free skin rituals';
-        detectedMission = 'Nourishing skin longevity with cold-pressed alpine extracts and zero-waste packaging.';
-      } else if (!isCoffee && text.length > 5) {
-        // Custom generic business venture
-        detectedTheme = text.length > 30 ? text.slice(0, 30) + '...' : text;
-        detectedTone = 'bold';
-        detectedAudience = 'Modern discerning consumers and forward-thinking clients';
-        detectedMission = `Building an unforgettable identity for "${text}".`;
-      }
-
-      const candidateInput: Partial<BrandInput> = {
-        industry: detectedTheme,
-        tone: detectedTone,
-        targetAudience: detectedAudience,
-        mission: detectedMission,
-        constraints: 'Modern, memorable, high phonetic appeal, verified domain availability',
+    try {
+      const currentState = {
+        step: get().step,
+        industry: get().input.industry,
+        tone: get().input.tone,
+        targetAudience: get().input.targetAudience,
+        mission: get().input.mission,
+        selectedName: get().selectedName?.name,
       };
 
-      const names = getNamesForConcept(candidateInput.industry || detectedTheme);
+      const history = get().chatMessages.slice(-6).map((m) => ({
+        sender: m.sender,
+        text: m.text,
+      }));
 
-      // REFINEMENT PATH: once the identity is complete, a free-text message is
-      // a refinement, not a restart. Previously every message fell through to
-      // the default path below, which resets the four `hasConfirmed*` flags —
-      // so typing "make the tone more luxurious" after finishing would wipe
-      // four artefacts off the canvas and send the user back to name choice.
-      if (get().hasConfirmedLogo) {
-        // A refinement re-tunes the brief's tone and nothing else. Merging the
-        // full `candidateInput` here used to overwrite `industry` with the raw
-        // chat text, so "make the tone more luxurious" rewrote the Brief card's
-        // industry to "Make the tone more luxurious…".
-        const refinementTone: BrandTone = /luxur|quiet|elegant|premium|refined|understated|calm|sophisticat/.test(lower)
-          ? 'luxurious'
-          : /bold|energetic|loud|high-energy|punchy|striking|bolder/.test(lower)
-            ? 'bold'
-            : /minimal|clean|simple|restrained|quietly/.test(lower)
-              ? 'minimalist'
-              : /playful|fun|friendly|warm|cheerful/.test(lower)
-                ? 'playful'
-                : /tech|futur|digital|precise|engineer/.test(lower)
-                  ? 'tech-forward'
-                  : get().input.tone;
+      // Call Groq (GPT OSS 120B) backend endpoint
+      const aiRes = await brandApi.chat({
+        message: text,
+        history,
+        currentContext: currentState,
+      });
 
+      const reply = aiRes.reply;
+      const suggestions = aiRes.suggestions || ['Start a new brand', 'Ask for advice'];
+      const detectedIntent = aiRes.detectedIntent;
+      const brief = aiRes.extractedBrief;
+
+      // REFINEMENT PATH: once the identity is complete or active
+      if (get().hasConfirmedLogo && detectedIntent === 'refine' && brief?.tone) {
+        const refinementTone = (brief.tone as BrandTone) || get().input.tone;
         set({
           input: { ...get().input, tone: refinementTone },
           isChatTyping: false,
@@ -793,83 +721,118 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
         const botMsg: ChatMessage = {
           id: 'msg_bot_refine_' + Date.now(),
           sender: 'assistant',
-          text: `**Brief re-tuned to ${refinementTone}.** ${get().selectedName.name}'s confirmed cards are untouched — the Brief card now reflects the new tone.\n\nTo rework a specific piece, use **Change name**, **Change tagline** or **Palette** on the card you want to revisit.`,
+          text: reply,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          suggestions: ['Use a quieter, more luxurious tone', 'Try a bolder direction'],
+          suggestions,
         };
 
         set((state) => ({ chatMessages: [...state.chatMessages, botMsg] }));
         return;
       }
 
-      // FAST PATH: If user already provided a brand name, skip 5-name generation and immediately suggest color palette & open Canva editor
-      if (explicitName) {
-        const cleanName = explicitName;
-        // Seed the tagline with the first real option for this name, so the name
-        // card previews an actual tagline rather than an invented placeholder.
-        const previewTagline =
-          getTaglinesForBrand(cleanName, detectedTheme)[0]?.tagline ?? 'Tagline pending.';
-        const brandObj: BrandName = {
-          id: 'custom_' + Date.now(),
-          name: cleanName,
-          meaning: 'Named by you.',
-          tagline: previewTagline,
-          domainAvailability: {
-            com: true,
-            io: true,
-            co: true,
-            handle: { twitter: true, instagram: true },
-          },
-          visualDirection: {
-            palette: [
-              { hex: '#1C1917', name: 'Obsidian Roast', role: 'text' },
-              { hex: '#C2410C', name: 'Terracotta Ember', role: 'primary' },
-              { hex: '#EA580C', name: 'Crema Gold', role: 'secondary' },
-              { hex: '#FDFBF7', name: 'Parchment Milk', role: 'background' },
-              { hex: '#78716C', name: 'Pumice Stone', role: 'accent' },
-            ],
-            fonts: {
-              headline: 'Outfit',
-              body: 'Plus Jakarta Sans',
-              headlineWeight: '700',
-              bodyWeight: '400',
-            },
-            styleDescription: 'Clean modernist geometry with elevated human warmth.',
-          },
+      // NEW BRAND / VENTURE PATH
+      if ((detectedIntent === 'new_brand' || (brief && brief.industry)) && brief?.industry) {
+        const detectedTheme = brief.industry;
+        const detectedTone: BrandTone = (brief.tone as BrandTone) || 'bold';
+        const detectedAudience = brief.targetAudience || 'Modern discerning consumers';
+        const detectedMission = brief.mission || `Building an unforgettable identity for ${detectedTheme}.`;
+
+        const candidateInput: Partial<BrandInput> = {
+          industry: detectedTheme,
+          tone: detectedTone,
+          targetAudience: detectedAudience,
+          mission: detectedMission,
+          constraints: 'Modern, memorable, high phonetic appeal',
         };
 
-        set({
-          input: { ...get().input, ...candidateInput, businessName: cleanName },
-          hasConfirmedIndustry: true,
-          hasConfirmedName: true,
-          hasConfirmedTagline: false,
-          hasConfirmedPalette: false,
-          hasConfirmedLogo: false,
-          isNameModalOpen: false,
-          isTaglineModalOpen: false,
-          isPaletteModalOpen: false,
-          isLogoModalOpen: false,
-          selectedName: brandObj,
-          brandNames: [brandObj, ...names.slice(0, 4)],
-          // The name step is skipped, so the tagline is now the active step.
-          step: 3,
-          isChatTyping: false,
-        });
+        // Explicit brand name fast path
+        if (brief.businessName) {
+          const cleanName = brief.businessName;
+          const previewTagline =
+            getTaglinesForBrand(cleanName, detectedTheme)[0]?.tagline ?? 'Tagline pending.';
 
-        reply = `**Brand name locked — ${cleanName}**\n\nYou already named the venture, so **${cleanName}** is set as the primary candidate.\n\n- **Industry**: ${detectedTheme}\n- **Audience**: ${detectedAudience}\n\nFour taglines are ready. Pick one from the canvas to continue.`;
+          const brandObj: BrandName = {
+            id: 'custom_' + Date.now(),
+            name: cleanName,
+            meaning: 'Specified by you.',
+            tagline: previewTagline,
+            domainAvailability: {
+              com: true,
+              io: true,
+              co: true,
+              handle: { twitter: true, instagram: true },
+            },
+            visualDirection: {
+              palette: [
+                { hex: '#0F172A', name: 'Midnight Slate', role: 'primary' },
+                { hex: '#2563EB', name: 'Cobalt Pulse', role: 'secondary' },
+                { hex: '#38BDF8', name: 'Sky Breeze', role: 'accent' },
+                { hex: '#F8FAFC', name: 'Clean White', role: 'background' },
+                { hex: '#1E293B', name: 'Dark Ink', role: 'text' },
+              ],
+              fonts: { headline: 'Outfit', body: 'Inter', headlineWeight: '700', bodyWeight: '400' },
+              styleDescription: 'Clean modernist geometry with elevated human warmth.',
+            },
+          };
 
-        actionOptions = [
-          {
-            id: 'opt_auto_pilot',
-            label: 'Complete the remaining steps',
-            actionType: 'run_auto_pipeline',
-          },
-        ];
+          const names = getNamesForConcept(detectedTheme);
 
-        suggestions = [
-          'Use a quieter, more luxurious tone',
-          'Try a bolder, high-energy direction',
-        ];
+          set({
+            input: { ...get().input, ...candidateInput, businessName: cleanName },
+            hasConfirmedIndustry: true,
+            hasConfirmedName: true,
+            hasConfirmedTagline: false,
+            hasConfirmedPalette: false,
+            hasConfirmedLogo: false,
+            isNameModalOpen: false,
+            isTaglineModalOpen: false,
+            isPaletteModalOpen: false,
+            isLogoModalOpen: false,
+            selectedName: brandObj,
+            brandNames: [brandObj, ...names.slice(0, 4)],
+            step: 3,
+            isChatTyping: false,
+          });
+        } else {
+          // No explicit name: populate naming candidates
+          let names = getNamesForConcept(detectedTheme);
+
+          set({
+            input: { ...get().input, ...candidateInput },
+            hasConfirmedIndustry: true,
+            hasConfirmedName: false,
+            hasConfirmedTagline: false,
+            hasConfirmedPalette: false,
+            hasConfirmedLogo: false,
+            isNameModalOpen: false,
+            isTaglineModalOpen: false,
+            isPaletteModalOpen: false,
+            isLogoModalOpen: false,
+            brandNames: names,
+            selectedName: names[0],
+            step: 2,
+            isChatTyping: false,
+          });
+
+          // Asynchronously fetch live Groq generated names using GPT OSS 120B to enrich the list
+          brandApi
+            .generate({
+              input: {
+                industry: detectedTheme,
+                tone: detectedTone,
+                targetAudience: detectedAudience,
+                mission: detectedMission,
+                constraints: candidateInput.constraints || '',
+              },
+              count: 10,
+            })
+            .then((res) => {
+              if (res.names && res.names.length > 0) {
+                set({ brandNames: res.names, selectedName: res.names[0] });
+              }
+            })
+            .catch((e) => console.warn('Groq names background fetch error:', e));
+        }
 
         const botMsg: ChatMessage = {
           id: 'msg_bot_' + Date.now(),
@@ -877,59 +840,48 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
           text: reply,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           suggestions,
-          actionOptions,
+          actionOptions: [
+            {
+              id: 'opt_auto_pilot',
+              label: 'Complete the remaining steps',
+              actionType: 'run_auto_pipeline',
+            },
+          ],
         };
 
         set((state) => ({
           chatMessages: [...state.chatMessages, botMsg],
         }));
-
         return;
       }
 
-      // Default path (no name provided): confirm the brief and move to naming.
-      set({
-        input: { ...get().input, ...candidateInput },
-        hasConfirmedIndustry: true,
-        hasConfirmedName: false,
-        hasConfirmedTagline: false,
-        hasConfirmedPalette: false,
-        hasConfirmedLogo: false,
-        isNameModalOpen: false,
-        isTaglineModalOpen: false,
-        isPaletteModalOpen: false,
-        isLogoModalOpen: false,
-        brandNames: names,
-        selectedName: names[0],
-        step: 2,
-        isChatTyping: false,
-      });
-
-      reply = `**Brief captured** — ${detectedTheme}\n\n- **Tone**: ${detectedTone}\n- **Audience**: ${detectedAudience}\n\nFive candidate names are on the canvas. Pick one to continue.`;
-
-      actionOptions = [
-        {
-          id: 'opt_auto_pilot',
-          label: 'Complete the remaining steps',
-          actionType: 'run_auto_pipeline',
-        },
-      ];
-
-      suggestions = ['Use a quieter, more luxurious tone', 'Try a bolder direction'];
-
+      // Conversational turn (Greeting, advice, question)
       const botMsg: ChatMessage = {
         id: 'msg_bot_' + Date.now(),
         sender: 'assistant',
         text: reply,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         suggestions,
-        actionOptions,
       };
 
       set((state) => ({
         chatMessages: [...state.chatMessages, botMsg],
+        isChatTyping: false,
       }));
-    }, 600);
+    } catch (err: any) {
+      console.error('[BrandStore] Chat error:', err);
+      const fallbackMsg: ChatMessage = {
+        id: 'msg_bot_err_' + Date.now(),
+        sender: 'assistant',
+        text: `I had trouble connecting to the AI director (${err?.message || 'Network error'}). Please try again!`,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        suggestions: ['Try again', 'Start over'],
+      };
+      set((state) => ({
+        chatMessages: [...state.chatMessages, fallbackMsg],
+        isChatTyping: false,
+      }));
+    }
   },
 
   startIdentityCreation: (initialPrompt?: string) => {
