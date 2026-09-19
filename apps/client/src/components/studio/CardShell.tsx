@@ -13,24 +13,21 @@ export interface StepBadgeProps {
 }
 
 /**
- * The single step indicator used by every workspace card. Replaces the mix of
- * "CARD 1: …" / "STEP 4: …" eyebrows that disagreed with each other.
+ * The single step marker used by every workspace card.
+ *
+ * Deliberately quiet: a numbered dot and the step name in sentence case. It was
+ * a purple uppercase pill with a border, which competed with the card's actual
+ * content for attention.
  */
 export const StepBadge: React.FC<StepBadgeProps> = ({ step, className }) => {
   const meta = getStep(step);
 
   return (
-    <span
-      className={cn(
-        'inline-flex items-center gap-1.5 rounded-full border border-brand-200/70 bg-brand-50',
-        'py-0.5 pl-0.5 pr-2.5 text-2xs font-bold uppercase tracking-wider text-brand-700',
-        className,
-      )}
-    >
-      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-brand-600 text-3xs font-black text-white">
+    <span className={cn('inline-flex items-center gap-1.5', className)}>
+      <span className="flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-brand-600 text-3xs font-black text-white">
         {meta.id}
       </span>
-      {meta.title}
+      <span className="text-2xs font-semibold text-slate-500">{meta.title}</span>
     </span>
   );
 };
@@ -92,7 +89,7 @@ export const CardShell: React.FC<CardShellProps> = ({
         className,
       )}
     >
-      <header className="flex flex-col gap-3 border-b border-slate-100 pb-3.5 sm:flex-row sm:items-center sm:justify-between">
+      <header className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex min-w-0 flex-wrap items-center gap-2">
           <StepBadge step={step} />
           {status && (
@@ -106,7 +103,7 @@ export const CardShell: React.FC<CardShellProps> = ({
       </header>
 
       {(title || subtitle) && (
-        <div className="mt-4">
+        <div className="mt-3.5">
           {title && (
             <h3 className="font-display text-lg font-bold tracking-tight text-slate-950">
               {title}
@@ -116,7 +113,7 @@ export const CardShell: React.FC<CardShellProps> = ({
         </div>
       )}
 
-      <div className={cn(title || subtitle ? 'mt-4' : 'mt-0', bodyClassName)}>{children}</div>
+      <div className={cn(title || subtitle ? 'mt-4' : 'mt-4', bodyClassName)}>{children}</div>
     </section>
   );
 };

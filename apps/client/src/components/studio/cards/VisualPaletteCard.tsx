@@ -4,13 +4,14 @@ import { getPalette } from '../../../lib/palettes';
 import { CardShell } from '../CardShell';
 import { SwatchStrip } from '../SwatchStrip';
 import { Button } from '../../ui/primitives';
-import { Type, RefreshCw, WandSparkles } from 'lucide-react';
 
 /**
  * Step 4 artefact — the applied visual system.
  *
  * Reads the same palette catalogue as the chooser, so what is shown here is
- * always exactly what the user selected.
+ * always exactly what the user selected. The palette and one type specimen are
+ * the whole card; the bordered "headline / body" panels and the copy hint were
+ * chrome around four pieces of information.
  */
 export const VisualPaletteCard: React.FC = () => {
   const { selectedName, activePaletteIdx, openPaletteModal, openLogoModal } = useBrandStore();
@@ -30,23 +31,12 @@ export const VisualPaletteCard: React.FC = () => {
       id="step-card-visual"
       step={4}
       variant="confirmed"
-      status={{ label: 'Applied', tone: 'success', dot: true }}
       actions={
         <>
-          <Button
-            variant="secondary"
-            size="sm"
-            icon={<RefreshCw className="h-3.5 w-3.5 text-slate-400" />}
-            onClick={openPaletteModal}
-          >
+          <Button variant="secondary" size="sm" onClick={openPaletteModal}>
             Change palette
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            icon={<WandSparkles className="h-3.5 w-3.5" />}
-            onClick={openLogoModal}
-          >
+          <Button variant="outline" size="sm" onClick={openLogoModal}>
             Logos
           </Button>
         </>
@@ -54,13 +44,7 @@ export const VisualPaletteCard: React.FC = () => {
     >
       <div className="space-y-4">
         <div>
-          <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-            <span className="text-2xs font-bold uppercase tracking-wider text-slate-400">
-              {palette.name}
-            </span>
-            <span className="text-2xs text-slate-400">Select a swatch to copy its hex</span>
-          </div>
-
+          <span className="text-2xs font-medium text-slate-400">{palette.name}</span>
           <SwatchStrip
             swatches={palette.swatches}
             size="lg"
@@ -68,40 +52,20 @@ export const VisualPaletteCard: React.FC = () => {
             showName
             copiedHex={copiedHex}
             onCopy={handleCopy}
+            className="mt-2"
           />
         </div>
 
-        <div className="border-t border-slate-100 pt-4">
-          <span className="flex items-center gap-1.5 text-2xs font-bold uppercase tracking-wider text-slate-400">
-            <Type className="h-3 w-3" />
-            Type pairing
-          </span>
-
-          <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
-              <span className="block text-2xs font-semibold uppercase tracking-wider text-slate-400">
-                Headline · {fonts.headline}
-              </span>
-              <p
-                className="mt-1 truncate text-base font-bold text-slate-900"
-                style={{ fontFamily: `'${fonts.headline}', sans-serif` }}
-              >
-                {selectedName.name} Identity
-              </p>
-            </div>
-
-            <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
-              <span className="block text-2xs font-semibold uppercase tracking-wider text-slate-400">
-                Body · {fonts.body}
-              </span>
-              <p
-                className="mt-1 text-xs leading-relaxed text-slate-600"
-                style={{ fontFamily: `'${fonts.body}', serif` }}
-              >
-                Crafting meaningful modern impressions across every touchpoint.
-              </p>
-            </div>
-          </div>
+        <div className="space-y-1.5 border-t border-slate-100 pt-4">
+          <p
+            className="truncate font-display text-2xl font-black tracking-tight text-slate-900"
+            style={{ fontFamily: `'${fonts.headline}', sans-serif` }}
+          >
+            {selectedName.name}
+          </p>
+          <p className="text-2xs text-slate-400">
+            {fonts.headline} <span className="text-slate-300">·</span> {fonts.body}
+          </p>
         </div>
       </div>
     </CardShell>

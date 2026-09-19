@@ -1,10 +1,11 @@
 import React from 'react';
 import { ChevronRight, Download, Home, RotateCcw } from 'lucide-react';
 import { useBrandStore } from '../../store/brandStore';
-import { Button, Divider, IconButton, StatusPill } from '../ui/primitives';
+import { Button, Divider, IconButton } from '../ui/primitives';
 import { BrandMark } from '../layout/BrandMark';
 import { StepRail } from './StepRail';
 import { useFlowProgress } from '../../hooks/useFlowProgress';
+import { useArmedAction } from '../../hooks/useArmedAction';
 import { KIT_CARD_ID, scrollToId, scrollToStepCard } from '../../lib/dom';
 
 /**
@@ -19,8 +20,14 @@ import { KIT_CARD_ID, scrollToId, scrollToStepCard } from '../../lib/dom';
  * is now a quiet pane label and all progress lives here.
  */
 export const StudioTopBar: React.FC = () => {
-  const { input, selectedName, hasConfirmedName, reset, setViewMode, setStep } = useBrandStore();
+  const { input, selectedName, hasConfirmedName, reset, setViewMode } = useBrandStore();
   const progress = useFlowProgress();
+
+  /**
+   * Reset discards the whole session and sits one click away from "Home", so it
+   * arms before it fires. See `useArmedAction`.
+   */
+  const resetAction = useArmedAction(reset);
 
   return (
     <header className="relative z-30 flex h-14 flex-shrink-0 select-none items-center gap-3 border-b border-slate-200/90 bg-white/85 px-3 backdrop-blur-xl sm:px-4">
@@ -66,15 +73,22 @@ export const StudioTopBar: React.FC = () => {
 
       {/* Right: session actions */}
       <div className="flex flex-shrink-0 items-center gap-1.5">
-        {progress.isComplete && (
-          <StatusPill tone="success" dot className="hidden xl:inline-flex">
-            Complete
-          </StatusPill>
+        {resetAction.isArmed ? (
+          <Button
+            variant="ghost"
+            size="sm"
+            pill
+            onClick={resetAction.confirm}
+            onBlur={resetAction.disarm}
+            className="border border-coral-300 bg-coral-50 text-coral-700 hover:bg-coral-100"
+          >
+            Confirm reset
+          </Button>
+        ) : (
+          <IconButton label="Reset session" onClick={resetAction.arm}>
+            <RotateCcw className="h-3.5 w-3.5" />
+          </IconButton>
         )}
-
-        <IconButton label="Reset session" onClick={reset}>
-          <RotateCcw className="h-3.5 w-3.5" />
-        </IconButton>
 
         {hasConfirmedName && (
           <Button

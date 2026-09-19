@@ -32,17 +32,9 @@ export const App: React.FC = () => {
 
       <footer className="mt-12 w-full border-t border-brand-100/80 bg-white/60 px-4 py-8 backdrop-blur-md sm:px-8">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-xs text-slate-500 sm:flex-row">
-          <div className="flex items-center gap-3">
-            <BrandMark size="sm" />
-            <span className="hidden text-slate-300 sm:inline">·</span>
-            <span className="hidden text-2xs font-medium uppercase tracking-wider text-slate-400 sm:inline">
-              Idea to Identity
-            </span>
-          </div>
+          <BrandMark size="sm" />
 
-          <span className="font-mono text-2xs text-slate-400">
-            © 2026 Upstream AI Studio · All rights reserved
-          </span>
+          <span className="text-2xs text-slate-400">© 2026 Upstream</span>
         </div>
       </footer>
     </div>

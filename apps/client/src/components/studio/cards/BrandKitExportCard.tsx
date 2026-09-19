@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useBrandStore } from '../../../store/brandStore';
 import { CardShell } from '../CardShell';
 import { Button } from '../../ui/primitives';
 import { DomainChip } from '../DomainChip';
 import { exportBrandCardToPDF, exportBrandCardToImage } from '../../../utils/pdfExport';
 import { KIT_CARD_ID } from '../../../lib/dom';
+import { useArmedAction } from '../../../hooks/useArmedAction';
 import confetti from 'canvas-confetti';
 import { Check, Code2, Download, FileText, RotateCcw } from 'lucide-react';
 
@@ -12,12 +13,17 @@ import { Check, Code2, Download, FileText, RotateCcw } from 'lucide-react';
  * Step 5 artefact — the exportable brand specification.
  *
  * Carries `KIT_CARD_ID` because it is also the DOM capture target for the PDF
- * and PNG exporters, so the element id must stay stable.
+ * and PNG exporters, so the element id must stay stable. Its body is the
+ * document that gets exported, which is why the summary stays — but as plain
+ * lines rather than a four-cell boxed grid.
  */
 export const BrandKitExportCard: React.FC = () => {
   const { selectedName, input, reset } = useBrandStore();
   const [exporting, setExporting] = useState<'pdf' | 'png' | null>(null);
   const [copiedTokens, setCopiedTokens] = useState(false);
+
+  /** Discards the finished session, so it confirms the same way the top bar does. */
+  const newProject = useArmedAction(reset);
 
   const celebrate = () => {
     try {
@@ -26,6 +32,16 @@ export const BrandKitExportCard: React.FC = () => {
       /* canvas unavailable — purely decorative */
     }
   };
+
+  /**
+   * The terminal artefact mounts exactly once per session, when the identity is
+   * finished. That makes this the single correct place for the celebration:
+   * the manual and autonomous paths both land here.
+   */
+  useEffect(() => {
+    celebrate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleDownloadPDF = async () => {
     setExporting('pdf');
@@ -73,49 +89,53 @@ export const BrandKitExportCard: React.FC = () => {
       step={5}
       variant="confirmed"
       className="border-brand-200 bg-gradient-to-br from-white via-brand-50/40 to-coral-50/30"
-      status={{ label: 'Ready to export', tone: 'brand', dot: true }}
-      actions={
-        <Button
-          variant="ghost"
-          size="sm"
-          icon={<RotateCcw className="h-3.5 w-3.5" />}
-          onClick={reset}
-        >
-          New project
-        </Button>
-      }
       title="Brand specification"
-      subtitle="Every decision from this session, compiled and ready to share."
+      actions={
+        newProject.isArmed ? (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={newProject.confirm}
+            onBlur={newProject.disarm}
+            className="border border-coral-300 bg-coral-50 text-coral-700 hover:bg-coral-100"
+          >
+            Discard and start over?
+          </Button>
+        ) : (
+          <Button
+            variant="ghost"
+            size="sm"
+            icon={<RotateCcw className="h-3.5 w-3.5" />}
+            onClick={newProject.arm}
+          >
+            New project
+          </Button>
+        )
+      }
     >
       <div className="space-y-4">
-        <dl className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-          <div className="rounded-xl border border-slate-200/80 bg-white/90 p-2.5">
-            <dt className="text-2xs font-bold uppercase tracking-wider text-slate-400">Name</dt>
-            <dd className="mt-0.5 truncate font-display text-sm font-bold text-slate-900">
-              {selectedName.name}
-            </dd>
-          </div>
+        <div>
+          <h3 className="font-display text-2xl font-black tracking-tight text-slate-950">
+            {selectedName.name}
+          </h3>
+          <p className="mt-0.5 font-serif text-sm italic text-brand-700">
+            “{selectedName.tagline}”
+          </p>
+        </div>
 
-          <div className="rounded-xl border border-slate-200/80 bg-white/90 p-2.5">
-            <dt className="text-2xs font-bold uppercase tracking-wider text-slate-400">Industry</dt>
-            <dd className="mt-0.5 truncate text-xs font-semibold text-slate-700">
-              {input.industry}
-            </dd>
-          </div>
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-2xs">
+          <span className="flex items-baseline gap-1.5">
+            <span className="text-slate-400">Industry</span>
+            <span className="font-medium text-slate-700">{input.industry}</span>
+          </span>
 
-          <div className="rounded-xl border border-slate-200/80 bg-white/90 p-2.5">
-            <dt className="text-2xs font-bold uppercase tracking-wider text-slate-400">Domains</dt>
-            <dd className="mt-1 flex flex-wrap gap-1">
-              <DomainChip label=".com" available={selectedName.domainAvailability.com} />
-              <DomainChip label=".io" available={selectedName.domainAvailability.io} />
-            </dd>
-          </div>
-
-          <div className="rounded-xl border border-slate-200/80 bg-white/90 p-2.5">
-            <dt className="text-2xs font-bold uppercase tracking-wider text-slate-400">Status</dt>
-            <dd className="mt-0.5 text-xs font-semibold text-brand-700">Ready for launch</dd>
-          </div>
-        </dl>
+          <span className="flex items-center gap-1.5">
+            <span className="text-slate-400">Domains</span>
+            <DomainChip label=".com" available={selectedName.domainAvailability.com} />
+            <DomainChip label=".io" available={selectedName.domainAvailability.io} />
+            <DomainChip label=".co" available={selectedName.domainAvailability.co} />
+          </span>
+        </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
           <Button
@@ -133,7 +153,7 @@ export const BrandKitExportCard: React.FC = () => {
             variant="secondary"
             size="lg"
             loading={exporting === 'png'}
-            icon={<FileText className="h-4 w-4 text-blue-500" />}
+            icon={<FileText className="h-4 w-4" />}
             onClick={handleDownloadPNG}
           >
             {exporting === 'png' ? 'Exporting…' : 'Export PNG'}
@@ -146,7 +166,7 @@ export const BrandKitExportCard: React.FC = () => {
               copiedTokens ? (
                 <Check className="h-4 w-4 text-emerald-600" />
               ) : (
-                <Code2 className="h-4 w-4 text-coral-500" />
+                <Code2 className="h-4 w-4" />
               )
             }
             onClick={handleCopyTokens}

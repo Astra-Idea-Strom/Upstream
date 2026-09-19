@@ -6,7 +6,7 @@ import { Button, SegmentedControl } from '../../ui/primitives';
 import { KIT_CARD_ID, scrollToId } from '../../../lib/dom';
 import { cn } from '../../../lib/cn';
 import type { LogoStyle } from '@upstream/shared';
-import { CreditCard, Download, Image as ImageIcon, RefreshCw, Smartphone } from 'lucide-react';
+import { CreditCard, Download, Image as ImageIcon, Smartphone } from 'lucide-react';
 
 const STYLE_LABELS: Record<LogoStyle, { label: string; desc: string }> = {
   minimal: { label: 'Minimalist Glyph', desc: 'Continuous-line monogram' },
@@ -21,6 +21,10 @@ type MockupTab = 'icon' | 'card' | 'banner';
 
 /**
  * Step 5 artefact — the locked logo mark, previewed on real surfaces.
+ *
+ * The mark itself is the content: one large preview, its style name, and two
+ * compact switches. Every control is self-labelling, so the uppercase section
+ * headers around them were removed.
  */
 export const LogoArtworkCard: React.FC = () => {
   const { selectedName, selectedLogoStyle, openLogoModal } = useBrandStore();
@@ -34,15 +38,9 @@ export const LogoArtworkCard: React.FC = () => {
       id="step-card-logo"
       step={5}
       variant="confirmed"
-      status={{ label: 'Synthesized', tone: 'success', dot: true }}
       actions={
         <>
-          <Button
-            variant="secondary"
-            size="sm"
-            icon={<RefreshCw className="h-3.5 w-3.5 text-slate-400" />}
-            onClick={openLogoModal}
-          >
+          <Button variant="secondary" size="sm" onClick={openLogoModal}>
             Change style
           </Button>
           <Button
@@ -76,38 +74,26 @@ export const LogoArtworkCard: React.FC = () => {
 
           <div className="min-w-0 flex-1 space-y-3">
             <div>
-              <span className="text-2xs font-bold uppercase tracking-wider text-slate-400">
-                Style
-              </span>
               <h4 className="font-display text-base font-bold text-slate-900">{info.label}</h4>
-              <p className="mt-0.5 text-xs leading-relaxed text-slate-500">
-                {info.desc} · scalable vector geometry with calibrated optical balance.
-              </p>
+              <p className="mt-0.5 text-xs text-slate-500">{info.desc}</p>
             </div>
 
-            <div>
-              <span className="mb-1.5 block text-2xs font-bold uppercase tracking-wider text-slate-400">
-                Preview surface
-              </span>
-              <SegmentedControl<PreviewSurface>
-                aria-label="Logo preview surface"
-                value={surface}
-                onChange={setSurface}
-                options={[
-                  { value: 'light', label: 'Light' },
-                  { value: 'dark', label: 'Dark' },
-                  { value: 'brand', label: 'Brand' },
-                ]}
-              />
-            </div>
+            <SegmentedControl<PreviewSurface>
+              aria-label="Logo preview surface"
+              value={surface}
+              onChange={setSurface}
+              options={[
+                { value: 'light', label: 'Light' },
+                { value: 'dark', label: 'Dark' },
+                { value: 'brand', label: 'Brand' },
+              ]}
+            />
           </div>
         </div>
 
-        <div className="border-t border-slate-100 pt-4">
-          <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-            <span className="text-2xs font-bold uppercase tracking-wider text-slate-400">
-              Touchpoint mockups
-            </span>
+        <div className="space-y-3 border-t border-slate-100 pt-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="text-2xs font-medium text-slate-400">Mockups</span>
 
             <SegmentedControl<MockupTab>
               aria-label="Touchpoint mockup"
@@ -130,10 +116,7 @@ export const LogoArtworkCard: React.FC = () => {
 
             {mockup === 'card' && (
               <div className="flex h-36 w-64 flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 shadow-md">
-                <div className="flex items-center justify-between">
-                  <LogoArtwork brand={selectedName} style={selectedLogoStyle} variant="light" size="sm" />
-                  <span className="font-mono text-2xs text-slate-400">HQ / Atelier</span>
-                </div>
+                <LogoArtwork brand={selectedName} style={selectedLogoStyle} variant="light" size="sm" />
                 <div>
                   <h5 className="text-sm font-bold text-slate-900">{selectedName.name}</h5>
                   <p className="text-2xs italic text-slate-400">{selectedName.tagline}</p>

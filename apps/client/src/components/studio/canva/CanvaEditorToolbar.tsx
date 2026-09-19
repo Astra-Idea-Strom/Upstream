@@ -6,20 +6,18 @@ import { cn } from '../../../lib/cn';
 import {
   Moon,
   RotateCcw,
-  Sliders,
-  Sparkles,
   Sun,
   Type,
 } from 'lucide-react';
 
 export const FONT_OPTIONS = [
-  { name: 'Outfit', category: 'Modern geometric sans' },
-  { name: 'Plus Jakarta Sans', category: 'Tech neo-grotesque' },
-  { name: 'Syne', category: 'Artisanal avant-garde' },
-  { name: 'Playfair Display', category: 'High editorial serif' },
-  { name: 'Inter', category: 'Neutral hyper-legible' },
-  { name: 'Space Grotesk', category: 'Brutalist tech' },
-  { name: 'Merriweather', category: 'Warm literary serif' },
+  { name: 'Outfit' },
+  { name: 'Plus Jakarta Sans' },
+  { name: 'Syne' },
+  { name: 'Playfair Display' },
+  { name: 'Inter' },
+  { name: 'Space Grotesk' },
+  { name: 'Merriweather' },
 ];
 
 type CanvasElement = 'wordmark' | 'tagline' | 'background';
@@ -29,7 +27,13 @@ const BACKGROUNDS: { mode: CanvasBackground; label: string; icon: React.ReactNod
   { mode: 'light', label: 'White', icon: <Sun className="h-3.5 w-3.5" /> },
   { mode: 'linen', label: 'Linen', icon: <span className="text-2xs font-bold">Aa</span> },
   { mode: 'dark', label: 'Dark', icon: <Moon className="h-3.5 w-3.5" /> },
-  { mode: 'brand', label: 'Brand', icon: <Sparkles className="h-3.5 w-3.5" /> },
+  {
+    mode: 'brand',
+    label: 'Brand',
+    icon: (
+      <span className="h-3 w-3 rounded-full bg-gradient-to-tr from-brand-600 to-coral-500" />
+    ),
+  },
 ];
 
 const SELECT_CLASS =
@@ -85,39 +89,32 @@ export const CanvaEditorToolbar: React.FC = () => {
 
   return (
     <div className="rounded-2xl border border-slate-200/90 bg-white p-3 shadow-xs">
-      {/* Header row */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
-        <span className="flex items-center gap-1.5 text-2xs font-bold uppercase tracking-wider text-slate-500">
-          <Sliders className="h-3.5 w-3.5 text-brand-600" />
-          Design controls
-        </span>
+      {/* Which element is being edited, and a reset. */}
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <SegmentedControl<CanvasElement>
+          aria-label="Element to edit"
+          value={canvaSelectedElement}
+          onChange={setCanvaSelectedElement}
+          options={[
+            { value: 'wordmark', label: 'Name' },
+            { value: 'tagline', label: 'Tagline' },
+            { value: 'background', label: 'Canvas' },
+          ]}
+        />
 
-        <div className="flex flex-wrap items-center gap-2">
-          <SegmentedControl<CanvasElement>
-            aria-label="Element to edit"
-            value={canvaSelectedElement}
-            onChange={setCanvaSelectedElement}
-            options={[
-              { value: 'wordmark', label: 'Name' },
-              { value: 'tagline', label: 'Tagline' },
-              { value: 'background', label: 'Canvas' },
-            ]}
-          />
-
-          <button
-            type="button"
-            onClick={resetCanvaStyles}
-            title="Reset to agent defaults"
-            className="flex items-center gap-1 rounded-md px-1.5 py-1 text-2xs font-semibold text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45"
-          >
-            <RotateCcw className="h-3 w-3" />
-            Reset
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={resetCanvaStyles}
+          title="Reset"
+          className="flex items-center gap-1 rounded-md px-1.5 py-1 text-2xs font-semibold text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45"
+        >
+          <RotateCcw className="h-3 w-3" />
+          Reset
+        </button>
       </div>
 
-      {/* Control row */}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5 pt-2.5">
+      {/* Properties of the selected element. */}
+      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2.5">
         {/* Typeface */}
         <div className="flex items-center gap-1.5">
           <Type className="h-3.5 w-3.5 flex-shrink-0 text-slate-400" />
@@ -132,7 +129,7 @@ export const CanvaEditorToolbar: React.FC = () => {
           >
             {FONT_OPTIONS.map((font) => (
               <option key={font.name} value={font.name}>
-                {font.name} · {font.category}
+                {font.name}
               </option>
             ))}
           </select>
@@ -140,7 +137,7 @@ export const CanvaEditorToolbar: React.FC = () => {
 
         {/* Size */}
         <div className="flex items-center gap-1.5">
-          <span className="text-2xs font-bold uppercase tracking-wider text-slate-400">Size</span>
+          <span className="text-2xs font-medium text-slate-400">Size</span>
           <button
             type="button"
             onClick={() => nudgeSize(-2)}
@@ -164,7 +161,7 @@ export const CanvaEditorToolbar: React.FC = () => {
 
         {/* Weight */}
         <div className="flex items-center gap-1">
-          <span className="text-2xs font-bold uppercase tracking-wider text-slate-400">Weight</span>
+          <span className="text-2xs font-medium text-slate-400">Weight</span>
           {[400, 600, 700, 800].map((weight) => (
             <button
               key={weight}
@@ -187,7 +184,7 @@ export const CanvaEditorToolbar: React.FC = () => {
         <div className="flex items-center gap-1.5">
           <label
             htmlFor="canva-tracking"
-            className="text-2xs font-bold uppercase tracking-wider text-slate-400"
+            className="text-2xs font-medium text-slate-400"
           >
             Tracking
           </label>
@@ -208,7 +205,7 @@ export const CanvaEditorToolbar: React.FC = () => {
 
         {/* Colour */}
         <div className="flex items-center gap-1.5">
-          <span className="text-2xs font-bold uppercase tracking-wider text-slate-400">Colour</span>
+          <span className="text-2xs font-medium text-slate-400">Colour</span>
           {palette.swatches.map((swatch) => (
             <button
               key={swatch.hex}
@@ -242,7 +239,7 @@ export const CanvaEditorToolbar: React.FC = () => {
 
         {/* Canvas background */}
         <div className="flex items-center gap-1">
-          <span className="text-2xs font-bold uppercase tracking-wider text-slate-400">Canvas</span>
+          <span className="text-2xs font-medium text-slate-400">Canvas</span>
           {BACKGROUNDS.map((background) => (
             <button
               key={background.mode}
