@@ -1,0 +1,94 @@
+{
+ "category": "data",
+ "skills": [
+  {
+   "name": "analytics",
+   "use_when": "Data analytics: SQL aggregations, event tracking schema, cohort analysis, funnel reporting, and OLAP query optimization. Use when building analytics d",
+   "keys": [
+    "funnel",
+    "cohort",
+    "retention",
+    "kpi",
+    "metrics warehouse",
+    "event tracking"
+   ],
+   "not_for": [
+    "on phones",
+    "on mobile",
+    "responsive"
+   ],
+   "cost": 741
+  },
+  {
+   "name": "data-modeling",
+   "use_when": "Relational and document data modeling: entity-relationship diagrams, normalization, foreign keys, and schema design. Use when designing database schem",
+   "keys": [
+    "er diagram",
+    "normalization",
+    "schema design"
+   ],
+   "not_for": [
+    "scanned",
+    "invoice",
+    "invoices"
+   ],
+   "cost": 778
+  },
+  {
+   "name": "data-processing",
+   "use_when": "Data pipelines: ETL workflows, chunked stream processing, deduplication, batch validation, and transformation. Use when processing bulk datasets, clea",
+   "keys": [
+    "data processing",
+    "etl",
+    "csv parse",
+    "data pipeline",
+    "stream data",
+    "pydantic",
+    "zod validation"
+   ],
+   "not_for": [],
+   "cost": 727
+  },
+  {
+   "name": "nosql",
+   "use_when": "Document and key-value store architecture: MongoDB, DynamoDB, Redis, flexible schemas, compound index optimization (ESR rule), access-pattern modeling",
+   "keys": [
+    "mongo",
+    "mongodb",
+    "dynamodb",
+    "document store"
+   ],
+   "not_for": [],
+   "cost": 1599
+  },
+  {
+   "name": "postgresql",
+   "use_when": "PostgreSQL administration and advanced features: EXPLAIN ANALYZE, pgvector, partial indexes, row-level security (RLS), and JSONB. Use when tuning Post",
+   "keys": [
+    "pg",
+    "pgvector",
+    "postgres",
+    "postgresql",
+    "psql"
+   ],
+   "not_for": [],
+   "cost": 764
+  },
+  {
+   "name": "sql",
+   "use_when": "Relational query optimization, composite indexing rules, ACID transactions, isolation levels, EXPLAIN ANALYZE diagnosis, and keyset pagination. Use wh",
+   "keys": [
+    "select",
+    "join",
+    "index",
+    "query plan",
+    "explain analyze"
+   ],
+   "not_for": [
+    "monad",
+    "explain what a"
+   ],
+   "cost": 1386
+  }
+ ]
+}

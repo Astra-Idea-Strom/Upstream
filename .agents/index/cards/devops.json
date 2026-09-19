@@ -1,0 +1,111 @@
+{
+ "category": "devops",
+ "skills": [
+  {
+   "name": "ci-cd",
+   "use_when": "Continuous integration and delivery: GitHub Actions, automated test workflows, artifact building, and deployment gates. Use when creating CI/CD pipeli",
+   "keys": [
+    "pipeline",
+    "github actions",
+    "build matrix",
+    "release workflow"
+   ],
+   "not_for": [],
+   "cost": 1051
+  },
+  {
+   "name": "cloud",
+   "use_when": "Cloud infrastructure and serverless architecture: AWS, GCP, Azure, S3, IAM policies, and cloud networking. Use when deploying cloud infrastructure, co",
+   "keys": [
+    "aws",
+    "gcp",
+    "azure",
+    "s3",
+    "lambda",
+    "iam",
+    "terraform"
+   ],
+   "not_for": [],
+   "cost": 830
+  },
+  {
+   "name": "deployment",
+   "use_when": "Application deployment: zero-downtime releases, blue-green deployments, health checks, rollback automation, and environments. Use when releasing appli",
+   "keys": [
+    "rollout",
+    "blue green",
+    "canary",
+    "zero downtime",
+    "rollback"
+   ],
+   "not_for": [
+    "rename",
+    "this variable"
+   ],
+   "cost": 871
+  },
+  {
+   "name": "docker",
+   "use_when": "Containerization: Dockerfile multi-stage builds, docker-compose orchestration, container networking, and image size minimization. Use when creating Do",
+   "keys": [
+    "dockerfile",
+    "compose",
+    "image size",
+    "container",
+    "multi-stage"
+   ],
+   "not_for": [],
+   "cost": 1065
+  },
+  {
+   "name": "git",
+   "use_when": "Git version control: branching workflows, atomic commits, interactive rebase, merge conflict resolution, and bisect. Use when managing git history, re",
+   "keys": [
+    "rebase",
+    "merge conflict",
+    "cherry-pick",
+    "bisect",
+    "commit message"
+   ],
+   "not_for": [],
+   "cost": 809
+  },
+  {
+   "name": "github",
+   "use_when": "GitHub platform features: pull request templates, issue triage, branch protection rules, GitHub releases, and webhooks. Use when managing GitHub repos",
+   "keys": [
+    "pull request",
+    "actions",
+    "codeowners",
+    "issue template"
+   ],
+   "not_for": [],
+   "cost": 799
+  },
+  {
+   "name": "monitoring",
+   "use_when": "Application monitoring, uptime monitoring, health check endpoints, alert thresholds, and incident notification routing. Use when setting up server hea",
+   "keys": [
+    "alerting",
+    "uptime",
+    "pagerduty",
+    "dashboards"
+   ],
+   "not_for": [],
+   "cost": 899
+  },
+  {
+   "name": "observability",
+   "use_when": "Observability: OpenTelemetry, structured logging, distributed tracing, metrics collection, and Prometheus/Grafana. Use when instrumenting applications",
+   "keys": [
+    "tracing",
+    "opentelemetry",
+    "structured logs",
+    "slo",
+    "span"
+   ],
+   "not_for": [],
+   "cost": 997
+  }
+ ]
+}

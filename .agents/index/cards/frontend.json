@@ -1,0 +1,220 @@
+{
+ "category": "frontend",
+ "skills": [
+  {
+   "name": "3d-web",
+   "use_when": "3D web graphics: WebGL fundamentals, canvas rendering, camera controls, shaders, and lightweight 3D scenes. Use when rendering interactive 3D visualiz",
+   "keys": [
+    "interactive 3D",
+    "WebGL"
+   ],
+   "not_for": [],
+   "cost": 989
+  },
+  {
+   "name": "accessibility",
+   "use_when": "WCAG 2.2 AA engineering: semantic HTML, ARIA, keyboard navigation, focus management (native dialog, focus trap), the 2.2 criteria at levels A and AA, ",
+   "keys": [
+    "a11y",
+    "accessible",
+    "alt text",
+    "aria",
+    "contrast ratio",
+    "focus order",
+    "keyboard accessible",
+    "keyboard nav",
+    "keyboard operable",
+    "screen reader",
+    "wcag"
+   ],
+   "not_for": [],
+   "cost": 1472
+  },
+  {
+   "name": "advanced-css",
+   "use_when": "Modern advanced CSS: CSS Grid, Flexbox, container queries, fluid typography with clamp(), custom properties, and subgrid. Use when implementing comple",
+   "keys": [
+    "grid",
+    "subgrid",
+    "container query",
+    ":has",
+    "@layer",
+    "flexbox"
+   ],
+   "not_for": [],
+   "cost": 894
+  },
+  {
+   "name": "animation-motion",
+   "use_when": "Web animations: CSS transitions, keyframes, spring physics, Framer Motion, and prefers-reduced-motion accessibility. Use when building UI animations, ",
+   "keys": [
+    "framer motion",
+    "transition",
+    "keyframes",
+    "reduced motion"
+   ],
+   "not_for": [],
+   "cost": 863
+  },
+  {
+   "name": "design-systems",
+   "use_when": "Design tokens (color, typography scale, spacing, elevation, motion), reusable accessible component libraries, Radix primitives, and Tailwind integrati",
+   "keys": [
+    "across pages",
+    "button variants",
+    "component library",
+    "consistency",
+    "design token",
+    "inconsistent",
+    "spacing scale",
+    "storybook",
+    "theming",
+    "tokens"
+   ],
+   "not_for": [
+    "threat",
+    "threats",
+    "threat model"
+   ],
+   "cost": 1125
+  },
+  {
+   "name": "frontend-engineering",
+   "use_when": "Modern frontend development: React, Next.js, component lifecycle, custom hooks, state management, and DOM optimization. Use when building user interfa",
+   "keys": [
+    "react",
+    "next.js",
+    "vue",
+    "component",
+    "state management",
+    "hooks",
+    "re-render",
+    "rerender",
+    "usestate",
+    "useeffect",
+    "props",
+    "jsx",
+    "tsx",
+    "component tree"
+   ],
+   "not_for": [],
+   "cost": 875
+  },
+  {
+   "name": "frontend-performance",
+   "use_when": "Core Web Vitals engineering (LCP, CLS, INP), asset optimization (AVIF/WebP, fonts), code splitting, streaming SSR, and hydration architectures. Use wh",
+   "keys": [
+    "bundle size",
+    "cls",
+    "cumulative layout shift",
+    "hydration",
+    "inp",
+    "interaction to next paint",
+    "janky",
+    "largest contentful paint",
+    "lcp",
+    "lighthouse",
+    "megabytes of javascript",
+    "re-render loop",
+    "ship javascript",
+    "slow page",
+    "slow render"
+   ],
+   "not_for": [],
+   "cost": 1397
+  },
+  {
+   "name": "frontend-security",
+   "use_when": "Frontend vulnerability defense: DOM XSS sanitization (DOMPurify), CSP with per-response nonces, iframe sandboxing, CSRF mitigation, secure cookie flag",
+   "keys": [
+    "csp",
+    "dom xss",
+    "httponly cookie"
+   ],
+   "not_for": [],
+   "cost": 1376
+  },
+  {
+   "name": "human-ui-design",
+   "use_when": "Anti-AI-slop visual judgement; bans gratuitous gradients, pill borders and default-template aesthetics. Use when a UI looks generic, templated, \"AI-ma",
+   "keys": [
+    "ai slop",
+    "looks generic",
+    "looks templated",
+    "make it feel designed"
+   ],
+   "not_for": [],
+   "cost": 1623
+  },
+  {
+   "name": "responsive-design",
+   "use_when": "Mobile-first layout, fluid clamp() scales, breakpoints and container-aware components. Use when something breaks on a phone or tablet, or when a layou",
+   "keys": [
+    "breakpoint",
+    "clamp",
+    "doesn't fit",
+    "mobile",
+    "narrow screen",
+    "on mobile",
+    "phone",
+    "phones",
+    "responsive component",
+    "small screen",
+    "tablet",
+    "viewport"
+   ],
+   "not_for": [],
+   "cost": 621
+  },
+  {
+   "name": "threejs",
+   "use_when": "Three.js 3D development: scene graphs, mesh geometries, PBR materials, lighting, GLTF loading, and render loops. Use when developing Three.js applicat",
+   "keys": [
+    "three.js",
+    "threejs"
+   ],
+   "not_for": [],
+   "cost": 1208
+  },
+  {
+   "name": "ui-ux",
+   "use_when": "UI/UX design principles: user journey mapping, visual hierarchy, error state UX, cognitive load reduction, and wireframing. Use when planning user wor",
+   "keys": [
+    "user flow",
+    "onboarding",
+    "empty state",
+    "information architecture"
+   ],
+   "not_for": [],
+   "cost": 785
+  },
+  {
+   "name": "visual-design",
+   "use_when": "Visual aesthetics: color harmony, typography pairing, whitespace distribution, layout balance, and brand consistency. Use when improving visual appeal",
+   "keys": [
+    "hierarchy",
+    "contrast",
+    "color palette",
+    "spacing",
+    "typography"
+   ],
+   "not_for": [],
+   "cost": 711
+  },
+  {
+   "name": "web-design",
+   "use_when": "Web design fundamentals: page structure, semantic HTML5, viewport scaling, hero sections, and navigation patterns. Use when structuring marketing webs",
+   "keys": [
+    "web design",
+    "typography",
+    "type scale",
+    "vertical rhythm",
+    "measure",
+    "leading",
+    "kerning"
+   ],
+   "not_for": [],
+   "cost": 968
+  }
+ ]
+}

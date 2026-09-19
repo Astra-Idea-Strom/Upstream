@@ -1,0 +1,120 @@
+{
+ "category": "tools",
+ "skills": [
+  {
+   "name": "capability-gap-detection",
+   "use_when": "Detect and triage missing capabilities in a skill library instead of adding skills speculatively: gap signals from routing failures, the evidence bar ",
+   "keys": [
+    "missing skill",
+    "should we add a skill",
+    "capability gap",
+    "prune skills"
+   ],
+   "not_for": [],
+   "cost": 958
+  },
+  {
+   "name": "skill-adaptation",
+   "use_when": "Sanitizing, adapting, and formatting external skills into repository-compliant structure and frontmatter schema. Use when importing third-party skills",
+   "keys": [
+    "adapt skill",
+    "improve skill",
+    "convert skill",
+    "sanitize skill"
+   ],
+   "not_for": [],
+   "cost": 860
+  },
+  {
+   "name": "skill-auditing",
+   "use_when": "Skill security auditing: static analysis, 6-point security review, dangerous pattern scanning, and permission verification. Use when vetting newly cre",
+   "keys": [
+    "audit skill",
+    "check skill security",
+    "validate script",
+    "skill safety"
+   ],
+   "not_for": [],
+   "cost": 1023
+  },
+  {
+   "name": "skill-authoring",
+   "use_when": "Author spec-compliant Agent Skills: valid YAML frontmatter, a description written as the discovery trigger, three-tier progressive disclosure, activat",
+   "keys": [
+    "write a skill",
+    "skill.md",
+    "frontmatter",
+    "skill description",
+    "skill never triggers",
+    "authoring a skill"
+   ],
+   "not_for": [],
+   "cost": 1154
+  },
+  {
+   "name": "skill-discovery",
+   "use_when": "Skill library discovery: searching skills by capability, evaluating skill relevance, and inspecting skill descriptions. Use when finding appropriate s",
+   "keys": [
+    "discover skill",
+    "find skill",
+    "skill discovery",
+    "needs human review",
+    "missing skill"
+   ],
+   "not_for": [],
+   "cost": 869
+  },
+  {
+   "name": "skill-evaluation",
+   "use_when": "Build and run evaluation sets for skill routing and skill quality: labelled prompt sets with must/forbid targets, precision, recall, F1, lead accuracy",
+   "keys": [
+    "eval set",
+    "precision recall",
+    "routing accuracy",
+    "golden set",
+    "measure the router",
+    "regression gate"
+   ],
+   "not_for": [],
+   "cost": 832
+  },
+  {
+   "name": "skill-installation",
+   "use_when": "Skill installation and deployment: placing skills in appropriate domain directories, configuring paths, and workspace linking. Use when installing val",
+   "keys": [
+    "install skill",
+    "register skill",
+    "mount skill",
+    "global skill install"
+   ],
+   "not_for": [],
+   "cost": 800
+  },
+  {
+   "name": "skill-routing",
+   "use_when": "Deterministic two-stage skill router: index shards, BM25 lexical scoring, intent classification, and overlays. Use when selecting optimal skills for a",
+   "keys": [
+    "route skills",
+    "select skills",
+    "which skills should I use",
+    "skill router",
+    "skill routing",
+    "skill selection"
+   ],
+   "not_for": [],
+   "cost": 1079
+  },
+  {
+   "name": "skill-validation",
+   "use_when": "Repository skill validation: frontmatter verification, index parity, broken link detection, and schema compliance. Use when validating the AI-SKILLS l",
+   "keys": [
+    "validate skills",
+    "test router",
+    "check skill frontmatter",
+    "skill lint"
+   ],
+   "not_for": [],
+   "cost": 803
+  }
+ ]
+}
