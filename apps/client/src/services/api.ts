@@ -73,4 +73,25 @@ export const brandApi = {
       return { results };
     }
   },
+
+  // Conversational Agent Chat powered by Groq (GPT OSS 120B)
+  chat: async (params: {
+    message: string;
+    history?: Array<{ sender: 'user' | 'assistant'; text: string }>;
+    currentContext?: any;
+  }): Promise<{
+    reply: string;
+    suggestions?: string[];
+    detectedIntent: 'greeting' | 'new_brand' | 'refine' | 'question';
+    extractedBrief?: {
+      businessName?: string;
+      industry?: string;
+      tone?: string;
+      targetAudience?: string;
+      mission?: string;
+    };
+  }> => {
+    const res = await api.post('/brand/chat', params);
+    return res.data;
+  },
 };

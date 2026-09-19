@@ -22,10 +22,21 @@ export interface GenerateBrandResponse {
 // ─────────────────────────────────────────────
 // POST /api/brand/logos
 // ─────────────────────────────────────────────
+export type { LogoGenerationRequest } from './brand.types';
+
 export interface GenerateLogosRequest {
   projectId: string;
   selectedName: BrandName;
-  count?: number; // default: 4
+  mode?: 'template' | 'scratch';
+  archetypeId?: string;
+  exemplarBrandId?: string;
+  referenceImageBase64?: string;
+  referenceImageMimeType?: string;
+  preferredColors?: string[];
+  fontStyle?: string;
+  styleKeywords?: string;
+  industry?: string;
+  count?: number; // default: 2
 }
 
 export interface GenerateLogosResponse {
