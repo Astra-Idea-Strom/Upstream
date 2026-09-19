@@ -87,11 +87,11 @@ export const StudioLayout: React.FC = () => {
   }, [isDragging, chatWidth]);
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#F8F6FE] text-slate-900 font-sans">
+    <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#F0F6FC] text-slate-900 font-sans">
       {/* ============================================================ */}
       {/* TOP AGENT PORTAL HEADER (No top options patch) */}
       {/* ============================================================ */}
-      <header className="h-12 border-b border-slate-200/90 bg-white px-4 flex items-center justify-between flex-shrink-0 z-30 select-none">
+      <header className="h-12 border-b border-sky-200/60 bg-[#F4F9FD] px-4 flex items-center justify-between flex-shrink-0 z-30 select-none">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setViewMode('landing')}
@@ -105,9 +105,9 @@ export const StudioLayout: React.FC = () => {
             </span>
           </button>
 
-          <div className="h-4 w-[1px] bg-slate-200" />
+          <div className="h-4 w-[1px] bg-sky-200/80" />
 
-          <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-100/90 text-xs font-semibold text-slate-700">
+          <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-sky-100/70 border border-sky-200/60 text-xs font-semibold text-slate-700">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="truncate max-w-[160px]">{input.industry || 'Brand Venture'}</span>
             {hasConfirmedName && (
@@ -170,14 +170,14 @@ export const StudioLayout: React.FC = () => {
           title="Drag to resize panels (Double-click to reset)"
           className={`hidden md:flex items-center justify-center w-2 -ml-[1px] relative z-20 cursor-col-resize group transition-colors duration-150 flex-shrink-0 select-none ${
             isDragging
-              ? 'bg-brand-500 ring-2 ring-brand-400/40'
-              : 'bg-slate-200/90 hover:bg-brand-400'
+              ? 'bg-sky-500 ring-2 ring-sky-400/40'
+              : 'bg-sky-200/80 hover:bg-sky-400'
           }`}
         >
           {/* Subtle tactile grip pill */}
           <div
             className={`w-0.5 h-8 rounded-full transition-colors ${
-              isDragging ? 'bg-white' : 'bg-slate-400 group-hover:bg-white'
+              isDragging ? 'bg-white' : 'bg-sky-400 group-hover:bg-white'
             }`}
           />
         </div>

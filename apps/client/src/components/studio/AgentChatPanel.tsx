@@ -53,9 +53,9 @@ export const AgentChatPanel: React.FC = () => {
   ].filter(Boolean).length;
 
   return (
-    <div className="flex flex-col h-full bg-white border-r border-slate-200/90 select-none">
+    <div className="flex flex-col h-full bg-[#F1F6FB] border-r border-sky-200/70 select-none">
       {/* Agent Header */}
-      <div className="h-12 px-4 border-b border-slate-200/90 flex items-center justify-between bg-[#FAF9FE] flex-shrink-0">
+      <div className="h-12 px-4 border-b border-sky-200/60 flex items-center justify-between bg-[#EBF3FA] flex-shrink-0">
         <div className="flex items-center gap-2.5">
           <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-brand-600 to-coral-400 flex items-center justify-center text-white text-xs font-bold shadow-2xs">
             <Bot className="w-4 h-4" />
@@ -72,12 +72,12 @@ export const AgentChatPanel: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="px-2 py-0.5 rounded-full bg-brand-50 border border-brand-200/70 text-[10px] font-bold text-brand-700">
+          <span className="px-2 py-0.5 rounded-full bg-sky-100/90 border border-sky-200 text-[10px] font-bold text-sky-800">
             {completedStepsCount}/5 Active
           </span>
           <button
             onClick={reset}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+            className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-sky-100 transition-colors"
             title="Reset Agent Session"
           >
             <RotateCcw className="w-3.5 h-3.5" />
@@ -86,12 +86,12 @@ export const AgentChatPanel: React.FC = () => {
       </div>
 
       {/* Sleek Milestone Pipeline Bar */}
-      <div className="px-4 py-2 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between text-[10px] font-mono text-slate-500 flex-shrink-0">
+      <div className="px-4 py-2 bg-[#F3F8FD] border-b border-sky-200/50 flex items-center justify-between text-[10px] font-mono text-slate-500 flex-shrink-0">
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-          <span className={`px-2 py-0.5 rounded-md transition-colors ${hasConfirmedIndustry ? 'bg-emerald-100 text-emerald-800 font-bold' : 'bg-slate-200/70 text-slate-600'}`}>
+          <span className={`px-2 py-0.5 rounded-md transition-colors ${hasConfirmedIndustry ? 'bg-emerald-100 text-emerald-800 font-bold' : 'bg-sky-100 text-slate-600'}`}>
             1. Concept
           </span>
-          <span className="text-slate-300">›</span>
+          <span className="text-sky-300">›</span>
           <span className={`px-2 py-0.5 rounded-md transition-colors ${hasConfirmedName ? 'bg-emerald-100 text-emerald-800 font-bold' : step === 2 ? 'bg-amber-100 text-amber-900 font-bold ring-1 ring-amber-300 animate-pulse' : 'bg-slate-200/70 text-slate-600'}`}>
             2. Names
           </span>
@@ -114,7 +114,7 @@ export const AgentChatPanel: React.FC = () => {
       </div>
 
       {/* Messages & Execution Stream */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3.5 text-xs bg-[#FBFBFE]">
+      <div className="flex-1 overflow-y-auto p-4 space-y-3.5 text-xs bg-[#F0F6FC]">
         {/* Conversation Thread */}
         {chatMessages.map((msg) => (
           <div
@@ -125,7 +125,7 @@ export const AgentChatPanel: React.FC = () => {
               className={`max-w-[92%] rounded-2xl p-3 shadow-2xs leading-relaxed select-text ${
                 msg.sender === 'user'
                   ? 'bg-slate-900 text-white rounded-tr-none'
-                  : 'bg-white border border-slate-200/90 text-slate-800 rounded-tl-none shadow-xs'
+                  : 'bg-white border border-sky-200/80 text-slate-800 rounded-tl-none shadow-xs'
               }`}
             >
               <p className="whitespace-pre-line">{msg.text}</p>
@@ -147,10 +147,10 @@ export const AgentChatPanel: React.FC = () => {
                     <button
                       key={opt.id}
                       onClick={() => handleActionOption(opt)}
-                      className="w-full bg-white hover:bg-brand-50 text-slate-800 hover:text-brand-800 border border-brand-200/80 rounded-xl px-3 py-2 text-xs font-bold transition-all text-left flex items-center justify-between shadow-2xs group"
+                      className="w-full bg-white hover:bg-sky-50 text-slate-800 hover:text-sky-900 border border-sky-200 rounded-xl px-3 py-2 text-xs font-bold transition-all text-left flex items-center justify-between shadow-2xs group"
                     >
                       <span>{opt.label}</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-brand-600 group-hover:translate-x-0.5 transition-transform" />
+                      <ArrowRight className="w-3.5 h-3.5 text-sky-600 group-hover:translate-x-0.5 transition-transform" />
                     </button>
                   ))}
               </div>
@@ -163,7 +163,7 @@ export const AgentChatPanel: React.FC = () => {
                   <button
                     key={i}
                     onClick={() => sendChatMessage(sug)}
-                    className="bg-white hover:bg-brand-50 text-slate-700 hover:text-brand-700 border border-slate-200/90 rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors text-left flex items-center gap-1 shadow-2xs"
+                    className="bg-white hover:bg-sky-50 text-slate-700 hover:text-sky-900 border border-sky-200/80 rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors text-left flex items-center gap-1 shadow-2xs"
                   >
                     <Sparkles className="w-2.5 h-2.5 text-coral-500 flex-shrink-0" />
                     <span>{sug}</span>
@@ -187,24 +187,24 @@ export const AgentChatPanel: React.FC = () => {
       </div>
 
       {/* Replit-Style Docked Prompt Bar */}
-      <div className="p-3 bg-white border-t border-slate-200/90 flex-shrink-0 space-y-2">
+      <div className="p-3 bg-[#EAF3FA] border-t border-sky-200/70 flex-shrink-0 space-y-2">
         {/* Quick Suggestion Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar text-[10px]">
           <button
             onClick={() => sendChatMessage('We are building a coffee business named Ceramiq')}
-            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-100 hover:bg-orange-50 text-slate-700 hover:text-orange-700 transition-colors border border-slate-200/70 font-medium"
+            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-white hover:bg-sky-100 text-slate-700 hover:text-sky-800 transition-colors border border-sky-200 font-medium shadow-2xs"
           >
             ☕ Coffee 'Ceramiq'
           </button>
           <button
             onClick={() => sendChatMessage('Streetwear and sneaker label called Kinetics')}
-            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-100 hover:bg-purple-50 text-slate-700 hover:text-purple-700 transition-colors border border-slate-200/70 font-medium"
+            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-white hover:bg-sky-100 text-slate-700 hover:text-sky-800 transition-colors border border-sky-200 font-medium shadow-2xs"
           >
             👟 Streetwear 'Kinetics'
           </button>
           <button
             onClick={() => sendChatMessage('Autonomous AI agent cloud platform named Nexa')}
-            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-700 transition-colors border border-slate-200/70 font-medium"
+            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-white hover:bg-sky-100 text-slate-700 hover:text-sky-800 transition-colors border border-sky-200 font-medium shadow-2xs"
           >
             ⚡ AI SaaS 'Nexa'
           </button>
@@ -213,7 +213,7 @@ export const AgentChatPanel: React.FC = () => {
         {/* Replit Styled Multi-Line Card Box */}
         <form
           onSubmit={handleSend}
-          className="w-full bg-white rounded-2xl border-2 border-slate-200 hover:border-slate-300 focus-within:border-[#F97356] focus-within:ring-4 focus-within:ring-orange-500/10 transition-all p-2.5 shadow-2xs relative text-left"
+          className="w-full bg-white rounded-2xl border-2 border-sky-200 hover:border-sky-300 focus-within:border-sky-500 focus-within:ring-4 focus-within:ring-sky-400/15 transition-all p-2.5 shadow-2xs relative text-left"
         >
           <textarea
             value={inputVal}
