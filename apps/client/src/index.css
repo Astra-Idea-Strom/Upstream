@@ -8,6 +8,13 @@
     --brand-accent: #F85A52;
     --brand-bg: #F8F6FE;
     --brand-text: #131627;
+    --surface: #FFFFFF;
+    --line: #E7E5F0;
+    --line-strong: #D8D5E6;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
@@ -18,40 +25,52 @@
     background-attachment: fixed;
     color: var(--brand-text);
   }
+
+  /* One consistent, always-visible keyboard focus ring for the whole product.
+     Individual components opt out with focus-visible:outline-none. */
+  :focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: rgba(124, 58, 237, 0.18);
+  }
 }
 
-/* Glassmorphism & Visual Aesthetics */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 10px 35px -5px rgba(124, 58, 237, 0.07),
-              0 2px 8px -1px rgba(0, 0, 0, 0.03);
-}
+@layer components {
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 10px 35px -5px rgba(124, 58, 237, 0.07),
+                0 2px 8px -1px rgba(0, 0, 0, 0.03);
+  }
 
-.glass-card-interactive {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 8px 28px -4px rgba(124, 58, 237, 0.06);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
+  .glass-card-interactive {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 28px -4px rgba(124, 58, 237, 0.06);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 
-.glass-card-interactive:hover {
-  transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(164, 130, 226, 0.4);
-  box-shadow: 0 20px 40px -10px rgba(124, 58, 237, 0.14);
-}
+  .glass-card-interactive:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(164, 130, 226, 0.4);
+    box-shadow: 0 20px 40px -10px rgba(124, 58, 237, 0.14);
+  }
 
-.glass-pill {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-  box-shadow: 0 4px 14px 0 rgba(124, 58, 237, 0.08);
+  .glass-pill {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 14px 0 rgba(124, 58, 237, 0.08);
+  }
 }
 
 /* Animated gradient text */
@@ -73,10 +92,26 @@
   -webkit-text-fill-color: transparent;
 }
 
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
 /* Custom subtle scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
@@ -87,4 +122,68 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(124, 58, 237, 0.6);
+}
+
+/* ---------------------------------------------------------------------------
+   Legacy `tailwindcss-animate` compatibility.
+
+   The studio cards were authored against tailwindcss-animate compound classes
+   (`animate-in fade-in zoom-in-95`) but the plugin is not installed, so those
+   utilities were silent no-ops and every card appeared with no entrance
+   animation. These rules restore the intended behaviour without adding a
+   dependency. Plain CSS (outside @layer) is never purged by Tailwind.
+   --------------------------------------------------------------------------- */
+@keyframes wb-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wb-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes wb-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-in {
+  animation: wb-enter 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-in.fade-in {
+  animation-name: wb-fade-in;
+}
+
+.animate-in.zoom-in-95 {
+  animation-name: wb-zoom-in;
+}
+
+/* Respect users who ask for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

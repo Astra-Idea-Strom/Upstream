@@ -1,6 +1,6 @@
 import React from 'react';
 import { useBrandStore } from '../../store/brandStore';
-import { PREBUILT_THEMES, PrebuiltTheme } from '../../mock/mockData';
+import { PREBUILT_THEMES } from '../../mock/mockData';
 import {
   ArrowUpRight,
   Sparkles,
@@ -23,11 +23,7 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export const PrebuiltThemesSection: React.FC = () => {
-  const { selectedThemeId, selectTheme, setStep } = useBrandStore();
-
-  const handleSelectAndScroll = (theme: PrebuiltTheme) => {
-    selectTheme(theme.id);
-  };
+  const { selectedThemeId, selectTheme } = useBrandStore();
 
   return (
     <section className="px-4 sm:px-8 py-10 relative">
@@ -62,7 +58,7 @@ export const PrebuiltThemesSection: React.FC = () => {
             return (
               <div
                 key={theme.id}
-                onClick={() => handleSelectAndScroll(theme)}
+                onClick={() => selectTheme(theme.id)}
                 className={`group relative rounded-4xl overflow-hidden cursor-pointer transition-all duration-300 flex flex-col justify-between border ${
                   isSelected
                     ? 'border-brand-500 ring-4 ring-brand-500/20 shadow-xl bg-white'

@@ -1,178 +1,109 @@
 import React, { useState } from 'react';
 import { useBrandStore } from '../../../store/brandStore';
-import {
-  Palette,
-  Type,
-  Check,
-  RotateCcw,
-} from 'lucide-react';
+import { getPalette } from '../../../lib/palettes';
+import { CardShell } from '../CardShell';
+import { SwatchStrip } from '../SwatchStrip';
+import { Button } from '../../ui/primitives';
+import { Type, RefreshCw, WandSparkles } from 'lucide-react';
 
-const ALTERNATIVE_PALETTES = [
-  {
-    name: 'Electric Neon & Violet',
-    description: 'High energy modern tech-forward and streetwear contrast.',
-    swatches: [
-      { hex: '#7C3AED', name: 'Electric Violet', role: 'primary' as const },
-      { hex: '#1E1B4B', name: 'Midnight Navy', role: 'secondary' as const },
-      { hex: '#FB7185', name: 'Neon Coral', role: 'accent' as const },
-      { hex: '#F8F6FE', name: 'Lilac Fog', role: 'background' as const },
-      { hex: '#0F172A', name: 'Pitch Ink', role: 'text' as const },
-    ],
-  },
-  {
-    name: 'Artisan Terracotta & Roast',
-    description: 'Warm, cozy earthy ceramics, espresso crema, and natural kraft paper.',
-    swatches: [
-      { hex: '#D97706', name: 'Terracotta Glaze', role: 'primary' as const },
-      { hex: '#FDE68A', name: 'Warm Cream', role: 'secondary' as const },
-      { hex: '#7C3AED', name: 'Artisan Violet', role: 'accent' as const },
-      { hex: '#FDFBF7', name: 'Linen Paper', role: 'background' as const },
-      { hex: '#451A03', name: 'Dark Roast', role: 'text' as const },
-    ],
-  },
-  {
-    name: 'Haute Atelier Pastel',
-    description: 'Soft, silk European elegance with muted lavender and amber gold.',
-    swatches: [
-      { hex: '#9060FA', name: 'Silk Lavender', role: 'primary' as const },
-      { hex: '#DDD6FE', name: 'Mist Lilac', role: 'secondary' as const },
-      { hex: '#F59E0B', name: 'Amber Gold', role: 'accent' as const },
-      { hex: '#FCFBFF', name: 'Opal Pearl', role: 'background' as const },
-      { hex: '#1E1035', name: 'Velvet Noir', role: 'text' as const },
-    ],
-  },
-  {
-    name: 'Pure Botanical Sage',
-    description: 'Clean organic wellness and restorative natural skincare harmony.',
-    swatches: [
-      { hex: '#10B981', name: 'Botanical Emerald', role: 'primary' as const },
-      { hex: '#A7F3D0', name: 'Mint Dew', role: 'secondary' as const },
-      { hex: '#F472B6', name: 'Wild Blossom', role: 'accent' as const },
-      { hex: '#F6FBF8', name: 'Fresh Morning', role: 'background' as const },
-      { hex: '#064E3B', name: 'Deep Canopy', role: 'text' as const },
-    ],
-  },
-];
-
+/**
+ * Step 4 artefact — the applied visual system.
+ *
+ * Reads the same palette catalogue as the chooser, so what is shown here is
+ * always exactly what the user selected.
+ */
 export const VisualPaletteCard: React.FC = () => {
   const { selectedName, activePaletteIdx, openPaletteModal, openLogoModal } = useBrandStore();
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
 
-  const handleCopy = (hex: string) => {
-    navigator.clipboard.writeText(hex);
-    setCopiedHex(hex);
-    setTimeout(() => setCopiedHex(null), 1800);
-  };
+  const palette = getPalette(activePaletteIdx);
+  const { fonts } = palette;
 
-  const paletteObj = ALTERNATIVE_PALETTES[activePaletteIdx] || ALTERNATIVE_PALETTES[0];
-  const fonts = selectedName?.visualDirection?.fonts || {
-    headline: 'Plus Jakarta Sans',
-    body: 'Inter',
-    headlineWeight: '800',
-    bodyWeight: '400',
+  const handleCopy = (hex: string) => {
+    navigator.clipboard?.writeText(hex).catch(() => undefined);
+    setCopiedHex(hex);
+    window.setTimeout(() => setCopiedHex(null), 1800);
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-7 shadow-xs relative overflow-hidden transition-all hover:border-brand-300 animate-in fade-in duration-300">
-      <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-100">
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/70 text-[10px] font-bold text-brand-800">
-            <Palette className="w-3 h-3 text-coral-500" />
-            <span>CARD 3: COLOR PALETTE & TYPOGRAPHY</span>
-          </span>
-          <span className="inline-flex items-center gap-1 text-[10px] font-mono text-emerald-600 font-semibold px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200/60">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            HARMONIZED
-          </span>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <button
+    <CardShell
+      id="step-card-visual"
+      step={4}
+      variant="confirmed"
+      status={{ label: 'Applied', tone: 'success', dot: true }}
+      actions={
+        <>
+          <Button
+            variant="secondary"
+            size="sm"
+            icon={<RefreshCw className="h-3.5 w-3.5 text-slate-400" />}
             onClick={openPaletteModal}
-            className="px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors flex items-center gap-1 shadow-2xs"
           >
-            <RotateCcw className="w-3 h-3 text-slate-500" />
-            <span>Change Palette</span>
-          </button>
-          <button
+            Change palette
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            icon={<WandSparkles className="h-3.5 w-3.5" />}
             onClick={openLogoModal}
-            className="px-3 py-1 rounded-full bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200 text-xs font-bold transition-colors shadow-2xs"
           >
-            Inspect Logos
-          </button>
-        </div>
-      </div>
-
+            Logos
+          </Button>
+        </>
+      }
+    >
       <div className="space-y-4">
         <div>
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-              5-Color Chromatic Harmony ({paletteObj.name})
+          <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+            <span className="text-2xs font-bold uppercase tracking-wider text-slate-400">
+              {palette.name}
             </span>
-            <span className="text-[10px] text-slate-400 font-mono">Click hex to copy</span>
+            <span className="text-2xs text-slate-400">Select a swatch to copy its hex</span>
           </div>
 
-          <div className="grid grid-cols-5 gap-2">
-            {paletteObj.swatches.map((swatch, i) => (
-              <div
-                key={i}
-                onClick={() => handleCopy(swatch.hex)}
-                className="group flex flex-col cursor-pointer"
-              >
-                <div
-                  className="h-14 sm:h-16 rounded-2xl shadow-inner border border-black/5 flex items-end p-1.5 transition-transform group-hover:scale-105 relative"
-                  style={{ backgroundColor: swatch.hex }}
-                >
-                  {copiedHex === swatch.hex && (
-                    <div className="absolute inset-0 bg-black/60 rounded-2xl flex items-center justify-center text-white text-[10px] font-bold">
-                      <Check className="w-3 h-3" />
-                    </div>
-                  )}
-                </div>
-                <span className="text-[10px] font-bold text-slate-800 mt-1 truncate">
-                  {swatch.name}
-                </span>
-                <span className="text-[9px] font-mono text-slate-400 uppercase">
-                  {swatch.hex}
-                </span>
-              </div>
-            ))}
-          </div>
+          <SwatchStrip
+            swatches={palette.swatches}
+            size="lg"
+            showHex
+            showName
+            copiedHex={copiedHex}
+            onCopy={handleCopy}
+          />
         </div>
 
-        <div className="pt-2 border-t border-slate-100">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2 flex items-center gap-1">
-            <Type className="w-3 h-3 text-brand-600" />
-            <span>Google Fonts Hierarchy</span>
+        <div className="border-t border-slate-100 pt-4">
+          <span className="flex items-center gap-1.5 text-2xs font-bold uppercase tracking-wider text-slate-400">
+            <Type className="h-3 w-3" />
+            Type pairing
           </span>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100">
-              <span className="text-[9px] font-bold text-slate-400 uppercase block">
-                Headline · {fonts.headline} ({fonts.headlineWeight} weight)
+          <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
+              <span className="block text-2xs font-semibold uppercase tracking-wider text-slate-400">
+                Headline · {fonts.headline}
               </span>
               <p
-                className="text-lg font-bold text-slate-900 mt-1 truncate"
-                style={{ fontFamily: fonts.headline }}
+                className="mt-1 truncate text-base font-bold text-slate-900"
+                style={{ fontFamily: `'${fonts.headline}', sans-serif` }}
               >
                 {selectedName.name} Identity
               </p>
             </div>
 
-            <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100">
-              <span className="text-[9px] font-bold text-slate-400 uppercase block">
-                Body Font · {fonts.body} ({fonts.bodyWeight} weight)
+            <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
+              <span className="block text-2xs font-semibold uppercase tracking-wider text-slate-400">
+                Body · {fonts.body}
               </span>
               <p
-                className="text-xs text-slate-600 mt-1 leading-relaxed"
-                style={{ fontFamily: fonts.body }}
+                className="mt-1 text-xs leading-relaxed text-slate-600"
+                style={{ fontFamily: `'${fonts.body}', serif` }}
               >
-                Crafting meaningful modern impressions across all touchpoints.
+                Crafting meaningful modern impressions across every touchpoint.
               </p>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </CardShell>
   );
 };

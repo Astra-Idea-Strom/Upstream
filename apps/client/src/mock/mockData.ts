@@ -737,17 +737,19 @@ export function getNamesForConcept(industryOrPrompt: string): BrandName[] {
   return MOCK_BRAND_NAMES.slice(0, 5);
 }
 
-export const INITIAL_CHAT_MESSAGES = [
-  {
-    id: 'm1',
-    sender: 'assistant' as const,
-    text: "Hello! I'm your Upstream Autonomous Brand Agent. Describe your business vision or startup idea (e.g. \"We are building a coffee business and looking to have a brand\"), and I will autonomously guide you step-by-step: Names ➜ Taglines ➜ Color Harmonies ➜ Visual Flow ➜ Vector Logos ➜ Investor Brand Kit.",
-    timestamp: 'Just now',
-    suggestions: [
-      'We are building a coffee business and looking to have a brand',
-      'Streetwear & sneaker apparel for Gen Z',
-      'Autonomous AI cloud platform for developers',
-      'Organic botanical skincare ritual brand',
-    ],
-  },
-];
+type SeedMessage = {
+  id: string;
+  sender: 'user' | 'assistant';
+  text: string;
+  timestamp: string;
+  suggestions?: string[];
+};
+
+/**
+ * The transcript starts empty.
+ *
+ * The agent panel renders its own greeting and starter prompts, so seeding a
+ * welcome message here duplicated the same four prompts twice on first load
+ * (once as buttons, once as suggestion chips).
+ */
+export const INITIAL_CHAT_MESSAGES: SeedMessage[] = [];

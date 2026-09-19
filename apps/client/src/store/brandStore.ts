@@ -114,6 +114,12 @@ interface BrandStore {
 
   // Master Full-Auto Runner
   runFullAutonomousPipeline: () => void;
+  /**
+   * True while the agent is driving the flow itself. The canvas uses this to
+   * render a placeholder for the in-flight step instead of a chooser the user
+   * is not expected to interact with.
+   */
+  isAutoPilot: boolean;
 
   // Loading states
   isLoadingNames: boolean;
@@ -280,14 +286,11 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
         brandNames: names,
         selectedName: names[0],
         viewMode: 'studio',
-        step: 1,
+        step: 2,
         hasConfirmedIndustry: true,
       });
-
-      // Automatically synthesize names and open modal after a brief pause
-      setTimeout(() => {
-        set({ isNameModalOpen: true });
-      }, 700);
+      // No timer needed: confirming the brief makes the name step active, and
+      // the canvas derives its chooser from progress.
     }
   },
 
@@ -308,17 +311,12 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
     const botMsg: ChatMessage = {
       id: 'msg_bot_confirmed_' + Date.now(),
       sender: 'assistant',
-      text: `✨ **Industry Confirmed**: "${finalInput.industry}"\n\nI have generated the **Industry & Concept Card** on your right workspace. Now synthesizing 5 curated brand names with phonetic and domain availability checks...`,
+      text: `**Brief confirmed** — ${finalInput.industry}\n\nI've materialised the **Brief & Positioning** card on your canvas and generated five candidate names with domain and handle checks. Pick one to continue.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       actionOptions: [
         {
-          id: 'opt_open_names',
-          label: '✨ Inspect 5 Generated Names',
-          actionType: 'open_names_modal',
-        },
-        {
           id: 'opt_auto_pilot',
-          label: '⚡ Auto-Pilot (All Steps)',
+          label: 'Auto-pilot the remaining steps',
           actionType: 'run_auto_pipeline',
         },
       ],
@@ -328,12 +326,10 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       chatMessages: [...state.chatMessages, botMsg],
     }));
 
-    // Center modal with blurred background pops open
+    // The name step is now active, so the canvas renders its chooser. The
+    // timer only clears the "synthesising" skeleton.
     setTimeout(() => {
-      set({
-        isLoadingNames: false,
-        isNameModalOpen: true,
-      });
+      set({ isLoadingNames: false });
     }, 700);
   },
 
@@ -357,30 +353,13 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
     const botMsg: ChatMessage = {
       id: 'msg_bot_name_chosen_' + Date.now(),
       sender: 'assistant',
-      text: `Selected **${name.name}**! The **Brand Name Card** has materialized on your right workspace.\n\nNow synthesizing 4 strategic tagline concepts tailored to ${name.name}...`,
+      text: `**${name.name}** is locked in.\n\nI've materialised the name card with its domain and handle checks, and drafted four taglines for ${name.name}. Choose one to continue.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      actionOptions: [
-        {
-          id: 'opt_tagline',
-          label: `⚡ Select Tagline for "${name.name}"`,
-          actionType: 'open_tagline_modal',
-        },
-        {
-          id: 'opt_auto_pilot',
-          label: '⚡ Auto-Pilot Remaining Steps',
-          actionType: 'run_auto_pipeline',
-        },
-      ],
     };
 
     set((state) => ({
       chatMessages: [...state.chatMessages, botMsg],
     }));
-
-    // Automatically open Tagline modal for user
-    setTimeout(() => {
-      set({ isTaglineModalOpen: true });
-    }, 700);
   },
 
   // STEP 2 -> STEP 3: Tagline Chosen -> Automatically advances to Color Palette
@@ -398,30 +377,13 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
     const botMsg: ChatMessage = {
       id: 'msg_bot_tagline_' + Date.now(),
       sender: 'assistant',
-      text: `Tagline locked: *"${tagline}"*! Updated on your brand card.\n\nNow formulating 5 harmonic visual color palettes and typography pairings for **${updated.name}**...`,
+      text: `Tagline locked — *"${tagline}"*.\n\nI've built five chromatic harmonies for **${updated.name}**, each paired with a Google Font. Apply one to continue.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      actionOptions: [
-        {
-          id: 'opt_palette',
-          label: '🎨 View Color & Font Harmonies',
-          actionType: 'open_palette_modal',
-        },
-        {
-          id: 'opt_auto_pilot',
-          label: '⚡ Auto-Pilot Remaining Steps',
-          actionType: 'run_auto_pipeline',
-        },
-      ],
     };
 
     set((state) => ({
       chatMessages: [...state.chatMessages, botMsg],
     }));
-
-    // Automatically open Palette modal for user
-    setTimeout(() => {
-      set({ isPaletteModalOpen: true });
-    }, 700);
   },
 
   toggleFavorite: (nameId) =>
@@ -447,30 +409,13 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
     const botMsg: ChatMessage = {
       id: 'msg_bot_palette_' + Date.now(),
       sender: 'assistant',
-      text: `Visual palette locked in! **Visual Palette Card** added to your workspace.\n\nNow synthesizing 5 architectural vector logo styles for **${get().selectedName.name}**...`,
+      text: `Visual system applied to **${get().selectedName.name}**.\n\nFive vector logo directions are ready. Pick a mark to finish the identity.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      actionOptions: [
-        {
-          id: 'opt_logos',
-          label: '💎 Inspect 5 Vector Logo Marks',
-          actionType: 'open_logos_modal',
-        },
-        {
-          id: 'opt_auto_pilot',
-          label: '⚡ Auto-Pilot Remaining Steps',
-          actionType: 'run_auto_pipeline',
-        },
-      ],
     };
 
     set((state) => ({
       chatMessages: [...state.chatMessages, botMsg],
     }));
-
-    // Automatically open Logo modal for user
-    setTimeout(() => {
-      set({ isLogoModalOpen: true });
-    }, 800);
   },
 
   selectedLogoStyle: 'minimal',
@@ -498,7 +443,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
     const botMsg: ChatMessage = {
       id: 'msg_bot_logo_' + Date.now(),
       sender: 'assistant',
-      text: `🎉 **Brand Identity Generation Complete!**\n\nAll 5 investor-ready cards have materialized on your workspace canvas:\n1. **Industry & Concept Card**\n2. **Brand Name & Tagline Card**\n3. **Visual Palette & Fonts Card**\n4. **Vector Logo Artwork Card**\n5. **Brand Kit Export Card**\n\nYou can toggle dark/light contrast modes, preview touchpoints, or download your complete Brand Kit PDF.`,
+      text: `**Brand Identity Generation Complete!**\n\nAll 5 investor-ready cards have materialized on your workspace canvas:\n1. **Industry & Concept Card**\n2. **Brand Name & Tagline Card**\n3. **Visual Palette & Fonts Card**\n4. **Vector Logo Artwork Card**\n5. **Brand Kit Export Card**\n\nYou can toggle dark/light contrast modes, preview touchpoints, or download your complete Brand Kit PDF.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       suggestions: ['Download PDF Brand Card', 'Copy Design Tokens', 'Start New Project'],
     };
@@ -510,8 +455,9 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
 
   // FULL AUTONOMOUS PIPELINE RUNNER (Names -> Tagline -> Colors -> Visual Flow -> Logo)
   runFullAutonomousPipeline: () => {
-    // Close any open modals
+    // Close any open choosers and mark the session as agent-driven.
     set({
+      isAutoPilot: true,
       isNameModalOpen: false,
       isTaglineModalOpen: false,
       isPaletteModalOpen: false,
@@ -536,7 +482,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       const msg1: ChatMessage = {
         id: 'msg_auto_name_' + Date.now(),
         sender: 'assistant',
-        text: `⚡ [Autonomous Agent]: Synthesized and selected primary brand name **${chosenName.name}** (Match: 98/100). Materialized Brand Name Card.`,
+        text: `[Autonomous Agent]: Synthesized and selected primary brand name **${chosenName.name}** (Match: 98/100). Materialized Brand Name Card.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       set((state) => ({ chatMessages: [...state.chatMessages, msg1] }));
@@ -553,7 +499,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       const msg2: ChatMessage = {
         id: 'msg_auto_tagline_' + Date.now(),
         sender: 'assistant',
-        text: `⚡ [Autonomous Agent]: Calibrated strategic tagline: *"${chosenTagline}"* (${taglines[0]?.angle || 'Artisanal Craft'}).`,
+        text: `[Autonomous Agent]: Calibrated strategic tagline: *"${chosenTagline}"* (${taglines[0]?.angle || 'Artisanal Craft'}).`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       set((state) => ({ chatMessages: [...state.chatMessages, msg2] }));
@@ -569,7 +515,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       const msg3: ChatMessage = {
         id: 'msg_auto_palette_' + Date.now(),
         sender: 'assistant',
-        text: `⚡ [Autonomous Agent]: Established 5-color harmony and calibrated typography pairing (Headline: ${chosenName.visualDirection?.fonts.headline || 'Outfit'}, Body: ${chosenName.visualDirection?.fonts.body || 'Inter'}). Materialized Visual Palette Card.`,
+        text: `[Autonomous Agent]: Established 5-color harmony and calibrated typography pairing (Headline: ${chosenName.visualDirection?.fonts.headline || 'Outfit'}, Body: ${chosenName.visualDirection?.fonts.body || 'Inter'}). Materialized Visual Palette Card.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       set((state) => ({ chatMessages: [...state.chatMessages, msg3] }));
@@ -580,6 +526,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       set({
         selectedLogoStyle: 'minimal',
         hasConfirmedLogo: true,
+        isAutoPilot: false,
         step: 5,
       });
 
@@ -592,7 +539,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       const msg4: ChatMessage = {
         id: 'msg_auto_complete_' + Date.now(),
         sender: 'assistant',
-        text: `🎉 [Autonomous Agent]: **All 5 Brand Identity Artifacts Generated!**\n\n- Industry: ${get().input.industry}\n- Name: **${chosenName.name}**\n- Tagline: *"${chosenTagline}"*\n- Visual: 5-Color Harmony + Font Pairing\n- Logo: Architectural Vector Mark\n- Kit: PDF & PNG Export ready.`,
+        text: `[Autonomous Agent]: **All 5 Brand Identity Artifacts Generated!**\n\n- Industry: ${get().input.industry}\n- Name: **${chosenName.name}**\n- Tagline: *"${chosenTagline}"*\n- Visual: 5-Color Harmony + Font Pairing\n- Logo: Architectural Vector Mark\n- Kit: PDF & PNG Export ready.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         suggestions: ['Download PDF Brand Card', 'Copy Design Tokens', 'Start New Project'],
       };
@@ -602,6 +549,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
 
   isLoadingNames: false,
   isLoadingLogos: false,
+  isAutoPilot: false,
   setLoadingNames: (loading) => set({ isLoadingNames: loading }),
   setLoadingLogos: (loading) => set({ isLoadingLogos: loading }),
 
@@ -624,6 +572,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       sessions: [newSession, ...state.sessions],
       activeSessionId: newId,
       viewMode: 'studio',
+      chatMessages: INITIAL_CHAT_MESSAGES,
       step: 1,
       hasConfirmedIndustry: false,
       hasConfirmedName: false,
@@ -634,6 +583,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       isTaglineModalOpen: false,
       isPaletteModalOpen: false,
       isLogoModalOpen: false,
+      isAutoPilot: false,
       input: {
         businessName: '',
         industry: '',
@@ -834,33 +784,33 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
           input: { ...get().input, ...candidateInput, businessName: cleanName },
           hasConfirmedIndustry: true,
           hasConfirmedName: true,
+          hasConfirmedTagline: false,
+          hasConfirmedPalette: false,
+          hasConfirmedLogo: false,
           isNameModalOpen: false,
           isTaglineModalOpen: false,
+          isPaletteModalOpen: false,
+          isLogoModalOpen: false,
           selectedName: brandObj,
           brandNames: [brandObj, ...names.slice(0, 4)],
-          step: 4,
+          // The name step is skipped, so the tagline is now the active step.
+          step: 3,
           isChatTyping: false,
         });
 
-        reply = `✨ **Brand Name Locked: "${cleanName}"**\n\nI recognized your brand name: **${cleanName}**!\n- **Name Generation**: Skipped (Name specified by user)\n- **Industry**: ${detectedTheme}\n\n🎨 **Next: Color Palette & Visual Identity**\nI've opened the curated **Color Palette** selection for you, and activated the **Canva-style Design Controls** on your right workspace where you can live-edit typography, sizes, weights, and colors!`;
+        reply = `**Brand name locked — ${cleanName}**\n\nYou already named the venture, so I've skipped name generation and kept **${cleanName}** as the primary candidate.\n\n- **Industry**: ${detectedTheme}\n- **Brief**: ${detectedAudience}\n\nNext I'll draft taglines for ${cleanName}. Pick one from the canvas to continue.`;
 
         actionOptions = [
           {
-            id: 'opt_palette_open',
-            label: '🎨 Suggest & Choose Color Palette',
-            actionType: 'open_palette_modal',
-          },
-          {
             id: 'opt_auto_pilot',
-            label: '⚡ Run Auto-Pilot for Remaining Steps',
+            label: 'Auto-pilot the remaining steps',
             actionType: 'run_auto_pipeline',
           },
         ];
 
         suggestions = [
-          'Choose Warm Terracotta Palette',
-          'Switch font to Syne or Playfair Display',
-          'Generate Vector Logos',
+          'Make the tone more luxurious and quiet',
+          'Try a bolder, high-energy direction',
         ];
 
         const botMsg: ChatMessage = {
@@ -876,44 +826,38 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
           chatMessages: [...state.chatMessages, botMsg],
         }));
 
-        // Immediately suggest color palette modal after 500ms
-        setTimeout(() => {
-          set({ isPaletteModalOpen: true });
-        }, 500);
-
         return;
       }
 
-      // Default path (no name provided): automatically confirm industry and populate Card 1
+      // Default path (no name provided): confirm the brief and move to naming.
       set({
         input: { ...get().input, ...candidateInput },
         hasConfirmedIndustry: true,
+        hasConfirmedName: false,
+        hasConfirmedTagline: false,
+        hasConfirmedPalette: false,
+        hasConfirmedLogo: false,
+        isNameModalOpen: false,
+        isTaglineModalOpen: false,
+        isPaletteModalOpen: false,
+        isLogoModalOpen: false,
         brandNames: names,
         selectedName: names[0],
         step: 2,
         isChatTyping: false,
       });
 
-      reply = `✨ **Autonomous Agent Initialized**\n\nI analyzed your vision: *"${text}"*\n- **Industry**: ${detectedTheme}\n- **Tone**: ${detectedTone}\n- **Audience**: ${detectedAudience}\n\n**Card 1: Industry & Concept** is now live on your workspace. Now synthesizing 5 curated brand names with phonetic scoring...`;
+      reply = `**Brief captured** — ${detectedTheme}\n\nHere's how I read it:\n- **Tone**: ${detectedTone}\n- **Audience**: ${detectedAudience}\n\nI've materialised the **Brief & Positioning** card and generated five candidate names with domain and handle checks. Pick one on the canvas to continue.`;
 
       actionOptions = [
         {
-          id: 'opt_open_names',
-          label: '✨ Open 5 Generated Names',
-          actionType: 'open_names_modal',
-        },
-        {
           id: 'opt_auto_pilot',
-          label: '⚡ Run Full Auto-Pilot (All Steps)',
+          label: 'Auto-pilot the remaining steps',
           actionType: 'run_auto_pipeline',
         },
       ];
 
-      suggestions = [
-        '⚡ Run Full Auto-Pilot (All Steps)',
-        'Open 5 Generated Names',
-        'Make tone more luxury & quiet',
-      ];
+      suggestions = ['Make the tone more luxurious and quiet', 'Use a bolder direction'];
 
       const botMsg: ChatMessage = {
         id: 'msg_bot_' + Date.now(),
@@ -927,11 +871,6 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       set((state) => ({
         chatMessages: [...state.chatMessages, botMsg],
       }));
-
-      // Automatically open the 5 names center modal after 800ms
-      setTimeout(() => {
-        set({ isNameModalOpen: true });
-      }, 800);
     }, 600);
   },
 
@@ -967,9 +906,12 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
     }, 700);
   },
 
+  // Clears the session but stays inside the studio, so "Reset" means "start a
+  // fresh brand" instead of throwing the user back to the marketing page.
   reset: () => {
     set({
-      viewMode: 'landing',
+      viewMode: 'studio',
+      chatMessages: INITIAL_CHAT_MESSAGES,
       step: 1,
       input: defaultInput,
       hasConfirmedIndustry: false,
@@ -981,6 +923,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       isTaglineModalOpen: false,
       isPaletteModalOpen: false,
       isLogoModalOpen: false,
+      isAutoPilot: false,
       brandNames: FIVE_CURATED_NAMES,
       selectedName: FIVE_CURATED_NAMES[0],
       selectedLogoStyle: 'minimal',

@@ -1,0 +1,99 @@
+{
+ "category": "domains",
+ "skills": [
+  {
+   "name": "audio-speech-processing",
+   "use_when": "Audio and speech processing: Whisper transcription, text-to-speech (TTS), Web Audio API, and audio normalization. Use when transcribing audio, generat",
+   "keys": [
+    "whisper",
+    "tts",
+    "stt",
+    "diarization",
+    "waveform"
+   ],
+   "not_for": [],
+   "cost": 1103
+  },
+  {
+   "name": "computer-vision-multimodal",
+   "use_when": "Computer vision and multimodal AI: image classification, object detection, OCR extraction, and visual inspection. Use when analyzing images with multi",
+   "keys": [
+    "image input",
+    "vision model",
+    "bounding box",
+    "ocr image"
+   ],
+   "not_for": [],
+   "cost": 1097
+  },
+  {
+   "name": "document-processing",
+   "use_when": "Document parsing and extraction: PDF text extraction, table parsing, structured invoice processing, and markdown conversion. Use when parsing PDF docu",
+   "keys": [
+    "pdf",
+    "docx",
+    "ocr",
+    "table extraction",
+    "parsing documents"
+   ],
+   "not_for": [],
+   "cost": 1036
+  },
+  {
+   "name": "edtech-learning",
+   "use_when": "Educational technology: spaced repetition (SM-2/FSRS), quiz generation, mastery learning rubrics, and retention tracking. Use when building learning p",
+   "keys": [
+    "spaced repetition",
+    "quiz",
+    "curriculum",
+    "lesson"
+   ],
+   "not_for": [],
+   "cost": 1056
+  },
+  {
+   "name": "geo-mapping",
+   "use_when": "Geospatial engineering: GeoJSON schemas, coordinates, spatial queries, Leaflet/Mapbox maps, and Haversine distance. Use when rendering interactive map",
+   "keys": [
+    "geojson",
+    "mapbox",
+    "leaflet",
+    "lat/lng",
+    "tiles",
+    "postgis"
+   ],
+   "not_for": [],
+   "cost": 1339
+  },
+  {
+   "name": "health-wellness-safety",
+   "use_when": "Health and wellness applications: health metrics tracking, HIPAA privacy awareness, accessibility safety, and clinical guidelines. Use when handling s",
+   "keys": [
+    "crisis",
+    "diagnosis",
+    "dosage",
+    "hurt themselves",
+    "medical",
+    "medical advice",
+    "mental health",
+    "self harm",
+    "suicide"
+   ],
+   "not_for": [],
+   "cost": 1064
+  },
+  {
+   "name": "personal-finance",
+   "use_when": "Personal finance applications: ledger double-entry bookkeeping, currency precision, interest calculations, and transaction categorization. Use when bu",
+   "keys": [
+    "budget",
+    "portfolio",
+    "tax",
+    "ledger",
+    "double entry"
+   ],
+   "not_for": [],
+   "cost": 1163
+  }
+ ]
+}

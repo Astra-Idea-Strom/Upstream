@@ -1,34 +1,56 @@
 import React from 'react';
 import { useBrandStore } from '../../../store/brandStore';
+import { getPalette } from '../../../lib/palettes';
+import { SegmentedControl } from '../../ui/primitives';
+import { cn } from '../../../lib/cn';
 import {
-  Type,
-  Maximize2,
-  Minimize2,
-  Sliders,
-  Palette,
-  Sun,
   Moon,
-  Sparkles,
-  Bold,
-  AlignLeft,
-  AlignCenter,
-  AlignRight,
   RotateCcw,
+  Sliders,
+  Sparkles,
+  Sun,
+  Type,
 } from 'lucide-react';
 
 export const FONT_OPTIONS = [
-  { name: 'Outfit', category: 'Modern Geometric Sans' },
-  { name: 'Plus Jakarta Sans', category: 'Tech Neo-Grotesque' },
-  { name: 'Syne', category: 'Artisanal Avant-Garde' },
-  { name: 'Playfair Display', category: 'High Editorial Serif' },
-  { name: 'Inter', category: 'Neutral Hyper-Legible' },
-  { name: 'Space Grotesk', category: 'Brutalist Tech' },
-  { name: 'Merriweather', category: 'Warm Literary Serif' },
+  { name: 'Outfit', category: 'Modern geometric sans' },
+  { name: 'Plus Jakarta Sans', category: 'Tech neo-grotesque' },
+  { name: 'Syne', category: 'Artisanal avant-garde' },
+  { name: 'Playfair Display', category: 'High editorial serif' },
+  { name: 'Inter', category: 'Neutral hyper-legible' },
+  { name: 'Space Grotesk', category: 'Brutalist tech' },
+  { name: 'Merriweather', category: 'Warm literary serif' },
 ];
 
+type CanvasElement = 'wordmark' | 'tagline' | 'background';
+type CanvasBackground = 'light' | 'linen' | 'dark' | 'brand';
+
+const BACKGROUNDS: { mode: CanvasBackground; label: string; icon: React.ReactNode }[] = [
+  { mode: 'light', label: 'White', icon: <Sun className="h-3.5 w-3.5" /> },
+  { mode: 'linen', label: 'Linen', icon: <span className="text-2xs font-bold">Aa</span> },
+  { mode: 'dark', label: 'Dark', icon: <Moon className="h-3.5 w-3.5" /> },
+  { mode: 'brand', label: 'Brand', icon: <Sparkles className="h-3.5 w-3.5" /> },
+];
+
+const SELECT_CLASS =
+  'rounded-lg border border-slate-200 bg-white px-2 py-1 text-2xs font-semibold text-slate-700 ' +
+  'transition-colors hover:border-slate-300 focus:border-brand-400 focus:outline-none ' +
+  'focus:ring-4 focus:ring-brand-500/10';
+
+const STEP_BUTTON_CLASS =
+  'flex h-6 w-6 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-600 ' +
+  'transition-colors hover:bg-slate-100 hover:text-slate-900 ' +
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45';
+
+/**
+ * Live design controls for the selected lockup.
+ *
+ * Sits under the name card so the user can tune the wordmark without leaving
+ * the canvas. Reads the canonical palette catalogue, so the swatch row here
+ * always matches the palette shown in step 4.
+ */
 export const CanvaEditorToolbar: React.FC = () => {
   const {
-    selectedName,
     activePaletteIdx,
     canvaSelectedElement,
     setCanvaSelectedElement,
@@ -49,214 +71,196 @@ export const CanvaEditorToolbar: React.FC = () => {
     resetCanvaStyles,
   } = useBrandStore();
 
-  const paletteSwatches = selectedName.visualDirection?.palette || [];
+  const palette = getPalette(activePaletteIdx);
+  const isTaglineSelected = canvaSelectedElement === 'tagline';
+  const activeSize = isTaglineSelected ? canvaTaglineSize : canvaWordmarkSize;
+
+  const nudgeSize = (delta: number) => {
+    if (isTaglineSelected) {
+      setCanvaTaglineSize(Math.min(36, Math.max(10, canvaTaglineSize + delta)));
+    } else {
+      setCanvaWordmarkSize(Math.min(84, Math.max(18, canvaWordmarkSize + delta)));
+    }
+  };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/90 p-3 sm:p-4 shadow-sm space-y-3 select-none">
-      {/* Top Header & Element Selector */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-slate-100">
-        <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
-          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-800 font-mono flex items-center gap-1">
-            <Sliders className="w-3.5 h-3.5 text-brand-600" />
-            <span>Canva Design Controls</span>
-          </span>
-        </div>
+    <div className="rounded-2xl border border-slate-200/90 bg-white p-3 shadow-xs">
+      {/* Header row */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+        <span className="flex items-center gap-1.5 text-2xs font-bold uppercase tracking-wider text-slate-500">
+          <Sliders className="h-3.5 w-3.5 text-brand-600" />
+          Design controls
+        </span>
 
-        {/* Selected Element Tabs: Name vs Tagline vs Background */}
-        <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-xl text-xs font-semibold">
+        <div className="flex flex-wrap items-center gap-2">
+          <SegmentedControl<CanvasElement>
+            aria-label="Element to edit"
+            value={canvaSelectedElement}
+            onChange={setCanvaSelectedElement}
+            options={[
+              { value: 'wordmark', label: 'Name' },
+              { value: 'tagline', label: 'Tagline' },
+              { value: 'background', label: 'Canvas' },
+            ]}
+          />
+
           <button
-            onClick={() => setCanvaSelectedElement('wordmark')}
-            className={`px-2.5 py-1 rounded-lg transition-all ${
-              canvaSelectedElement === 'wordmark'
-                ? 'bg-white text-slate-900 shadow-2xs font-bold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
+            type="button"
+            onClick={resetCanvaStyles}
+            title="Reset to agent defaults"
+            className="flex items-center gap-1 rounded-md px-1.5 py-1 text-2xs font-semibold text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45"
           >
-            Brand Name
-          </button>
-          <button
-            onClick={() => setCanvaSelectedElement('tagline')}
-            className={`px-2.5 py-1 rounded-lg transition-all ${
-              canvaSelectedElement === 'tagline'
-                ? 'bg-white text-slate-900 shadow-2xs font-bold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            Tagline
-          </button>
-          <button
-            onClick={() => setCanvaSelectedElement('background')}
-            className={`px-2.5 py-1 rounded-lg transition-all ${
-              canvaSelectedElement === 'background'
-                ? 'bg-white text-slate-900 shadow-2xs font-bold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            Canvas Theme
+            <RotateCcw className="h-3 w-3" />
+            Reset
           </button>
         </div>
-
-        <button
-          onClick={resetCanvaStyles}
-          className="text-[11px] font-semibold text-slate-500 hover:text-slate-800 flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-slate-100 transition-colors"
-          title="Reset to AI defaults"
-        >
-          <RotateCcw className="w-3 h-3" />
-          <span>Reset</span>
-        </button>
       </div>
 
-      {/* Main Tooling Row */}
-      <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs">
-        {/* 1. Font Family Picker */}
-        <div className="flex items-center gap-2">
-          <Type className="w-3.5 h-3.5 text-slate-400" />
+      {/* Control row */}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5 pt-2.5">
+        {/* Typeface */}
+        <div className="flex items-center gap-1.5">
+          <Type className="h-3.5 w-3.5 flex-shrink-0 text-slate-400" />
+          <label htmlFor="canva-font" className="sr-only">
+            Typeface
+          </label>
           <select
+            id="canva-font"
             value={canvaHeadlineFont}
-            onChange={(e) => setCanvaHeadlineFont(e.target.value)}
-            className="px-2.5 py-1.5 rounded-xl border border-slate-200 bg-slate-50 font-bold text-slate-800 focus:outline-none focus:border-brand-500 focus:bg-white text-xs cursor-pointer shadow-2xs"
+            onChange={(event) => setCanvaHeadlineFont(event.target.value)}
+            className={SELECT_CLASS}
           >
-            {FONT_OPTIONS.map((f) => (
-              <option key={f.name} value={f.name} style={{ fontFamily: f.name }}>
-                {f.name} ({f.category})
+            {FONT_OPTIONS.map((font) => (
+              <option key={font.name} value={font.name}>
+                {font.name} · {font.category}
               </option>
             ))}
           </select>
         </div>
 
-        {/* 2. Font Size Controls */}
-        <div className="flex items-center gap-1.5 border-l border-slate-200 pl-3">
-          <span className="text-[10px] font-bold text-slate-400 uppercase font-mono">Size</span>
+        {/* Size */}
+        <div className="flex items-center gap-1.5">
+          <span className="text-2xs font-bold uppercase tracking-wider text-slate-400">Size</span>
           <button
-            onClick={() => {
-              if (canvaSelectedElement === 'tagline') {
-                setCanvaTaglineSize(Math.max(10, canvaTaglineSize - 2));
-              } else {
-                setCanvaWordmarkSize(Math.max(18, canvaWordmarkSize - 2));
-              }
-            }}
-            className="w-7 h-7 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold flex items-center justify-center transition-colors"
+            type="button"
+            onClick={() => nudgeSize(-2)}
+            aria-label="Decrease size"
+            className={STEP_BUTTON_CLASS}
           >
-            -
+            −
           </button>
-          <span className="w-10 text-center font-mono font-bold text-slate-800">
-            {canvaSelectedElement === 'tagline' ? canvaTaglineSize : canvaWordmarkSize}px
+          <span className="w-9 text-center font-mono text-2xs font-bold text-slate-700">
+            {activeSize}
           </span>
           <button
-            onClick={() => {
-              if (canvaSelectedElement === 'tagline') {
-                setCanvaTaglineSize(Math.min(36, canvaTaglineSize + 2));
-              } else {
-                setCanvaWordmarkSize(Math.min(84, canvaWordmarkSize + 2));
-              }
-            }}
-            className="w-7 h-7 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold flex items-center justify-center transition-colors"
+            type="button"
+            onClick={() => nudgeSize(2)}
+            aria-label="Increase size"
+            className={STEP_BUTTON_CLASS}
           >
             +
           </button>
         </div>
 
-        {/* 3. Font Weight Selector */}
-        <div className="flex items-center gap-1 border-l border-slate-200 pl-3">
-          <span className="text-[10px] font-bold text-slate-400 uppercase font-mono mr-1">Weight</span>
-          {[400, 600, 700, 800].map((w) => (
+        {/* Weight */}
+        <div className="flex items-center gap-1">
+          <span className="text-2xs font-bold uppercase tracking-wider text-slate-400">Weight</span>
+          {[400, 600, 700, 800].map((weight) => (
             <button
-              key={w}
-              onClick={() => setCanvaFontWeight(w)}
-              className={`px-2 py-1 rounded-md text-[11px] font-mono transition-all ${
-                canvaFontWeight === w
-                  ? 'bg-slate-900 text-white font-bold'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-              }`}
+              key={weight}
+              type="button"
+              onClick={() => setCanvaFontWeight(weight)}
+              className={cn(
+                'rounded-md px-1.5 py-1 font-mono text-2xs transition-colors',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45',
+                canvaFontWeight === weight
+                  ? 'bg-slate-900 font-bold text-white'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200',
+              )}
             >
-              {w === 400 ? 'Reg' : w === 600 ? 'Semi' : w === 700 ? 'Bold' : 'Black'}
+              {weight === 400 ? 'Reg' : weight === 600 ? 'Semi' : weight === 700 ? 'Bold' : 'Black'}
             </button>
           ))}
         </div>
 
-        {/* 4. Letter Spacing Tracking */}
-        <div className="flex items-center gap-2 border-l border-slate-200 pl-3">
-          <span className="text-[10px] font-bold text-slate-400 uppercase font-mono">Tracking</span>
+        {/* Tracking */}
+        <div className="flex items-center gap-1.5">
+          <label
+            htmlFor="canva-tracking"
+            className="text-2xs font-bold uppercase tracking-wider text-slate-400"
+          >
+            Tracking
+          </label>
           <input
+            id="canva-tracking"
             type="range"
             min="-1"
             max="12"
             step="1"
             value={canvaLetterSpacing}
-            onChange={(e) => setCanvaLetterSpacing(parseInt(e.target.value, 10))}
-            className="w-16 sm:w-20 accent-brand-600 cursor-pointer"
+            onChange={(event) => setCanvaLetterSpacing(Number.parseInt(event.target.value, 10))}
+            className="w-16 cursor-pointer accent-brand-600"
           />
-          <span className="text-[10px] font-mono text-slate-600 font-bold w-6">
-            {canvaLetterSpacing}px
+          <span className="w-6 font-mono text-2xs font-bold text-slate-600">
+            {canvaLetterSpacing}
           </span>
         </div>
 
-        {/* 5. Color Swatches & Custom Picker */}
-        <div className="flex items-center gap-1.5 border-l border-slate-200 pl-3">
-          <span className="text-[10px] font-bold text-slate-400 uppercase font-mono mr-1">Color</span>
-          {paletteSwatches.slice(0, 5).map((sw, i) => (
+        {/* Colour */}
+        <div className="flex items-center gap-1.5">
+          <span className="text-2xs font-bold uppercase tracking-wider text-slate-400">Colour</span>
+          {palette.swatches.map((swatch) => (
             <button
-              key={i}
-              onClick={() => setCanvaTextColor(sw.hex)}
-              className={`w-5 h-5 rounded-full border border-black/10 transition-transform hover:scale-110 shadow-2xs ${
-                canvaTextColor.toLowerCase() === sw.hex.toLowerCase() ? 'ring-2 ring-brand-500 ring-offset-1' : ''
-              }`}
-              style={{ backgroundColor: sw.hex }}
-              title={sw.name}
+              key={swatch.hex}
+              type="button"
+              onClick={() => setCanvaTextColor(swatch.hex)}
+              title={`${swatch.name} · ${swatch.hex}`}
+              aria-label={`Use ${swatch.name}`}
+              style={{ backgroundColor: swatch.hex }}
+              className={cn(
+                'h-5 w-5 rounded-full border border-black/10 shadow-2xs transition-transform hover:scale-110',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45',
+                canvaTextColor.toLowerCase() === swatch.hex.toLowerCase() &&
+                  'ring-2 ring-brand-500 ring-offset-1',
+              )}
             />
           ))}
 
-          {/* Native Color Eyedropper Picker */}
-          <label className="relative cursor-pointer flex items-center justify-center w-6 h-6 rounded-full border border-slate-300 bg-gradient-to-tr from-rose-400 via-purple-400 to-amber-300 shadow-2xs hover:scale-105 transition-transform ml-1">
+          <label
+            className="relative ml-0.5 flex h-6 w-6 cursor-pointer items-center justify-center overflow-hidden rounded-full border border-slate-300 bg-gradient-to-tr from-rose-400 via-brand-400 to-amber-300 shadow-2xs transition-transform hover:scale-105"
+            title="Custom colour"
+          >
+            <span className="sr-only">Custom text colour</span>
             <input
               type="color"
               value={canvaTextColor.startsWith('#') ? canvaTextColor : '#0F172A'}
-              onChange={(e) => setCanvaTextColor(e.target.value)}
-              className="opacity-0 absolute inset-0 cursor-pointer w-full h-full"
+              onChange={(event) => setCanvaTextColor(event.target.value)}
+              className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
             />
           </label>
         </div>
 
-        {/* 6. Background Mode */}
-        <div className="flex items-center gap-1 border-l border-slate-200 pl-3">
-          <span className="text-[10px] font-bold text-slate-400 uppercase font-mono mr-1">Canvas</span>
-          <button
-            onClick={() => setCanvaBgMode('light')}
-            className={`p-1.5 rounded-lg transition-colors ${
-              canvaBgMode === 'light' ? 'bg-white border border-slate-300 text-slate-900 shadow-2xs' : 'text-slate-400 hover:text-slate-700'
-            }`}
-            title="Clean White"
-          >
-            <Sun className="w-3.5 h-3.5" />
-          </button>
-          <button
-            onClick={() => setCanvaBgMode('linen')}
-            className={`p-1.5 rounded-lg transition-colors ${
-              canvaBgMode === 'linen' ? 'bg-amber-50 border border-amber-300 text-amber-900 shadow-2xs' : 'text-slate-400 hover:text-slate-700'
-            }`}
-            title="Warm Linen"
-          >
-            <span className="text-[10px] font-bold font-serif">Aa</span>
-          </button>
-          <button
-            onClick={() => setCanvaBgMode('dark')}
-            className={`p-1.5 rounded-lg transition-colors ${
-              canvaBgMode === 'dark' ? 'bg-slate-900 text-white shadow-2xs' : 'text-slate-400 hover:text-slate-700'
-            }`}
-            title="Obsidian Dark"
-          >
-            <Moon className="w-3.5 h-3.5" />
-          </button>
-          <button
-            onClick={() => setCanvaBgMode('brand')}
-            className={`p-1.5 rounded-lg transition-colors ${
-              canvaBgMode === 'brand' ? 'bg-gradient-to-r from-brand-600 to-coral-500 text-white shadow-2xs' : 'text-slate-400 hover:text-slate-700'
-            }`}
-            title="Brand Gradient"
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-          </button>
+        {/* Canvas background */}
+        <div className="flex items-center gap-1">
+          <span className="text-2xs font-bold uppercase tracking-wider text-slate-400">Canvas</span>
+          {BACKGROUNDS.map((background) => (
+            <button
+              key={background.mode}
+              type="button"
+              onClick={() => setCanvaBgMode(background.mode)}
+              title={background.label}
+              aria-label={`${background.label} canvas`}
+              className={cn(
+                'flex h-6 w-6 items-center justify-center rounded-md border transition-colors',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45',
+                canvaBgMode === background.mode
+                  ? 'border-brand-300 bg-brand-50 text-brand-700'
+                  : 'border-slate-200 bg-white text-slate-400 hover:bg-slate-100 hover:text-slate-700',
+              )}
+            >
+              {background.icon}
+            </button>
+          ))}
         </div>
       </div>
     </div>

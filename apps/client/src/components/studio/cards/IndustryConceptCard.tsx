@@ -1,30 +1,35 @@
 import React, { useState } from 'react';
 import { useBrandStore } from '../../../store/brandStore';
-import {
-  Briefcase,
-  Users,
-  Target,
-  Sparkles,
-  Edit3,
-  Check,
-  Flame,
-  Crown,
-  Cpu,
-  Minimize2,
-  Smile,
-  ShieldCheck,
-} from 'lucide-react';
+import { CardShell } from '../CardShell';
+import { Button, IconButton } from '../../ui/primitives';
 import type { BrandTone } from '@upstream/shared';
+import {
+  Check,
+  Cpu,
+  Crown,
+  Edit3,
+  Flame,
+  Minimize2,
+  ShieldCheck,
+  Smile,
+} from 'lucide-react';
 
 const TONE_ICONS: Record<BrandTone, React.ReactNode> = {
-  bold: <Flame className="w-3.5 h-3.5 text-orange-500" />,
-  luxurious: <Crown className="w-3.5 h-3.5 text-amber-500" />,
-  'tech-forward': <Cpu className="w-3.5 h-3.5 text-blue-500" />,
-  minimalist: <Minimize2 className="w-3.5 h-3.5 text-emerald-500" />,
-  playful: <Smile className="w-3.5 h-3.5 text-pink-500" />,
-  professional: <ShieldCheck className="w-3.5 h-3.5 text-purple-500" />,
+  bold: <Flame className="h-3.5 w-3.5 text-orange-500" />,
+  luxurious: <Crown className="h-3.5 w-3.5 text-amber-500" />,
+  'tech-forward': <Cpu className="h-3.5 w-3.5 text-blue-500" />,
+  minimalist: <Minimize2 className="h-3.5 w-3.5 text-emerald-500" />,
+  playful: <Smile className="h-3.5 w-3.5 text-pink-500" />,
+  professional: <ShieldCheck className="h-3.5 w-3.5 text-brand-500" />,
 };
 
+const FIELD_CLASS =
+  'w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs text-slate-900 ' +
+  'transition-colors focus:border-brand-400 focus:outline-none focus:ring-4 focus:ring-brand-500/10';
+
+/**
+ * Step 1 artefact — the confirmed brief the rest of the flow is generated from.
+ */
 export const IndustryConceptCard: React.FC = () => {
   const { input, setInput, openNameModal } = useBrandStore();
   const [isEditing, setIsEditing] = useState(false);
@@ -36,117 +41,111 @@ export const IndustryConceptCard: React.FC = () => {
     setIsEditing(false);
   };
 
+  const handleCancel = () => {
+    setIndustryVal(input.industry);
+    setMissionVal(input.mission);
+    setIsEditing(false);
+  };
+
   return (
-    <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-7 shadow-xs relative overflow-hidden transition-all hover:border-brand-300 animate-in fade-in duration-300">
-      {/* Top Tag & Actions */}
-      <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-100">
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/70 text-[10px] font-bold text-brand-800">
-            <Sparkles className="w-3 h-3 text-coral-500" />
-            <span>CARD 1: BRAND PARAMETERS</span>
-          </span>
-          <span className="inline-flex items-center gap-1 text-[10px] font-mono text-emerald-600 font-semibold px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200/60">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            CONFIRMED
-          </span>
-        </div>
-
-        <div className="flex items-center gap-2">
+    <CardShell
+      id="step-card-brief"
+      step={1}
+      variant="confirmed"
+      status={{ label: 'Confirmed', tone: 'success', dot: true }}
+      actions={
+        <>
           {isEditing ? (
-            <button
-              onClick={handleSave}
-              className="px-3 py-1 rounded-full bg-slate-950 text-white text-xs font-semibold hover:bg-brand-600 transition-colors flex items-center gap-1 shadow-2xs"
-            >
-              <Check className="w-3 h-3" />
-              <span>Save</span>
-            </button>
+            <>
+              <Button variant="ghost" size="sm" onClick={handleCancel}>
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                size="sm"
+                icon={<Check className="h-3.5 w-3.5" />}
+                onClick={handleSave}
+              >
+                Save
+              </Button>
+            </>
           ) : (
-            <button
-              onClick={() => setIsEditing(true)}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
-              title="Edit Parameters"
-            >
-              <Edit3 className="w-3.5 h-3.5" />
-            </button>
+            <>
+              <IconButton label="Edit brief" onClick={() => setIsEditing(true)}>
+                <Edit3 className="h-3.5 w-3.5" />
+              </IconButton>
+              <Button variant="outline" size="sm" onClick={openNameModal}>
+                Inspect names
+              </Button>
+            </>
           )}
-
-          <button
-            onClick={openNameModal}
-            className="px-3 py-1 rounded-full bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200 text-xs font-bold transition-colors shadow-2xs"
-          >
-            Inspect 5 Names
-          </button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="space-y-3.5">
+        </>
+      }
+    >
+      <dl className="space-y-4">
         <div>
-          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
-            Industry & Niche
-          </span>
-          {isEditing ? (
-            <input
-              type="text"
-              value={industryVal}
-              onChange={(e) => setIndustryVal(e.target.value)}
-              className="w-full px-3 py-1.5 rounded-xl border border-brand-300 text-sm font-bold text-slate-900 focus:outline-none"
-            />
-          ) : (
-            <h3 className="text-lg font-bold text-slate-900 font-display flex items-center gap-2">
-              <Briefcase className="w-4 h-4 text-brand-600" />
-              <span>{input.industry}</span>
-            </h3>
-          )}
+          <dt className="text-2xs font-bold uppercase tracking-wider text-slate-400">
+            Industry & niche
+          </dt>
+          <dd className="mt-1">
+            {isEditing ? (
+              <input
+                type="text"
+                value={industryVal}
+                onChange={(event) => setIndustryVal(event.target.value)}
+                className={FIELD_CLASS}
+                aria-label="Industry and niche"
+              />
+            ) : (
+              <span className="font-display text-base font-bold text-slate-900">
+                {input.industry}
+              </span>
+            )}
+          </dd>
         </div>
 
         <div>
-          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1 flex items-center gap-1">
-            <Target className="w-3 h-3 text-brand-600" />
-            <span>Mission & Purpose</span>
-          </span>
-          {isEditing ? (
-            <textarea
-              rows={2}
-              value={missionVal}
-              onChange={(e) => setMissionVal(e.target.value)}
-              className="w-full px-3 py-1.5 rounded-xl border border-brand-300 text-xs text-slate-800 focus:outline-none"
-            />
-          ) : (
-            <p className="text-xs text-slate-600 leading-relaxed bg-slate-50/70 p-3 rounded-2xl border border-slate-100">
-              "{input.mission}"
-            </p>
-          )}
+          <dt className="text-2xs font-bold uppercase tracking-wider text-slate-400">
+            Mission & purpose
+          </dt>
+          <dd className="mt-1">
+            {isEditing ? (
+              <textarea
+                rows={3}
+                value={missionVal}
+                onChange={(event) => setMissionVal(event.target.value)}
+                className={`${FIELD_CLASS} resize-none leading-relaxed`}
+                aria-label="Mission and purpose"
+              />
+            ) : (
+              <p className="rounded-xl border border-slate-100 bg-slate-50/70 p-3 text-xs leading-relaxed text-slate-600">
+                {input.mission}
+              </p>
+            )}
+          </dd>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-          <div className="flex items-center gap-2 p-2.5 rounded-2xl bg-slate-50/80 border border-slate-100">
-            <Users className="w-4 h-4 text-brand-600 flex-shrink-0" />
-            <div className="truncate">
-              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 block">
-                Target Audience
-              </span>
-              <span className="text-[11px] font-semibold text-slate-700 truncate block">
-                {input.targetAudience}
-              </span>
-            </div>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
+            <dt className="text-2xs font-bold uppercase tracking-wider text-slate-400">
+              Target audience
+            </dt>
+            <dd className="mt-1 text-xs font-medium leading-snug text-slate-700">
+              {input.targetAudience}
+            </dd>
           </div>
 
-          <div className="flex items-center gap-2 p-2.5 rounded-2xl bg-slate-50/80 border border-slate-100">
-            <div className="p-1 rounded-lg bg-white border border-slate-200/60 shadow-2xs">
-              {TONE_ICONS[input.tone] || <Flame className="w-3.5 h-3.5 text-orange-500" />}
-            </div>
-            <div className="truncate">
-              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-400 block">
-                Brand Personality
-              </span>
-              <span className="text-[11px] font-semibold text-slate-700 capitalize block">
-                {input.tone} & Distinctive
-              </span>
-            </div>
+          <div className="rounded-xl border border-slate-100 bg-slate-50/70 p-3">
+            <dt className="text-2xs font-bold uppercase tracking-wider text-slate-400">
+              Brand personality
+            </dt>
+            <dd className="mt-1 flex items-center gap-1.5 text-xs font-medium capitalize text-slate-700">
+              {TONE_ICONS[input.tone] ?? TONE_ICONS.bold}
+              {input.tone}
+            </dd>
           </div>
         </div>
-      </div>
-    </div>
+      </dl>
+    </CardShell>
   );
 };

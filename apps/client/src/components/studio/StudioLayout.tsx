@@ -1,196 +1,195 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useBrandStore } from '../../store/brandStore';
+import React, { useCallback, useEffect, useState } from 'react';
+import { LayoutGrid, MessageSquare } from 'lucide-react';
 import { AgentChatPanel } from './AgentChatPanel';
 import { AgentWorkspace } from './AgentWorkspace';
-import { Download, RotateCcw } from 'lucide-react';
+import { StudioTopBar } from './StudioTopBar';
+import { SegmentedControl } from '../ui/primitives';
+import { cn } from '../../lib/cn';
 
+const MIN_CHAT_WIDTH = 300;
+const MAX_CHAT_WIDTH = 720;
+const DEFAULT_CHAT_WIDTH = 400;
+/** The canvas must always keep at least this much room. */
+const MIN_CANVAS_WIDTH = 420;
+const STORAGE_KEY = 'upstream_chat_width';
+
+type MobilePane = 'chat' | 'canvas';
+
+function readStoredWidth(): number {
+  if (typeof window === 'undefined') return DEFAULT_CHAT_WIDTH;
+  const stored = window.localStorage.getItem(STORAGE_KEY);
+  if (!stored) return DEFAULT_CHAT_WIDTH;
+  const parsed = Number.parseInt(stored, 10);
+  if (Number.isNaN(parsed)) return DEFAULT_CHAT_WIDTH;
+  return Math.min(Math.max(parsed, MIN_CHAT_WIDTH), MAX_CHAT_WIDTH);
+}
+
+function clampWidth(px: number): number {
+  const available = typeof window === 'undefined' ? MAX_CHAT_WIDTH : window.innerWidth - MIN_CANVAS_WIDTH;
+  const upper = Math.max(MIN_CHAT_WIDTH, Math.min(MAX_CHAT_WIDTH, available));
+  return Math.min(Math.max(px, MIN_CHAT_WIDTH), upper);
+}
+
+/**
+ * The studio shell: a resizable two-pane workspace.
+ *
+ * Agent conversation on the left, materialised brand artefacts on the right —
+ * the same shape as Replit, Lovable and Bolt. Below `md` the panes would be
+ * unusably narrow side by side, so they become a single switched pane instead
+ * of both being squeezed in.
+ */
 export const StudioLayout: React.FC = () => {
-  const {
-    input,
-    selectedName,
-    hasConfirmedName,
-    setViewMode,
-    isNameModalOpen,
-    isTaglineModalOpen,
-    isPaletteModalOpen,
-    isLogoModalOpen,
-    setStep,
-    reset,
-  } = useBrandStore();
-
-  // Resizable Panels State with persistence
-  const [chatWidth, setChatWidth] = useState<number>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('upstream_chat_width');
-      if (saved) {
-        const parsed = parseInt(saved, 10);
-        if (!isNaN(parsed) && parsed >= 280 && parsed <= 900) {
-          return parsed;
-        }
-      }
-    }
-    return 420;
-  });
-
+  const [chatWidth, setChatWidth] = useState<number>(readStoredWidth);
   const [isDragging, setIsDragging] = useState(false);
+  const [mobilePane, setMobilePane] = useState<MobilePane>('chat');
 
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
+  const persistWidth = useCallback((width: number) => {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, String(width));
+    } catch {
+      /* storage may be unavailable (private mode) — width is non-critical */
+    }
   }, []);
 
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    setIsDragging(true);
-  }, []);
+  const nudgeWidth = useCallback(
+    (delta: number) => {
+      setChatWidth((current) => {
+        const next = clampWidth(current + delta);
+        persistWidth(next);
+        return next;
+      });
+    },
+    [persistWidth],
+  );
 
   useEffect(() => {
     if (!isDragging) return;
 
-    const handleMove = (clientX: number) => {
-      const minWidth = 280;
-      const maxWidth = Math.max(minWidth, Math.min(window.innerWidth - 380, 850));
-      const newWidth = Math.max(minWidth, Math.min(clientX, maxWidth));
-      setChatWidth(newWidth);
+    const handleMove = (clientX: number) => setChatWidth(clampWidth(clientX));
+    const handleMouseMove = (event: MouseEvent) => handleMove(event.clientX);
+    const handleTouchMove = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      if (touch) handleMove(touch.clientX);
     };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      handleMove(e.clientX);
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 0) {
-        handleMove(e.touches[0].clientX);
-      }
-    };
-
     const handleEnd = () => {
       setIsDragging(false);
-      localStorage.setItem('upstream_chat_width', chatWidth.toString());
+      setChatWidth((current) => {
+        persistWidth(current);
+        return current;
+      });
     };
 
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleEnd);
-    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('touchend', handleEnd);
 
-    document.body.style.cursor = 'col-resize';
-    document.body.style.userSelect = 'none';
+    const { body } = document;
+    const previousCursor = body.style.cursor;
+    const previousUserSelect = body.style.userSelect;
+    body.style.cursor = 'col-resize';
+    body.style.userSelect = 'none';
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleEnd);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleEnd);
-      document.body.style.cursor = '';
-      document.body.style.userSelect = '';
+      body.style.cursor = previousCursor;
+      body.style.userSelect = previousUserSelect;
     };
-  }, [isDragging, chatWidth]);
+  }, [isDragging, persistWidth]);
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#F8F6FE] text-slate-900 font-sans">
-      {/* ============================================================ */}
-      {/* TOP AGENT PORTAL HEADER (No top options patch) */}
-      {/* ============================================================ */}
-      <header className="h-12 border-b border-slate-200/90 bg-white px-4 flex items-center justify-between flex-shrink-0 z-30 select-none">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setViewMode('landing')}
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-          >
-            <div className="w-7 h-7 rounded-lg bg-slate-950 flex items-center justify-center text-white font-black text-xs">
-              UP
-            </div>
-            <span className="font-display font-black text-sm tracking-tight text-slate-950">
-              UPSTREAM
-            </span>
-          </button>
+    <div className="flex h-screen w-screen animate-fade-in flex-col overflow-hidden bg-[#F8F6FE] font-sans text-slate-900">
+      <StudioTopBar />
 
-          <div className="h-4 w-[1px] bg-slate-200" />
+      {/* Mobile pane switch — the two panes are never shown side by side here. */}
+      <div className="flex h-11 flex-shrink-0 items-center justify-center border-b border-slate-200/90 bg-white px-3 md:hidden">
+        <SegmentedControl<MobilePane>
+          aria-label="Switch studio pane"
+          value={mobilePane}
+          onChange={setMobilePane}
+          options={[
+            {
+              value: 'chat',
+              label: 'Agent',
+              icon: <MessageSquare className="h-3 w-3" />,
+            },
+            {
+              value: 'canvas',
+              label: 'Canvas',
+              icon: <LayoutGrid className="h-3 w-3" />,
+            },
+          ]}
+        />
+      </div>
 
-          <div className="flex items-center gap-2 px-2.5 py-1 rounded-lg bg-slate-100/90 text-xs font-semibold text-slate-700">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="truncate max-w-[160px]">{input.industry || 'Brand Venture'}</span>
-            {hasConfirmedName && (
-              <>
-                <span className="text-slate-400">/</span>
-                <strong className="text-brand-700 font-bold">{selectedName.name}</strong>
-              </>
-            )}
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {hasConfirmedName && (
-            <button
-              onClick={() => setStep(5)}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-50 hover:bg-brand-100 text-brand-700 text-xs font-bold border border-brand-200 transition-colors"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>Export Kit</span>
-            </button>
-          )}
-
-          <button
-            onClick={reset}
-            className="p-1.5 rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
-            title="Reset Session"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-          </button>
-
-          <button
-            onClick={() => setViewMode('landing')}
-            className="px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors"
-          >
-            Home
-          </button>
-        </div>
-      </header>
-
-      {/* ============================================================ */}
-      {/* MAIN TWO-PANEL WORKSPACE (Chat Interface on Left, Workspace Cards on Right) */}
-      {/* ============================================================ */}
-      <div className={`flex-1 flex overflow-hidden relative ${isDragging ? 'select-none' : ''}`}>
-        {/* Left Panel: Chat Interface */}
+      <div className={cn('relative flex flex-1 overflow-hidden', isDragging && 'select-none')}>
+        {/* Left pane: agent conversation */}
         <div
-          style={{ width: `${chatWidth}px` }}
-          className="max-md:!w-full flex-shrink-0 h-full overflow-hidden"
+          style={{ width: chatWidth }}
+          className={cn(
+            'h-full flex-shrink-0 overflow-hidden max-md:!w-full',
+            mobilePane === 'canvas' && 'max-md:hidden',
+          )}
         >
           <AgentChatPanel />
         </div>
 
-        {/* Resizable Divider Handle (Visible on md+) */}
+        {/* Resize handle (desktop only) */}
         <div
-          onMouseDown={handleMouseDown}
-          onTouchStart={handleTouchStart}
-          onDoubleClick={() => {
-            setChatWidth(420);
-            localStorage.setItem('upstream_chat_width', '420');
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Resize panels"
+          tabIndex={0}
+          onMouseDown={(event) => {
+            event.preventDefault();
+            setIsDragging(true);
           }}
-          title="Drag to resize panels (Double-click to reset)"
-          className={`hidden md:flex items-center justify-center w-2 -ml-[1px] relative z-20 cursor-col-resize group transition-colors duration-150 flex-shrink-0 select-none ${
-            isDragging
-              ? 'bg-brand-500 ring-2 ring-brand-400/40'
-              : 'bg-slate-200/90 hover:bg-brand-400'
-          }`}
+          onTouchStart={() => setIsDragging(true)}
+          onDoubleClick={() => {
+            setChatWidth(DEFAULT_CHAT_WIDTH);
+            persistWidth(DEFAULT_CHAT_WIDTH);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === 'ArrowLeft') {
+              event.preventDefault();
+              nudgeWidth(-24);
+            } else if (event.key === 'ArrowRight') {
+              event.preventDefault();
+              nudgeWidth(24);
+            }
+          }}
+          title="Drag to resize · double-click to reset"
+          className={cn(
+            'group relative z-20 -ml-px hidden w-1.5 flex-shrink-0 cursor-col-resize select-none',
+            'items-center justify-center transition-colors duration-150 md:flex',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/50',
+            isDragging ? 'bg-brand-500' : 'bg-slate-200/90 hover:bg-brand-400',
+          )}
         >
-          {/* Subtle tactile grip pill */}
-          <div
-            className={`w-0.5 h-8 rounded-full transition-colors ${
-              isDragging ? 'bg-white' : 'bg-slate-400 group-hover:bg-white'
-            }`}
+          <span
+            aria-hidden="true"
+            className={cn(
+              'h-8 w-0.5 rounded-full transition-colors',
+              isDragging ? 'bg-white' : 'bg-slate-400 group-hover:bg-white',
+            )}
           />
         </div>
 
-        {/* Right Panel: Workspace Canvas */}
-        <div className="flex-1 h-full flex flex-col overflow-hidden min-w-[340px]">
+        {/* Right pane: workspace canvas */}
+        <div
+          className={cn(
+            'flex h-full min-w-0 flex-1 flex-col overflow-hidden',
+            mobilePane === 'chat' && 'max-md:hidden',
+          )}
+        >
           <AgentWorkspace />
         </div>
 
-        {/* Transparent overlay during dragging to prevent child pointer event interception */}
-        {isDragging && (
-          <div className="fixed inset-0 z-50 cursor-col-resize select-none" />
-        )}
+        {/* Swallow pointer events while dragging so children cannot steal them. */}
+        {isDragging && <div className="fixed inset-0 z-50 cursor-col-resize select-none" />}
       </div>
     </div>
   );

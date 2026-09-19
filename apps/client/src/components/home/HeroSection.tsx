@@ -82,7 +82,7 @@ export const HeroSection: React.FC = () => {
             <div className="absolute inset-0 z-0">
               <img
                 src="/photos/orchid.jpeg"
-                alt="Moana 3D Botanical Artwork"
+                alt="Botanical artwork used as the hero visual"
                 className="w-full h-full object-cover object-center"
               />
               {/* Soft overlay gradient */}

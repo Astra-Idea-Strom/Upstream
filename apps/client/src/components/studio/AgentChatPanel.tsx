@@ -1,322 +1,354 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useMemo, useRef, useEffect, useState } from 'react';
 import { useBrandStore } from '../../store/brandStore';
+import { RichText } from '../ui/RichText';
+import { StatusPill, Spinner } from '../ui/primitives';
+import { useFlowProgress } from '../../hooks/useFlowProgress';
+import { cn } from '../../lib/cn';
 import {
-  Send,
-  Sparkles,
+  ArrowUp,
   Bot,
-  Terminal,
   Check,
-  ChevronDown,
-  ChevronRight,
-  RotateCcw,
-  ArrowRight,
-  Plus,
+  Coffee,
+  Cpu,
+  Crown,
+  Shirt,
+  Sparkles,
 } from 'lucide-react';
 
+/** The starter prompts, shown once — here, not also on the canvas. */
+const STARTER_PROMPTS = [
+  { icon: Coffee, label: 'Specialty Coffee Roastery', prompt: 'We are building a coffee business named Ceramiq', accent: 'text-amber-700 bg-amber-50' },
+  { icon: Shirt, label: 'Streetwear & Sneakers', prompt: 'Streetwear and sneaker label called Kinetics', accent: 'text-brand-700 bg-brand-50' },
+  { icon: Cpu, label: 'AI Developer Cloud', prompt: 'Autonomous AI agent cloud platform named Nexa', accent: 'text-blue-700 bg-blue-50' },
+  { icon: Crown, label: 'Luxury Atelier', prompt: 'Haute couture atelier and luxury evening wear boutique', accent: 'text-coral-600 bg-coral-50' },
+] as const;
+
+/**
+ * The agent conversation pane.
+ *
+ * Follows the Replit/Lovable convention: assistant turns are unboxed prose with
+ * an avatar, user turns are the only bubbles. This replaced a layout where
+ * every turn was a bordered card nested inside a bordered panel, which made a
+ * three-message conversation read as nine stacked boxes.
+ */
 export const AgentChatPanel: React.FC = () => {
-  const {
-    chatMessages,
-    isChatTyping,
-    sendChatMessage,
-    handleActionOption,
-    input,
-    selectedName,
-    step,
-    hasConfirmedIndustry,
-    hasConfirmedName,
-    hasConfirmedTagline,
-    hasConfirmedPalette,
-    hasConfirmedLogo,
-    reset,
-  } = useBrandStore();
+  const { chatMessages, isChatTyping, isAutoPilot, sendChatMessage, handleActionOption, reset } =
+    useBrandStore();
+  const progress = useFlowProgress();
 
   const [inputVal, setInputVal] = useState('');
-  const [showAgentLog, setShowAgentLog] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const activeStep = progress.steps.find((entry) => entry.status === 'active')?.step ?? null;
+  const hasStarted = progress.completedCount > 0;
+
+  /** The agent is mid-flight: thinking about a reply, or driving auto-pilot. */
+  const isAgentBusy = isChatTyping || isAutoPilot;
+
+  /**
+   * Used only to steer the composer's placeholder — the step rail owns all
+   * visible progress reporting.
+   */
+  const activeStepLabel = activeStep?.label ?? null;
+
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, [chatMessages, isChatTyping]);
 
-  const handleSend = (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    if (!inputVal.trim()) return;
-    sendChatMessage(inputVal);
+  const statusLabel = useMemo(() => {
+    if (isChatTyping) return 'Thinking';
+    if (progress.isComplete) return 'Session complete';
+    return hasStarted ? 'Ready' : 'Idle';
+  }, [isChatTyping, progress.isComplete, hasStarted]);
+
+  const handleSend = (event?: React.FormEvent) => {
+    event?.preventDefault();
+    const value = inputVal.trim();
+    if (!value) return;
+    sendChatMessage(value);
     setInputVal('');
   };
 
-  const completedStepsCount = [
-    hasConfirmedIndustry,
-    hasConfirmedName,
-    hasConfirmedTagline,
-    hasConfirmedPalette,
-    hasConfirmedLogo,
-  ].filter(Boolean).length;
-
   return (
-    <div className="flex flex-col h-full bg-white border-r border-slate-200/90 select-none">
-      {/* Agent Header */}
-      <div className="h-12 px-4 border-b border-slate-200/90 flex items-center justify-between bg-[#FAF9FE] flex-shrink-0">
-        <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-brand-600 to-coral-400 flex items-center justify-center text-white text-xs font-bold shadow-2xs">
-            <Bot className="w-4 h-4" />
-          </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-bold text-xs text-slate-900 leading-none">Upstream Agent</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            </div>
-            <span className="text-[10px] text-slate-400 font-mono block mt-0.5 leading-none">
-              Autonomous Brand Architect · v2
-            </span>
-          </div>
+    <div className="flex h-full flex-col border-r border-slate-200/90 bg-white">
+      {/* ---------------------------------------------------------------- */}
+      {/* Header                                                            */}
+      {/* ---------------------------------------------------------------- */}
+      <div className="flex h-11 flex-shrink-0 items-center justify-between gap-2 border-b border-slate-200/90 px-3.5">
+        <div className="flex min-w-0 items-center gap-2">
+          <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-tr from-brand-600 to-coral-400 text-white">
+            <Bot className="h-3.5 w-3.5" />
+          </span>
+          <span className="truncate text-xs font-bold text-slate-900">Upstream Agent</span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="px-2 py-0.5 rounded-full bg-brand-50 border border-brand-200/70 text-[10px] font-bold text-brand-700">
-            {completedStepsCount}/5 Active
-          </span>
-          <button
-            onClick={reset}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
-            title="Reset Agent Session"
+        <div className="flex flex-shrink-0 items-center gap-1.5">
+          <StatusPill
+            tone={isChatTyping ? 'brand' : progress.isComplete ? 'success' : 'neutral'}
+            dot
+            pulse={isChatTyping}
           >
-            <RotateCcw className="w-3.5 h-3.5" />
-          </button>
+            {statusLabel}
+          </StatusPill>
+
+          {hasStarted && (
+            <button
+              type="button"
+              onClick={reset}
+              className="rounded-md px-1.5 py-0.5 text-2xs font-semibold text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45"
+            >
+              New
+            </button>
+          )}
         </div>
       </div>
 
-      {/* Messages & Execution Log */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3.5 text-xs bg-[#FBFBFE]">
-        {/* Replit Agent Welcome Banner if awaiting concept */}
-        {!hasConfirmedIndustry && (
-          <div className="p-4 rounded-3xl bg-gradient-to-b from-orange-50/80 via-white to-white border border-orange-200/80 shadow-2xs space-y-2.5 animate-in fade-in duration-300 text-left">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-100 border border-orange-200 text-[10px] font-bold text-orange-800">
-              <Sparkles className="w-3 h-3 text-[#F97356]" />
-              <span>Idea to Identity · Replit Agent Mode</span>
+      {/* ---------------------------------------------------------------- */}
+      {/* Transcript                                                        */}
+      {/* ---------------------------------------------------------------- */}
+      <div className="flex-1 overflow-y-auto px-3.5 py-4">
+        {/* Greeting — the single entry point into the flow. */}
+        {!hasStarted && (
+          <div className="mb-5">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-brand-200/70 bg-brand-50 px-2.5 py-0.5 text-2xs font-bold uppercase tracking-wider text-brand-700">
+              <Sparkles className="h-3 w-3 text-coral-500" />
+              Idea to identity
             </div>
 
-            <h2 className="text-xl sm:text-2xl font-display font-black text-slate-950 tracking-tight leading-tight">
-              What will you build?
-            </h2>
-
-            <p className="text-[11px] text-slate-600 leading-relaxed font-normal">
-              Describe your startup vision below. The autonomous agent will build your brand step-by-step: name, taglines, color harmony, and vector logo.
+            <h1 className="mt-3 font-display text-xl font-black leading-tight tracking-tight text-slate-950">
+              What are you building?
+            </h1>
+            <p className="mt-1.5 text-xs leading-relaxed text-slate-600">
+              Describe your venture. The agent will work through the brief, name, tagline, visual
+              system and logo — materialising each artefact on the canvas as it goes.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-              <button
-                onClick={() => sendChatMessage('We are building a coffee business named Ceramiq')}
-                className="p-2.5 rounded-2xl bg-white hover:bg-orange-50/70 border border-slate-200/90 hover:border-orange-300 text-left transition-all group shadow-2xs"
-              >
-                <div className="flex items-center gap-2">
-                  <span className="text-sm">☕</span>
-                  <div className="truncate">
-                    <strong className="text-xs text-slate-900 group-hover:text-orange-950 block truncate">
-                      Coffee 'Ceramiq'
-                    </strong>
-                    <span className="text-[9px] text-slate-400 block truncate">
-                      Direct name fast-path
-                    </span>
-                  </div>
-                </div>
-              </button>
-
-              <button
-                onClick={() => sendChatMessage('Streetwear and sneaker label called Kinetics')}
-                className="p-2.5 rounded-2xl bg-white hover:bg-purple-50/70 border border-slate-200/90 hover:border-purple-300 text-left transition-all group shadow-2xs"
-              >
-                <div className="flex items-center gap-2">
-                  <span className="text-sm">👟</span>
-                  <div className="truncate">
-                    <strong className="text-xs text-slate-900 group-hover:text-purple-950 block truncate">
-                      Streetwear 'Kinetics'
-                    </strong>
-                    <span className="text-[9px] text-slate-400 block truncate">
-                      Urban sneakers & apparel
-                    </span>
-                  </div>
-                </div>
-              </button>
+            <div className="mt-4 space-y-1.5">
+              {STARTER_PROMPTS.map((starter) => (
+                <button
+                  key={starter.label}
+                  type="button"
+                  onClick={() => sendChatMessage(starter.prompt)}
+                  className={cn(
+                    'group flex w-full items-center gap-2.5 rounded-xl border border-slate-200/90 bg-white px-2.5 py-2 text-left',
+                    'transition-colors hover:border-brand-300 hover:bg-brand-50/60',
+                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45',
+                  )}
+                >
+                  <span
+                    className={cn(
+                      'flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg',
+                      starter.accent,
+                    )}
+                  >
+                    <starter.icon className="h-3.5 w-3.5" />
+                  </span>
+                  <span className="min-w-0 flex-1 truncate text-xs font-semibold text-slate-800">
+                    {starter.label}
+                  </span>
+                </button>
+              ))}
             </div>
           </div>
         )}
 
-        {/* Collapsible Execution Steps Log */}
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-3 shadow-2xs">
-          <button
-            onClick={() => setShowAgentLog(!showAgentLog)}
-            className="w-full flex items-center justify-between text-left text-slate-700 font-semibold text-[11px]"
-          >
-            <div className="flex items-center gap-1.5">
-              <Terminal className="w-3.5 h-3.5 text-brand-600" />
-              <span>Agent Execution Stream ({completedStepsCount}/5 Complete)</span>
-            </div>
-            {showAgentLog ? (
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
-            ) : (
-              <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            )}
-          </button>
-
-          {showAgentLog && (
-            <div className="mt-2.5 pt-2 border-t border-slate-100 space-y-1.5 font-mono text-[10px] text-slate-600">
-              <div className={`flex items-center gap-1.5 ${hasConfirmedIndustry ? 'text-emerald-700' : 'text-slate-400'}`}>
-                {hasConfirmedIndustry ? <Check className="w-3 h-3 text-emerald-600 flex-shrink-0" /> : <span className="w-3 h-3 text-center">•</span>}
-                <span>[1/5] Extract vision: {hasConfirmedIndustry ? input.industry : 'Awaiting concept'}</span>
-              </div>
-              <div className={`flex items-center gap-1.5 ${hasConfirmedName ? 'text-emerald-700' : 'text-slate-400'}`}>
-                {hasConfirmedName ? <Check className="w-3 h-3 text-emerald-600 flex-shrink-0" /> : <span className="w-3 h-3 text-center">•</span>}
-                <span>[2/5] Brand name: {hasConfirmedName ? selectedName.name : 'Pending'}</span>
-              </div>
-              <div className={`flex items-center gap-1.5 ${hasConfirmedTagline ? 'text-emerald-700' : 'text-slate-400'}`}>
-                {hasConfirmedTagline ? <Check className="w-3 h-3 text-emerald-600 flex-shrink-0" /> : <span className="w-3 h-3 text-center">•</span>}
-                <span>[3/5] Tagline: {hasConfirmedTagline ? `"${selectedName.tagline}"` : 'Pending'}</span>
-              </div>
-              <div className={`flex items-center gap-1.5 ${hasConfirmedPalette ? 'text-emerald-700' : 'text-slate-400'}`}>
-                {hasConfirmedPalette ? <Check className="w-3 h-3 text-emerald-600 flex-shrink-0" /> : <span className="w-3 h-3 text-center">•</span>}
-                <span>[4/5] 5-color harmony & Google Font pairing</span>
-              </div>
-              <div className={`flex items-center gap-1.5 ${hasConfirmedLogo ? 'text-emerald-700' : 'text-slate-400'}`}>
-                {hasConfirmedLogo ? <Check className="w-3 h-3 text-emerald-600 flex-shrink-0" /> : <span className="w-3 h-3 text-center">•</span>}
-                <span>[5/5] Vector logo & investor brand kit export</span>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Conversation Thread */}
-        {chatMessages.map((msg) => (
-          <div
-            key={msg.id}
-            className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}
-          >
-            <div
-              className={`max-w-[92%] rounded-2xl p-3 shadow-2xs leading-relaxed select-text ${
-                msg.sender === 'user'
-                  ? 'bg-slate-900 text-white rounded-tr-none'
-                  : 'bg-white border border-slate-200/90 text-slate-800 rounded-tl-none shadow-xs'
-              }`}
-            >
-              <p className="whitespace-pre-line">{msg.text}</p>
-              <span
-                className={`text-[9px] block mt-1 ${
-                  msg.sender === 'user' ? 'text-slate-400 text-right' : 'text-slate-400'
-                }`}
-              >
-                {msg.timestamp}
+        {/* Run log — shown only while the agent is actually working, so the
+            transcript reads as a conversation rather than a dashboard. The
+            step rail in the top bar is the persistent progress surface. */}
+        {isAgentBusy && (
+          <div className="mb-4 overflow-hidden rounded-xl border border-slate-200/80 bg-slate-50/60">
+            <div className="flex items-center gap-2 border-b border-slate-200/70 px-2.5 py-2">
+              <Spinner className="h-3 w-3 flex-shrink-0 text-brand-500" />
+              <span className="text-2xs font-bold uppercase tracking-wider text-slate-500">
+                Run log · {progress.completedCount}/{progress.total}
               </span>
             </div>
 
-            {/* Interactive Action Option Buttons */}
-            {msg.actionOptions && msg.actionOptions.length > 0 && (
-              <div className="flex flex-col gap-1.5 mt-2 max-w-[95%] w-full">
-                {msg.actionOptions.map((opt) => (
-                  <button
-                    key={opt.id}
-                    onClick={() => handleActionOption(opt)}
-                    className="w-full bg-white hover:bg-brand-50 text-slate-800 hover:text-brand-800 border border-brand-200/80 rounded-xl px-3 py-2 text-xs font-bold transition-all text-left flex items-center justify-between shadow-2xs group"
+            <ol className="space-y-1.5 px-2.5 py-2">
+              {progress.steps.map(({ step, status }) => (
+                <li key={step.key} className="flex items-start gap-2">
+                  <span
+                    className={cn(
+                      'mt-px flex h-3.5 w-3.5 flex-shrink-0 items-center justify-center rounded-full',
+                      status === 'done' && 'bg-emerald-500 text-white',
+                      status === 'active' && 'border border-brand-400 bg-white',
+                      status === 'upcoming' && 'border border-slate-300 bg-white',
+                    )}
                   >
-                    <span>{opt.label}</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-brand-600 group-hover:translate-x-0.5 transition-transform" />
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Suggestion Chips */}
-            {msg.suggestions && msg.suggestions.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 mt-2 max-w-[95%]">
-                {msg.suggestions.map((sug, i) => (
-                  <button
-                    key={i}
-                    onClick={() => sendChatMessage(sug)}
-                    className="bg-white hover:bg-brand-50 text-slate-700 hover:text-brand-700 border border-slate-200/90 rounded-full px-2.5 py-1 text-[11px] font-medium transition-colors text-left flex items-center gap-1 shadow-2xs"
-                  >
-                    <Sparkles className="w-2.5 h-2.5 text-coral-500 flex-shrink-0" />
-                    <span>{sug}</span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
-
-        {isChatTyping && (
-          <div className="flex items-center gap-1.5 text-brand-600 bg-white p-2.5 rounded-2xl w-fit border border-slate-200 shadow-2xs">
-            <div className="w-1.5 h-1.5 rounded-full bg-brand-500 animate-bounce" />
-            <div className="w-1.5 h-1.5 rounded-full bg-brand-500 animate-bounce [animation-delay:0.2s]" />
-            <div className="w-1.5 h-1.5 rounded-full bg-brand-500 animate-bounce [animation-delay:0.4s]" />
-            <span className="text-[11px] font-mono text-slate-500 ml-1">Agent synthesizing...</span>
+                    {status === 'done' && <Check className="h-2.5 w-2.5" strokeWidth={3.5} />}
+                    {status === 'active' && <span className="h-1.5 w-1.5 rounded-full bg-brand-600" />}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span
+                      className={cn(
+                        'block truncate text-2xs font-semibold',
+                        status === 'done' && 'text-slate-500',
+                        status === 'active' && 'text-brand-700',
+                        status === 'upcoming' && 'text-slate-400',
+                      )}
+                    >
+                      {step.title}
+                    </span>
+                    {status === 'active' && (
+                      <span className="block text-2xs leading-snug text-slate-500">
+                        {step.description}
+                      </span>
+                    )}
+                  </span>
+                </li>
+              ))}
+            </ol>
           </div>
         )}
 
-        <div ref={messagesEndRef} />
+        {/* Conversation */}
+        <div className="space-y-4">
+          {chatMessages.map((msg) => {
+            const isUser = msg.sender === 'user';
+            const hasActions = Boolean(msg.actionOptions?.length);
+
+            return (
+              <div key={msg.id} className={cn('flex flex-col', isUser && 'items-end')}>
+                {isUser ? (
+                  <div className="max-w-[88%] rounded-2xl rounded-br-sm bg-slate-900 px-3 py-2 text-xs leading-relaxed text-white">
+                    <RichText text={msg.text} inverse />
+                  </div>
+                ) : (
+                  <div className="flex w-full gap-2.5">
+                    <span className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-tr from-brand-600 to-coral-400 text-white">
+                      <Bot className="h-3.5 w-3.5" />
+                    </span>
+                    <div className="min-w-0 flex-1 pt-0.5">
+                      <RichText
+                        text={msg.text}
+                        className="text-xs leading-relaxed text-slate-700"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Primary affordance: explicit agent actions. */}
+                {hasActions && (
+                  <div
+                    className={cn(
+                      'mt-2 flex w-full flex-col gap-1.5',
+                      !isUser && 'pl-[2.125rem]',
+                    )}
+                  >
+                    {msg.actionOptions?.map((option) => (
+                      <button
+                        key={option.id}
+                        type="button"
+                        onClick={() => handleActionOption(option)}
+                        className={cn(
+                          'flex w-full items-center justify-between gap-2 rounded-xl border border-brand-200/80 bg-white',
+                          'px-2.5 py-2 text-left text-xs font-semibold text-slate-800',
+                          'transition-colors hover:border-brand-300 hover:bg-brand-50 hover:text-brand-800',
+                          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45',
+                        )}
+                      >
+                        <span className="truncate">{option.label}</span>
+                        <ArrowUp className="h-3.5 w-3.5 flex-shrink-0 rotate-90 text-brand-500" />
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Secondary affordance: free-text follow-ups. Suppressed when
+                    explicit actions already cover the same intent. */}
+                {!hasActions && Boolean(msg.suggestions?.length) && (
+                  <div className={cn('mt-2 flex flex-wrap gap-1.5', !isUser && 'pl-[2.125rem]')}>
+                    {msg.suggestions?.map((suggestion) => (
+                      <button
+                        key={suggestion}
+                        type="button"
+                        onClick={() => sendChatMessage(suggestion)}
+                        className={cn(
+                          'inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-2.5 py-1',
+                          'text-2xs font-medium text-slate-600 transition-colors',
+                          'hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700',
+                          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45',
+                        )}
+                      >
+                        <Sparkles className="h-2.5 w-2.5 flex-shrink-0 text-coral-500" />
+                        {suggestion}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+
+          {isChatTyping && (
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-lg bg-gradient-to-tr from-brand-600 to-coral-400 text-white">
+                <Bot className="h-3.5 w-3.5" />
+              </span>
+              <span className="flex items-center gap-1.5 text-2xs font-medium text-slate-500">
+                <Spinner className="h-3 w-3 text-brand-500" />
+                Working…
+              </span>
+            </div>
+          )}
+
+          <div ref={messagesEndRef} />
+        </div>
       </div>
 
-      {/* Replit-Style Docked Prompt Bar */}
-      <div className="p-3 bg-white border-t border-slate-200/90 flex-shrink-0 space-y-2">
-        {/* Quick Suggestion Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar text-[10px]">
-          <button
-            onClick={() => sendChatMessage('We are building a coffee business named Ceramiq')}
-            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-100 hover:bg-orange-50 text-slate-700 hover:text-orange-700 transition-colors border border-slate-200/70 font-medium"
-          >
-            ☕ Coffee 'Ceramiq'
-          </button>
-          <button
-            onClick={() => sendChatMessage('Streetwear and sneaker label called Kinetics')}
-            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-100 hover:bg-purple-50 text-slate-700 hover:text-purple-700 transition-colors border border-slate-200/70 font-medium"
-          >
-            👟 Streetwear 'Kinetics'
-          </button>
-          <button
-            onClick={() => sendChatMessage('Autonomous AI agent cloud platform named Nexa')}
-            className="whitespace-nowrap px-2.5 py-1 rounded-full bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-700 transition-colors border border-slate-200/70 font-medium"
-          >
-            ⚡ AI SaaS 'Nexa'
-          </button>
-        </div>
-
-        {/* Replit Styled Multi-Line Card Box */}
+      {/* ---------------------------------------------------------------- */}
+      {/* Composer                                                          */}
+      {/* ---------------------------------------------------------------- */}
+      <div className="flex-shrink-0 border-t border-slate-200/90 bg-white p-2.5">
         <form
           onSubmit={handleSend}
-          className="w-full bg-white rounded-2xl border-2 border-slate-200 hover:border-slate-300 focus-within:border-[#F97356] focus-within:ring-4 focus-within:ring-orange-500/10 transition-all p-2.5 shadow-2xs relative text-left"
+          className={cn(
+            'rounded-2xl border border-slate-200 bg-white p-2 transition-colors',
+            'focus-within:border-brand-400 focus-within:ring-4 focus-within:ring-brand-500/10',
+          )}
         >
+          <label htmlFor="agent-prompt" className="sr-only">
+            Message the Upstream Agent
+          </label>
           <textarea
+            id="agent-prompt"
             value={inputVal}
-            onChange={(e) => setInputVal(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
+            onChange={(event) => setInputVal(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
                 handleSend();
               }
             }}
-            placeholder="Build a brand for... (e.g. Specialty coffee roastery named Ceramiq, or a streetwear label)"
+            placeholder={
+              !hasStarted
+                ? 'Describe the venture you want to brand…'
+                : activeStepLabel
+                  ? `Waiting on ${activeStepLabel.toLowerCase()} — or refine the brief…`
+                  : 'Refine the brief, or ask for a different direction…'
+            }
             rows={2}
-            className="w-full resize-none text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none bg-transparent leading-relaxed"
+            className="w-full resize-none bg-transparent px-1 text-xs leading-relaxed text-slate-900 placeholder:text-slate-400 focus:outline-none"
           />
 
-          {/* Bottom Actions Row inside Box */}
-          <div className="flex items-center justify-between pt-1 border-t border-slate-100 mt-1">
-            <div className="flex items-center gap-1">
-              <button
-                type="button"
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
-                title="Add context or attachments"
-              >
-                <Plus className="w-3.5 h-3.5" />
-              </button>
-              <span className="text-[10px] text-slate-400 font-mono">Press ↵</span>
-            </div>
+          <div className="mt-1 flex items-center justify-between gap-2 border-t border-slate-100 pt-1.5">
+            <span className="hidden text-2xs text-slate-400 sm:inline">
+              <kbd className="font-sans font-semibold text-slate-500">↵</kbd> send ·{' '}
+              <kbd className="font-sans font-semibold text-slate-500">⇧↵</kbd> newline
+            </span>
 
             <button
               type="submit"
               disabled={!inputVal.trim()}
-              className="w-6 h-6 rounded-full bg-[#F97356] disabled:bg-slate-200 text-white disabled:text-slate-400 flex items-center justify-center transition-all shadow-2xs hover:scale-105 active:scale-95 disabled:hover:scale-100"
-              title="Send to Upstream Agent"
+              aria-label="Send to Upstream Agent"
+              className={cn(
+                'ml-auto flex h-7 w-7 items-center justify-center rounded-full transition-all',
+                'bg-brand-600 text-white hover:bg-brand-700 active:scale-95',
+                'disabled:pointer-events-none disabled:bg-slate-200 disabled:text-slate-400',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45 focus-visible:ring-offset-2',
+              )}
             >
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowUp className="h-3.5 w-3.5" />
             </button>
           </div>
         </form>
