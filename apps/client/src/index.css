@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --brand-primary: #7C3AED;
+    --brand-accent: #F85A52;
+    --brand-bg: #F8F6FE;
+    --brand-text: #131627;
+  }
+
+  body {
+    background: radial-gradient(circle at 15% 10%, rgba(221, 210, 244, 0.45) 0%, transparent 45%),
+                radial-gradient(circle at 85% 25%, rgba(255, 209, 209, 0.35) 0%, transparent 40%),
+                radial-gradient(circle at 50% 80%, rgba(210, 191, 255, 0.3) 0%, transparent 50%),
+                #F8F6FE;
+    background-attachment: fixed;
+    color: var(--brand-text);
+  }
+}
+
+/* Glassmorphism & Visual Aesthetics */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 10px 35px -5px rgba(124, 58, 237, 0.07),
+              0 2px 8px -1px rgba(0, 0, 0, 0.03);
+}
+
+.glass-card-interactive {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 28px -4px rgba(124, 58, 237, 0.06);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card-interactive:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(164, 130, 226, 0.4);
+  box-shadow: 0 20px 40px -10px rgba(124, 58, 237, 0.14);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 14px 0 rgba(124, 58, 237, 0.08);
+}
+
+/* Animated gradient text */
+.gradient-text-purple {
+  background: linear-gradient(135deg, #7C3AED 0%, #B594FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-coral {
+  background: linear-gradient(135deg, #F85A52 0%, #FF7D75 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-hero {
+  background: linear-gradient(135deg, #131627 0%, #521CAE 50%, #7C3AED 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(164, 130, 226, 0.35);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 58, 237, 0.6);
+}
