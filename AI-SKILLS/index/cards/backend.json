@@ -1,0 +1,168 @@
+{
+ "category": "backend",
+ "skills": [
+  {
+   "name": "api-design",
+   "use_when": "RESTful standards, pagination, status codes, versioning, OpenAPI. Use when designing or changing an HTTP interface — not when securing one (that is ap",
+   "keys": [
+    "rest",
+    "endpoint",
+    "openapi",
+    "pagination",
+    "versioning",
+    "status code"
+   ],
+   "not_for": [
+    "api contract end to end",
+    "test the api",
+    "test the rest"
+   ],
+   "cost": 802
+  },
+  {
+   "name": "authentication",
+   "use_when": "Identity proof: JWT, HttpOnly cookies, session stores, Argon2id, refresh-token rotation. Use when handling login, signup, sessions, passwords or token",
+   "keys": [
+    "argon2",
+    "bcrypt",
+    "credential",
+    "httponly",
+    "httponly cookie",
+    "httponly cookies",
+    "jwt",
+    "login",
+    "login endpoint",
+    "magic link",
+    "md5 password",
+    "oauth",
+    "password hash",
+    "refresh token",
+    "refresh tokens",
+    "session",
+    "signup"
+   ],
+   "not_for": [
+    "author",
+    "authoring"
+   ],
+   "cost": 760
+  },
+  {
+   "name": "authorization",
+   "use_when": "RBAC, ABAC, route guards, policy middleware and tenant isolation. Use when deciding what an already-identified user may access — permissions, roles, \"",
+   "keys": [
+    "abac",
+    "access control",
+    "admin only",
+    "changing the id",
+    "idor",
+    "other users data",
+    "permission check",
+    "permissions",
+    "policy",
+    "rbac",
+    "roles",
+    "tenant isolation",
+    "viewer role"
+   ],
+   "not_for": [],
+   "cost": 704
+  },
+  {
+   "name": "backend-engineering",
+   "use_when": "Server-side architecture: Node.js, Express, Fastify, REST APIs, middleware pipelines, and error boundaries. Use when building server-side applications",
+   "keys": [
+    "backend",
+    "server",
+    "nodejs",
+    "fastapi",
+    "express",
+    "service layer",
+    "controller"
+   ],
+   "not_for": [],
+   "cost": 837
+  },
+  {
+   "name": "backend-security",
+   "use_when": "Server-side vulnerability defense: input sanitization, rate limiting, secure headers, CORS, and request validation. Use when hardening backend APIs, m",
+   "keys": [
+    "backend security",
+    "rate limit",
+    "ssrf",
+    "cors",
+    "helmet",
+    "ddos prevention",
+    "payload limit"
+   ],
+   "not_for": [],
+   "cost": 842
+  },
+  {
+   "name": "caching",
+   "use_when": "Redis and in-memory caching: cache-aside, write-through, TTL jitter, cache stampede prevention (singleflight), negative caching, and eviction policies",
+   "keys": [
+    "redis",
+    "ttl",
+    "cache invalidation",
+    "memoize",
+    "cdn cache"
+   ],
+   "not_for": [],
+   "cost": 1579
+  },
+  {
+   "name": "database",
+   "use_when": "Connection pools, migrations, ORM behaviour, transaction boundaries. Use when changing schema, running migrations, or diagnosing connection and transa",
+   "keys": [
+    "migration",
+    "connection pool",
+    "orm",
+    "prisma",
+    "schema change"
+   ],
+   "not_for": [
+    "css",
+    "animation",
+    "jwt signing algorithm"
+   ],
+   "cost": 786
+  },
+  {
+   "name": "queues",
+   "use_when": "Asynchronous job processing: BullMQ, Redis streams, Celery, worker concurrency, and dead-letter queues. Use when offloading long-running jobs, process",
+   "keys": [
+    "bullmq",
+    "celery",
+    "sqs",
+    "kafka",
+    "worker",
+    "background job",
+    "dead letter"
+   ],
+   "not_for": [],
+   "cost": 775
+  },
+  {
+   "name": "realtime",
+   "use_when": "Real-time bidirectional communication: WebSockets, Server-Sent Events (SSE), Socket.io, and pub/sub channels. Use when streaming live tokens, building",
+   "keys": [
+    "live updates",
+    "pub/sub",
+    "socket.io",
+    "sse",
+    "stream the model",
+    "stream the response",
+    "stream to browser",
+    "stream to the browser",
+    "streaming response",
+    "token by token",
+    "websocket"
+   ],
+   "not_for": [
+    "what time is it"
+   ],
+   "cost": 792
+  }
+ ]
+}

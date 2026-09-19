@@ -1,0 +1,108 @@
+{"id": 1, "q": "the checkout page throws TypeError: cannot read properties of undefined", "must": ["debugging"], "forbid": ["visual-design", "deployment"]}
+{"id": 2, "q": "our login endpoint returns 401 for valid passwords since yesterday", "must": ["debugging", "authentication"], "forbid": ["animation-motion"]}
+{"id": 3, "q": "write unit tests for the invoice calculator", "must": ["unit-testing"], "forbid": ["deployment"]}
+{"id": 4, "q": "set up test-first workflow for the new payments module", "must": ["tdd-workflow"], "forbid": ["docker"]}
+{"id": 5, "q": "add pagination to the /products endpoint", "must": ["api-design"], "forbid": ["accessibility"]}
+{"id": 6, "q": "our API returns 200 for errors, fix the status codes", "must": ["api-design"], "forbid": ["threejs"]}
+{"id": 7, "q": "users can read other users orders by changing the id in the url", "must": ["authorization"], "forbid": ["animation-motion"]}
+{"id": 8, "q": "implement refresh tokens with httponly cookies", "must": ["authentication"], "forbid": ["geo-mapping"]}
+{"id": 9, "q": "rotate the leaked stripe key and stop it happening again", "must": ["secrets-management"], "forbid": ["ui-ux"]}
+{"id": 10, "q": "we committed a .env file to git", "must": ["secrets-management"], "forbid": ["edtech-learning"]}
+{"id": 11, "q": "do a security audit of our session and credential handling", "must": ["authentication"], "forbid": ["database", "api-design", "backend-engineering"]}
+{"id": 12, "q": "check the app for xss and csrf holes", "must": ["owasp"], "forbid": ["queues"]}
+{"id": 13, "q": "our npm audit shows 14 criticals", "must": ["dependency-security"], "forbid": ["visual-design"]}
+{"id": 14, "q": "model the threats for a new multi tenant billing system", "must": ["threat-modeling"], "forbid": ["animation-motion"]}
+{"id": 15, "q": "we store user health data, what do we need for gdpr", "must": ["privacy"], "forbid": ["docker"]}
+{"id": 16, "q": "guard our chatbot against prompt injection from retrieved documents", "must": ["ai-security"], "forbid": ["responsive-design"]}
+{"id": 17, "q": "the dashboard is unusable on a phone", "must": ["responsive-design"], "forbid": ["analytics", "queues"]}
+{"id": 18, "q": "make the landing page look less like every other AI startup", "must": ["human-ui-design"], "forbid": ["database"]}
+{"id": 19, "q": "our buttons and spacing are inconsistent across pages", "must": ["design-systems"], "forbid": ["queues"]}
+{"id": 20, "q": "screen reader users cannot operate the modal", "must": ["accessibility"], "forbid": ["caching"]}
+{"id": 21, "q": "largest contentful paint is 4.2 seconds", "must": ["frontend-performance"], "forbid": ["sql"]}
+{"id": 22, "q": "our react app re-renders the whole list on every keystroke", "must": ["frontend-engineering"], "forbid": ["cloud"]}
+{"id": 23, "q": "build a three.js scene with a gltf model and orbit controls", "must": ["threejs"], "forbid": ["sql"]}
+{"id": 24, "q": "add a subtle hover transition that respects reduced motion", "must": ["animation-motion"], "forbid": ["database"]}
+{"id": 25, "q": "the grid breaks at 900px, use container queries instead", "must": ["advanced-css"], "forbid": ["queues"]}
+{"id": 26, "q": "our postgres query went from 40ms to 9 seconds", "must": ["postgresql"], "forbid": ["animation-motion"]}
+{"id": 27, "q": "write a sql query that finds duplicate emails", "must": ["sql"], "forbid": ["docker"]}
+{"id": 28, "q": "design the schema for a subscriptions product", "must": ["data-modeling"], "forbid": ["accessibility"]}
+{"id": 29, "q": "should we use mongodb or postgres for event logs", "must": ["decision-making"], "forbid": ["animation-motion"]}
+{"id": 30, "q": "the migration locked the table in production", "must": ["database"], "forbid": ["visual-design"]}
+{"id": 31, "q": "add redis caching to the product listing", "must": ["caching"], "forbid": ["accessibility"]}
+{"id": 32, "q": "emails should be sent in the background with retries", "must": ["queues"], "forbid": ["threejs"]}
+{"id": 33, "q": "push live scores to connected clients", "must": ["realtime"], "forbid": ["sql"]}
+{"id": 34, "q": "our webhook handler times out and stripe retries forever", "must": ["error-handling"], "forbid": ["accessibility"]}
+{"id": 35, "q": "add a circuit breaker around the pricing service", "must": ["error-handling"], "forbid": ["ui-ux"]}
+{"id": 36, "q": "dockerfile builds a 2.4gb image", "must": ["docker"], "forbid": ["accessibility"]}
+{"id": 37, "q": "set up github actions to run tests on every pr", "must": ["ci-cd"], "forbid": ["threejs"]}
+{"id": 38, "q": "i need to deploy without downtime", "must": ["deployment"], "forbid": ["visual-design"]}
+{"id": 39, "q": "i have a merge conflict in package-lock.json", "must": ["git"], "forbid": ["sql"]}
+{"id": 40, "q": "add distributed tracing so we can see slow spans", "must": ["observability"], "forbid": ["visual-design"]}
+{"id": 41, "q": "set up alerting when error rate goes above 2 percent", "must": ["monitoring", "observability"], "forbid": ["threejs"]}
+{"id": 42, "q": "our s3 bucket is public, lock down iam", "must": ["cloud"], "forbid": ["animation-motion"]}
+{"id": 43, "q": "chunk our docs and build retrieval over them", "must": ["rag"], "forbid": ["docker"]}
+{"id": 44, "q": "which embedding model and dimension should we use", "must": ["embeddings"], "forbid": ["accessibility"]}
+{"id": 45, "q": "our system prompt keeps getting ignored on long conversations", "must": ["prompt-engineering"], "forbid": ["sql"]}
+{"id": 46, "q": "define json schemas for our function calling tools", "must": ["tool-use"], "forbid": ["responsive-design"]}
+{"id": 47, "q": "build an agent loop that can retry failed tool calls", "must": ["agents"], "forbid": ["visual-design"]}
+{"id": 48, "q": "how do we measure if the new prompt is actually better", "must": ["ai-evaluation"], "forbid": ["docker"]}
+{"id": 49, "q": "transcribe uploaded meeting audio and identify speakers", "must": ["audio-speech-processing"], "forbid": ["sql"]}
+{"id": 50, "q": "extract tables out of scanned invoices", "must": ["document-processing"], "forbid": ["animation-motion"]}
+{"id": 51, "q": "let users upload a photo and describe what is in it", "must": ["computer-vision-multimodal"], "forbid": ["queues"]}
+{"id": 52, "q": "show delivery drivers on a live map", "must": ["geo-mapping"], "forbid": ["sql"]}
+{"id": 53, "q": "build a double entry ledger for expense tracking", "must": ["personal-finance"], "forbid": ["threejs"]}
+{"id": 54, "q": "add spaced repetition to our flashcards feature", "must": ["edtech-learning"], "forbid": ["docker"]}
+{"id": 55, "q": "the user says they want to hurt themselves in the chat, what should the app do", "must": ["health-wellness-safety"], "forbid": ["animation-motion"]}
+{"id": 56, "q": "what is the capital of France", "must": [], "forbid": ["debugging", "documentation", "planning"]}
+{"id": 57, "q": "write me a haiku about rain", "must": [], "forbid": ["documentation", "tdd-workflow", "unit-testing"]}
+{"id": 58, "q": "thanks, that worked", "must": [], "forbid": ["debugging", "code-review"]}
+{"id": 59, "q": "explain what a monad is", "must": [], "forbid": ["debugging", "documentation"]}
+{"id": 60, "q": "what time is it in tokyo", "must": [], "forbid": ["geo-mapping", "debugging"]}
+{"id": 61, "q": "rename this variable to something clearer", "must": ["refactoring"], "forbid": ["deployment", "debugging"]}
+{"id": 62, "q": "this 400 line function does six things", "must": ["refactoring"], "forbid": ["cloud"]}
+{"id": 63, "q": "review my pull request before i merge", "must": ["code-review"], "forbid": ["deployment"]}
+{"id": 64, "q": "write a readme for this repo", "must": ["documentation"], "forbid": ["unit-testing"]}
+{"id": 65, "q": "write an adr for choosing kafka over rabbitmq", "must": ["decision-making"], "forbid": ["accessibility"]}
+{"id": 66, "q": "plan the milestones to ship this from scratch in six weeks", "must": ["planning"], "forbid": ["threejs"]}
+{"id": 67, "q": "just make it look better", "must": ["human-ui-design", "visual-design", "prompt-understanding"], "forbid": ["sql", "docker"]}
+{"id": 68, "q": "add whatever security is needed for my api", "must": ["api-security"], "forbid": ["database", "backend-engineering"]}
+{"id": 69, "q": "make sure the signup form is accessible and keyboard operable", "must": ["accessibility"], "forbid": ["queues"]}
+{"id": 70, "q": "test the rest api contract end to end", "must": ["api-testing"], "forbid": ["visual-design"]}
+{"id": 71, "q": "our playwright tests are flaky", "must": ["e2e-testing"], "forbid": ["sql"]}
+{"id": 72, "q": "load test the checkout flow to 5000 rps", "must": ["performance-testing"], "forbid": ["visual-design"]}
+{"id": 73, "q": "run an automated wcag check in ci", "must": ["accessibility-testing"], "forbid": ["queues"]}
+{"id": 74, "q": "add sast and dependency scanning to the pipeline", "must": ["security-testing", "dependency-security"], "forbid": ["animation-motion"]}
+{"id": 75, "q": "our integration tests hit the real database and are slow", "must": ["integration-testing"], "forbid": ["visual-design"]}
+{"id": 76, "q": "convert this component to typescript with strict types", "must": ["frontend-engineering"], "forbid": ["sql"]}
+{"id": 77, "q": "my build fails only in ci but works locally", "must": ["ci-cd", "debugging"], "forbid": ["visual-design"]}
+{"id": 78, "q": "cache invalidation is serving stale prices", "must": ["caching"], "forbid": ["accessibility"]}
+{"id": 79, "q": "users in india see dates in the wrong format", "must": ["i18n-localization"], "forbid": ["threejs", "queues"]}
+{"id": 80, "q": "rate limit the public api per api key", "must": ["api-security"], "forbid": ["animation-motion"]}
+{"id": 81, "q": "cors is blocking our frontend calls", "must": ["api-security"], "forbid": ["sql"]}
+{"id": 82, "q": "hash passwords properly, we are using md5", "must": ["authentication"], "forbid": ["threejs"]}
+{"id": 83, "q": "add role based permissions for admin and viewer", "must": ["authorization"], "forbid": ["docker"]}
+{"id": 84, "q": "design a rest api for a booking system", "must": ["api-design"], "forbid": ["animation-motion"]}
+{"id": 85, "q": "the app crashes on launch after the last deploy", "must": ["debugging"], "forbid": ["visual-design"]}
+{"id": 86, "q": "our logs are unstructured and useless during incidents", "must": ["observability"], "forbid": ["threejs"]}
+{"id": 87, "q": "reduce the bundle size, we ship 1.8mb of javascript", "must": ["frontend-performance"], "forbid": ["sql"]}
+{"id": 88, "q": "pick a color palette with enough contrast", "must": ["visual-design"], "forbid": ["queues"]}
+{"id": 89, "q": "the onboarding flow loses people at step three", "must": ["ui-ux"], "forbid": ["docker"]}
+{"id": 90, "q": "write the openapi spec for these endpoints", "must": ["api-design"], "forbid": ["threejs"]}
+{"id": 91, "q": "vector search returns irrelevant chunks", "must": ["rag"], "forbid": ["accessibility"]}
+{"id": 92, "q": "our llm calls cost too much per request", "must": ["llm"], "forbid": ["animation-motion"]}
+{"id": 93, "q": "stream the model response token by token to the browser", "must": ["realtime", "llm"], "forbid": ["sql"]}
+{"id": 94, "q": "set up a golden set to catch regressions in our classifier", "must": ["ai-evaluation"], "forbid": ["docker"]}
+{"id": 95, "q": "decompose this epic into shippable milestones", "must": ["problem-decomposition", "planning"], "forbid": ["threejs"]}
+{"id": 96, "q": "our context window keeps overflowing in long agent runs", "must": ["context-engineering", "agents"], "forbid": ["visual-design"]}
+{"id": 97, "q": "i dont know whats wrong, it just feels off", "must": ["prompt-understanding"], "forbid": ["docker", "sql"]}
+{"id": 98, "q": "bisect to find which commit broke the build", "must": ["git"], "forbid": ["visual-design"]}
+{"id": 99, "q": "blue green deploy behind a load balancer on aws", "must": ["deployment", "cloud"], "forbid": ["accessibility"]}
+{"id": 100, "q": "our webhooks need hmac signature verification", "must": ["api-security"], "forbid": ["animation-motion"]}
+{"id": 101, "q": "stream the model response token by token to the browser", "must": ["llm", "realtime"], "forbid": ["e2e-testing"]}
+{"id": 102, "q": "should we use mongodb or postgres for event logs", "must": ["decision-making"], "forbid": []}
+{"id": 103, "q": "our login endpoint returns 401 for valid passwords since yesterday", "must": ["debugging"], "forbid": []}
+{"id": 104, "q": "model the threats for a new multi tenant billing system", "must": ["threat-modeling"], "forbid": ["design-systems"]}
+{"id": 105, "q": "extract tables out of scanned invoices", "must": ["document-processing"], "forbid": ["refactoring"]}
+{"id": 106, "q": "implement refresh tokens with httponly cookies", "must": ["authentication"], "forbid": []}
+{"id": 107, "q": "test the rest api contract end to end", "must": ["api-testing"], "forbid": []}
+{"id": 108, "q": "is this safe to merge", "must": ["security-review"], "forbid": []}

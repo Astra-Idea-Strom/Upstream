@@ -1,0 +1,146 @@
+{
+ "category": "ai",
+ "skills": [
+  {
+   "name": "agents",
+   "use_when": "Autonomous AI agent architecture: plan-execute-evaluate cycles, memory stores, subagent delegation, and loop safety bounds. Use when designing multi-s",
+   "keys": [
+    "agent loop",
+    "agent run",
+    "agentic loop",
+    "long running agent",
+    "multi-step tool use",
+    "planner",
+    "subagent"
+   ],
+   "not_for": [],
+   "cost": 1035
+  },
+  {
+   "name": "ai-evaluation",
+   "use_when": "Model output evaluation, automated scoring rubrics, benchmark datasets, pairwise comparisons, and regression testing. Use when measuring LLM generatio",
+   "keys": [
+    "eval set",
+    "golden set",
+    "is actually better",
+    "judge",
+    "llm as judge",
+    "measure if",
+    "offline eval",
+    "precision recall",
+    "regression eval",
+    "regression in our"
+   ],
+   "not_for": [],
+   "cost": 1049
+  },
+  {
+   "name": "embeddings",
+   "use_when": "Vector embeddings: embedding models, vector dimensions, similarity metrics, and pgvector HNSW indexing. Use when generating semantic embeddings, compu",
+   "keys": [
+    "vector",
+    "cosine similarity",
+    "ann",
+    "hnsw",
+    "sentence transformer",
+    "dimension"
+   ],
+   "not_for": [],
+   "cost": 1026
+  },
+  {
+   "name": "llm",
+   "use_when": "LLM API integration, token budgeting, prompt construction, streaming responses, and temperature/sampling configuration. Use when calling OpenAI, Anthr",
+   "keys": [
+    "claude",
+    "completion",
+    "context window",
+    "cost per request",
+    "gpt",
+    "llm call",
+    "model call",
+    "model response",
+    "stream the model",
+    "stream the response",
+    "streaming completion",
+    "streaming response",
+    "temperature",
+    "token by token",
+    "token cost",
+    "token limit"
+   ],
+   "not_for": [],
+   "cost": 964
+  },
+  {
+   "name": "prompt-engineering",
+   "use_when": "System prompts, XML instruction structure, few-shot demonstration conditioning, and role definition for language models. Use when authoring system ins",
+   "keys": [
+    "system prompt",
+    "few-shot",
+    "chain of thought",
+    "output format"
+   ],
+   "not_for": [
+    "date format",
+    "wrong format for users"
+   ],
+   "cost": 865
+  },
+  {
+   "name": "rag",
+   "use_when": "Retrieval-augmented generation pipelines: chunking strategies, vector search retrieval, context injection, and reranking. Use when grounding LLM respo",
+   "keys": [
+    "bm25",
+    "chunk",
+    "chunking",
+    "grounding",
+    "hybrid search",
+    "irrelevant chunks",
+    "knowledge base",
+    "reranker",
+    "retrieval augmented",
+    "retrieval over",
+    "top-k",
+    "vector search",
+    "vector store"
+   ],
+   "not_for": [],
+   "cost": 1050
+  },
+  {
+   "name": "retrieval-ranking",
+   "use_when": "Rank and fuse retrieval candidates: BM25 scoring, dense cosine retrieval, Reciprocal Rank Fusion, score calibration, cut-off selection and cross-encod",
+   "keys": [
+    "bm25",
+    "rrf",
+    "rank fusion",
+    "reranker",
+    "cross encoder",
+    "top-k",
+    "relevance score",
+    "hybrid search",
+    "results are irrelevant",
+    "wrong results",
+    "tune retrieval"
+   ],
+   "not_for": [
+    "rank the team",
+    "leaderboard"
+   ],
+   "cost": 1029
+  },
+  {
+   "name": "tool-use",
+   "use_when": "LLM tool calling, function definitions, JSON schema parameters, tool execution loops, and error recovery. Use when equipping LLMs with external tools,",
+   "keys": [
+    "function calling",
+    "tool schema",
+    "mcp",
+    "tool choice"
+   ],
+   "not_for": [],
+   "cost": 1075
+  }
+ ]
+}

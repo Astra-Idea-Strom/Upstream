@@ -1,0 +1,123 @@
+{
+ "category": "security",
+ "skills": [
+  {
+   "name": "ai-security",
+   "use_when": "AI application security: prompt injection defense, indirect injection mitigation, SSRF prevention, and output guardrails. Use when securing LLM applic",
+   "keys": [
+    "prompt injection",
+    "jailbreak",
+    "model exfiltration",
+    "tool poisoning"
+   ],
+   "not_for": [],
+   "cost": 1183
+  },
+  {
+   "name": "api-security",
+   "use_when": "OWASP API Top 10: BOLA, broken auth, resource consumption, SSRF, HMAC webhook verification, rate limiting, CORS. Use when hardening an API, rate-limit",
+   "keys": [
+    "rate limit",
+    "api key",
+    "cors",
+    "bearer token"
+   ],
+   "not_for": [],
+   "cost": 1140
+  },
+  {
+   "name": "dependency-security",
+   "use_when": "Software supply chain security: npm audit, vulnerability scanning, lockfile integrity, and dependency pinning. Use when auditing npm/pip dependencies,",
+   "keys": [
+    "cve",
+    "npm audit",
+    "sbom",
+    "supply chain",
+    "dependabot"
+   ],
+   "not_for": [],
+   "cost": 833
+  },
+  {
+   "name": "owasp",
+   "use_when": "OWASP Top 10 web vulnerabilities: SQLi, XSS, CSRF, broken access control, SSRF, and security misconfigurations. Use when auditing web applications aga",
+   "keys": [
+    "csrf",
+    "idor",
+    "security is needed",
+    "sqli",
+    "ssrf",
+    "top 10",
+    "whatever security",
+    "whatever security is needed",
+    "xss"
+   ],
+   "not_for": [],
+   "cost": 1015
+  },
+  {
+   "name": "privacy",
+   "use_when": "Data privacy engineering: GDPR, CCPA, PII anonymization, data retention policies, consent management, and encryption at rest. Use when handling person",
+   "keys": [
+    "gdpr",
+    "pii",
+    "data retention",
+    "dpa",
+    "consent"
+   ],
+   "not_for": [],
+   "cost": 1205
+  },
+  {
+   "name": "secrets-management",
+   "use_when": "Secrets lifecycle: environment variables, .env security, vault integration, key rotation, and gitignore enforcement. Use when configuring API keys, pr",
+   "keys": [
+    "secret leaks",
+    "secret leak",
+    "leaked secrets",
+    "leaked credentials",
+    "credentials leak"
+   ],
+   "not_for": [],
+   "cost": 852
+  },
+  {
+   "name": "secure-coding",
+   "use_when": "Secure programming practices: memory safety, buffer overflow prevention, type validation, integer overflow defenses, and safe parsing. Use when writin",
+   "keys": [
+    "secure coding",
+    "defensive programming",
+    "input validation",
+    "safe code",
+    "sanitization"
+   ],
+   "not_for": [],
+   "cost": 812
+  },
+  {
+   "name": "security-review",
+   "use_when": "Security code review: manual threat inspection, privilege escalation audit, vulnerability triage, and pre-merge security checks. Use when performing p",
+   "keys": [
+    "review this PR for security",
+    "security review before merge",
+    "check this diff for vulnerabilities",
+    "is this safe to merge",
+    "security audit this change",
+    "what should I reject in this PR"
+   ],
+   "not_for": [],
+   "cost": 1101
+  },
+  {
+   "name": "threat-modeling",
+   "use_when": "STRIDE threat modeling: attack surface mapping, threat actor profiling, mitigation prioritization, and trust boundary analysis. Use when modeling thre",
+   "keys": [
+    "stride",
+    "attack surface",
+    "trust boundary"
+   ],
+   "not_for": [],
+   "cost": 860
+  }
+ ]
+}

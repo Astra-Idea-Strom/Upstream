@@ -1,0 +1,1089 @@
+{
+  "_comment": "Hand-authored v3 routing metadata that cannot be derived from skills-index.json. Merged over the auto-migrated card by build_index.py. Add entries incrementally; skills with no entry get safe defaults.",
+  "prompt-understanding": {
+    "negative_triggers": [
+      "add a column",
+      "rename the file",
+      "what is",
+      "explain how",
+      "npm install"
+    ],
+    "role": "meta",
+    "example_queries": [
+      "make it look better",
+      "this feels off, fix it",
+      "just make it professional"
+    ],
+    "gate": "ambiguous_only",
+    "aliases": [
+      "don't know what's wrong",
+      "dont know whats wrong",
+      "feels off",
+      "just make it",
+      "something is off"
+    ]
+  },
+  "context-engineering": {
+    "role": "meta",
+    "gate": "none",
+    "negative_triggers": [
+      "css",
+      "database",
+      "deploy"
+    ],
+    "aliases": [
+      "compaction",
+      "context window",
+      "overflowing",
+      "summarise history",
+      "too many tokens"
+    ]
+  },
+  "planning": {
+    "role": "meta",
+    "gate": "multi_step_only",
+    "aliases": [
+      "milestones",
+      "roadmap",
+      "sequence the work",
+      "ship this",
+      "six weeks"
+    ]
+  },
+  "problem-decomposition": {
+    "role": "meta",
+    "gate": "multi_step_only",
+    "alternative_to": [
+      "planning"
+    ]
+  },
+  "requirements-analysis": {
+    "role": "meta",
+    "gate": "ambiguous_only"
+  },
+  "decision-making": {
+    "role": "lead",
+    "gate": "tradeoff_only",
+    "example_queries": [
+      "should we use postgres or mongo",
+      "write an ADR for the queue choice"
+    ],
+    "aliases": [
+      "should we use",
+      "should we",
+      "which database",
+      "which one",
+      "decide between",
+      "x or y",
+      "trade-offs",
+      "pros and cons",
+      "adr",
+      "architecture decision record"
+    ]
+  },
+  "prompt-optimization": {
+    "role": "meta",
+    "gate": "never_auto"
+  },
+  "debugging": {
+    "role": "lead",
+    "aliases": [
+      "exception",
+      "for valid passwords",
+      "it crashes",
+      "login endpoint returns 401",
+      "not working",
+      "regression",
+      "returns 401",
+      "returns 500",
+      "since yesterday",
+      "stack trace",
+      "traceback",
+      "used to work",
+      "valid passwords"
+    ],
+    "example_queries": [
+      "500 error on POST /orders",
+      "my tests hang forever",
+      "TypeError: cannot read properties of undefined"
+    ],
+    "negative_triggers": [
+      "add a feature",
+      "design a",
+      "write documentation"
+    ]
+  },
+  "code-review": {
+    "role": "support",
+    "gate": "review_only",
+    "negative_triggers": [
+      "fix this crash",
+      "why is it failing"
+    ],
+    "aliases": [
+      "before i merge",
+      "critique this code",
+      "review my pr",
+      "review my pull request",
+      "review this code"
+    ]
+  },
+  "refactoring": {
+    "role": "lead",
+    "specializes": [],
+    "negative_triggers": [
+      "500 error",
+      "crash",
+      "document",
+      "extract table",
+      "extract tables",
+      "invoice",
+      "invoices",
+      "ocr",
+      "scanned",
+      "stack trace"
+    ],
+    "aliases": [
+      "400 line",
+      "clean up this code",
+      "code smell",
+      "dead code",
+      "does six things",
+      "duplicate code",
+      "extract function",
+      "extract method",
+      "god object",
+      "long function",
+      "rename",
+      "simplify",
+      "split this file",
+      "too many responsibilities"
+    ],
+    "requires_remove": [
+      "debugging"
+    ]
+  },
+  "error-handling": {
+    "role": "support",
+    "aliases": [
+      "backoff",
+      "circuit breaker",
+      "dead letter",
+      "error boundary",
+      "graceful degradation",
+      "idempotency",
+      "retries forever",
+      "retry",
+      "swallow errors",
+      "timeout",
+      "times out",
+      "webhook handler"
+    ]
+  },
+  "documentation": {
+    "role": "lead",
+    "aliases": [
+      "readme",
+      "adr",
+      "changelog",
+      "docstring",
+      "openapi doc"
+    ],
+    "negative_triggers": [
+      "haiku",
+      "poem",
+      "song"
+    ]
+  },
+  "unit-testing": {
+    "role": "support",
+    "gate": "test_intent_only",
+    "negative_triggers": [
+      "design",
+      "style",
+      "css",
+      "deploy"
+    ]
+  },
+  "integration-testing": {
+    "specializes": [
+      "unit-testing"
+    ]
+  },
+  "api-testing": {
+    "specializes": [
+      "integration-testing"
+    ],
+    "role": "lead",
+    "aliases": [
+      "test the rest api",
+      "rest api contract",
+      "api contract",
+      "contract test",
+      "contract testing",
+      "contract end to end",
+      "endpoint testing",
+      "api testing"
+    ]
+  },
+  "e2e-testing": {
+    "specializes": [
+      "integration-testing"
+    ]
+  },
+  "tdd-workflow": {
+    "role": "lead",
+    "alternative_to": [
+      "unit-testing"
+    ],
+    "negative_triggers": [
+      "haiku",
+      "poem",
+      "song"
+    ]
+  },
+  "security-testing": {
+    "specializes": [
+      "unit-testing"
+    ],
+    "role": "lead"
+  },
+  "accessibility-testing": {
+    "specializes": [
+      "unit-testing"
+    ],
+    "aliases": [
+      "a11y in ci",
+      "automated accessibility",
+      "axe",
+      "wcag check"
+    ]
+  },
+  "performance-testing": {
+    "specializes": [
+      "integration-testing"
+    ]
+  },
+  "sql": {
+    "role": "lead",
+    "aliases": [
+      "select",
+      "join",
+      "index",
+      "query plan",
+      "explain analyze"
+    ],
+    "negative_triggers": [
+      "monad",
+      "explain what a"
+    ]
+  },
+  "postgresql": {
+    "specializes": [
+      "sql"
+    ],
+    "aliases": [
+      "pg",
+      "pgvector",
+      "postgres",
+      "postgresql",
+      "psql"
+    ]
+  },
+  "nosql": {
+    "alternative_to": [
+      "sql"
+    ],
+    "aliases": [
+      "mongo",
+      "mongodb",
+      "dynamodb",
+      "document store"
+    ]
+  },
+  "database": {
+    "role": "support",
+    "aliases": [
+      "migration",
+      "connection pool",
+      "orm",
+      "prisma",
+      "schema change"
+    ],
+    "negative_triggers": [
+      "css",
+      "animation",
+      "jwt signing algorithm"
+    ]
+  },
+  "data-modeling": {
+    "role": "lead",
+    "aliases": [
+      "er diagram",
+      "normalization",
+      "schema design"
+    ],
+    "negative_triggers": [
+      "scanned",
+      "invoice",
+      "invoices",
+      "ocr"
+    ]
+  },
+  "secure-coding": {
+    "role": "support",
+    "gate": "security_intent_only"
+  },
+  "owasp": {
+    "specializes": [
+      "secure-coding"
+    ],
+    "aliases": [
+      "csrf",
+      "idor",
+      "security is needed",
+      "sqli",
+      "ssrf",
+      "top 10",
+      "whatever security",
+      "whatever security is needed",
+      "xss"
+    ]
+  },
+  "api-security": {
+    "specializes": [
+      "secure-coding"
+    ],
+    "requires_soft": [
+      "api-design"
+    ],
+    "aliases": [
+      "rate limit",
+      "api key",
+      "cors",
+      "bearer token"
+    ]
+  },
+  "secrets-management": {
+    "role": "specialist",
+    "gate": "none",
+    "aliases": [
+      "secret leaks",
+      "secret leak",
+      "leaked secrets",
+      "leaked credentials",
+      "credentials leak"
+    ]
+  },
+  "threat-modeling": {
+    "role": "lead",
+    "gate": "design_intent_only",
+    "aliases": [
+      "stride",
+      "attack surface",
+      "trust boundary"
+    ]
+  },
+  "privacy": {
+    "aliases": [
+      "gdpr",
+      "pii",
+      "data retention",
+      "dpa",
+      "consent"
+    ]
+  },
+  "ai-security": {
+    "specializes": [
+      "secure-coding"
+    ],
+    "aliases": [
+      "prompt injection",
+      "jailbreak",
+      "model exfiltration",
+      "tool poisoning"
+    ]
+  },
+  "dependency-security": {
+    "aliases": [
+      "cve",
+      "npm audit",
+      "sbom",
+      "supply chain",
+      "dependabot"
+    ]
+  },
+  "security-review": {
+    "role": "lead",
+    "alternative_to": [
+      "code-review"
+    ],
+    "gate": "security_intent_only",
+    "aliases": []
+  },
+  "authentication": {
+    "aliases": [
+      "argon2",
+      "bcrypt",
+      "credential",
+      "httponly",
+      "httponly cookie",
+      "httponly cookies",
+      "jwt",
+      "login",
+      "login endpoint",
+      "magic link",
+      "md5 password",
+      "oauth",
+      "password hash",
+      "refresh token",
+      "refresh tokens",
+      "session",
+      "signup"
+    ],
+    "negative_triggers": [
+      "author",
+      "authoring"
+    ]
+  },
+  "authorization": {
+    "specializes": [
+      "authentication"
+    ],
+    "aliases": [
+      "abac",
+      "access control",
+      "admin only",
+      "changing the id",
+      "idor",
+      "other users data",
+      "permission check",
+      "permissions",
+      "policy",
+      "rbac",
+      "roles",
+      "tenant isolation",
+      "viewer role"
+    ]
+  },
+  "api-design": {
+    "role": "lead",
+    "aliases": [
+      "rest",
+      "endpoint",
+      "openapi",
+      "pagination",
+      "versioning",
+      "status code"
+    ],
+    "negative_triggers": [
+      "api contract end to end",
+      "test the api",
+      "test the rest",
+      "test the rest api"
+    ]
+  },
+  "backend-engineering": {
+    "role": "support",
+    "gate": "backend_parent_only"
+  },
+  "caching": {
+    "aliases": [
+      "redis",
+      "ttl",
+      "cache invalidation",
+      "memoize",
+      "cdn cache"
+    ]
+  },
+  "queues": {
+    "aliases": [
+      "bullmq",
+      "celery",
+      "sqs",
+      "kafka",
+      "worker",
+      "background job",
+      "dead letter"
+    ]
+  },
+  "realtime": {
+    "aliases": [
+      "live updates",
+      "pub/sub",
+      "socket.io",
+      "sse",
+      "stream the model",
+      "stream the response",
+      "stream to browser",
+      "stream to the browser",
+      "streaming response",
+      "token by token",
+      "websocket"
+    ],
+    "negative_triggers": [
+      "what time is it"
+    ]
+  },
+  "backend-security": {
+    "specializes": [
+      "secure-coding"
+    ]
+  },
+  "frontend-engineering": {
+    "role": "support",
+    "gate": "frontend_parent_only",
+    "aliases": [
+      "react",
+      "next.js",
+      "vue",
+      "component",
+      "state management",
+      "hooks",
+      "re-render",
+      "rerender",
+      "usestate",
+      "useeffect",
+      "props",
+      "jsx",
+      "tsx",
+      "component tree"
+    ]
+  },
+  "human-ui-design": {
+    "specializes": [
+      "visual-design"
+    ],
+    "role": "lead",
+    "aliases": [
+      "ai slop",
+      "looks generic",
+      "looks templated",
+      "make it feel designed"
+    ]
+  },
+  "visual-design": {
+    "aliases": [
+      "hierarchy",
+      "contrast",
+      "color palette",
+      "spacing",
+      "typography"
+    ]
+  },
+  "web-design": {
+    "alternative_to": [
+      "visual-design"
+    ]
+  },
+  "advanced-css": {
+    "aliases": [
+      "grid",
+      "subgrid",
+      "container query",
+      ":has",
+      "@layer",
+      "flexbox"
+    ]
+  },
+  "responsive-design": {
+    "aliases": [
+      "breakpoint",
+      "clamp",
+      "doesn't fit",
+      "mobile",
+      "narrow screen",
+      "on mobile",
+      "phone",
+      "phones",
+      "responsive component",
+      "small screen",
+      "tablet",
+      "viewport"
+    ]
+  },
+  "accessibility": {
+    "aliases": [
+      "a11y",
+      "accessible",
+      "alt text",
+      "aria",
+      "contrast ratio",
+      "focus order",
+      "keyboard accessible",
+      "keyboard nav",
+      "keyboard operable",
+      "screen reader",
+      "wcag"
+    ]
+  },
+  "frontend-performance": {
+    "aliases": [
+      "bundle size",
+      "cls",
+      "cumulative layout shift",
+      "hydration",
+      "inp",
+      "interaction to next paint",
+      "janky",
+      "largest contentful paint",
+      "lcp",
+      "lighthouse",
+      "megabytes of javascript",
+      "re-render loop",
+      "ship javascript",
+      "slow page",
+      "slow render"
+    ]
+  },
+  "frontend-security": {
+    "specializes": [
+      "secure-coding"
+    ],
+    "aliases": [
+      "csp",
+      "dom xss",
+      "httponly cookie"
+    ]
+  },
+  "design-systems": {
+    "aliases": [
+      "across pages",
+      "button variants",
+      "component library",
+      "consistency",
+      "design token",
+      "inconsistent",
+      "spacing scale",
+      "storybook",
+      "theming",
+      "tokens"
+    ],
+    "negative_triggers": [
+      "threat",
+      "threats",
+      "threat model",
+      "threat modeling",
+      "billing system",
+      "attack",
+      "stride",
+      "multi tenant"
+    ]
+  },
+  "animation-motion": {
+    "aliases": [
+      "framer motion",
+      "transition",
+      "keyframes",
+      "reduced motion"
+    ]
+  },
+  "3d-web": {
+    "role": "domain",
+    "gate": "none",
+    "aliases": [
+      "interactive 3D",
+      "WebGL"
+    ]
+  },
+  "threejs": {
+    "role": "specialist",
+    "gate": "none",
+    "aliases": [
+      "three.js",
+      "threejs"
+    ]
+  },
+  "ui-ux": {
+    "aliases": [
+      "user flow",
+      "onboarding",
+      "empty state",
+      "information architecture"
+    ]
+  },
+  "git": {
+    "aliases": [
+      "rebase",
+      "merge conflict",
+      "cherry-pick",
+      "bisect",
+      "commit message"
+    ]
+  },
+  "github": {
+    "specializes": [
+      "git"
+    ],
+    "aliases": [
+      "pull request",
+      "actions",
+      "codeowners",
+      "issue template"
+    ]
+  },
+  "ci-cd": {
+    "aliases": [
+      "pipeline",
+      "github actions",
+      "build matrix",
+      "release workflow"
+    ]
+  },
+  "docker": {
+    "aliases": [
+      "dockerfile",
+      "compose",
+      "image size",
+      "container",
+      "multi-stage"
+    ]
+  },
+  "deployment": {
+    "aliases": [
+      "rollout",
+      "blue green",
+      "canary",
+      "zero downtime",
+      "rollback"
+    ],
+    "negative_triggers": [
+      "rename",
+      "this variable"
+    ]
+  },
+  "cloud": {
+    "aliases": [
+      "aws",
+      "gcp",
+      "azure",
+      "s3",
+      "lambda",
+      "iam",
+      "terraform"
+    ]
+  },
+  "monitoring": {
+    "alternative_to": [
+      "observability"
+    ],
+    "aliases": [
+      "alerting",
+      "uptime",
+      "pagerduty",
+      "dashboards"
+    ]
+  },
+  "observability": {
+    "aliases": [
+      "tracing",
+      "opentelemetry",
+      "structured logs",
+      "slo",
+      "span"
+    ]
+  },
+  "llm": {
+    "role": "support",
+    "gate": "ai_parent_only",
+    "aliases": [
+      "claude",
+      "completion",
+      "context window",
+      "cost per request",
+      "gpt",
+      "llm call",
+      "model call",
+      "model response",
+      "stream the model",
+      "stream the response",
+      "streaming completion",
+      "streaming response",
+      "temperature",
+      "token by token",
+      "token cost",
+      "token limit"
+    ]
+  },
+  "prompt-engineering": {
+    "specializes": [
+      "llm"
+    ],
+    "aliases": [
+      "system prompt",
+      "few-shot",
+      "chain of thought",
+      "output format"
+    ],
+    "negative_triggers": [
+      "date format",
+      "wrong format for users"
+    ]
+  },
+  "rag": {
+    "specializes": [
+      "llm"
+    ],
+    "aliases": [
+      "bm25",
+      "chunk",
+      "chunking",
+      "grounding",
+      "hybrid search",
+      "irrelevant chunks",
+      "knowledge base",
+      "reranker",
+      "retrieval augmented",
+      "retrieval over",
+      "top-k",
+      "vector search",
+      "vector store"
+    ]
+  },
+  "embeddings": {
+    "aliases": [
+      "vector",
+      "cosine similarity",
+      "ann",
+      "hnsw",
+      "sentence transformer",
+      "dimension"
+    ]
+  },
+  "agents": {
+    "specializes": [
+      "llm"
+    ],
+    "aliases": [
+      "agent loop",
+      "agent run",
+      "agentic loop",
+      "long running agent",
+      "multi-step tool use",
+      "planner",
+      "subagent"
+    ]
+  },
+  "tool-use": {
+    "specializes": [
+      "llm"
+    ],
+    "aliases": [
+      "function calling",
+      "tool schema",
+      "mcp",
+      "tool choice"
+    ]
+  },
+  "ai-evaluation": {
+    "specializes": [
+      "llm"
+    ],
+    "aliases": [
+      "eval set",
+      "golden set",
+      "is actually better",
+      "judge",
+      "llm as judge",
+      "measure if",
+      "offline eval",
+      "precision recall",
+      "regression eval",
+      "regression in our"
+    ]
+  },
+  "audio-speech-processing": {
+    "aliases": [
+      "whisper",
+      "tts",
+      "stt",
+      "diarization",
+      "waveform"
+    ]
+  },
+  "document-processing": {
+    "aliases": [
+      "pdf",
+      "docx",
+      "ocr",
+      "table extraction",
+      "parsing documents"
+    ]
+  },
+  "computer-vision-multimodal": {
+    "aliases": [
+      "image input",
+      "vision model",
+      "bounding box",
+      "ocr image"
+    ]
+  },
+  "health-wellness-safety": {
+    "role": "gate",
+    "gate": "always_if_matched",
+    "aliases": [
+      "crisis",
+      "diagnosis",
+      "dosage",
+      "hurt themselves",
+      "medical",
+      "medical advice",
+      "mental health",
+      "self harm",
+      "suicide"
+    ]
+  },
+  "personal-finance": {
+    "aliases": [
+      "budget",
+      "portfolio",
+      "tax",
+      "ledger",
+      "double entry"
+    ]
+  },
+  "edtech-learning": {
+    "aliases": [
+      "spaced repetition",
+      "quiz",
+      "curriculum",
+      "lesson"
+    ]
+  },
+  "geo-mapping": {
+    "aliases": [
+      "geojson",
+      "mapbox",
+      "leaflet",
+      "lat/lng",
+      "tiles",
+      "postgis"
+    ]
+  },
+  "skill-routing": {
+    "role": "meta",
+    "gate": "never_auto"
+  },
+  "skill-discovery": {
+    "role": "meta",
+    "gate": "never_auto"
+  },
+  "skill-auditing": {
+    "role": "meta",
+    "gate": "never_auto"
+  },
+  "skill-validation": {
+    "role": "meta",
+    "gate": "never_auto"
+  },
+  "skill-installation": {
+    "role": "meta",
+    "gate": "never_auto"
+  },
+  "skill-adaptation": {
+    "role": "meta",
+    "gate": "never_auto"
+  },
+  "analytics": {
+    "aliases": [
+      "funnel",
+      "cohort",
+      "retention",
+      "kpi",
+      "metrics warehouse",
+      "event tracking"
+    ],
+    "negative_triggers": [
+      "on phones",
+      "on mobile",
+      "responsive"
+    ]
+  },
+  "retrieval-ranking": {
+    "role": "lead",
+    "aliases": [
+      "bm25",
+      "rrf",
+      "rank fusion",
+      "reranker",
+      "cross encoder",
+      "top-k",
+      "relevance score",
+      "hybrid search",
+      "results are irrelevant",
+      "wrong results",
+      "tune retrieval"
+    ],
+    "example_queries": [
+      "our search returns irrelevant results",
+      "how do we combine keyword and vector search",
+      "how many results should we return"
+    ],
+    "negative_triggers": [
+      "rank the team",
+      "leaderboard"
+    ],
+    "specializes": []
+  },
+  "skill-evaluation": {
+    "role": "meta",
+    "gate": "never_auto",
+    "aliases": [
+      "eval set",
+      "precision recall",
+      "routing accuracy",
+      "golden set",
+      "measure the router",
+      "regression gate"
+    ]
+  },
+  "capability-gap-detection": {
+    "role": "meta",
+    "gate": "never_auto",
+    "aliases": [
+      "missing skill",
+      "should we add a skill",
+      "capability gap",
+      "prune skills"
+    ]
+  },
+  "skill-authoring": {
+    "role": "meta",
+    "gate": "never_auto",
+    "aliases": [
+      "write a skill",
+      "skill.md",
+      "frontmatter",
+      "skill description",
+      "skill never triggers",
+      "authoring a skill"
+    ]
+  },
+  "i18n-localization": {
+    "role": "lead",
+    "aliases": [
+      "i18n",
+      "l10n",
+      "locale",
+      "translation",
+      "timezone",
+      "rtl",
+      "date format",
+      "currency format",
+      "wrong date",
+      "multi language",
+      "different countries",
+      "users in india",
+      "plural rules"
+    ],
+    "example_queries": [
+      "users in india see dates in the wrong format",
+      "add a second language to the app",
+      "the arabic layout is broken"
+    ],
+    "negative_triggers": [
+      "date picker styling",
+      "sql date column"
+    ]
+  }
+}

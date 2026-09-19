@@ -1,0 +1,129 @@
+{
+ "category": "testing",
+ "skills": [
+  {
+   "name": "accessibility-testing",
+   "use_when": "Accessibility testing: axe-core, Pa11y, screen-reader validation, WCAG 2.2 AA audit, and keyboard navigation testing. Use when verifying accessibility",
+   "keys": [
+    "a11y in ci",
+    "automated accessibility",
+    "axe",
+    "wcag check"
+   ],
+   "not_for": [],
+   "cost": 976
+  },
+  {
+   "name": "api-testing",
+   "use_when": "API automated testing: Supertest, Postman/Newman, REST contract validation, status code checks, and payload assertion. Use when writing integration te",
+   "keys": [
+    "test the rest api",
+    "rest api contract",
+    "api contract",
+    "contract test",
+    "contract testing",
+    "contract end to end",
+    "endpoint testing",
+    "api testing"
+   ],
+   "not_for": [],
+   "cost": 1013
+  },
+  {
+   "name": "e2e-testing",
+   "use_when": "End-to-end browser testing: Playwright, Cypress, user flow automation, visual regression, and cross-browser testing. Use when automating full browser ",
+   "keys": [
+    "e2e",
+    "playwright",
+    "cypress",
+    "browser test",
+    "end-to-end",
+    "user journey test"
+   ],
+   "not_for": [],
+   "cost": 957
+  },
+  {
+   "name": "integration-testing",
+   "use_when": "Integration testing: multi-component interaction, database integration tests, testcontainers, and mock services. Use when testing service-to-database ",
+   "keys": [
+    "integration test",
+    "msw",
+    "test container",
+    "database test",
+    "service integration"
+   ],
+   "not_for": [],
+   "cost": 1006
+  },
+  {
+   "name": "performance-testing",
+   "use_when": "Performance and load testing: k6, Lighthouse, latency benchmarking, throughput measurement, and SLA evaluation. Use when load-testing APIs, benchmarki",
+   "keys": [
+    "performance test",
+    "load test",
+    "stress test",
+    "k6",
+    "autocannon",
+    "latency test",
+    "rps",
+    "throughput"
+   ],
+   "not_for": [],
+   "cost": 796
+  },
+  {
+   "name": "security-testing",
+   "use_when": "Automated security testing: DAST scans, OWASP ZAP, dependency vulnerability scanning, and fuzz testing. Use when automating security regression scans,",
+   "keys": [
+    "security test",
+    "sast",
+    "dast",
+    "security scan",
+    "vulnerability test",
+    "fuzzing"
+   ],
+   "not_for": [],
+   "cost": 900
+  },
+  {
+   "name": "tdd-workflow",
+   "use_when": "Test-Driven Development (TDD): Red-Green-Refactor cycles, test-first design, minimal implementation, and unit test ergonomics. Use when developing fea",
+   "keys": [
+    "write the test first",
+    "TDD this feature",
+    "red green refactor",
+    "test driven development",
+    "failing test before implementation",
+    "TDD workflow",
+    "write tests before code"
+   ],
+   "not_for": [
+    "haiku",
+    "poem",
+    "song"
+   ],
+   "cost": 923
+  },
+  {
+   "name": "unit-testing",
+   "use_when": "Test structure, isolation, mocking boundaries, coverage that means something. Use when writing, fixing or designing tests — not as a default add-on to",
+   "keys": [
+    "unit test",
+    "tdd",
+    "jest",
+    "vitest",
+    "pytest",
+    "test case",
+    "mocking",
+    "assertion"
+   ],
+   "not_for": [
+    "design",
+    "style",
+    "css"
+   ],
+   "cost": 1124
+  }
+ ]
+}
