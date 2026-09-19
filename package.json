@@ -1,0 +1,21 @@
+{
+  "name": "upstream",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI Brand Identity & Naming Generator – Hackathon Monorepo",
+  "scripts": {
+    "dev": "concurrently \"pnpm --filter @upstream/client dev\" \"pnpm --filter @upstream/server dev\"",
+    "build": "pnpm --filter @upstream/shared build && pnpm --filter @upstream/client build && pnpm --filter @upstream/server build",
+    "typecheck": "pnpm -r typecheck",
+    "clean": "pnpm -r exec rm -rf dist node_modules"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@12.4.2"
+}
