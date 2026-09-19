@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { BrandInput, BrandName, LogoConcept } from '@upstream/shared';
+import type { BrandInput, BrandName, LogoConcept, LogoStyle } from '@upstream/shared';
 import { MOCK_BRAND_NAMES, PREBUILT_THEMES, INITIAL_CHAT_MESSAGES } from '../mock/mockData';
 
 export interface ChatMessage {
@@ -10,10 +10,22 @@ export interface ChatMessage {
   suggestions?: string[];
 }
 
+export interface ProjectSession {
+  id: string;
+  title: string;
+  industry: string;
+  timestamp: string;
+  activeBrandName?: string;
+}
+
 interface BrandStore {
-  // Navigation & Flow
-  step: 1 | 2 | 3 | 4;
-  setStep: (step: 1 | 2 | 3 | 4) => void;
+  // Page mode: 'landing' vs 'studio'
+  viewMode: 'landing' | 'studio';
+  setViewMode: (mode: 'landing' | 'studio') => void;
+
+  // Multi-step progression inside studio (1: Input -> 2: 5 Names -> 3: Palette & Visual Guide -> 4: 5 Logos -> 5: Download As)
+  step: 1 | 2 | 3 | 4 | 5;
+  setStep: (step: 1 | 2 | 3 | 4 | 5) => void;
 
   // Input state
   input: BrandInput;
@@ -21,60 +33,67 @@ interface BrandStore {
   selectedThemeId: string | null;
   selectTheme: (themeId: string) => void;
 
-  // Brand Names
+  // Brand Names (top 5 curated)
   projectId: string;
   brandNames: BrandName[];
-  selectedName: BrandName | null;
+  selectedName: BrandName;
   favorites: string[];
   searchQuery: string;
-  filterTone: string;
-  filterOnlyAvailable: boolean;
 
   setBrandNames: (names: BrandName[]) => void;
   selectName: (name: BrandName) => void;
   toggleFavorite: (nameId: string) => void;
   setSearchQuery: (query: string) => void;
-  setFilterTone: (tone: string) => void;
-  setFilterOnlyAvailable: (val: boolean) => void;
 
-  // Logo Concepts
-  logoConcepts: LogoConcept[];
+  // Selected Color Palette in Step 3
+  activePaletteIdx: number;
+  setActivePaletteIdx: (idx: number) => void;
+
+  // 5 Logo Concepts
+  selectedLogoStyle: LogoStyle;
+  setSelectedLogoStyle: (style: LogoStyle) => void;
   selectedLogo: LogoConcept | null;
-  setLogoConcepts: (logos: LogoConcept[]) => void;
   selectLogo: (logo: LogoConcept) => void;
 
-  // Loading & Generation States
+  // Loading states
   isLoadingNames: boolean;
   isLoadingLogos: boolean;
-  logoGenStage: number; // 0 to 4 for animated progress
   setLoadingNames: (loading: boolean) => void;
   setLoadingLogos: (loading: boolean) => void;
-  setLogoGenStage: (stage: number) => void;
 
-  // Left Sidebar & Chat
-  isSidebarOpen: boolean;
-  setSidebarOpen: (open: boolean) => void;
-  activeSidebarTab: 'chat' | 'assets';
-  setActiveSidebarTab: (tab: 'chat' | 'assets') => void;
+  // Project Sessions History (for left rail)
+  sessions: ProjectSession[];
+  activeSessionId: string;
+  createNewProject: () => void;
+  loadSession: (sessionId: string) => void;
+
+  // Left Chat Pane inside Studio
   chatMessages: ChatMessage[];
   isChatTyping: boolean;
   sendChatMessage: (text: string) => void;
 
-  // Utility Actions
+  // Quick actions
+  startIdentityCreation: () => void;
   regenerateNames: () => void;
   reset: () => void;
 }
 
 const defaultInput: BrandInput = {
   businessName: '',
-  industry: 'Sustainable Streetwear & Sneaker Fashion',
-  targetAudience: 'Eco-conscious Gen Z & urban creators aged 18-32',
-  mission: 'Pioneering limited-run apparel and footwear using recycled ocean polymers and architectural silhouettes.',
+  industry: 'Streetwear & Sneaker Apparel',
+  targetAudience: 'Gen Z and urban creators aged 18-32',
+  mission: 'Crafting limited-run apparel and sneakers merging architectural silhouettes with sustainable comfort.',
   tone: 'bold',
-  constraints: 'Modern, under 10 letters, high-impact branding, avoid cliché green eco words',
+  constraints: 'Modern, under 9 letters, high-impact branding, punchy and memorable',
 };
 
+// 5 Curated Brand Names
+const FIVE_CURATED_NAMES: BrandName[] = MOCK_BRAND_NAMES.slice(0, 5);
+
 export const useBrandStore = create<BrandStore>((set, get) => ({
+  viewMode: 'landing',
+  setViewMode: (mode) => set({ viewMode: mode }),
+
   step: 1,
   setStep: (step) => set({ step }),
 
@@ -89,17 +108,17 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       set({
         selectedThemeId: themeId,
         input: { ...theme.defaultInput },
+        viewMode: 'studio',
+        step: 1,
       });
     }
   },
 
   projectId: 'proj_upstream_' + Date.now().toString(36),
-  brandNames: MOCK_BRAND_NAMES,
-  selectedName: MOCK_BRAND_NAMES[0],
+  brandNames: FIVE_CURATED_NAMES,
+  selectedName: FIVE_CURATED_NAMES[0],
   favorites: ['brand_01'],
   searchQuery: '',
-  filterTone: 'all',
-  filterOnlyAvailable: false,
 
   setBrandNames: (names) => set({ brandNames: names }),
   selectName: (name) => set({ selectedName: name }),
@@ -110,25 +129,61 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
         : [...state.favorites, nameId],
     })),
   setSearchQuery: (query) => set({ searchQuery: query }),
-  setFilterTone: (tone) => set({ filterTone: tone }),
-  setFilterOnlyAvailable: (val) => set({ filterOnlyAvailable: val }),
 
-  logoConcepts: [],
+  activePaletteIdx: 0,
+  setActivePaletteIdx: (idx) => set({ activePaletteIdx: idx }),
+
+  selectedLogoStyle: 'minimal',
+  setSelectedLogoStyle: (style) => set({ selectedLogoStyle: style }),
   selectedLogo: null,
-  setLogoConcepts: (logos) => set({ logoConcepts: logos }),
   selectLogo: (logo) => set({ selectedLogo: logo }),
 
   isLoadingNames: false,
   isLoadingLogos: false,
-  logoGenStage: 0,
   setLoadingNames: (loading) => set({ isLoadingNames: loading }),
   setLoadingLogos: (loading) => set({ isLoadingLogos: loading }),
-  setLogoGenStage: (stage) => set({ logoGenStage: stage }),
 
-  isSidebarOpen: false,
-  setSidebarOpen: (open) => set({ isSidebarOpen: open }),
-  activeSidebarTab: 'chat',
-  setActiveSidebarTab: (tab) => set({ activeSidebarTab: tab }),
+  sessions: [
+    { id: 's1', title: 'Kinetics Footwear', industry: 'Streetwear & Kicks', timestamp: 'Today', activeBrandName: 'Kinetics' },
+    { id: 's2', title: 'Aurae Atelier', industry: 'Haute Couture', timestamp: 'Yesterday', activeBrandName: 'Aurae' },
+    { id: 's3', title: 'Synapse Engine', industry: 'Cloud AI Platform', timestamp: '3 days ago', activeBrandName: 'Synapse' },
+  ],
+  activeSessionId: 's1',
+
+  createNewProject: () => {
+    const newId = 's_' + Date.now();
+    const newSession: ProjectSession = {
+      id: newId,
+      title: 'New Brand Project',
+      industry: 'Custom Idea',
+      timestamp: 'Just now',
+    };
+    set((state) => ({
+      sessions: [newSession, ...state.sessions],
+      activeSessionId: newId,
+      viewMode: 'studio',
+      step: 1,
+      input: {
+        businessName: '',
+        industry: '',
+        targetAudience: '',
+        mission: '',
+        tone: 'bold',
+        constraints: '',
+      },
+    }));
+  },
+
+  loadSession: (sessionId) => {
+    const s = get().sessions.find((item) => item.id === sessionId);
+    if (s) {
+      set({
+        activeSessionId: sessionId,
+        viewMode: 'studio',
+      });
+    }
+  },
+
   chatMessages: INITIAL_CHAT_MESSAGES,
   isChatTyping: false,
 
@@ -145,24 +200,23 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       isChatTyping: true,
     }));
 
-    // Realistic AI brand consultant response
     setTimeout(() => {
       const lower = text.toLowerCase();
       let reply = '';
       let suggestions: string[] = [];
 
-      if (lower.includes('tagline') || lower.includes('slogan')) {
-        reply = `Here are 3 punchy taglines tailored for your ${get().input.industry} concept:\n\n1. "Wear the Motion."\n2. "Sculpted for the Streets."\n3. "Next-Gen Form, Zero Waste."\n\nWould you like me to pair these with your current selected name (${get().selectedName?.name || 'Kinetics'})?`;
-        suggestions = ['Apply tagline to current name', 'Generate 3 more minimalist taglines', 'Suggest matching color accents'];
+      if (lower.includes('name') || lower.includes('ideas') || lower.includes('brand')) {
+        reply = `I've analyzed your concept for ${get().input.industry}. The 5 curated names currently generated on the right pane are:\n\n1. **Kinetics** (Streetwear & dynamic motion)\n2. **Aurae** (Quiet European luxury)\n3. **Synapse** (Intelligent connectivity)\n4. **Verdura** (Botanical purity)\n5. **Voltaic** (High-voltage bold energy)\n\nClick any card on the right to select it, or ask me to tweak the tone!`;
+        suggestions = ['Move to Color Palette step', 'Make names more playful', 'Check .com availability'];
       } else if (lower.includes('color') || lower.includes('palette')) {
-        reply = `For a ${get().input.tone} vibe in ${get().input.industry}, I recommend this high-contrast palette:\n\n• Primary: #7C3AED (Electric Violet)\n• Secondary: #1E1B4B (Midnight Navy)\n• Accent: #FB7185 (Neon Coral)\n• Background: #F8F6FE (Lilac Fog)\n• Text: #0F172A (Pitch Ink)\n\nThis gives immense premium presence without feeling dated.`;
-        suggestions = ['Apply this palette to my brand', 'Show warm earth tone alternative', 'Explain typography pairings'];
-      } else if (lower.includes('name') || lower.includes('boutique') || lower.includes('ideas')) {
-        reply = `Exploring creative names for your ${get().input.industry} venture:\n\n• **Vanguardist** (Bold & architectural)\n• **Solstice Atelier** (Refined, radiant, luxurious)\n• **Cortex** (Tech-forward and swift)\n• **Aethel** (Ancient Nordic for noble)\n\nYou can click on any generated card in the studio to preview full visual identity guides!`;
-        suggestions = ['Add these to my brand names grid', 'Check .com domain status', 'Switch to luxury boutique theme'];
+        reply = `For your brand tone (${get().input.tone}), here is our harmonized 5-color palette:\n\n• Primary: #7C3AED (Electric Violet)\n• Secondary: #1E1B4B (Midnight Navy)\n• Accent: #FB7185 (Neon Coral)\n• Background: #F8F6FE (Lilac Fog)\n• Text: #0F172A (Pitch Ink)\n\nI've updated the palette recommendations on Step 3 for you.`;
+        suggestions = ['Go to Visual Guide step', 'Suggest earthy warm tones', 'Generate matching logos'];
+      } else if (lower.includes('logo') || lower.includes('sketch')) {
+        reply = `I can synthesize 5 vector logo styles for "${get().selectedName.name}":\n\n• Minimalist Continuous-Line Glyph\n• Modern Architectural Wordmark\n• Abstract Dynamic Prism\n• Geometric Golden-Ratio Crest\n• Illustrative Organic Badge\n\nClick over to Step 4 on the right to watch the live generation!`;
+        suggestions = ['Take me to Logo Studio', 'View dark mode mockups', 'Export PDF Brand Card'];
       } else {
-        reply = `I've analyzed your brand notes for "${get().input.industry}". Your positioning targets ${get().input.targetAudience} with a ${get().input.tone} tone. The current brand name "${get().selectedName?.name || 'Kinetics'}" scores 98% on memorability and has verified .com domain availability!`;
-        suggestions = ['Generate logo concepts for this name', 'Tune tone to minimalist', 'Export current brand one-pager'];
+        reply = `Great direction! I've noted: "${text}". I can adapt your brand parameters, recommend taglines, or adjust visual palettes right now.`;
+        suggestions = ['Show 5 curated names', 'Preview color palette', 'Build logo concepts'];
       }
 
       const botMsg: ChatMessage = {
@@ -177,35 +231,36 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
         chatMessages: [...state.chatMessages, botMsg],
         isChatTyping: false,
       }));
-    }, 900);
+    }, 850);
+  },
+
+  startIdentityCreation: () => {
+    set({
+      viewMode: 'studio',
+      step: 1,
+    });
   },
 
   regenerateNames: () => {
     set({ isLoadingNames: true });
     setTimeout(() => {
-      // Shuffle and slightly vary names
-      const shuffled = [...MOCK_BRAND_NAMES].sort(() => 0.5 - Math.random());
+      const shuffled = [...MOCK_BRAND_NAMES].sort(() => 0.5 - Math.random()).slice(0, 5);
       set({
         brandNames: shuffled,
         selectedName: shuffled[0],
         isLoadingNames: false,
       });
-    }, 1200);
+    }, 1100);
   },
 
   reset: () => {
     set({
+      viewMode: 'landing',
       step: 1,
       input: defaultInput,
-      selectedThemeId: 'clothes-shoes',
-      brandNames: MOCK_BRAND_NAMES,
-      selectedName: MOCK_BRAND_NAMES[0],
-      logoConcepts: [],
-      selectedLogo: null,
-      logoGenStage: 0,
-      searchQuery: '',
-      filterTone: 'all',
-      filterOnlyAvailable: false,
+      brandNames: FIVE_CURATED_NAMES,
+      selectedName: FIVE_CURATED_NAMES[0],
+      selectedLogoStyle: 'minimal',
     });
   },
 }));

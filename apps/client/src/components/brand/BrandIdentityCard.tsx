@@ -109,23 +109,23 @@ export const BrandIdentityCard: React.FC = () => {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-100 text-brand-800 text-xs font-bold mb-2">
               <Sparkles className="w-3.5 h-3.5 text-coral-500" />
-              <span>STEP 4 OF 4: BRAND IDENTITY ONE-PAGER</span>
+              <span>STEP 5 OF 5: DOWNLOAD AS BRAND IDENTITY</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-slate-900 tracking-tight">
-              Brand Identity Complete: <span className="text-brand-600">{selectedName.name}</span>
+              Brand Identity Specification: <span className="text-brand-600">{selectedName.name}</span>
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Ready to share with investors, co-founders, and design contractors.
+              Download your complete brand guidelines as PDF or high-res image.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5">
             <button
-              onClick={() => setStep(3)}
+              onClick={() => setStep(4)}
               className="px-4 py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-colors"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
-              <span>Back to Logos</span>
+              <span>Back to 5 Logos</span>
             </button>
 
             <button

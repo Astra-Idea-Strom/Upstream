@@ -27,11 +27,6 @@ export const PrebuiltThemesSection: React.FC = () => {
 
   const handleSelectAndScroll = (theme: PrebuiltTheme) => {
     selectTheme(theme.id);
-    // Scroll smoothly to form section if on step 1, or jump to form
-    const formElement = document.getElementById('brand-input-form');
-    if (formElement) {
-      formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
   };
 
   return (
