@@ -26,7 +26,9 @@ export const LogoArtworkCard: React.FC = () => {
   const info = STYLE_LABELS[selectedLogoStyle] || STYLE_LABELS.minimal;
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-7 shadow-xs relative overflow-hidden transition-all hover:border-brand-300 animate-in fade-in duration-300">
+    <div className="bg-white rounded-3xl border-2 border-brand-400/90 p-6 sm:p-7 shadow-md shadow-brand-500/5 relative overflow-hidden transition-all text-left animate-in fade-in duration-300">
+      {/* Top Colorful Accent Strip */}
+      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-cyan-500 via-brand-600 to-indigo-500" />
       <div className="flex items-center justify-between pb-3.5 mb-4 border-b border-slate-100">
         <div className="flex items-center gap-2">
           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/70 text-[10px] font-bold text-brand-800">

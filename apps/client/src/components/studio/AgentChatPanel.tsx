@@ -12,7 +12,6 @@ import {
   ArrowRight,
   Plus,
 } from 'lucide-react';
-import { ChatBrandNameCard } from './chat/ChatBrandNameCard';
 
 export const AgentChatPanel: React.FC = () => {
   const {
@@ -21,9 +20,6 @@ export const AgentChatPanel: React.FC = () => {
     sendChatMessage,
     handleActionOption,
     input,
-    brandNames,
-    selectedName,
-    selectName,
     step,
     hasConfirmedIndustry,
     hasConfirmedName,
@@ -231,35 +227,6 @@ export const AgentChatPanel: React.FC = () => {
             )}
           </div>
         ))}
-
-        {/* Colorful Candidate Name Cards directly in the Chat Stream */}
-        {hasConfirmedIndustry && brandNames && brandNames.length > 0 && (
-          <div className="space-y-2.5 my-3 p-3.5 rounded-3xl bg-slate-50/90 border border-slate-200/90 shadow-2xs">
-            <div className="flex items-center justify-between px-1 mb-1">
-              <div className="flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-[#F97356]" />
-                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-900 font-mono">
-                  Curated Brand Candidates ({brandNames.length})
-                </span>
-              </div>
-              <span className="text-[10px] font-mono text-slate-500">
-                {hasConfirmedName ? `✓ Active: ${selectedName.name}` : 'Tap to select'}
-              </span>
-            </div>
-
-            <div className="space-y-2.5">
-              {brandNames.slice(0, 5).map((brandItem, bIdx) => (
-                <ChatBrandNameCard
-                  key={brandItem.id || bIdx}
-                  brand={brandItem}
-                  isSelected={selectedName.name === brandItem.name}
-                  onSelect={() => selectName(brandItem)}
-                  index={bIdx}
-                />
-              ))}
-            </div>
-          </div>
-        )}
 
         {isChatTyping && (
           <div className="flex items-center gap-1.5 text-brand-600 bg-white p-2.5 rounded-2xl w-fit border border-slate-200 shadow-2xs">
