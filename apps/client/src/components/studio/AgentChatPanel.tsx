@@ -88,6 +88,60 @@ export const AgentChatPanel: React.FC = () => {
 
       {/* Messages & Execution Log */}
       <div className="flex-1 overflow-y-auto p-4 space-y-3.5 text-xs bg-[#FBFBFE]">
+        {/* Replit Agent Welcome Banner if awaiting concept */}
+        {!hasConfirmedIndustry && (
+          <div className="p-4 rounded-3xl bg-gradient-to-b from-orange-50/80 via-white to-white border border-orange-200/80 shadow-2xs space-y-2.5 animate-in fade-in duration-300 text-left">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-orange-100 border border-orange-200 text-[10px] font-bold text-orange-800">
+              <Sparkles className="w-3 h-3 text-[#F97356]" />
+              <span>Idea to Identity · Replit Agent Mode</span>
+            </div>
+
+            <h2 className="text-xl sm:text-2xl font-display font-black text-slate-950 tracking-tight leading-tight">
+              What will you build?
+            </h2>
+
+            <p className="text-[11px] text-slate-600 leading-relaxed font-normal">
+              Describe your startup vision below. The autonomous agent will build your brand step-by-step: name, taglines, color harmony, and vector logo.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              <button
+                onClick={() => sendChatMessage('We are building a coffee business named Ceramiq')}
+                className="p-2.5 rounded-2xl bg-white hover:bg-orange-50/70 border border-slate-200/90 hover:border-orange-300 text-left transition-all group shadow-2xs"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-sm">☕</span>
+                  <div className="truncate">
+                    <strong className="text-xs text-slate-900 group-hover:text-orange-950 block truncate">
+                      Coffee 'Ceramiq'
+                    </strong>
+                    <span className="text-[9px] text-slate-400 block truncate">
+                      Direct name fast-path
+                    </span>
+                  </div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => sendChatMessage('Streetwear and sneaker label called Kinetics')}
+                className="p-2.5 rounded-2xl bg-white hover:bg-purple-50/70 border border-slate-200/90 hover:border-purple-300 text-left transition-all group shadow-2xs"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-sm">👟</span>
+                  <div className="truncate">
+                    <strong className="text-xs text-slate-900 group-hover:text-purple-950 block truncate">
+                      Streetwear 'Kinetics'
+                    </strong>
+                    <span className="text-[9px] text-slate-400 block truncate">
+                      Urban sneakers & apparel
+                    </span>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Collapsible Execution Steps Log */}
         <div className="rounded-2xl border border-slate-200/80 bg-white p-3 shadow-2xs">
           <button
