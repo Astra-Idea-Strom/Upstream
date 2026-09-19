@@ -170,6 +170,11 @@ interface BrandStore {
   isGuidelinesModalOpen: boolean;
   openGuidelinesModal: () => void;
   closeGuidelinesModal: () => void;
+
+  // Workspace Split Mode (Replit Style: initially chat only, splits into workspace on interaction or manual toggle)
+  isWorkspaceOpen: boolean;
+  setIsWorkspaceOpen: (open: boolean) => void;
+  toggleWorkspace: () => void;
 }
 
 const defaultInput: BrandInput = {
