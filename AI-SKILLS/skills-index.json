@@ -1,0 +1,3631 @@
+{
+  "version": "2.0.0",
+  "updated_at": "2026-09-19T02:14:14Z",
+  "total_skills": 91,
+  "skills": [
+    {
+      "name": "prompt-understanding",
+      "category": "core",
+      "path": "core/prompt-understanding/",
+      "description": "Intent classification, ambiguous user prompt interpretation, requirement extraction, and query disambiguation. Use when interpreting vague user requests, translating conversational input to requirements, or clarifying ambiguous goals. Not for formulating execution plans or optimizing tool prompts (that is planning or prompt-optimization).",
+      "triggers": [
+        "understand request",
+        "vague prompt",
+        "make it better",
+        "make it professional",
+        "fix this",
+        "user intent"
+      ],
+      "capabilities": [
+        "intent-parsing",
+        "ambiguity-resolution",
+        "implicit-requirements"
+      ],
+      "requires": [],
+      "complements": [
+        "requirements-analysis",
+        "planning"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Authored from first principles for natural language engineering conversion."
+    },
+    {
+      "name": "requirements-analysis",
+      "category": "core",
+      "path": "core/requirements-analysis/",
+      "description": "Requirements elicitation, constraint identification, acceptance criteria definition, and edge-case discovery. Use when scoping features, analyzing product specs, discovering technical edge cases, or defining user stories. Not for internal task planning or code milestone sequencing (that is planning or problem-decomposition).",
+      "triggers": [
+        "requirements",
+        "specifications",
+        "constraints",
+        "acceptance criteria",
+        "scope"
+      ],
+      "capabilities": [
+        "requirements-extraction",
+        "constraint-analysis",
+        "acceptance-criteria"
+      ],
+      "requires": [
+        "prompt-understanding"
+      ],
+      "complements": [
+        "planning",
+        "problem-decomposition"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Engineered with strict minimal-clarification logic."
+    },
+    {
+      "name": "problem-decomposition",
+      "category": "core",
+      "path": "core/problem-decomposition/",
+      "description": "Decomposing complex systems into atomic, testable milestones, vertical slices, and dependency-ordered execution paths. Use when breaking down multi-component features, managing technical dependencies, scheduling critical paths, or structuring engineering work. Not for high-level project goals or architectural decisions (that is planning or decision-making).",
+      "triggers": [
+        "break down",
+        "decompose",
+        "milestones",
+        "subtasks",
+        "complex project"
+      ],
+      "capabilities": [
+        "task-decomposition",
+        "dependency-ordering",
+        "milestone-planning"
+      ],
+      "requires": [
+        "requirements-analysis"
+      ],
+      "complements": [
+        "planning",
+        "decision-making"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Original synthesis of divide-and-conquer systems engineering."
+    },
+    {
+      "name": "planning",
+      "category": "core",
+      "path": "core/planning/",
+      "description": "Structured internal task planning, mental scratchpad formulation, goal setting, re-plan triggers, and contingency rollbacks. Use when initiating complex multi-step tasks, scoping architectural implementations, handling plan deviations, or preparing implementation plans for user review. Not for decomposing features into code milestones (that is problem-decomposition) or architecture trade-offs (that is decision-making).",
+      "triggers": [
+        "plan",
+        "roadmap",
+        "implementation plan",
+        "strategy",
+        "architecture plan"
+      ],
+      "capabilities": [
+        "execution-planning",
+        "internal-representation",
+        "verification-planning"
+      ],
+      "requires": [
+        "requirements-analysis"
+      ],
+      "complements": [
+        "decision-making",
+        "context-engineering"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/plan-writing",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Upgraded with internal state scratchpad and proportionality constraints."
+    },
+    {
+      "name": "context-engineering",
+      "category": "core",
+      "path": "core/context-engineering/",
+      "description": "Context window management: pruning irrelevant history, hierarchical summarization, and high-density token budgeting. Use when managing long chat histories, fitting complex tasks into model context limits, or distilling conversation state. Not for prompt structure or subagent delegation briefs (that is prompt-engineering or prompt-optimization).",
+      "triggers": [
+        "context management",
+        "token limit",
+        "compress context",
+        "large output",
+        "token budget"
+      ],
+      "capabilities": [
+        "context-classification",
+        "context-compression",
+        "token-optimization",
+        "observation-management"
+      ],
+      "requires": [],
+      "complements": [
+        "planning",
+        "prompt-optimization"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Authored to implement maximum-useful-information-per-token principle."
+    },
+    {
+      "name": "prompt-optimization",
+      "category": "core",
+      "path": "core/prompt-optimization/",
+      "description": "High-signal prompt engineering for subagents, task tools, and LLM APIs: XML tag structuring, JSON schemas, few-shot conditioning, and delegation briefs. Use when crafting prompts for subagents, defining tool schemas, reducing prompt bloat, or improving LLM instruction adherence. Not for end-user chat interfaces or prompt evaluation pipelines (that is prompt-engineering or ai-evaluation).",
+      "triggers": [
+        "optimize prompt",
+        "compress prompt",
+        "subagent prompt",
+        "tool prompt",
+        "prompt efficiency"
+      ],
+      "capabilities": [
+        "prompt-compression",
+        "subagent-instruction",
+        "signal-to-noise"
+      ],
+      "requires": [
+        "context-engineering"
+      ],
+      "complements": [
+        "llm",
+        "agents"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "ai",
+        "agents",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Authored for subagent and tool communication optimization."
+    },
+    {
+      "name": "decision-making",
+      "category": "core",
+      "path": "core/decision-making/",
+      "description": "Architectural decision records (ADR), weighted decision matrices, trade-off analysis, and one-way vs two-way decision frameworks. Use when choosing between databases, frameworks, or cloud architectures (e.g. X or Y, which database, should we use), evaluating irreversible trade-offs, or documenting technical rationale. Not for scheduling task sequences (that is planning or problem-decomposition).",
+      "triggers": [
+        "trade-offs",
+        "ADR",
+        "choose framework",
+        "evaluate options",
+        "architecture decision"
+      ],
+      "capabilities": [
+        "tradeoff-analysis",
+        "adr-documentation",
+        "action-discipline",
+        "self-checking"
+      ],
+      "requires": [
+        "requirements-analysis"
+      ],
+      "complements": [
+        "planning",
+        "requirements-analysis"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/architecture",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Expanded with INTENT/EVIDENCE/SCOPE/RISK/VERIFY pre-action gating."
+    },
+    {
+      "name": "debugging",
+      "category": "core",
+      "path": "core/debugging/",
+      "description": "Evidence-based 4-phase systematic debugging: observe, diagnose root cause, apply a surgical fix, retest. Prohibits random patching. Use when something is broken, crashing, erroring, failing a test, or behaving differently than expected — not when adding new functionality.",
+      "triggers": [
+        "debug",
+        "error",
+        "bug",
+        "stack trace",
+        "crash",
+        "fix failure",
+        "troubleshoot"
+      ],
+      "capabilities": [
+        "root-cause-analysis",
+        "error-tracing",
+        "hypothesis-testing",
+        "regression-prevention"
+      ],
+      "requires": [],
+      "complements": [
+        "unit-testing",
+        "code-review"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/systematic-debugging",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Enhanced with failure recovery and anti-hallucination diagnostics."
+    },
+    {
+      "name": "refactoring",
+      "category": "core",
+      "path": "core/refactoring/",
+      "description": "Behavior-preserving clean code transformations: guard clauses, function extraction, value objects, and characterization testing. Use when cleaning legacy code, simplifying nested conditionals, eliminating primitive obsession, or applying the strangler pattern. Not for fixing functional bugs or introducing new features (that is debugging or backend-engineering).",
+      "triggers": [
+        "refactor",
+        "clean code",
+        "code smell",
+        "simplify",
+        "decouple",
+        "modularize"
+      ],
+      "capabilities": [
+        "code-simplification",
+        "smell-detection",
+        "behavior-preservation",
+        "safe-transformation"
+      ],
+      "requires": [],
+      "complements": [
+        "debugging",
+        "code-review",
+        "unit-testing"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/clean-code",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Added red-green-refactor boundaries and complexity metrics."
+    },
+    {
+      "name": "code-review",
+      "category": "core",
+      "path": "core/code-review/",
+      "description": "Quality checklists, static analysis and review heuristics for changes about to be merged. Use when reviewing a pull request, critiquing code, or gating a merge — not during an active incident.",
+      "triggers": [
+        "review code",
+        "PR review",
+        "code audit",
+        "check quality",
+        "review changes"
+      ],
+      "capabilities": [
+        "code-audit",
+        "correctness-verification",
+        "style-consistency",
+        "security-sanity"
+      ],
+      "requires": [],
+      "complements": [
+        "owasp",
+        "accessibility",
+        "refactoring"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/code-review-checklist",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Added strict anti-slop and accessibility verification gates."
+    },
+    {
+      "name": "documentation",
+      "category": "core",
+      "path": "core/documentation/",
+      "description": "Technical documentation: README generation, API references, architectural diagrams, and inline code comments. Use when documenting repositories, creating onboarding guides, documenting public API endpoints, or maintaining markdown docs. Not for formal architecture decision records (that is decision-making).",
+      "triggers": [
+        "document",
+        "write docs",
+        "API documentation",
+        "README",
+        "architecture diagram"
+      ],
+      "capabilities": [
+        "api-documentation",
+        "readme-authoring",
+        "mermaid-diagramming",
+        "changelog-tracking"
+      ],
+      "requires": [],
+      "complements": [
+        "planning",
+        "api-design"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/documentation-templates",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Aligned with Antigravity markdown/mermaid standards."
+    },
+    {
+      "name": "frontend-engineering",
+      "category": "frontend",
+      "path": "frontend/frontend-engineering/",
+      "description": "Modern frontend development: React, Next.js, component lifecycle, custom hooks, state management, and DOM optimization. Use when building user interfaces, architecting React components, managing client state, or optimizing render lifecycles. Not for design token taxonomy or CSS animations (that is design-systems or animation-motion).",
+      "triggers": [
+        "react",
+        "next.js",
+        "frontend",
+        "web page",
+        "UI component",
+        "state management",
+        "JSX",
+        "TSX"
+      ],
+      "capabilities": [
+        "react-architecture",
+        "nextjs-app-router",
+        "state-management",
+        "form-handling"
+      ],
+      "requires": [],
+      "complements": [
+        "human-ui-design",
+        "advanced-css",
+        "accessibility",
+        "frontend-performance"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://react.dev",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Engineered with React 19 / Next.js App Router idioms."
+    },
+    {
+      "name": "ui-ux",
+      "category": "frontend",
+      "path": "frontend/ui-ux/",
+      "description": "UI/UX design principles: user journey mapping, visual hierarchy, error state UX, cognitive load reduction, and wireframing. Use when planning user workflows, designing intuitive form interactions, improving visual ergonomics, or reducing user friction. Not for token definitions or low-level CSS layout (that is design-systems or advanced-css).",
+      "triggers": [
+        "UI",
+        "UX",
+        "user experience",
+        "user flow",
+        "onboarding flow",
+        "empty state",
+        "error state"
+      ],
+      "capabilities": [
+        "interaction-design",
+        "information-architecture",
+        "user-flows",
+        "heuristic-evaluation"
+      ],
+      "requires": [
+        "frontend-engineering"
+      ],
+      "complements": [
+        "human-ui-design",
+        "visual-design",
+        "accessibility"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "mobile",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Synthesized from Nielsen-Norman heuristics and modern SaaS UX standards."
+    },
+    {
+      "name": "visual-design",
+      "category": "frontend",
+      "path": "frontend/visual-design/",
+      "description": "Visual aesthetics: color harmony, typography pairing, whitespace distribution, layout balance, and brand consistency. Use when improving visual appeal, choosing complementary color palettes, balancing whitespace, or refining interface aesthetics. Not for token code implementation or accessible headless components (that is design-systems).",
+      "triggers": [
+        "visual design",
+        "color palette",
+        "contrast",
+        "visual hierarchy",
+        "aesthetic",
+        "graphic design"
+      ],
+      "capabilities": [
+        "visual-hierarchy",
+        "color-systems",
+        "optical-alignment",
+        "whitespace-rhythm"
+      ],
+      "requires": [],
+      "complements": [
+        "web-design",
+        "human-ui-design",
+        "design-systems"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "mobile"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Rooted in Swiss design and modern editorial web principles."
+    },
+    {
+      "name": "design-systems",
+      "category": "frontend",
+      "path": "frontend/design-systems/",
+      "description": "Design tokens (color, typography scale, spacing, elevation, motion), reusable accessible component libraries, Radix primitives, and Tailwind integration. Use when designing design token hierarchies, building reusable component primitives, configuring Tailwind theme scales, or enforcing dark-mode contrast. Not for high-level UX layout or brand identity (that is ui-ux or visual-design).",
+      "triggers": [
+        "design system",
+        "design tokens",
+        "component library",
+        "shadcn",
+        "radix",
+        "theme",
+        "dark mode"
+      ],
+      "capabilities": [
+        "design-tokens",
+        "component-primitives",
+        "theme-engine",
+        "token-architecture"
+      ],
+      "requires": [
+        "frontend-engineering"
+      ],
+      "complements": [
+        "advanced-css",
+        "human-ui-design"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://www.w3.org/community/design-tokens/",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "W3C Design Tokens spec and CSS custom property primitives."
+    },
+    {
+      "name": "responsive-design",
+      "category": "frontend",
+      "path": "frontend/responsive-design/",
+      "description": "Mobile-first layout, fluid clamp() scales, breakpoints and container-aware components. Use when something breaks on a phone or tablet, or when a layout must work across screen sizes.",
+      "triggers": [
+        "responsive",
+        "mobile",
+        "tablet",
+        "mobile-first",
+        "viewport",
+        "breakpoint",
+        "touch friendly"
+      ],
+      "capabilities": [
+        "mobile-first",
+        "fluid-typography",
+        "touch-interaction",
+        "viewport-adaptation"
+      ],
+      "requires": [
+        "frontend-engineering"
+      ],
+      "complements": [
+        "advanced-css",
+        "accessibility"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://web.dev/responsive-web-design-basics/",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "mobile"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Modern fluid clamp and touch target ergonomics."
+    },
+    {
+      "name": "accessibility",
+      "category": "frontend",
+      "path": "frontend/accessibility/",
+      "description": "WCAG 2.2 AA engineering: semantic HTML, ARIA, keyboard navigation, focus management (native dialog, focus trap), the 2.2 criteria at levels A and AA, forms, motion, screen-reader checks. Use when building or auditing accessible UI: dialogs, forms, focus, contrast, target size, drag interactions. Not for setting up automated a11y tests (that is accessibility-testing).",
+      "triggers": [
+        "accessibility",
+        "a11y",
+        "WCAG",
+        "screen reader",
+        "ARIA",
+        "keyboard navigation",
+        "focus management"
+      ],
+      "capabilities": [
+        "wcag-compliance",
+        "aria-semantics",
+        "keyboard-traversal",
+        "focus-management"
+      ],
+      "requires": [
+        "frontend-engineering"
+      ],
+      "complements": [
+        "accessibility-testing",
+        "human-ui-design"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://www.w3.org/WAI/standards-guidelines/wcag/",
+      "license": "W3C-Software",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Enforces WCAG 2.2 AA non-negotiables."
+    },
+    {
+      "name": "frontend-performance",
+      "category": "frontend",
+      "path": "frontend/frontend-performance/",
+      "description": "Core Web Vitals engineering (LCP, CLS, INP), asset optimization (AVIF/WebP, fonts), code splitting, streaming SSR, and hydration architectures. Use when improving page load speed, optimizing bundle size, fixing layout shifts, or debugging INP interaction lag. Not for server caching or database performance (that is caching or sql).",
+      "triggers": [
+        "performance",
+        "speed",
+        "Core Web Vitals",
+        "LCP",
+        "CLS",
+        "INP",
+        "bundle size",
+        "lazy loading"
+      ],
+      "capabilities": [
+        "web-vitals-optimization",
+        "bundle-analysis",
+        "asset-compression",
+        "render-optimization"
+      ],
+      "requires": [
+        "frontend-engineering"
+      ],
+      "complements": [
+        "frontend-engineering",
+        "advanced-css"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://web.dev/vitals/",
+      "license": "Apache-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Google Web Vitals 2026 guidance (INP metric prioritized)."
+    },
+    {
+      "name": "frontend-security",
+      "category": "frontend",
+      "path": "frontend/frontend-security/",
+      "description": "Frontend vulnerability defense: DOM XSS sanitization (DOMPurify), CSP with per-response nonces, iframe sandboxing, CSRF mitigation, secure cookie flags, and Subresource Integrity (SRI). Use when handling untrusted HTML/links in UI, configuring CSP headers, sandboxing iframes, or securing client authentication tokens. Not for server-side SQL injection or database encryption (that is backend-security or secure-coding).",
+      "triggers": [
+        "frontend security",
+        "XSS",
+        "CSP",
+        "sanitize HTML",
+        "CSRF",
+        "clickjacking"
+      ],
+      "capabilities": [
+        "xss-prevention",
+        "csp-configuration",
+        "cookie-security",
+        "input-sanitization"
+      ],
+      "requires": [
+        "frontend-engineering"
+      ],
+      "complements": [
+        "owasp",
+        "backend-security"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://owasp.org/www-project-top-ten/",
+      "license": "Apache-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "web",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Client-side XSS and CSP policy enforcement."
+    },
+    {
+      "name": "human-ui-design",
+      "category": "frontend",
+      "path": "frontend/human-ui-design/",
+      "description": "Anti-AI-slop visual judgement; bans gratuitous gradients, pill borders and default-template aesthetics. Use when a UI looks generic, templated, \"AI-made\", or the user says to make it look designed rather than merely functional.",
+      "triggers": [
+        "human design",
+        "anti-slop",
+        "taste",
+        "professional look",
+        "avoid ai look",
+        "modern UI",
+        "clean interface"
+      ],
+      "capabilities": [
+        "anti-slop-filtering",
+        "density-calibration",
+        "intentional-styling",
+        "contextual-aesthetic"
+      ],
+      "requires": [
+        "frontend-engineering"
+      ],
+      "complements": [
+        "web-design",
+        "advanced-css",
+        "ui-ux"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "adapted-taste-skill",
+      "source_url": "https://github.com/Leonxlnx/taste-skill",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Adapted from Leonxlnx/taste-skill; tailored to eliminate AI-generated artifacts."
+    },
+    {
+      "name": "web-design",
+      "category": "frontend",
+      "path": "frontend/web-design/",
+      "description": "Web design fundamentals: page structure, semantic HTML5, viewport scaling, hero sections, and navigation patterns. Use when structuring marketing websites, designing landing page layouts, organizing website navigation, or crafting header/footer sections. Not for complex React state or backend services (that is frontend-engineering or backend-engineering).",
+      "triggers": [
+        "web design",
+        "typography",
+        "type scale",
+        "vertical rhythm",
+        "measure",
+        "leading",
+        "kerning"
+      ],
+      "capabilities": [
+        "typographic-systems",
+        "grid-rhythm",
+        "spatial-geometry",
+        "content-hierarchy"
+      ],
+      "requires": [
+        "frontend-engineering"
+      ],
+      "complements": [
+        "human-ui-design",
+        "advanced-css"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "adapted-web-typography",
+      "source_url": "https://github.com/simongonzalezdc/web-typography-skill",
+      "license": "Apache-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Synthesized Bringhurst typographic principles and metric-matched fallbacks."
+    },
+    {
+      "name": "advanced-css",
+      "category": "frontend",
+      "path": "frontend/advanced-css/",
+      "description": "Modern advanced CSS: CSS Grid, Flexbox, container queries, fluid typography with clamp(), custom properties, and subgrid. Use when implementing complex responsive layouts, writing fluid CSS clamp rules, using container queries, or modern styling. Not for CSS animations or complete design token systems (that is animation-motion or design-systems).",
+      "triggers": [
+        "css",
+        "subgrid",
+        "container queries",
+        "clamp",
+        "@layer",
+        ":has selector",
+        "modern css",
+        "flexbox"
+      ],
+      "capabilities": [
+        "css-subgrid",
+        "container-queries",
+        "fluid-scaling",
+        "modern-selectors"
+      ],
+      "requires": [
+        "frontend-engineering"
+      ],
+      "complements": [
+        "web-design",
+        "responsive-design"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://developer.mozilla.org/en-US/docs/Web/CSS",
+      "license": "CC0",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Includes modern CSS Container Queries and :has() parent selectors."
+    },
+    {
+      "name": "animation-motion",
+      "category": "frontend",
+      "path": "frontend/animation-motion/",
+      "description": "Web animations: CSS transitions, keyframes, spring physics, Framer Motion, and prefers-reduced-motion accessibility. Use when building UI animations, configuring page transitions, animating layout changes, or enforcing reduced-motion modes. Not for static CSS styling or layout grids (that is advanced-css or responsive-design).",
+      "triggers": [
+        "animation",
+        "motion",
+        "framer motion",
+        "transition",
+        "micro-interaction",
+        "scroll animation",
+        "spring"
+      ],
+      "capabilities": [
+        "framer-motion",
+        "css-transitions",
+        "reduced-motion-support",
+        "interaction-feedback"
+      ],
+      "requires": [
+        "frontend-engineering"
+      ],
+      "complements": [
+        "human-ui-design",
+        "ui-ux"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "official-standards",
+      "source_url": "https://motion.dev",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "mobile"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Restrained physics springs and mandatory prefers-reduced-motion check."
+    },
+    {
+      "name": "3d-web",
+      "category": "frontend",
+      "path": "frontend/3d-web/",
+      "description": "3D web graphics: WebGL fundamentals, canvas rendering, camera controls, shaders, and lightweight 3D scenes. Use when rendering interactive 3D visualizations, managing WebGL canvas state, or integrating 3D assets on the web. Not for complex Three.js scene graphs or shader libraries (that is threejs).",
+      "triggers": [
+        "3D web",
+        "WebGL",
+        "3D scene",
+        "canvas 3d",
+        "interactive 3d",
+        "when to use 3d"
+      ],
+      "capabilities": [
+        "webgl-architecture",
+        "3d-asset-budgeting",
+        "thermal-management",
+        "fallback-design"
+      ],
+      "requires": [
+        "frontend-engineering"
+      ],
+      "complements": [
+        "threejs",
+        "frontend-performance"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "official-standards",
+      "source_url": "https://www.khronos.org/webgl/",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "3d"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Original guide for WebGL performance budgets and non-usage criteria."
+    },
+    {
+      "name": "threejs",
+      "category": "frontend",
+      "path": "frontend/threejs/",
+      "description": "Three.js 3D development: scene graphs, mesh geometries, PBR materials, lighting, GLTF loading, and render loops. Use when developing Three.js applications, loading 3D GLTF models, creating custom lighting rigs, or optimizing render frames. Not for lightweight 2D canvas graphics or pure CSS styling (that is 3d-web or advanced-css).",
+      "triggers": [
+        "three.js",
+        "threejs",
+        "r3f",
+        "react three fiber",
+        "drei",
+        "gltf",
+        "glb",
+        "orbit controls",
+        "shaders"
+      ],
+      "capabilities": [
+        "threejs-scene-graph",
+        "react-three-fiber",
+        "gltf-pipeline",
+        "raycasting-interaction"
+      ],
+      "requires": [
+        "frontend-engineering",
+        "3d-web"
+      ],
+      "complements": [
+        "frontend-performance",
+        "animation-motion"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "official-standards",
+      "source_url": "https://threejs.org/docs/",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "3d"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Complete practical guide for Three.js and R3F with explicit anti-patterns."
+    },
+    {
+      "name": "backend-engineering",
+      "category": "backend",
+      "path": "backend/backend-engineering/",
+      "description": "Server-side architecture: Node.js, Express, Fastify, REST APIs, middleware pipelines, and error boundaries. Use when building server-side applications, structuring backend routes, handling HTTP requests, or implementing business services. Not for frontend presentation or database schema modeling (that is frontend-engineering or data-modeling).",
+      "triggers": [
+        "backend",
+        "server",
+        "nodejs",
+        "fastapi",
+        "express",
+        "service layer",
+        "controller"
+      ],
+      "capabilities": [
+        "server-architecture",
+        "runtime-configuration",
+        "service-layer-pattern",
+        "error-handling"
+      ],
+      "requires": [],
+      "complements": [
+        "api-design",
+        "database",
+        "backend-security"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://nodejs.org",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "api",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Modular controller-service-repository patterns."
+    },
+    {
+      "name": "api-design",
+      "category": "backend",
+      "path": "backend/api-design/",
+      "description": "RESTful standards, pagination, status codes, versioning, OpenAPI. Use when designing or changing an HTTP interface — not when securing one (that is api-security).",
+      "triggers": [
+        "api",
+        "rest api",
+        "endpoint",
+        "http status",
+        "pagination",
+        "openapi",
+        "swagger",
+        "json api"
+      ],
+      "capabilities": [
+        "restful-architecture",
+        "pagination-design",
+        "status-code-semantics",
+        "idempotency"
+      ],
+      "requires": [
+        "backend-engineering"
+      ],
+      "complements": [
+        "backend-security",
+        "api-testing"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/api-patterns",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "api",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "REST guidelines with pagination and idempotency tokens."
+    },
+    {
+      "name": "authentication",
+      "category": "backend",
+      "path": "backend/authentication/",
+      "description": "Identity proof: JWT, HttpOnly cookies, session stores, Argon2id, refresh-token rotation. Use when handling login, signup, sessions, passwords or tokens — not for deciding what a logged-in user may do (that is authorization).",
+      "triggers": [
+        "auth",
+        "authentication",
+        "login",
+        "signup",
+        "password hashing",
+        "jwt",
+        "session",
+        "oauth"
+      ],
+      "capabilities": [
+        "password-hashing",
+        "jwt-validation",
+        "session-management",
+        "oauth2-flows"
+      ],
+      "requires": [
+        "backend-engineering"
+      ],
+      "complements": [
+        "authorization",
+        "backend-security",
+        "owasp"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+      "license": "CC-BY-SA-4.0",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "backend",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Strict HttpOnly cookie and modern salted hash enforcement."
+    },
+    {
+      "name": "authorization",
+      "category": "backend",
+      "path": "backend/authorization/",
+      "description": "RBAC, ABAC, route guards, policy middleware and tenant isolation. Use when deciding what an already-identified user may access — permissions, roles, \"user can see another user's data\".",
+      "triggers": [
+        "authorization",
+        "rbac",
+        "permissions",
+        "roles",
+        "access control",
+        "tenant isolation",
+        "admin check"
+      ],
+      "capabilities": [
+        "rbac-engine",
+        "permission-middleware",
+        "tenant-isolation",
+        "idor-defense"
+      ],
+      "requires": [
+        "authentication"
+      ],
+      "complements": [
+        "backend-security",
+        "owasp"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+      "license": "CC-BY-SA-4.0",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "backend",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Zero-trust object level ownership validation."
+    },
+    {
+      "name": "database",
+      "category": "backend",
+      "path": "backend/database/",
+      "description": "Connection pools, migrations, ORM behaviour, transaction boundaries. Use when changing schema, running migrations, or diagnosing connection and transaction problems — not for writing queries (sql) or designing schemas (data-modeling).",
+      "triggers": [
+        "database",
+        "db connection",
+        "orm",
+        "prisma",
+        "drizzle",
+        "migrations",
+        "transactions",
+        "acid"
+      ],
+      "capabilities": [
+        "connection-pooling",
+        "database-migrations",
+        "transaction-management",
+        "orm-integration"
+      ],
+      "requires": [
+        "backend-engineering"
+      ],
+      "complements": [
+        "sql",
+        "data-modeling"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/database-design",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Connection pool sizing and transaction rollback handling."
+    },
+    {
+      "name": "caching",
+      "category": "backend",
+      "path": "backend/caching/",
+      "description": "Redis and in-memory caching: cache-aside, write-through, TTL jitter, cache stampede prevention (singleflight), negative caching, and eviction policies. Use when designing caching layers, mitigating database load, preventing thundering herds, or configuring Redis memory eviction. Not for primary durable relational storage (that is sql or postgresql).",
+      "triggers": [
+        "cache",
+        "caching",
+        "redis",
+        "ttl",
+        "cache-aside",
+        "cache invalidation",
+        "memcached"
+      ],
+      "capabilities": [
+        "redis-caching",
+        "invalidation-strategies",
+        "ttl-management",
+        "stampede-mitigation"
+      ],
+      "requires": [
+        "backend-engineering"
+      ],
+      "complements": [
+        "database",
+        "backend-engineering"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://redis.io/docs/",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "api",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Cache invalidation patterns and distributed key naming."
+    },
+    {
+      "name": "queues",
+      "category": "backend",
+      "path": "backend/queues/",
+      "description": "Asynchronous job processing: BullMQ, Redis streams, Celery, worker concurrency, and dead-letter queues. Use when offloading long-running jobs, processing background tasks, retrying failed operations, or designing worker pipelines. Not for synchronous REST endpoints or in-memory caches (that is backend-engineering or caching).",
+      "triggers": [
+        "queue",
+        "background job",
+        "worker",
+        "bullmq",
+        "celery",
+        "async task",
+        "dlq",
+        "retry backoff"
+      ],
+      "capabilities": [
+        "message-queues",
+        "background-workers",
+        "retry-backoff",
+        "dlq-handling"
+      ],
+      "requires": [
+        "backend-engineering"
+      ],
+      "complements": [
+        "caching",
+        "observability"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://docs.bullmq.io",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Exponential backoff with jitter and idempotency keys."
+    },
+    {
+      "name": "realtime",
+      "category": "backend",
+      "path": "backend/realtime/",
+      "description": "Real-time bidirectional communication: WebSockets, Server-Sent Events (SSE), Socket.io, and pub/sub channels. Use when streaming live tokens, building collaborative features, pushing real-time notifications, or managing persistent connections. Not for standard request-response REST APIs (that is backend-engineering or api-design).",
+      "triggers": [
+        "realtime",
+        "websocket",
+        "sse",
+        "server-sent events",
+        "socket.io",
+        "live chat",
+        "live notifications"
+      ],
+      "capabilities": [
+        "websocket-lifecycle",
+        "sse-streaming",
+        "pub-sub-broadcast",
+        "heartbeat-reconnection"
+      ],
+      "requires": [
+        "backend-engineering"
+      ],
+      "complements": [
+        "frontend-engineering",
+        "caching"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "SSE vs WebSocket decision tree and heartbeat keep-alives."
+    },
+    {
+      "name": "backend-security",
+      "category": "backend",
+      "path": "backend/backend-security/",
+      "description": "Server-side vulnerability defense: input sanitization, rate limiting, secure headers, CORS, and request validation. Use when hardening backend APIs, mitigating brute-force attacks, configuring Helmet security headers, or sanitizing payloads. Not for frontend DOM security or user authentication (that is frontend-security or authentication).",
+      "triggers": [
+        "backend security",
+        "rate limit",
+        "ssrf",
+        "cors",
+        "helmet",
+        "ddos prevention",
+        "payload limit"
+      ],
+      "capabilities": [
+        "rate-limiting",
+        "ssrf-mitigation",
+        "cors-hardening",
+        "security-headers"
+      ],
+      "requires": [
+        "backend-engineering"
+      ],
+      "complements": [
+        "owasp",
+        "api-security"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html",
+      "license": "CC-BY-SA-4.0",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "backend",
+        "api",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Hardened CORS and private-network SSRF blocking."
+    },
+    {
+      "name": "sql",
+      "category": "data",
+      "path": "data/sql/",
+      "description": "Relational query optimization, composite indexing rules, ACID transactions, isolation levels, EXPLAIN ANALYZE diagnosis, and keyset pagination. Use when writing complex SQL queries, diagnosing slow database performance, designing multi-column indexes, or managing transactional integrity. Not for NoSQL document stores or DynamoDB single-table design (that is nosql).",
+      "triggers": [
+        "sql",
+        "query",
+        "select",
+        "join",
+        "indexes",
+        "relational database",
+        "foreign key"
+      ],
+      "capabilities": [
+        "sql-query-design",
+        "index-optimization",
+        "query-plan-analysis",
+        "parameterized-queries"
+      ],
+      "requires": [],
+      "complements": [
+        "data-modeling",
+        "postgresql"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://www.iso.org/standard/63555.html",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "data",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Index strategies and SQL injection prevention."
+    },
+    {
+      "name": "postgresql",
+      "category": "data",
+      "path": "data/postgresql/",
+      "description": "PostgreSQL administration and advanced features: EXPLAIN ANALYZE, pgvector, partial indexes, row-level security (RLS), and JSONB. Use when tuning Postgres queries, configuring RLS security policies, managing Postgres connections, or utilizing JSONB indexing. Not for generic multi-engine SQL queries or NoSQL documents (that is sql or nosql).",
+      "triggers": [
+        "postgres",
+        "postgresql",
+        "jsonb",
+        "pgvector",
+        "explain analyze",
+        "gin index",
+        "rls"
+      ],
+      "capabilities": [
+        "postgresql-advanced",
+        "jsonb-indexing",
+        "pgvector-search",
+        "explain-analyze"
+      ],
+      "requires": [
+        "sql"
+      ],
+      "complements": [
+        "data-modeling",
+        "embeddings"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://www.postgresql.org/docs/",
+      "license": "PostgreSQL",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "data",
+        "ai"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Includes pgvector vector indexing for AI apps."
+    },
+    {
+      "name": "nosql",
+      "category": "data",
+      "path": "data/nosql/",
+      "description": "Document and key-value store architecture: MongoDB, DynamoDB, Redis, flexible schemas, compound index optimization (ESR rule), access-pattern modeling, sharding, and consistency controls. Use when designing non-relational persistence, embedding vs referencing decisions, high-throughput key-value lookups, or DynamoDB single-table designs. Not for ACID relational transactions or complex multi-table SQL joins (that is sql or postgresql).",
+      "triggers": [
+        "nosql",
+        "mongodb",
+        "dynamodb",
+        "document database",
+        "denormalization",
+        "eventual consistency"
+      ],
+      "capabilities": [
+        "document-modeling",
+        "nosql-querying",
+        "denormalization-strategy"
+      ],
+      "requires": [],
+      "complements": [
+        "data-modeling",
+        "caching"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "official-standards",
+      "source_url": "https://www.mongodb.com/docs/",
+      "license": "Apache-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "data",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "When to choose NoSQL vs SQL decision framework."
+    },
+    {
+      "name": "data-modeling",
+      "category": "data",
+      "path": "data/data-modeling/",
+      "description": "Relational and document data modeling: entity-relationship diagrams, normalization, foreign keys, and schema design. Use when designing database schemas, normalizing relational entities, modeling table relationships, or selecting data types. Not for query optimization or execution plan analysis (that is sql or postgresql).",
+      "triggers": [
+        "data modeling",
+        "schema design",
+        "erd",
+        "normalization",
+        "foreign keys",
+        "table design"
+      ],
+      "capabilities": [
+        "entity-relationship-modeling",
+        "normalization-3nf",
+        "cardinality-rules",
+        "schema-architecture"
+      ],
+      "requires": [],
+      "complements": [
+        "sql",
+        "database"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/database-design",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "data",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Normalization and relationship modeling standards."
+    },
+    {
+      "name": "data-processing",
+      "category": "data",
+      "path": "data/data-processing/",
+      "description": "Data pipelines: ETL workflows, chunked stream processing, deduplication, batch validation, and transformation. Use when processing bulk datasets, cleaning inconsistent inputs, transforming files between formats, or deduplicating records. Not for real-time WebSocket events or vector embeddings (that is realtime or embeddings).",
+      "triggers": [
+        "data processing",
+        "etl",
+        "csv parse",
+        "data pipeline",
+        "stream data",
+        "pydantic",
+        "zod validation"
+      ],
+      "capabilities": [
+        "etl-pipeline",
+        "stream-parsing",
+        "data-validation",
+        "batch-transformation"
+      ],
+      "requires": [],
+      "complements": [
+        "data-modeling",
+        "analytics"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://nodejs.org/api/stream.html",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "data",
+        "backend"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Stream-based processing for large datasets without memory overflow."
+    },
+    {
+      "name": "analytics",
+      "category": "data",
+      "path": "data/analytics/",
+      "description": "Data analytics: SQL aggregations, event tracking schema, cohort analysis, funnel reporting, and OLAP query optimization. Use when building analytics dashboards, calculating retention metrics, designing telemetry events, or writing aggregation queries. Not for transactional relational operations (that is sql or postgresql).",
+      "triggers": [
+        "analytics",
+        "event tracking",
+        "metrics",
+        "funnel",
+        "dashboard metrics",
+        "posthog",
+        "telemetry"
+      ],
+      "capabilities": [
+        "event-modeling",
+        "metric-aggregation",
+        "cohort-analysis",
+        "dashboard-queries"
+      ],
+      "requires": [
+        "data-modeling"
+      ],
+      "complements": [
+        "sql",
+        "privacy"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "official-standards",
+      "source_url": "https://posthog.com/docs",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "data",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Privacy-preserving event taxonomies."
+    },
+    {
+      "name": "secure-coding",
+      "category": "security",
+      "path": "security/secure-coding/",
+      "description": "Secure programming practices: memory safety, buffer overflow prevention, type validation, integer overflow defenses, and safe parsing. Use when writing secure logic, preventing input parsing overflows, eliminating dangerous execution sinks, or type-checking inputs. Not for web headers or network transport security (that is backend-security).",
+      "triggers": [
+        "secure coding",
+        "defensive programming",
+        "input validation",
+        "safe code",
+        "sanitization"
+      ],
+      "capabilities": [
+        "defensive-coding",
+        "input-validation-schema",
+        "error-sanitization"
+      ],
+      "requires": [],
+      "complements": [
+        "owasp",
+        "threat-modeling"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/",
+      "license": "CC-BY-SA-4.0",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Comprehensive secure coding rules across languages."
+    },
+    {
+      "name": "owasp",
+      "category": "security",
+      "path": "security/owasp/",
+      "description": "OWASP Top 10 web vulnerabilities: SQLi, XSS, CSRF, broken access control, SSRF, and security misconfigurations. Use when auditing web applications against OWASP Top 10 risks, validating security controls, or reviewing code for web attack vectors. Not for AI-specific prompt attacks or infrastructure cloud IAM (that is ai-security or cloud).",
+      "triggers": [
+        "owasp",
+        "vulnerability",
+        "injection",
+        "broken access",
+        "crypto failure",
+        "misconfiguration",
+        "security audit"
+      ],
+      "capabilities": [
+        "owasp-top-10",
+        "vulnerability-remediation",
+        "security-benchmarks"
+      ],
+      "requires": [
+        "secure-coding"
+      ],
+      "complements": [
+        "api-security",
+        "security-testing"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/vulnerability-scanner",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "web",
+        "backend",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "OWASP Top 10 2025 aligned remediation guides."
+    },
+    {
+      "name": "threat-modeling",
+      "category": "security",
+      "path": "security/threat-modeling/",
+      "description": "STRIDE threat modeling: attack surface mapping, threat actor profiling, mitigation prioritization, and trust boundary analysis. Use when modeling threats for new architectures, analyzing trust boundaries, or evaluating system vulnerabilities before implementation. Not for real-time security incident response or live monitoring (that is monitoring).",
+      "triggers": [
+        "threat modeling",
+        "stride",
+        "attack surface",
+        "security architecture",
+        "threat analysis"
+      ],
+      "capabilities": [
+        "stride-methodology",
+        "attack-surface-mapping",
+        "risk-scoring"
+      ],
+      "requires": [],
+      "complements": [
+        "secure-coding",
+        "owasp"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "adapted-trailofbits",
+      "source_url": "https://github.com/trailofbits/skills",
+      "license": "Apache-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "STRIDE analysis adapted for modern web and cloud architectures."
+    },
+    {
+      "name": "api-security",
+      "category": "security",
+      "path": "security/api-security/",
+      "description": "OWASP API Top 10: BOLA, broken auth, resource consumption, SSRF, HMAC webhook verification, rate limiting, CORS. Use when hardening an API, rate-limiting, verifying webhooks, or responding to an API vulnerability.",
+      "triggers": [
+        "api security",
+        "bola",
+        "broken object level auth",
+        "webhook security",
+        "hmac",
+        "api rate limit"
+      ],
+      "capabilities": [
+        "bola-prevention",
+        "api-token-validation",
+        "webhook-signatures",
+        "payload-enforcement"
+      ],
+      "requires": [
+        "api-design",
+        "authentication"
+      ],
+      "complements": [
+        "owasp",
+        "backend-security"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://owasp.org/www-project-api-security/",
+      "license": "CC-BY-SA-4.0",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "backend",
+        "api",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "OWASP API Top 10 and HMAC webhook verification patterns."
+    },
+    {
+      "name": "secrets-management",
+      "category": "security",
+      "path": "security/secrets-management/",
+      "description": "Secrets lifecycle: environment variables, .env security, vault integration, key rotation, and gitignore enforcement. Use when configuring API keys, preventing secrets leakage in source control, rotating production credentials, or loading env files. Not for user authentication or password hashing (that is authentication).",
+      "triggers": [
+        "secrets",
+        "api keys",
+        "credentials",
+        ".env",
+        "vault",
+        "secrets management",
+        "mask secrets"
+      ],
+      "capabilities": [
+        "secret-hygiene",
+        "credential-redaction",
+        "env-management",
+        "rotation-strategy"
+      ],
+      "requires": [],
+      "complements": [
+        "secure-coding",
+        "ci-cd"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html",
+      "license": "CC-BY-SA-4.0",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Automated regex scanner for leak prevention."
+    },
+    {
+      "name": "dependency-security",
+      "category": "security",
+      "path": "security/dependency-security/",
+      "description": "Software supply chain security: npm audit, vulnerability scanning, lockfile integrity, and dependency pinning. Use when auditing npm/pip dependencies, remediating known CVE vulnerabilities, locking dependency versions, or securing build pipelines. Not for application source code review or secrets management (that is secure-coding or secrets-management).",
+      "triggers": [
+        "dependency security",
+        "supply chain",
+        "npm audit",
+        "pip audit",
+        "vulnerable package",
+        "cve"
+      ],
+      "capabilities": [
+        "supply-chain-audit",
+        "lockfile-verification",
+        "cve-remediation",
+        "version-pinning"
+      ],
+      "requires": [],
+      "complements": [
+        "owasp",
+        "ci-cd"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "adapted-trailofbits",
+      "source_url": "https://github.com/trailofbits/skills",
+      "license": "Apache-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Automated audit commands and minimal dependency policy."
+    },
+    {
+      "name": "privacy",
+      "category": "security",
+      "path": "security/privacy/",
+      "description": "Data privacy engineering: GDPR, CCPA, PII anonymization, data retention policies, consent management, and encryption at rest. Use when handling personally identifiable information (PII), implementing user deletion requests, or configuring privacy controls. Not for cloud secrets management or password hashing (that is secrets-management or authentication).",
+      "triggers": [
+        "privacy",
+        "gdpr",
+        "pii",
+        "ccpa",
+        "data protection",
+        "anonymization",
+        "encryption at rest"
+      ],
+      "capabilities": [
+        "pii-redaction",
+        "data-minimization",
+        "gdpr-compliance",
+        "anonymization-methods"
+      ],
+      "requires": [
+        "secure-coding"
+      ],
+      "complements": [
+        "data-modeling",
+        "secrets-management"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://gdpr.eu",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "PII redaction regex and data lifecycle rules."
+    },
+    {
+      "name": "ai-security",
+      "category": "security",
+      "path": "security/ai-security/",
+      "description": "AI application security: prompt injection defense, indirect injection mitigation, SSRF prevention, and output guardrails. Use when securing LLM applications against prompt injections, validating untrusted AI outputs, or preventing SSRF from tool calls. Not for standard web application OWASP top 10 (that is owasp or secure-coding).",
+      "triggers": [
+        "ai security",
+        "prompt injection",
+        "jailbreak",
+        "llm security",
+        "indirect prompt injection",
+        "tool abuse"
+      ],
+      "capabilities": [
+        "prompt-injection-defense",
+        "tool-call-validation",
+        "indirect-injection-filtering",
+        "llm-privacy"
+      ],
+      "requires": [
+        "secure-coding"
+      ],
+      "complements": [
+        "llm",
+        "agents",
+        "tool-use"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+      "license": "CC-BY-SA-4.0",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "ai",
+        "agents",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "OWASP LLM Top 10 mitigations and boundary delimiters."
+    },
+    {
+      "name": "unit-testing",
+      "category": "testing",
+      "path": "testing/unit-testing/",
+      "description": "Test structure, isolation, mocking boundaries, coverage that means something. Use when writing, fixing or designing tests — not as a default add-on to unrelated work.",
+      "triggers": [
+        "unit test",
+        "tdd",
+        "jest",
+        "vitest",
+        "pytest",
+        "test case",
+        "mocking",
+        "assertion"
+      ],
+      "capabilities": [
+        "tdd-workflow",
+        "unit-test-design",
+        "mocking-patterns",
+        "edge-case-testing"
+      ],
+      "requires": [],
+      "complements": [
+        "integration-testing",
+        "debugging"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/tdd-workflow",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "TDD Red-Green-Refactor with Vitest/pytest fixtures."
+    },
+    {
+      "name": "integration-testing",
+      "category": "testing",
+      "path": "testing/integration-testing/",
+      "description": "Integration testing: multi-component interaction, database integration tests, testcontainers, and mock services. Use when testing service-to-database communication, verifying inter-module integration, or asserting subsystem boundaries. Not for isolated single-function tests or browser UI automation (that is unit-testing or e2e-testing).",
+      "triggers": [
+        "integration test",
+        "msw",
+        "test container",
+        "database test",
+        "service integration"
+      ],
+      "capabilities": [
+        "boundary-testing",
+        "msw-mocking",
+        "database-test-harness"
+      ],
+      "requires": [
+        "unit-testing"
+      ],
+      "complements": [
+        "api-testing",
+        "database"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/testing-patterns",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Isolated test database transactions and cleanup."
+    },
+    {
+      "name": "api-testing",
+      "category": "testing",
+      "path": "testing/api-testing/",
+      "description": "API automated testing: Supertest, Postman/Newman, REST contract validation, status code checks, and payload assertion. Use when writing integration tests for HTTP endpoints, asserting response bodies, verifying API status codes, or mocking endpoints. Not for browser end-to-end user simulation (that is e2e-testing).",
+      "triggers": [
+        "api test",
+        "supertest",
+        "contract test",
+        "endpoint test",
+        "http assertions"
+      ],
+      "capabilities": [
+        "http-assertions",
+        "schema-validation-tests",
+        "contract-testing"
+      ],
+      "requires": [
+        "api-design",
+        "unit-testing"
+      ],
+      "complements": [
+        "backend-security",
+        "integration-testing"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://github.com/ladjs/supertest",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "api",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Supertest and JSON schema assertion recipes."
+    },
+    {
+      "name": "e2e-testing",
+      "category": "testing",
+      "path": "testing/e2e-testing/",
+      "description": "End-to-end browser testing: Playwright, Cypress, user flow automation, visual regression, and cross-browser testing. Use when automating full browser workflows, testing multi-page checkout flows, taking regression screenshots, or verifying UI interactions. Not for isolated unit tests or backend API contracts (that is unit-testing or api-testing).",
+      "triggers": [
+        "e2e",
+        "playwright",
+        "cypress",
+        "browser test",
+        "end-to-end",
+        "user journey test"
+      ],
+      "capabilities": [
+        "playwright-automation",
+        "user-journey-tests",
+        "visual-regression",
+        "page-object-model"
+      ],
+      "requires": [
+        "frontend-engineering"
+      ],
+      "complements": [
+        "unit-testing",
+        "accessibility-testing"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://playwright.dev",
+      "license": "Apache-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Playwright Page Object Model and headless CI configuration."
+    },
+    {
+      "name": "performance-testing",
+      "category": "testing",
+      "path": "testing/performance-testing/",
+      "description": "Performance and load testing: k6, Lighthouse, latency benchmarking, throughput measurement, and SLA evaluation. Use when load-testing APIs, benchmarking concurrent throughput, evaluating Lighthouse web performance, or checking latency SLAs. Not for unit testing or functional test assertions (that is unit-testing or integration-testing).",
+      "triggers": [
+        "performance test",
+        "load test",
+        "stress test",
+        "k6",
+        "autocannon",
+        "latency test",
+        "rps",
+        "throughput"
+      ],
+      "capabilities": [
+        "load-testing-k6",
+        "latency-profiling",
+        "concurrency-benchmarking"
+      ],
+      "requires": [
+        "api-design"
+      ],
+      "complements": [
+        "caching",
+        "backend-engineering"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "official-standards",
+      "source_url": "https://k6.io/docs/",
+      "license": "AGPL-3.0",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "api",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "k6 load test scripts and p95/p99 SLA evaluation."
+    },
+    {
+      "name": "accessibility-testing",
+      "category": "testing",
+      "path": "testing/accessibility-testing/",
+      "description": "Accessibility testing: axe-core, Pa11y, screen-reader validation, WCAG 2.2 AA audit, and keyboard navigation testing. Use when verifying accessibility compliance, running automated axe audits, testing screen-reader announcements, or checking keyboard focus. Not for visual regression or functional API testing (that is e2e-testing or api-testing).",
+      "triggers": [
+        "accessibility test",
+        "axe-core",
+        "a11y test",
+        "pa11y",
+        "contrast check",
+        "keyboard audit"
+      ],
+      "capabilities": [
+        "axe-core-auditing",
+        "keyboard-navigation-audit",
+        "contrast-calculation"
+      ],
+      "requires": [
+        "accessibility"
+      ],
+      "complements": [
+        "e2e-testing",
+        "human-ui-design"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://github.com/dequelabs/axe-core",
+      "license": "MPL-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "axe-core CI automation and WCAG 2.2 checklist."
+    },
+    {
+      "name": "security-testing",
+      "category": "testing",
+      "path": "testing/security-testing/",
+      "description": "Automated security testing: DAST scans, OWASP ZAP, dependency vulnerability scanning, and fuzz testing. Use when automating security regression scans, executing fuzz testing on endpoints, or running DAST pipelines in CI. Not for manual code review or architectural threat modeling (that is security-review or threat-modeling).",
+      "triggers": [
+        "security test",
+        "sast",
+        "dast",
+        "security scan",
+        "vulnerability test",
+        "fuzzing"
+      ],
+      "capabilities": [
+        "sast-scanning",
+        "dast-probing",
+        "header-auditing"
+      ],
+      "requires": [
+        "owasp",
+        "secure-coding"
+      ],
+      "complements": [
+        "dependency-security",
+        "api-security"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "adapted-trailofbits",
+      "source_url": "https://github.com/trailofbits/skills",
+      "license": "Apache-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Automated header and vulnerability testing workflows."
+    },
+    {
+      "name": "git",
+      "category": "devops",
+      "path": "devops/git/",
+      "description": "Git version control: branching workflows, atomic commits, interactive rebase, merge conflict resolution, and bisect. Use when managing git history, resolving merge conflicts, staging atomic commits, or debugging regressions via git bisect. Not for GitHub remote features or CI automation (that is github or ci-cd).",
+      "triggers": [
+        "git",
+        "commit",
+        "branch",
+        "rebase",
+        "merge conflict",
+        "cherry-pick",
+        ".gitignore"
+      ],
+      "capabilities": [
+        "git-workflow",
+        "conflict-resolution",
+        "atomic-commits",
+        "rebase-discipline"
+      ],
+      "requires": [],
+      "complements": [
+        "github",
+        "ci-cd"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://git-scm.com/doc",
+      "license": "GPL-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Atomic commit standards and structured conflict resolution."
+    },
+    {
+      "name": "github",
+      "category": "devops",
+      "path": "devops/github/",
+      "description": "GitHub platform features: pull request templates, issue triage, branch protection rules, GitHub releases, and webhooks. Use when managing GitHub repositories, setting up branch protection, configuring PR automations, or handling GitHub webhooks. Not for local git command-line operations (that is git).",
+      "triggers": [
+        "github",
+        "pull request",
+        "pr template",
+        "github actions",
+        "branch protection",
+        "gh cli"
+      ],
+      "capabilities": [
+        "pr-automation",
+        "issue-management",
+        "branch-protection",
+        "release-orchestration"
+      ],
+      "requires": [
+        "git"
+      ],
+      "complements": [
+        "ci-cd",
+        "code-review"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://docs.github.com",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "High-signal PR description formats and review gates."
+    },
+    {
+      "name": "docker",
+      "category": "devops",
+      "path": "devops/docker/",
+      "description": "Containerization: Dockerfile multi-stage builds, docker-compose orchestration, container networking, and image size minimization. Use when creating Dockerfiles, running multi-container local environments, reducing container attack surfaces, or optimizing image builds. Not for cloud orchestration or CI workflows (that is cloud or ci-cd).",
+      "triggers": [
+        "docker",
+        "dockerfile",
+        "container",
+        "docker-compose",
+        "image build",
+        "multi-stage"
+      ],
+      "capabilities": [
+        "containerization",
+        "multi-stage-docker",
+        "docker-compose-orchestration",
+        "image-hardening"
+      ],
+      "requires": [],
+      "complements": [
+        "ci-cd",
+        "deployment"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://docs.docker.com",
+      "license": "Apache-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "backend",
+        "fullstack",
+        "devops"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Non-root security defaults and multi-stage build caching."
+    },
+    {
+      "name": "ci-cd",
+      "category": "devops",
+      "path": "devops/ci-cd/",
+      "description": "Continuous integration and delivery: GitHub Actions, automated test workflows, artifact building, and deployment gates. Use when creating CI/CD pipelines, automating linting and tests on pull requests, or configuring build matrix workflows. Not for container definitions or cloud resource provisioning (that is docker or cloud).",
+      "triggers": [
+        "ci/cd",
+        "github actions",
+        "pipeline",
+        "continuous integration",
+        "automated deploy",
+        "workflow yml"
+      ],
+      "capabilities": [
+        "github-actions-pipeline",
+        "automated-quality-gates",
+        "build-matrix"
+      ],
+      "requires": [
+        "git",
+        "github"
+      ],
+      "complements": [
+        "docker",
+        "deployment"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/deployment-procedures",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Hardened GitHub Actions with dependency caching and lint checks."
+    },
+    {
+      "name": "deployment",
+      "category": "devops",
+      "path": "devops/deployment/",
+      "description": "Application deployment: zero-downtime releases, blue-green deployments, health checks, rollback automation, and environments. Use when releasing applications to production, configuring zero-downtime updates, setting up health checks, or executing rollbacks. Not for CI test pipelines or cloud resource declarations (that is ci-cd or cloud).",
+      "triggers": [
+        "deployment",
+        "deploy",
+        "vercel",
+        "railway",
+        "fly.io",
+        "hosting",
+        "production deploy",
+        "ssl"
+      ],
+      "capabilities": [
+        "platform-deployment",
+        "zero-downtime-release",
+        "environment-configuration",
+        "dns-ssl"
+      ],
+      "requires": [
+        "backend-engineering"
+      ],
+      "complements": [
+        "docker",
+        "cloud",
+        "ci-cd"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/deployment-procedures",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "PaaS deployment configurations and production checklists."
+    },
+    {
+      "name": "cloud",
+      "category": "devops",
+      "path": "devops/cloud/",
+      "description": "Cloud infrastructure and serverless architecture: AWS, GCP, Azure, S3, IAM policies, and cloud networking. Use when deploying cloud infrastructure, configuring S3 buckets, setting up IAM permissions, or managing cloud environments. Not for Dockerfile definitions or local git workflows (that is docker or git).",
+      "triggers": [
+        "cloud",
+        "aws",
+        "s3",
+        "gcp",
+        "serverless",
+        "lambda",
+        "object storage",
+        "cloud architecture"
+      ],
+      "capabilities": [
+        "object-storage-s3",
+        "serverless-functions",
+        "iam-least-privilege",
+        "cloud-cost-control"
+      ],
+      "requires": [],
+      "complements": [
+        "deployment",
+        "docker"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://aws.amazon.com/architecture/",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "backend",
+        "fullstack",
+        "cloud"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Cost-conscious cloud patterns and S3 signed URLs. Elevated priority to high to align with security_sensitive status."
+    },
+    {
+      "name": "monitoring",
+      "category": "devops",
+      "path": "devops/monitoring/",
+      "description": "Application monitoring, uptime monitoring, health check endpoints, alert thresholds, and incident notification routing. Use when setting up server health checks, tracking error rates, defining alerting rules, or integrating PagerDuty/Slack notifications. Not for distributed tracing or log aggregation (that is observability).",
+      "triggers": [
+        "monitoring",
+        "health check",
+        "uptime",
+        "prometheus",
+        "alerts",
+        "grafana",
+        "system metrics"
+      ],
+      "capabilities": [
+        "healthcheck-design",
+        "metric-collection",
+        "alerting-rules"
+      ],
+      "requires": [
+        "backend-engineering"
+      ],
+      "complements": [
+        "observability",
+        "deployment"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "official-standards",
+      "source_url": "https://prometheus.io/docs/",
+      "license": "Apache-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Liveness/readiness probes and basic Prometheus metric exporters."
+    },
+    {
+      "name": "observability",
+      "category": "devops",
+      "path": "devops/observability/",
+      "description": "Observability: OpenTelemetry, structured logging, distributed tracing, metrics collection, and Prometheus/Grafana. Use when instrumenting applications with OpenTelemetry, adding correlation IDs to logs, tracing distributed requests, or exposing metrics. Not for simple uptime checks or ping alerts (that is monitoring).",
+      "triggers": [
+        "observability",
+        "opentelemetry",
+        "otel",
+        "structured logging",
+        "correlation id",
+        "sentry",
+        "distributed tracing"
+      ],
+      "capabilities": [
+        "opentelemetry-tracing",
+        "structured-json-logging",
+        "correlation-id-middleware",
+        "error-reporting-sentry"
+      ],
+      "requires": [
+        "backend-engineering"
+      ],
+      "complements": [
+        "monitoring",
+        "debugging"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://opentelemetry.io/docs/",
+      "license": "Apache-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Structured JSON logging with request context and correlation IDs."
+    },
+    {
+      "name": "llm",
+      "category": "ai",
+      "path": "ai/llm/",
+      "description": "LLM API integration, token budgeting, prompt construction, streaming responses, and temperature/sampling configuration. Use when calling OpenAI, Anthropic, or Gemini APIs, streaming tokens to clients, or handling model context windows. Not for agentic delegation loops or vector storage (that is agents or embeddings).",
+      "triggers": [
+        "llm",
+        "large language model",
+        "gpt",
+        "gemini",
+        "claude",
+        "temperature",
+        "tokens",
+        "streaming llm"
+      ],
+      "capabilities": [
+        "model-selection",
+        "parameter-tuning",
+        "token-budgeting",
+        "streaming-inference"
+      ],
+      "requires": [],
+      "complements": [
+        "prompt-engineering",
+        "ai-security"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://platform.openai.com/docs/",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "ai",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Model trade-off matrix and streaming SSE integration."
+    },
+    {
+      "name": "prompt-engineering",
+      "category": "ai",
+      "path": "ai/prompt-engineering/",
+      "description": "System prompts, XML instruction structure, few-shot demonstration conditioning, and role definition for language models. Use when authoring system instructions, structuring user prompts, conditioning model behavior, or extracting structured data. Not for subagent delegation briefs or prompt token compression (that is prompt-optimization).",
+      "triggers": [
+        "prompt engineering",
+        "system prompt",
+        "few-shot",
+        "chain of thought",
+        "cot",
+        "role prompt"
+      ],
+      "capabilities": [
+        "system-prompt-architecture",
+        "few-shot-design",
+        "chain-of-thought",
+        "delimiter-structuring"
+      ],
+      "requires": [
+        "llm"
+      ],
+      "complements": [
+        "prompt-optimization",
+        "ai-security"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "ai",
+        "agents"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "High-signal prompting templates with delimiter boundaries."
+    },
+    {
+      "name": "rag",
+      "category": "ai",
+      "path": "ai/rag/",
+      "description": "Retrieval-augmented generation pipelines: chunking strategies, vector search retrieval, context injection, and reranking. Use when grounding LLM responses in external documents, building semantic search workflows, or integrating vector context. Not for basic vector embeddings or standalone database indexing (that is embeddings or nosql).",
+      "triggers": [
+        "rag",
+        "retrieval augmented generation",
+        "chunking",
+        "vector search",
+        "hybrid search",
+        "reranking",
+        "citations"
+      ],
+      "capabilities": [
+        "document-chunking",
+        "hybrid-retrieval",
+        "cross-encoder-reranking",
+        "citation-grounding"
+      ],
+      "requires": [
+        "llm",
+        "embeddings"
+      ],
+      "complements": [
+        "ai-security",
+        "document-processing"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://python.langchain.com/docs/",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "ai",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Hybrid search (BM25 + vector) with strict citation verification."
+    },
+    {
+      "name": "embeddings",
+      "category": "ai",
+      "path": "ai/embeddings/",
+      "description": "Vector embeddings: embedding models, vector dimensions, similarity metrics, and pgvector HNSW indexing. Use when generating semantic embeddings, computing cosine similarity, tuning vector search recall, or indexing pgvector tables. Not for full retrieval-augmented generation pipelines or rerankers (that is rag or retrieval-ranking).",
+      "triggers": [
+        "embeddings",
+        "vector",
+        "cosine similarity",
+        "chromadb",
+        "pinecone",
+        "vector database"
+      ],
+      "capabilities": [
+        "vector-embedding-generation",
+        "similarity-metrics",
+        "vector-store-integration"
+      ],
+      "requires": [],
+      "complements": [
+        "rag",
+        "postgresql"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://github.com/chroma-core/chroma",
+      "license": "Apache-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "ai",
+        "data"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Chroma and pgvector implementation patterns."
+    },
+    {
+      "name": "agents",
+      "category": "ai",
+      "path": "ai/agents/",
+      "description": "Autonomous AI agent architecture: plan-execute-evaluate cycles, memory stores, subagent delegation, and loop safety bounds. Use when designing multi-step agentic workflows, orchestrating subagents, or implementing autonomous tool loops. Not for single-turn prompt conditioning or tool calling schemas (that is prompt-engineering or tool-use).",
+      "triggers": [
+        "agent",
+        "agents",
+        "autonomous agent",
+        "react loop",
+        "multi-agent",
+        "agent workflow"
+      ],
+      "capabilities": [
+        "react-loop-architecture",
+        "agent-state-machine",
+        "multi-agent-orchestration",
+        "loop-termination-guardrails"
+      ],
+      "requires": [
+        "llm",
+        "tool-use"
+      ],
+      "complements": [
+        "ai-security",
+        "ai-evaluation"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/parallel-agents",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "ai",
+        "agents"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Deterministic loop termination and state rollback."
+    },
+    {
+      "name": "tool-use",
+      "category": "ai",
+      "path": "ai/tool-use/",
+      "description": "LLM tool calling, function definitions, JSON schema parameters, tool execution loops, and error recovery. Use when equipping LLMs with external tools, writing function definitions, parsing tool calls, or executing client-side functions. Not for autonomous multi-agent orchestration (that is agents).",
+      "triggers": [
+        "tool use",
+        "function calling",
+        "tools",
+        "structured output",
+        "json schema",
+        "tool error recovery"
+      ],
+      "capabilities": [
+        "function-calling-schema",
+        "structured-json-enforcement",
+        "tool-error-recovery"
+      ],
+      "requires": [
+        "llm"
+      ],
+      "complements": [
+        "agents",
+        "ai-security"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://platform.openai.com/docs/guides/function-calling",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "ai",
+        "agents",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Strict JSON schema validation and retry with error feedback."
+    },
+    {
+      "name": "ai-evaluation",
+      "category": "ai",
+      "path": "ai/ai-evaluation/",
+      "description": "Model output evaluation, automated scoring rubrics, benchmark datasets, pairwise comparisons, and regression testing. Use when measuring LLM generation quality, evaluating prompt variations, testing AI model upgrades, or running offline eval suites. Not for live production telemetry or traces (that is monitoring or observability).",
+      "triggers": [
+        "ai evaluation",
+        "evals",
+        "ragas",
+        "benchmark llm",
+        "hallucination check",
+        "llm judge"
+      ],
+      "capabilities": [
+        "rag-evaluations",
+        "hallucination-scoring",
+        "groundedness-testing",
+        "llm-judge-rubric"
+      ],
+      "requires": [
+        "llm"
+      ],
+      "complements": [
+        "rag",
+        "unit-testing"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://github.com/explodinggradients/ragas",
+      "license": "Apache-2.0",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "ai",
+        "testing"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "RAGAS-inspired faithfulness and answer relevance tests."
+    },
+    {
+      "name": "audio-speech-processing",
+      "category": "domains",
+      "path": "domains/audio-speech-processing/",
+      "description": "Audio and speech processing: Whisper transcription, text-to-speech (TTS), Web Audio API, and audio normalization. Use when transcribing audio, generating synthetic speech, processing audio streams in the browser, or converting audio formats. Not for computer vision or text document extraction (that is computer-vision-multimodal or document-processing).",
+      "triggers": [
+        "audio",
+        "speech",
+        "transcription",
+        "whisper",
+        "recording",
+        "voice",
+        "podcast",
+        "speech-to-text",
+        "tts"
+      ],
+      "capabilities": [
+        "whisper-transcription",
+        "web-audio-recording",
+        "speaker-diarization",
+        "waveform-visualizer"
+      ],
+      "requires": [
+        "backend-engineering"
+      ],
+      "complements": [
+        "frontend-engineering",
+        "queues"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://github.com/openai/whisper",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "fullstack",
+        "ai",
+        "media"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Covers Hackathon problems 1, 5, 8, 11, 14, 22."
+    },
+    {
+      "name": "document-processing",
+      "category": "domains",
+      "path": "domains/document-processing/",
+      "description": "Document parsing and extraction: PDF text extraction, table parsing, structured invoice processing, and markdown conversion. Use when parsing PDF documents, extracting tabular data from reports, ingesting invoices, or normalizing file formats. Not for audio or image-only processing (that is audio-speech-processing or computer-vision-multimodal).",
+      "triggers": [
+        "pdf",
+        "document parsing",
+        "resume",
+        "ats",
+        "contract",
+        "legal doc",
+        "docx",
+        "text extraction"
+      ],
+      "capabilities": [
+        "pdf-layout-parsing",
+        "ats-resume-scoring",
+        "contract-clause-extraction",
+        "document-diff"
+      ],
+      "requires": [
+        "backend-engineering"
+      ],
+      "complements": [
+        "rag",
+        "data-processing"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://pypdf.readthedocs.io",
+      "license": "BSD-3-Clause",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "backend",
+        "ai",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Covers Hackathon problems 2, 7, 9, 12, 13, 15, 39, 44."
+    },
+    {
+      "name": "computer-vision-multimodal",
+      "category": "domains",
+      "path": "domains/computer-vision-multimodal/",
+      "description": "Computer vision and multimodal AI: image classification, object detection, OCR extraction, and visual inspection. Use when analyzing images with multimodal LLMs, running client-side vision inference, or extracting text from visual layouts. Not for PDF or text document parsing (that is document-processing).",
+      "triggers": [
+        "vision",
+        "image upload",
+        "fridge photo",
+        "wardrobe",
+        "photo recognition",
+        "ocr",
+        "pose estimation"
+      ],
+      "capabilities": [
+        "vision-llm-pipeline",
+        "image-preprocessing",
+        "object-detection-prompting",
+        "ocr-extraction"
+      ],
+      "requires": [
+        "llm"
+      ],
+      "complements": [
+        "frontend-engineering",
+        "backend-engineering"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://platform.openai.com/docs/guides/vision",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "ai",
+        "fullstack",
+        "mobile"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Covers Hackathon problems 16, 19, 20, 27, 30, 45."
+    },
+    {
+      "name": "health-wellness-safety",
+      "category": "domains",
+      "path": "domains/health-wellness-safety/",
+      "description": "Health and wellness applications: health metrics tracking, HIPAA privacy awareness, accessibility safety, and clinical guidelines. Use when handling sensitive wellness data, adhering to health data privacy standards, or building habit/health trackers. Not for general data privacy laws like GDPR/CCPA (that is privacy).",
+      "triggers": [
+        "health",
+        "symptoms",
+        "medication",
+        "wellness",
+        "habit coach",
+        "sleep coach",
+        "mental health",
+        "not medical advice"
+      ],
+      "capabilities": [
+        "non-diagnostic-guardrails",
+        "emergency-redirection",
+        "empathetic-non-clinical-tone",
+        "health-disclaimer-enforcement"
+      ],
+      "requires": [
+        "prompt-understanding"
+      ],
+      "complements": [
+        "ai-security",
+        "privacy"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "official-standards",
+      "source_url": "https://www.who.int/publications/i/item/9789240029200",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "health",
+        "ai",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Covers Hackathon problems 21, 31, 32, 33, 34."
+    },
+    {
+      "name": "personal-finance",
+      "category": "domains",
+      "path": "domains/personal-finance/",
+      "description": "Personal finance applications: ledger double-entry bookkeeping, currency precision, interest calculations, and transaction categorization. Use when building expense trackers, calculating financial balances, handling multi-currency transactions, or preventing float rounding. Not for relational database design or general analytics (that is data-modeling or analytics).",
+      "triggers": [
+        "finance",
+        "budget",
+        "money",
+        "transaction",
+        "bank data",
+        "expense tracker",
+        "currency"
+      ],
+      "capabilities": [
+        "currency-arithmetic",
+        "double-entry-ledger",
+        "transaction-categorization",
+        "financial-data-sanitization"
+      ],
+      "requires": [
+        "data-modeling"
+      ],
+      "complements": [
+        "privacy",
+        "sql"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://www.investopedia.com/terms/d/double-entry.asp",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "fintech",
+        "backend",
+        "fullstack"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Covers Hackathon problems 18, 35, 36."
+    },
+    {
+      "name": "edtech-learning",
+      "category": "domains",
+      "path": "domains/edtech-learning/",
+      "description": "Educational technology: spaced repetition (SM-2/FSRS), quiz generation, mastery learning rubrics, and retention tracking. Use when building learning platforms, calculating review intervals, generating educational quizzes, or tracking student mastery. Not for general personal finance or health applications (that is personal-finance or health-wellness-safety).",
+      "triggers": [
+        "education",
+        "study plan",
+        "flashcards",
+        "spaced repetition",
+        "sm-2",
+        "quiz generator",
+        "essay feedback",
+        "rubric"
+      ],
+      "capabilities": [
+        "spaced-repetition-sm2",
+        "adaptive-quiz-difficulty",
+        "rubric-evaluation",
+        "retention-scheduling"
+      ],
+      "requires": [
+        "backend-engineering"
+      ],
+      "complements": [
+        "llm",
+        "data-modeling"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "official-standards",
+      "source_url": "https://en.wikipedia.org/wiki/SuperMemo#SM-2_algorithm",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "edtech",
+        "fullstack",
+        "ai"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Covers Hackathon problems 9, 10, 11, 12, 13, 14."
+    },
+    {
+      "name": "geo-mapping",
+      "category": "domains",
+      "path": "domains/geo-mapping/",
+      "description": "Geospatial engineering: GeoJSON schemas, coordinates, spatial queries, Leaflet/Mapbox maps, and Haversine distance. Use when rendering interactive maps, calculating geographic distances, querying bounding boxes, or handling GeoJSON coordinates. Not for general 3D rendering or canvas graphics (that is 3d-web or threejs).",
+      "triggers": [
+        "map",
+        "geo",
+        "location",
+        "itinerary route",
+        "leaflet",
+        "mapbox",
+        "coordinates",
+        "distance calculation"
+      ],
+      "capabilities": [
+        "map-rendering",
+        "haversine-distance",
+        "geocoding",
+        "route-sequencing"
+      ],
+      "requires": [
+        "frontend-engineering"
+      ],
+      "complements": [
+        "api-design",
+        "advanced-css"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "adapted-antigravity-kit",
+      "source_url": "https://github.com/vudovn/antigravity-kit/tree/main/.agents/skills/geo-fundamentals",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "web",
+        "fullstack",
+        "mobile"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Covers Hackathon problems 17, 41."
+    },
+    {
+      "name": "skill-discovery",
+      "category": "tools",
+      "path": "tools/skill-discovery/",
+      "description": "Skill library discovery: searching skills by capability, evaluating skill relevance, and inspecting skill descriptions. Use when finding appropriate skills for a user request, exploring available skill modules, or browsing skill domains. Not for deterministic runtime router scoring (that is skill-routing).",
+      "triggers": [
+        "discover skill",
+        "find skill",
+        "skill discovery",
+        "needs human review",
+        "missing skill"
+      ],
+      "capabilities": [
+        "skill-research",
+        "discovery-routing",
+        "human-escalation-logging"
+      ],
+      "requires": [],
+      "complements": [
+        "skill-auditing",
+        "skill-adaptation"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "tools"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Manages NEEDS-HUMAN-REVIEW.md escalation workflow."
+    },
+    {
+      "name": "skill-auditing",
+      "category": "tools",
+      "path": "tools/skill-auditing/",
+      "description": "Skill security auditing: static analysis, 6-point security review, dangerous pattern scanning, and permission verification. Use when vetting newly created or imported skills for security risks, detecting hidden command execution, or verifying sandbox safety. Not for repository-wide schema validation (that is skill-validation).",
+      "triggers": [
+        "audit skill",
+        "check skill security",
+        "validate script",
+        "skill safety"
+      ],
+      "capabilities": [
+        "skill-security-audit",
+        "script-vulnerability-scan",
+        "license-compliance-check"
+      ],
+      "requires": [
+        "skill-discovery"
+      ],
+      "complements": [
+        "secure-coding",
+        "skill-adaptation"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "tools",
+        "security"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Automated security checklist for third-party skills."
+    },
+    {
+      "name": "skill-validation",
+      "category": "tools",
+      "path": "tools/skill-validation/",
+      "description": "Repository skill validation: frontmatter verification, index parity, broken link detection, and schema compliance. Use when validating the AI-SKILLS library, checking index consistency, enforcing file size targets, or running automated CI checks. Not for security vetting of foreign skills (that is skill-auditing).",
+      "triggers": [
+        "validate skills",
+        "test router",
+        "check skill frontmatter",
+        "skill lint"
+      ],
+      "capabilities": [
+        "yaml-schema-validation",
+        "path-integrity-checking",
+        "skill-router-testing"
+      ],
+      "requires": [],
+      "complements": [
+        "skill-auditing",
+        "skill-adaptation"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "tools"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Automated Python verification test suite."
+    },
+    {
+      "name": "skill-installation",
+      "category": "tools",
+      "path": "tools/skill-installation/",
+      "description": "Skill installation and deployment: placing skills in appropriate domain directories, configuring paths, and workspace linking. Use when installing validated skills into the library, updating folder structures, or linking skills to workspaces. Not for skill authoring or security auditing (that is skill-authoring or skill-auditing).",
+      "triggers": [
+        "install skill",
+        "register skill",
+        "mount skill",
+        "global skill install"
+      ],
+      "capabilities": [
+        "workspace-installation",
+        "global-configuration",
+        "json-config-registration"
+      ],
+      "requires": [
+        "skill-validation"
+      ],
+      "complements": [
+        "skill-discovery"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "tools"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Supports both workspace .agents and global ~/.gemini/config."
+    },
+    {
+      "name": "skill-adaptation",
+      "category": "tools",
+      "path": "tools/skill-adaptation/",
+      "description": "Sanitizing, adapting, and formatting external skills into repository-compliant structure and frontmatter schema. Use when importing third-party skills, converting external skill manifests, documenting skill diffs, or standardizing skill files. Not for runtime skill routing or skill validation checks (that is skill-routing or skill-validation).",
+      "triggers": [
+        "adapt skill",
+        "improve skill",
+        "convert skill",
+        "sanitize skill"
+      ],
+      "capabilities": [
+        "skill-refactoring",
+        "attribution-preservation",
+        "anti-slop-pruning"
+      ],
+      "requires": [
+        "skill-auditing"
+      ],
+      "complements": [
+        "skill-validation"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "tools"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Formal adaptation protocol with diff logging."
+    },
+    {
+      "name": "security-review",
+      "category": "security",
+      "path": "security/security-review/",
+      "description": "Security code review: manual threat inspection, privilege escalation audit, vulnerability triage, and pre-merge security checks. Use when performing peer security reviews, identifying security flaws before production, or triaging vulnerability reports. Not for automated test execution or continuous integration gates (that is security-testing or ci-cd).",
+      "triggers": [
+        "review this PR for security",
+        "security review before merge",
+        "check this diff for vulnerabilities",
+        "is this safe to merge",
+        "security audit this change",
+        "what should I reject in this PR"
+      ],
+      "capabilities": [
+        "pre-merge-security-gate",
+        "hard-reject-criteria",
+        "escalation-decision",
+        "diff-security-scan"
+      ],
+      "requires": [],
+      "complements": [
+        "owasp",
+        "threat-modeling",
+        "secure-coding",
+        "code-review"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "adapted-ecc",
+      "source_url": "https://github.com/affaan-m/everything-claude-code/blob/main/skills/security-review/SKILL.md",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Scoped to gate/escalation process only. Removed input validation, SQL injection, and auth implementation details (already in secure-coding/owasp). Added STRIDE escalation trigger matrix and hard-reject list."
+    },
+    {
+      "name": "tdd-workflow",
+      "category": "testing",
+      "path": "testing/tdd-workflow/",
+      "description": "Test-Driven Development (TDD): Red-Green-Refactor cycles, test-first design, minimal implementation, and unit test ergonomics. Use when developing features test-first, writing unit tests before code, or maintaining high test coverage during implementation. Not for performance load testing or end-to-end browser tests (that is performance-testing or e2e-testing).",
+      "triggers": [
+        "write the test first",
+        "TDD this feature",
+        "red green refactor",
+        "test driven development",
+        "failing test before implementation",
+        "TDD workflow",
+        "write tests before code"
+      ],
+      "capabilities": [
+        "red-green-refactor-cycle",
+        "cycle-gating",
+        "test-first-sequencing",
+        "regression-safety"
+      ],
+      "requires": [],
+      "complements": [
+        "unit-testing",
+        "refactoring",
+        "code-review"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "adapted-ecc",
+      "source_url": "https://github.com/affaan-m/everything-claude-code/blob/main/skills/tdd-workflow/SKILL.md",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Scoped to cycle sequencing and gating rules only. Removed coverage targets, test type taxonomy, and Bun-specific runner detection (ECC-internal tool). Removed AAA pattern and mocking (already in unit-testing)."
+    },
+    {
+      "name": "error-handling",
+      "category": "core",
+      "path": "core/error-handling/",
+      "description": "Resilient error handling: typed domain errors, centralized error middleware, retry with exponential backoff, and circuit breakers. Use when designing error hierarchies, catching unhandled rejections, configuring API error responses, or building fault-tolerant services. Not for frontend visual error states (that is frontend-engineering or ui-ux).",
+      "triggers": [
+        "handle errors properly",
+        "add error handling",
+        "retry logic",
+        "circuit breaker",
+        "error boundary",
+        "what to log in errors",
+        "backoff strategy",
+        "custom error classes"
+      ],
+      "capabilities": [
+        "error-class-hierarchy",
+        "boundary-placement",
+        "retry-backoff",
+        "circuit-breaker",
+        "ui-error-boundary",
+        "structured-logging"
+      ],
+      "requires": [],
+      "complements": [
+        "debugging",
+        "unit-testing",
+        "secure-coding"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "adapted-ecc",
+      "source_url": "https://github.com/affaan-m/everything-claude-code/blob/main/skills/error-handling/SKILL.md",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-18",
+      "modifications": "Adapted from affaan-m/everything-claude-code. Scoped to failure prevention and containment (custom error hierarchies, seam boundaries, retry/backoff, circuit breakers, UI boundaries, structured logging rules). Excluded root-cause diagnosis (owned by core/debugging)."
+    },
+    {
+      "name": "skill-routing",
+      "category": "tools",
+      "path": "tools/skill-routing/",
+      "description": "Deterministic two-stage skill router: index shards, BM25 lexical scoring, intent classification, and overlays. Use when selecting optimal skills for a user prompt, computing lexical match scores, or tuning routing overlays. Not for general skill creation or file formatting (that is skill-authoring or skill-adaptation).",
+      "triggers": [
+        "route skills",
+        "select skills",
+        "which skills should I use",
+        "skill router",
+        "skill routing",
+        "skill selection"
+      ],
+      "capabilities": [
+        "skill-routing",
+        "progressive-disclosure",
+        "priority-arbitration",
+        "trigger-matching",
+        "graph-traversal"
+      ],
+      "requires": [],
+      "complements": [
+        "skill-validation",
+        "skill-discovery"
+      ],
+      "conflicts": [],
+      "priority": "critical",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": true,
+      "project_types": [
+        "tools",
+        "all"
+      ],
+      "last_reviewed": "2026-09-19",
+      "modifications": "Authored to register the deterministic router and manifest progressive disclosure engine."
+    },
+    {
+      "name": "retrieval-ranking",
+      "category": "ai",
+      "path": "ai/retrieval-ranking/",
+      "description": "Rank and fuse retrieval candidates: BM25 scoring, dense cosine retrieval, Reciprocal Rank Fusion, score calibration, cut-off selection and cross-encoder reranking. Use when building or debugging a retriever, a tool/skill router, a search feature, or whenever results are \"close but wrong\", over-selected, or returning noise below the relevance floor.",
+      "triggers": [
+        "ranking",
+        "relevance",
+        "fusion",
+        "top-k",
+        "retrieval quality",
+        "search results wrong"
+      ],
+      "capabilities": [
+        "bm25-scoring",
+        "rank-fusion",
+        "score-calibration",
+        "reranking"
+      ],
+      "requires": [
+        "embeddings"
+      ],
+      "complements": [
+        "rag",
+        "ai-evaluation"
+      ],
+      "conflicts": [],
+      "priority": "high",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-19",
+      "modifications": "Authored for Router v3 hybrid scoring, fusion, and calibration."
+    },
+    {
+      "name": "skill-evaluation",
+      "category": "tools",
+      "path": "tools/skill-evaluation/",
+      "description": "Build and run evaluation sets for skill routing and skill quality: labelled prompt sets with must/forbid targets, precision, recall, F1, lead accuracy, abstention rate and context-token cost, wired into CI as a gate. Use when changing a router, adding or editing skills, or when someone claims a routing change is an improvement without a number attached.",
+      "triggers": [
+        "eval set",
+        "precision recall",
+        "routing accuracy",
+        "golden set",
+        "measure the router",
+        "regression gate"
+      ],
+      "capabilities": [
+        "eval-harness",
+        "routing-metrics",
+        "regression-testing",
+        "context-cost-measurement"
+      ],
+      "requires": [],
+      "complements": [
+        "capability-gap-detection",
+        "skill-authoring",
+        "ai-evaluation"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-19",
+      "modifications": "Authored for Router v3 evaluation harness and CI gates."
+    },
+    {
+      "name": "capability-gap-detection",
+      "category": "tools",
+      "path": "tools/capability-gap-detection/",
+      "description": "Detect and triage missing capabilities in a skill library instead of adding skills speculatively: gap signals from routing failures, the evidence bar for a new skill, extend-vs-create decisions and the retire path. Use when routing scatters across unrelated skills, when tempted to add skills in bulk, or when deciding whether a request needs a new skill or a wider alias list.",
+      "triggers": [
+        "missing skill",
+        "should we add a skill",
+        "capability gap",
+        "prune skills",
+        "library growth"
+      ],
+      "capabilities": [
+        "gap-detection",
+        "triage-protocol",
+        "skill-lifecycle",
+        "library-pruning"
+      ],
+      "requires": [],
+      "complements": [
+        "skill-evaluation",
+        "skill-authoring",
+        "skill-discovery"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-19",
+      "modifications": "Authored for evidence-gated library expansion and gap signals."
+    },
+    {
+      "name": "skill-authoring",
+      "category": "tools",
+      "path": "tools/skill-authoring/",
+      "description": "Author spec-compliant Agent Skills: valid YAML frontmatter, a description written as the discovery trigger, three-tier progressive disclosure, activation boundaries and size limits. Use when creating a new SKILL.md, fixing a skill that never triggers or triggers too often, or reviewing skills before they enter a shared library.",
+      "triggers": [
+        "write a skill",
+        "skill.md",
+        "frontmatter",
+        "skill description",
+        "skill never triggers",
+        "authoring a skill"
+      ],
+      "capabilities": [
+        "spec-compliance",
+        "frontmatter-authoring",
+        "trigger-design",
+        "progressive-disclosure"
+      ],
+      "requires": [],
+      "complements": [
+        "capability-gap-detection",
+        "skill-evaluation",
+        "skill-validation"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-19",
+      "modifications": "Authored for spec compliance, trigger design, and progressive disclosure."
+    },
+    {
+      "name": "i18n-localization",
+      "category": "core",
+      "path": "core/i18n-localization/",
+      "description": "Internationalisation and localisation: locale-aware dates, numbers, currency and plurals, message catalogues, ICU MessageFormat, timezone correctness, RTL layout and locale-sensitive sorting. Use when users in different countries see wrong dates, numbers or currency, when adding a second language, or when text expansion and right-to-left scripts break the layout.",
+      "triggers": [
+        "i18n",
+        "l10n",
+        "locale",
+        "translation",
+        "timezone",
+        "rtl",
+        "date format",
+        "currency format",
+        "wrong date",
+        "multi language",
+        "different countries",
+        "users in india",
+        "plural rules"
+      ],
+      "capabilities": [
+        "locale-formatting",
+        "message-catalogues",
+        "icu-messageformat",
+        "timezone-handling",
+        "rtl-layout"
+      ],
+      "requires": [],
+      "complements": [
+        "web-design",
+        "accessibility",
+        "responsive-design"
+      ],
+      "conflicts": [],
+      "priority": "normal",
+      "source": "original",
+      "source_url": "internal",
+      "license": "MIT",
+      "maintenance_status": "active",
+      "security_sensitive": false,
+      "project_types": [
+        "all"
+      ],
+      "last_reviewed": "2026-09-19",
+      "modifications": "Authored for locale correctness, ICU formatting, and timezone handling."
+    }
+  ]
+}

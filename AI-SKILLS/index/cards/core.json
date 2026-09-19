@@ -1,0 +1,237 @@
+{
+ "category": "core",
+ "skills": [
+  {
+   "name": "code-review",
+   "use_when": "Quality checklists, static analysis and review heuristics for changes about to be merged. Use when reviewing a pull request, critiquing code, or gatin",
+   "keys": [
+    "before i merge",
+    "critique this code",
+    "review my pr",
+    "review my pull request",
+    "review this code"
+   ],
+   "not_for": [
+    "fix this crash",
+    "why is it failing"
+   ],
+   "cost": 936
+  },
+  {
+   "name": "context-engineering",
+   "use_when": "Context window management: pruning irrelevant history, hierarchical summarization, and high-density token budgeting. Use when managing long chat histo",
+   "keys": [
+    "compaction",
+    "context window",
+    "overflowing",
+    "summarise history",
+    "too many tokens"
+   ],
+   "not_for": [
+    "css",
+    "database",
+    "deploy"
+   ],
+   "cost": 1045
+  },
+  {
+   "name": "debugging",
+   "use_when": "Evidence-based 4-phase systematic debugging: observe, diagnose root cause, apply a surgical fix, retest. Prohibits random patching. Use when something",
+   "keys": [
+    "exception",
+    "for valid passwords",
+    "it crashes",
+    "login endpoint returns 401",
+    "not working",
+    "regression",
+    "returns 401",
+    "returns 500",
+    "since yesterday",
+    "stack trace",
+    "traceback",
+    "used to work",
+    "valid passwords"
+   ],
+   "not_for": [
+    "add a feature",
+    "design a",
+    "write documentation"
+   ],
+   "cost": 840
+  },
+  {
+   "name": "decision-making",
+   "use_when": "Architectural decision records (ADR), weighted decision matrices, trade-off analysis, and one-way vs two-way decision frameworks. Use when choosing be",
+   "keys": [
+    "should we use",
+    "should we",
+    "which database",
+    "which one",
+    "decide between",
+    "x or y",
+    "trade-offs",
+    "pros and cons",
+    "adr",
+    "architecture decision record"
+   ],
+   "not_for": [],
+   "cost": 1089
+  },
+  {
+   "name": "documentation",
+   "use_when": "Technical documentation: README generation, API references, architectural diagrams, and inline code comments. Use when documenting repositories, creat",
+   "keys": [
+    "readme",
+    "adr",
+    "changelog",
+    "docstring",
+    "openapi doc"
+   ],
+   "not_for": [
+    "haiku",
+    "poem",
+    "song"
+   ],
+   "cost": 666
+  },
+  {
+   "name": "error-handling",
+   "use_when": "Resilient error handling: typed domain errors, centralized error middleware, retry with exponential backoff, and circuit breakers. Use when designing ",
+   "keys": [
+    "backoff",
+    "circuit breaker",
+    "dead letter",
+    "error boundary",
+    "graceful degradation",
+    "idempotency",
+    "retries forever",
+    "retry",
+    "swallow errors",
+    "timeout",
+    "times out",
+    "webhook handler"
+   ],
+   "not_for": [],
+   "cost": 1218
+  },
+  {
+   "name": "i18n-localization",
+   "use_when": "Internationalisation and localisation: locale-aware dates, numbers, currency and plurals, message catalogues, ICU MessageFormat, timezone correctness,",
+   "keys": [
+    "i18n",
+    "l10n",
+    "locale",
+    "translation",
+    "timezone",
+    "rtl",
+    "date format",
+    "currency format",
+    "wrong date",
+    "multi language",
+    "different countries",
+    "users in india",
+    "plural rules"
+   ],
+   "not_for": [
+    "date picker styling",
+    "sql date column"
+   ],
+   "cost": 836
+  },
+  {
+   "name": "planning",
+   "use_when": "Structured internal task planning, mental scratchpad formulation, goal setting, re-plan triggers, and contingency rollbacks. Use when initiating compl",
+   "keys": [
+    "milestones",
+    "roadmap",
+    "sequence the work",
+    "ship this",
+    "six weeks"
+   ],
+   "not_for": [],
+   "cost": 954
+  },
+  {
+   "name": "problem-decomposition",
+   "use_when": "Decomposing complex systems into atomic, testable milestones, vertical slices, and dependency-ordered execution paths. Use when breaking down multi-co",
+   "keys": [
+    "break down",
+    "decompose",
+    "milestones",
+    "subtasks",
+    "complex project"
+   ],
+   "not_for": [],
+   "cost": 1176
+  },
+  {
+   "name": "prompt-optimization",
+   "use_when": "High-signal prompt engineering for subagents, task tools, and LLM APIs: XML tag structuring, JSON schemas, few-shot conditioning, and delegation brief",
+   "keys": [
+    "optimize prompt",
+    "compress prompt",
+    "subagent prompt",
+    "tool prompt",
+    "prompt efficiency"
+   ],
+   "not_for": [],
+   "cost": 1075
+  },
+  {
+   "name": "prompt-understanding",
+   "use_when": "Intent classification, ambiguous user prompt interpretation, requirement extraction, and query disambiguation. Use when interpreting vague user reques",
+   "keys": [
+    "don't know what's wrong",
+    "dont know whats wrong",
+    "feels off",
+    "just make it",
+    "something is off"
+   ],
+   "not_for": [
+    "add a column",
+    "rename the file",
+    "what is"
+   ],
+   "cost": 914
+  },
+  {
+   "name": "refactoring",
+   "use_when": "Behavior-preserving clean code transformations: guard clauses, function extraction, value objects, and characterization testing. Use when cleaning leg",
+   "keys": [
+    "400 line",
+    "clean up this code",
+    "code smell",
+    "dead code",
+    "does six things",
+    "duplicate code",
+    "extract function",
+    "extract method",
+    "god object",
+    "long function",
+    "rename",
+    "simplify",
+    "split this file",
+    "too many responsibilities"
+   ],
+   "not_for": [
+    "500 error",
+    "crash",
+    "document"
+   ],
+   "cost": 1346
+  },
+  {
+   "name": "requirements-analysis",
+   "use_when": "Requirements elicitation, constraint identification, acceptance criteria definition, and edge-case discovery. Use when scoping features, analyzing pro",
+   "keys": [
+    "requirements",
+    "specifications",
+    "constraints",
+    "acceptance criteria",
+    "scope"
+   ],
+   "not_for": [],
+   "cost": 795
+  }
+ ]
+}

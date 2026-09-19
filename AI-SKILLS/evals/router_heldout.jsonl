@@ -1,0 +1,100 @@
+{"id": 1, "q": "this looks terrible, fix it", "must": ["human-ui-design"], "forbid": ["sql", "docker"]}
+{"id": 2, "q": "the colors feel completely off on the landing page", "must": ["visual-design"], "forbid": ["docker", "sql"]}
+{"id": 3, "q": "make this whole screen look clean and professional", "must": ["human-ui-design"], "forbid": ["database"]}
+{"id": 4, "q": "something feels broken with the layout on mobile", "must": ["responsive-design"], "forbid": ["sql"]}
+{"id": 5, "q": "clean up this messy design", "must": ["human-ui-design"], "forbid": ["deployment"]}
+{"id": 6, "q": "the typography and spacing look amateurish", "must": ["visual-design"], "forbid": ["docker"]}
+{"id": 7, "q": "can you polish the visuals here", "must": ["visual-design"], "forbid": ["api-security"]}
+{"id": 8, "q": "it's not looking right on an ipad", "must": ["responsive-design"], "forbid": ["database"]}
+{"id": 9, "q": "make this component feel much more premium", "must": ["human-ui-design"], "forbid": ["docker"]}
+{"id": 10, "q": "tidy up the visual hierarchy of the hero section", "must": ["visual-design"], "forbid": ["sql"]}
+{"id": 11, "q": "build a live chat room with websockets and store message history in postgresql", "must": ["realtime", "postgresql"], "forbid": ["threejs"]}
+{"id": 12, "q": "create an authenticated user profile page with accessible forms in react", "must": ["authentication", "accessibility"], "forbid": ["docker"]}
+{"id": 13, "q": "add stripe payments webhook with hmac signature verification and audit logging", "must": ["api-security", "observability"], "forbid": ["threejs"]}
+{"id": 14, "q": "setup redis cache invalidation when updating user records in sql database", "must": ["caching", "sql"], "forbid": ["3d-web"]}
+{"id": 15, "q": "build an interactive 3d globe with threejs and lazy load texture assets", "must": ["3d-web", "threejs"], "forbid": ["database"]}
+{"id": 16, "q": "create an automated ci pipeline on github actions running unit tests and linting", "must": ["ci-cd", "github"], "forbid": ["nosql"]}
+{"id": 17, "q": "implement rbac authorization checks in our rest api endpoints", "must": ["authorization", "api-design"], "forbid": ["threejs"]}
+{"id": 18, "q": "deploy docker containers to aws with zero downtime canary rollout", "must": ["docker", "deployment"], "forbid": ["visual-design"]}
+{"id": 19, "q": "build a rag pipeline chunking pdf documents and querying vector embeddings", "must": ["rag", "embeddings"], "forbid": ["animation-motion"]}
+{"id": 20, "q": "profile slow queries in postgresql and add compound indexes to fix performance", "must": ["postgresql", "sql"], "forbid": ["threejs"]}
+{"id": 21, "q": "what is the capital of France", "must": [], "forbid": ["backend-engineering", "frontend-engineering"]}
+{"id": 22, "q": "write me a poem about autumn leaves", "must": [], "forbid": ["documentation", "visual-design"]}
+{"id": 23, "q": "tell me about the history of the internet", "must": [], "forbid": ["backend-engineering"]}
+{"id": 24, "q": "explain what a monad is in functional programming", "must": [], "forbid": ["sql", "database"]}
+{"id": 25, "q": "who was Ada Lovelace", "must": [], "forbid": ["prompt-engineering"]}
+{"id": 26, "q": "write a limerick about software bugs", "must": [], "forbid": ["debugging", "unit-testing"]}
+{"id": 27, "q": "what does http status 418 mean", "must": [], "forbid": ["api-design"]}
+{"id": 28, "q": "thank you so much for your help today", "must": [], "forbid": ["prompt-understanding"]}
+{"id": 29, "q": "nice work, that looks cool", "must": [], "forbid": ["human-ui-design"]}
+{"id": 30, "q": "where is Mount Fuji located", "must": [], "forbid": ["geo-mapping"]}
+{"id": 31, "q": "yo my servr throws a 500 error whn fetching users", "must": ["debugging"], "forbid": ["design-systems"]}
+{"id": 32, "q": "plz add darkmode to the css variables", "must": ["advanced-css"], "forbid": ["database"]}
+{"id": 33, "q": "our db querys r super sluggish", "must": ["sql"], "forbid": ["animation-motion"]}
+{"id": 34, "q": "wanna add google oauth login to this express app", "must": ["authentication"], "forbid": ["docker"]}
+{"id": 35, "q": "how do i center a div with flexbox or css grid", "must": ["advanced-css"], "forbid": ["database"]}
+{"id": 36, "q": "the app crahes whenever i click submit button", "must": ["debugging"], "forbid": ["design-systems"]}
+{"id": 37, "q": "need to sanitise user inputs to stop sqli injection attacks", "must": ["secure-coding"], "forbid": ["animation-motion"]}
+{"id": 38, "q": "make this navbar responsive on smal screens", "must": ["responsive-design"], "forbid": ["sql"]}
+{"id": 39, "q": "pls cache the json responce in redis so it loads quick", "must": ["caching"], "forbid": ["threejs"]}
+{"id": 40, "q": "our pr builds are failin on github actions", "must": ["ci-cd"], "forbid": ["nosql"]}
+{"id": 41, "q": "configure tailwind design tokens for primary color palette and spacing scale", "must": ["design-systems"], "forbid": ["sql"]}
+{"id": 42, "q": "audit modal dialog for wcag 2.2 aa compliance and focus trap", "must": ["accessibility"], "forbid": ["backend-engineering"]}
+{"id": 43, "q": "reduce largest contentful paint and interaction to next paint in next.js", "must": ["frontend-performance"], "forbid": ["database"]}
+{"id": 44, "q": "prevent dom xss when rendering markdown content in browser", "must": ["frontend-security"], "forbid": ["sql"]}
+{"id": 45, "q": "build smooth micro-interactions with framer motion for card hover states", "must": ["animation-motion"], "forbid": ["database"]}
+{"id": 46, "q": "render complex 3d gltf model with orbitcontrols using three.js", "must": ["threejs"], "forbid": ["sql"]}
+{"id": 47, "q": "implement responsive fluid clamp typography and container queries", "must": ["responsive-design"], "forbid": ["database"]}
+{"id": 48, "q": "use modern css subgrid to align form labels across grid rows", "must": ["advanced-css"], "forbid": ["database"]}
+{"id": 49, "q": "fix screen reader navigation order for accordion tabs", "must": ["accessibility"], "forbid": ["docker"]}
+{"id": 50, "q": "optimize bundle size by code-splitting heavy third-party dependencies", "must": ["frontend-performance"], "forbid": ["sql"]}
+{"id": 51, "q": "configure content security policy headers with per-request nonce", "must": ["frontend-security"], "forbid": ["database"]}
+{"id": 52, "q": "create an accessible keyboard navigable dropdown menu with aria attributes", "must": ["accessibility"], "forbid": ["sql"]}
+{"id": 53, "q": "implement secure session management with httponly cookies and csrf tokens", "must": ["authentication"], "forbid": ["threejs"]}
+{"id": 54, "q": "enforce role based access control middleware for tenant admin endpoints", "must": ["authorization"], "forbid": ["threejs"]}
+{"id": 55, "q": "design restful api resource routes with standard pagination and status codes", "must": ["api-design"], "forbid": ["threejs"]}
+{"id": 56, "q": "configure rabbitmq message queue worker to process video transcoding jobs", "must": ["queues"], "forbid": ["threejs"]}
+{"id": 57, "q": "setup server sent events sse endpoint for live order tracking", "must": ["realtime"], "forbid": ["threejs"]}
+{"id": 58, "q": "implement sliding window rate limiter for public api routes in redis", "must": ["api-security"], "forbid": ["threejs"]}
+{"id": 59, "q": "manage database connection pool limits and handle reconnection on postgres", "must": ["database"], "forbid": ["threejs"]}
+{"id": 60, "q": "mitigate cache stampede using singleflight mutex locking in redis", "must": ["caching"], "forbid": ["threejs"]}
+{"id": 61, "q": "sign json web tokens with ed25519 asymmetric keys and rotate secrets", "must": ["authentication"], "forbid": ["threejs"]}
+{"id": 62, "q": "build an idempotent webhook processing route with exponential backoff retry", "must": ["error-handling"], "forbid": ["threejs"]}
+{"id": 63, "q": "configure openapi 3.1 documentation for internal microservice endpoints", "must": ["api-design"], "forbid": ["threejs"]}
+{"id": 64, "q": "prevent ssrf vulnerabilities when downloading images from user provided urls", "must": ["backend-security"], "forbid": ["threejs"]}
+{"id": 65, "q": "optimize slow relational query by analyzing execution plan with explain analyze", "must": ["sql"], "forbid": ["threejs"]}
+{"id": 66, "q": "configure jsonb indexing with gin in postgresql database", "must": ["postgresql"], "forbid": ["threejs"]}
+{"id": 67, "q": "design compound index following equality sort range esr rule in mongodb", "must": ["nosql"], "forbid": ["threejs"]}
+{"id": 68, "q": "create entity relationship diagram for ecommerce schema normalization", "must": ["data-modeling"], "forbid": ["threejs"]}
+{"id": 69, "q": "build etl batch pipeline for deduplicating transactional event records", "must": ["data-processing"], "forbid": ["threejs"]}
+{"id": 70, "q": "track daily active users and retention metrics in product analytics engine", "must": ["analytics"], "forbid": ["threejs"]}
+{"id": 71, "q": "choose between mongodb document store and postgresql for high volume event logs", "must": ["decision-making"], "forbid": ["threejs"]}
+{"id": 72, "q": "prevent sql injection by enforcing parameterized queries in node pg driver", "must": ["sql"], "forbid": ["threejs"]}
+{"id": 73, "q": "handle deadlocks in serializable database transactions gracefully", "must": ["sql"], "forbid": ["threejs"]}
+{"id": 74, "q": "configure pgvector extension to store and search high dimensional embeddings", "must": ["postgresql"], "forbid": ["threejs"]}
+{"id": 75, "q": "remediate cross site scripting xss in user comments input field", "must": ["owasp"], "forbid": ["threejs"]}
+{"id": 76, "q": "threat model our cloud architecture using stride methodology", "must": ["threat-modeling"], "forbid": ["threejs"]}
+{"id": 77, "q": "rotate leaked aws access key credentials and store in hashicorp vault", "must": ["secrets-management"], "forbid": ["threejs"]}
+{"id": 78, "q": "audit npm dependencies for critical cve vulnerabilities with npm audit", "must": ["dependency-security"], "forbid": ["threejs"]}
+{"id": 79, "q": "implement gdpr data subject access request and pii erasure endpoint", "must": ["privacy"], "forbid": ["threejs"]}
+{"id": 80, "q": "defend llm against prompt injection and jailbreak attacks with input sanitization", "must": ["ai-security"], "forbid": ["threejs"]}
+{"id": 81, "q": "conduct comprehensive security review of authentication diff before merging pr", "must": ["security-review"], "forbid": ["threejs"]}
+{"id": 82, "q": "configure strict cors headers with allowed origins and preflight cache", "must": ["api-security"], "forbid": ["threejs"]}
+{"id": 83, "q": "prevent timing attacks when comparing password hash digests with constant time comparison", "must": ["secure-coding"], "forbid": ["threejs"]}
+{"id": 84, "q": "sanitize file upload paths to prevent directory traversal attacks", "must": ["secure-coding"], "forbid": ["threejs"]}
+{"id": 85, "q": "write multi stage dockerfile to minimize production image size for nodejs app", "must": ["docker"], "forbid": ["threejs"]}
+{"id": 86, "q": "configure github actions workflow to run automated test matrix on pull requests", "must": ["ci-cd"], "forbid": ["threejs"]}
+{"id": 87, "q": "setup blue green deployment rollout with zero downtime on kubernetes", "must": ["deployment"], "forbid": ["threejs"]}
+{"id": 88, "q": "provision aws s3 bucket and iam roles with terraform infrastructure as code", "must": ["cloud"], "forbid": ["threejs"]}
+{"id": 89, "q": "instrument opentelemetry distributed tracing and structured log spans", "must": ["observability"], "forbid": ["threejs"]}
+{"id": 90, "q": "configure prometheus alerts and pagerduty escalation policy for high error rates", "must": ["monitoring"], "forbid": ["threejs"]}
+{"id": 91, "q": "clean up git history using interactive rebase and resolve merge conflicts", "must": ["git"], "forbid": ["threejs"]}
+{"id": 92, "q": "setup codeowners file and required branch protection rules on github", "must": ["github"], "forbid": ["threejs"]}
+{"id": 93, "q": "write comprehensive unit tests covering edge cases with pytest", "must": ["unit-testing"], "forbid": ["threejs"]}
+{"id": 94, "q": "test rest api endpoints contract with supertest asserting status codes and json schema", "must": ["api-testing"], "forbid": ["threejs"]}
+{"id": 95, "q": "write end to end browser tests simulating user checkout flow with playwright", "must": ["e2e-testing"], "forbid": ["threejs"]}
+{"id": 96, "q": "conduct load testing with k6 asserting latency percentiles and p99 response time", "must": ["performance-testing"], "forbid": ["threejs"]}
+{"id": 97, "q": "automate accessibility testing in ci using axe-core and pa11y", "must": ["accessibility-testing"], "forbid": ["threejs"]}
+{"id": 98, "q": "run automated dast penetration scan against staging environment with zaproxy", "must": ["security-testing"], "forbid": ["threejs"]}
+{"id": 99, "q": "follow test driven development tdd red green refactor cycle for tax calculation", "must": ["tdd-workflow"], "forbid": ["threejs"]}
+{"id": 100, "q": "write integration tests verifying database transaction rollback on error", "must": ["integration-testing"], "forbid": ["threejs"]}
