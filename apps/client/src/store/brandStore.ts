@@ -14,6 +14,8 @@ import {
   getTaglinesForBrand,
   INITIAL_CHAT_MESSAGES,
 } from '../mock/mockData';
+import { getCanvasSurface } from '../lib/canvasSurfaces';
+import { isLegible } from '../lib/color';
 import { brandApi } from '../services/api';
 
 export interface ChatActionOption {
@@ -269,7 +271,21 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
   canvaTextColor: '#0F172A',
   setCanvaTextColor: (color) => set({ canvaTextColor: color }),
   canvaBgMode: 'light',
-  setCanvaBgMode: (mode) => set({ canvaBgMode: mode }),
+  /**
+   * Switching the surface can strand the ink: a colour chosen for the white
+   * canvas disappears the moment the canvas turns dark, and the toolbar would
+   * still show it as selected. If the current colour cannot be read on the new
+   * surface, fall back to that surface's default ink so the two stay in step.
+   */
+  setCanvaBgMode: (mode) => {
+    const surface = getCanvasSurface(mode);
+    set((state) => ({
+      canvaBgMode: mode,
+      canvaTextColor: isLegible(state.canvaTextColor, surface.hex)
+        ? state.canvaTextColor
+        : surface.ink,
+    }));
+  },
   resetCanvaStyles: () =>
     set({
       canvaHeadlineFont: 'Outfit',

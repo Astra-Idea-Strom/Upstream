@@ -67,8 +67,8 @@ export const LogoSelectionCard: React.FC = () => {
                     : 'border-slate-200/90 bg-white hover:border-brand-300 hover:bg-slate-50/70',
                 )}
               >
-                <span className="flex h-24 w-24 items-center justify-center rounded-2xl border border-slate-100 bg-slate-50 p-2">
-                  <LogoArtwork brand={selectedName} style={option.style} variant="light" size="sm" />
+                <span className="grid h-24 w-24 flex-shrink-0 place-items-center rounded-2xl border border-slate-200/90 bg-slate-50 text-slate-900">
+                  <LogoArtwork brand={selectedName} style={option.style} variant="none" size="sm" />
                 </span>
 
                 <span className="flex-1">

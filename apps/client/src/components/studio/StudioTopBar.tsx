@@ -3,21 +3,21 @@ import { ChevronRight, Download, Home, RotateCcw } from 'lucide-react';
 import { useBrandStore } from '../../store/brandStore';
 import { Button, Divider, IconButton } from '../ui/primitives';
 import { BrandMark } from '../layout/BrandMark';
-import { StepRail } from './StepRail';
 import { useFlowProgress } from '../../hooks/useFlowProgress';
 import { useArmedAction } from '../../hooks/useArmedAction';
-import { KIT_CARD_ID, scrollToId, scrollToStepCard } from '../../lib/dom';
+import { KIT_CARD_ID, scrollToId } from '../../lib/dom';
 
 /**
  * The studio's one and only application chrome.
  *
- * Left: brand + project breadcrumb. Centre: the canonical step rail, so the
- * user can always see where they are in the flow. Right: session actions.
+ * Left: brand + project breadcrumb. Right: session actions.
  *
- * The canvas used to render a second full-width bar underneath this one
- * ("AUTONOMOUS WORKSPACE CANVAS · 2/5 Deliverables Materialized"), which meant
- * every screen carried two headers and two progress readouts. The canvas header
- * is now a quiet pane label and all progress lives here.
+ * The step rail that used to sit between them is gone — five labelled ticks
+ * repeating a flow the user is already walking through, and the canvas pane
+ * header already states the position ("Canvas · 2 of 5"). What remains of
+ * progress reporting is that one count plus the hairline along the bottom edge,
+ * which is enough to answer "how far along am I" without a second full row of
+ * chrome.
  */
 export const StudioTopBar: React.FC = () => {
   const { input, selectedName, hasConfirmedName, reset, setViewMode } = useBrandStore();
@@ -59,20 +59,8 @@ export const StudioTopBar: React.FC = () => {
         </div>
       </div>
 
-      {/* Centre: the canonical progress rail. Shrinks first so actions never wrap. */}
-      <div className="hidden min-w-0 flex-1 items-center justify-center md:flex">
-        <StepRail
-          progress={progress}
-          onSelect={(step) => {
-            // Completed steps are reachable: jump the canvas back to that
-            // artefact rather than making the user re-run the session.
-            scrollToStepCard(step.key);
-          }}
-        />
-      </div>
-
       {/* Right: session actions */}
-      <div className="flex flex-shrink-0 items-center gap-1.5">
+      <div className="ml-auto flex flex-shrink-0 items-center gap-1.5">
         {resetAction.isArmed ? (
           <Button
             variant="ghost"
