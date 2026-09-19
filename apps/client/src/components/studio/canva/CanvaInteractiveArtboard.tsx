@@ -1,18 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useBrandStore } from '../../../store/brandStore';
 import { LogoArtwork } from '../../brand/LogoArtwork';
-import {
-  Check,
-  CreditCard,
-  Package,
-  Smartphone,
-  Edit3,
-} from 'lucide-react';
+import { getPalette } from '../../../lib/palettes';
+import { getCanvasSurface } from '../../../lib/canvasSurfaces';
+import { cn } from '../../../lib/cn';
+import { Check, CreditCard, Package, Pencil, Smartphone } from 'lucide-react';
 
+type Touchpoint = 'lockup' | 'card' | 'packaging' | 'app';
+
+const TOUCHPOINTS: { id: Touchpoint; label: string; icon?: React.ReactNode }[] = [
+  { id: 'lockup', label: 'Lockup' },
+  { id: 'card', label: 'Business Card', icon: <CreditCard className="h-3.5 w-3.5" /> },
+  { id: 'packaging', label: 'Packaging', icon: <Package className="h-3.5 w-3.5" /> },
+  { id: 'app', label: 'App Icon', icon: <Smartphone className="h-3.5 w-3.5" /> },
+];
+
+/**
+ * The lockup editor.
+ *
+ * The canvas is a single lockup: a monochrome mark, the wordmark, and the
+ * tagline — every part driven by the same ink so the toolbar's colour control
+ * reads across all three.
+ *
+ * The mark used to render with its own wordmark *and* sit above a separate
+ * editable wordmark, so the name appeared twice and the second copy was the one
+ * the user was meant to edit. The mark is now glyph-only.
+ */
 export const CanvaInteractiveArtboard: React.FC = () => {
   const {
     selectedName,
     selectedLogoStyle,
+    activePaletteIdx,
     canvaHeadlineFont,
     canvaWordmarkSize,
     canvaTaglineSize,
@@ -25,209 +43,210 @@ export const CanvaInteractiveArtboard: React.FC = () => {
     setCanvaSelectedElement,
   } = useBrandStore();
 
-  const [activeTab, setActiveTab] = useState<'lockup' | 'card' | 'packaging' | 'app'>('lockup');
+  const [activeTab, setActiveTab] = useState<Touchpoint>('lockup');
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingTagline, setIsEditingTagline] = useState(false);
   const [nameVal, setNameVal] = useState(selectedName.name);
   const [taglineVal, setTaglineVal] = useState(selectedName.tagline);
 
+  const palette = getPalette(activePaletteIdx);
+  const surface = getCanvasSurface(canvaBgMode);
+
+  /**
+   * Keep the edit buffers in step with the brand. They were seeded once from
+   * `useState`, so anything that changed the name elsewhere left a stale value
+   * waiting in the input.
+   */
+  useEffect(() => setNameVal(selectedName.name), [selectedName.name]);
+  useEffect(() => setTaglineVal(selectedName.tagline), [selectedName.tagline]);
+
   const handleSaveName = () => {
-    if (nameVal.trim()) {
-      updateBrandNameText(nameVal.trim());
-    }
+    if (nameVal.trim()) updateBrandNameText(nameVal.trim());
     setIsEditingName(false);
   };
 
   const handleSaveTagline = () => {
-    if (taglineVal.trim()) {
-      updateTaglineText(taglineVal.trim());
-    }
+    if (taglineVal.trim()) updateTaglineText(taglineVal.trim());
     setIsEditingTagline(false);
   };
 
-  const bgStyles = {
-    light: 'bg-white border-slate-200/90 text-slate-900',
-    linen: 'bg-[#FDFBF7] border-amber-200/80 text-amber-950',
-    dark: 'bg-slate-950 border-slate-800 text-white',
-    brand: 'bg-gradient-to-br from-brand-600 via-brand-700 to-coral-500 border-transparent text-white',
-  }[canvaBgMode] || 'bg-white border-slate-200 text-slate-900';
+  // Packaging borrows the palette's background and text roles rather than a
+  // hard-coded kraft brown, which used to show on every brand regardless of
+  // industry.
+  const packagingBox = palette.swatches[3]?.hex ?? '#FDFBF7';
+  const packagingInk = palette.swatches[4]?.hex ?? '#1C1917';
+  const packagingPrimary = palette.swatches[0]?.hex ?? '#7C3AED';
 
-  const isDarkCanvas = canvaBgMode === 'dark' || canvaBgMode === 'brand';
-  const effectiveTextColor = isDarkCanvas ? '#FFFFFF' : canvaTextColor;
+  /** The hover-revealed edit affordance, now always discoverable. */
+  const EditAffordance: React.FC<{ onClick: () => void; label: string }> = ({
+    onClick,
+    label,
+  }) => (
+    <button
+      type="button"
+      onClick={onClick}
+      title={label}
+      aria-label={label}
+      className="flex-shrink-0 rounded-md p-1 opacity-50 transition-opacity hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45"
+    >
+      <Pencil className="h-3 w-3" />
+    </button>
+  );
 
   return (
     <div className="space-y-4">
       {/* Artboard header with touchpoint tabs */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-1">
+      <div className="flex flex-col justify-between gap-3 px-1 sm:flex-row sm:items-center">
         <span className="font-display text-xs font-bold text-slate-900">Lockup editor</span>
 
-        {/* Touchpoint Tabs */}
-        <div className="flex items-center gap-1 p-1 bg-slate-100 rounded-xl text-xs font-semibold">
-          <button
-            onClick={() => setActiveTab('lockup')}
-            className={`px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 ${
-              activeTab === 'lockup'
-                ? 'bg-white text-slate-900 shadow-2xs font-bold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <span>Lockup</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('card')}
-            className={`px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 ${
-              activeTab === 'card'
-                ? 'bg-white text-slate-900 shadow-2xs font-bold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <CreditCard className="w-3.5 h-3.5 text-slate-400" />
-            <span>Business Card</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('packaging')}
-            className={`px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 ${
-              activeTab === 'packaging'
-                ? 'bg-white text-slate-900 shadow-2xs font-bold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <Package className="w-3.5 h-3.5 text-slate-400" />
-            <span>Packaging</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('app')}
-            className={`px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 ${
-              activeTab === 'app'
-                ? 'bg-white text-slate-900 shadow-2xs font-bold'
-                : 'text-slate-600 hover:text-slate-900'
-            }`}
-          >
-            <Smartphone className="w-3.5 h-3.5 text-slate-400" />
-            <span>App Icon</span>
-          </button>
+        <div className="flex items-center gap-1 rounded-xl bg-slate-100 p-1 text-xs font-semibold">
+          {TOUCHPOINTS.map((touchpoint) => (
+            <button
+              key={touchpoint.id}
+              type="button"
+              onClick={() => setActiveTab(touchpoint.id)}
+              aria-pressed={activeTab === touchpoint.id}
+              className={cn(
+                'flex items-center gap-1.5 rounded-lg px-3 py-1 transition-colors',
+                'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45',
+                activeTab === touchpoint.id
+                  ? 'bg-white font-bold text-slate-900 shadow-2xs'
+                  : 'text-slate-600 hover:text-slate-900',
+              )}
+            >
+              {touchpoint.icon && (
+                <span className="text-slate-400">{touchpoint.icon}</span>
+              )}
+              <span>{touchpoint.label}</span>
+            </button>
+          ))}
         </div>
       </div>
 
       {/* Main Canvas Surface */}
       <div
-        className={`w-full min-h-[360px] sm:min-h-[400px] rounded-3xl border-2 p-8 sm:p-12 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-300 shadow-sm ${bgStyles}`}
+        className={cn(
+          'relative flex min-h-[360px] w-full flex-col items-center justify-center overflow-hidden rounded-3xl border-2 p-8 shadow-sm transition-colors duration-300 sm:min-h-[400px] sm:p-12',
+          surface.classes,
+        )}
       >
         {activeTab === 'lockup' && (
-          <div className="flex flex-col items-center justify-center text-center space-y-5 max-w-xl mx-auto">
-            {/* Logo Mark */}
-            <div className="transform hover:scale-105 transition-transform duration-200">
-              <LogoArtwork
-                brand={selectedName}
-                style={selectedLogoStyle}
-                variant={isDarkCanvas ? 'dark' : 'light'}
-                size="md"
-              />
-            </div>
+          <div
+            className="mx-auto flex max-w-xl flex-col items-center justify-center gap-4 text-center"
+            style={{ color: canvaTextColor }}
+          >
+            {/* Mark — glyph only. The wordmark below *is* the name. */}
+            <LogoArtwork
+              brand={selectedName}
+              style={selectedLogoStyle}
+              variant="none"
+              size="lg"
+              showName={false}
+            />
 
-            {/* Editable Brand Wordmark */}
+            {/* Editable wordmark */}
             <div
               onClick={() => setCanvaSelectedElement('wordmark')}
-              className="relative group cursor-pointer"
+              className="group relative cursor-pointer"
             >
               {isEditingName ? (
                 <div className="flex items-center gap-2">
                   <input
                     type="text"
                     value={nameVal}
-                    onChange={(e) => setNameVal(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSaveName()}
+                    onChange={(event) => setNameVal(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') handleSaveName();
+                      if (event.key === 'Escape') setIsEditingName(false);
+                    }}
+                    onBlur={handleSaveName}
                     autoFocus
-                    className="text-center font-display font-black bg-transparent border-b-2 border-brand-500 focus:outline-none tracking-tight"
+                    className="border-b-2 border-brand-500 bg-transparent text-center font-display font-black tracking-tight focus:outline-none"
                     style={{
                       fontFamily: canvaHeadlineFont,
                       fontSize: `${canvaWordmarkSize}px`,
-                      color: effectiveTextColor,
+                      color: canvaTextColor,
                     }}
                   />
                   <button
+                    type="button"
                     onClick={handleSaveName}
-                    className="p-1.5 rounded-lg bg-brand-600 text-white hover:bg-brand-700"
+                    title="Save name"
+                    aria-label="Save name"
+                    className="rounded-lg bg-brand-600 p-1.5 text-white hover:bg-brand-700"
                   >
-                    <Check className="w-4 h-4" />
+                    <Check className="h-4 w-4" />
                   </button>
                 </div>
               ) : (
-                <div
-                  onDoubleClick={() => setIsEditingName(true)}
-                  className="flex items-center justify-center gap-2"
-                >
+                <div className="flex items-center justify-center gap-2">
                   <h2
+                    onDoubleClick={() => setIsEditingName(true)}
                     style={{
                       fontFamily: canvaHeadlineFont,
                       fontSize: `${canvaWordmarkSize}px`,
                       fontWeight: canvaFontWeight,
                       letterSpacing: `${canvaLetterSpacing}px`,
-                      color: effectiveTextColor,
+                      color: canvaTextColor,
                     }}
-                    className="tracking-tight leading-none select-none transition-all"
+                    className="select-none leading-none tracking-tight transition-all"
                   >
                     {selectedName.name}
                   </h2>
-                  <button
-                    onClick={() => setIsEditingName(true)}
-                    className="opacity-0 group-hover:opacity-100 p-1 rounded-md bg-black/10 hover:bg-black/20 text-current transition-opacity text-xs"
-                    title="Edit Name"
-                  >
-                    <Edit3 className="w-3 h-3" />
-                  </button>
+                  <EditAffordance onClick={() => setIsEditingName(true)} label="Edit name" />
                 </div>
               )}
             </div>
 
-            {/* Editable Tagline */}
+            {/* Editable tagline — the lockup's serif face, so it carries its
+                own weight rather than following the wordmark's. */}
             <div
               onClick={() => setCanvaSelectedElement('tagline')}
-              className="relative group cursor-pointer"
+              className="group relative cursor-pointer"
             >
               {isEditingTagline ? (
                 <div className="flex items-center gap-2">
                   <input
                     type="text"
                     value={taglineVal}
-                    onChange={(e) => setTaglineVal(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSaveTagline()}
-                    autoFocus
-                    className="text-center italic font-serif bg-transparent border-b border-brand-500 focus:outline-none"
-                    style={{
-                      fontSize: `${canvaTaglineSize}px`,
-                      color: effectiveTextColor,
+                    onChange={(event) => setTaglineVal(event.target.value)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter') handleSaveTagline();
+                      if (event.key === 'Escape') setIsEditingTagline(false);
                     }}
+                    onBlur={handleSaveTagline}
+                    autoFocus
+                    className="border-b border-brand-500 bg-transparent text-center font-serif italic focus:outline-none"
+                    style={{ fontSize: `${canvaTaglineSize}px`, color: canvaTextColor }}
                   />
                   <button
+                    type="button"
                     onClick={handleSaveTagline}
-                    className="p-1 rounded-lg bg-brand-600 text-white"
+                    title="Save tagline"
+                    aria-label="Save tagline"
+                    className="rounded-lg bg-brand-600 p-1 text-white hover:bg-brand-700"
                   >
-                    <Check className="w-3 h-3" />
+                    <Check className="h-3 w-3" />
                   </button>
                 </div>
               ) : (
-                <div
-                  onDoubleClick={() => setIsEditingTagline(true)}
-                  className="flex items-center justify-center gap-2"
-                >
+                <div className="flex items-center justify-center gap-2">
                   <p
+                    onDoubleClick={() => setIsEditingTagline(true)}
                     style={{
                       fontSize: `${canvaTaglineSize}px`,
-                      color: isDarkCanvas ? 'rgba(255,255,255,0.8)' : effectiveTextColor,
+                      color: canvaTextColor,
+                      opacity: 0.78,
                       letterSpacing: `${Math.max(0, canvaLetterSpacing - 1)}px`,
                     }}
-                    className="italic font-serif leading-tight select-none transition-all"
+                    className="select-none font-serif italic leading-tight transition-all"
                   >
-                    "{selectedName.tagline}"
+                    &ldquo;{selectedName.tagline}&rdquo;
                   </p>
-                  <button
+                  <EditAffordance
                     onClick={() => setIsEditingTagline(true)}
-                    className="opacity-0 group-hover:opacity-100 p-1 rounded-md bg-black/10 hover:bg-black/20 text-current transition-opacity text-xs"
-                    title="Edit Tagline"
-                  >
-                    <Edit3 className="w-3 h-3" />
-                  </button>
+                    label="Edit tagline"
+                  />
                 </div>
               )}
             </div>
@@ -235,8 +254,11 @@ export const CanvaInteractiveArtboard: React.FC = () => {
         )}
 
         {activeTab === 'card' && (
-          <div className="w-full max-w-md h-56 rounded-2xl bg-white text-slate-900 border border-slate-200/90 p-6 flex flex-col justify-between shadow-lg relative overflow-hidden">
-            <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white font-bold">
+          <div className="relative flex h-56 w-full max-w-md flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-6 text-slate-900 shadow-lg">
+            <div
+              className="flex h-10 w-10 items-center justify-center rounded-xl font-bold text-white"
+              style={{ backgroundColor: palette.swatches[0]?.hex ?? '#0F172A' }}
+            >
               {selectedName.name.slice(0, 2).toUpperCase()}
             </div>
 
@@ -247,12 +269,15 @@ export const CanvaInteractiveArtboard: React.FC = () => {
               >
                 {selectedName.name}
               </h3>
-              <p className="text-xs text-brand-700 italic font-serif mt-0.5">
-                "{selectedName.tagline}"
+              <p
+                className="mt-0.5 font-serif text-xs italic"
+                style={{ color: palette.swatches[0]?.hex ?? '#7C3AED' }}
+              >
+                &ldquo;{selectedName.tagline}&rdquo;
               </p>
             </div>
 
-            <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 pt-2 border-t border-slate-100">
+            <div className="flex items-center justify-between border-t border-slate-100 pt-2 font-mono text-[10px] text-slate-500">
               <span>contact@{selectedName.name.toLowerCase()}.com</span>
               <span>www.{selectedName.name.toLowerCase()}.com</span>
             </div>
@@ -260,32 +285,42 @@ export const CanvaInteractiveArtboard: React.FC = () => {
         )}
 
         {activeTab === 'packaging' && (
-          <div className="w-64 h-80 rounded-3xl bg-[#EBE5D8] border-2 border-[#D6CDBC] p-6 flex flex-col items-center justify-center gap-3 text-center text-[#3D2E1E] shadow-xl">
-            <div className="w-16 h-16 rounded-2xl bg-[#3D2E1E] text-white flex items-center justify-center font-bold text-xl">
+          <div
+            className="flex h-80 w-64 flex-col items-center justify-center gap-3 rounded-3xl border-2 p-6 text-center shadow-xl"
+            style={{
+              backgroundColor: packagingBox,
+              borderColor: `${packagingPrimary}55`,
+              color: packagingInk,
+            }}
+          >
+            <div
+              className="flex h-16 w-16 items-center justify-center rounded-2xl text-xl font-bold"
+              style={{ backgroundColor: packagingPrimary, color: packagingBox }}
+            >
               {selectedName.name.charAt(0)}
             </div>
             <h4
               style={{ fontFamily: canvaHeadlineFont }}
-              className="text-2xl font-black tracking-tight text-[#2A1E12]"
+              className="text-2xl font-black tracking-tight"
             >
               {selectedName.name}
             </h4>
-            <p className="text-xs italic font-serif text-[#6B5742]">
-              "{selectedName.tagline}"
+            <p className="font-serif text-xs italic opacity-80">
+              &ldquo;{selectedName.tagline}&rdquo;
             </p>
           </div>
         )}
 
         {activeTab === 'app' && (
           <div className="flex flex-col items-center gap-4">
-            <div className="w-32 h-32 rounded-[28px] bg-gradient-to-br from-brand-600 to-coral-500 text-white flex flex-col items-center justify-center shadow-xl shadow-brand-500/20 transform hover:scale-105 transition-transform">
-              <span className="font-display font-black text-4xl tracking-tighter">
+            <div className="flex h-32 w-32 transform flex-col items-center justify-center rounded-[28px] bg-gradient-to-br from-brand-600 to-coral-500 text-white shadow-xl shadow-brand-500/20 transition-transform hover:scale-105">
+              <span className="font-display text-4xl font-black tracking-tighter">
                 {selectedName.name.slice(0, 2).toUpperCase()}
               </span>
             </div>
             <span
-              style={{ fontFamily: canvaHeadlineFont }}
-              className="text-base font-bold text-slate-800"
+              style={{ fontFamily: canvaHeadlineFont, color: canvaTextColor }}
+              className="text-base font-bold"
             >
               {selectedName.name}
             </span>

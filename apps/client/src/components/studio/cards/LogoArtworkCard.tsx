@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useBrandStore } from '../../../store/brandStore';
 import { LogoArtwork } from '../../brand/LogoArtwork';
 import { CardShell } from '../CardShell';
-import { Button, SegmentedControl } from '../../ui/primitives';
+import { Button } from '../../ui/primitives';
 import { KIT_CARD_ID, scrollToId } from '../../../lib/dom';
-import { cn } from '../../../lib/cn';
 import type { LogoStyle } from '@upstream/shared';
-import { CreditCard, Download, Image as ImageIcon, Smartphone } from 'lucide-react';
+import { Download } from 'lucide-react';
 
 const STYLE_LABELS: Record<LogoStyle, { label: string; desc: string }> = {
   minimal: { label: 'Minimalist Glyph', desc: 'Continuous-line monogram' },
@@ -16,28 +15,46 @@ const STYLE_LABELS: Record<LogoStyle, { label: string; desc: string }> = {
   illustrative: { label: 'Illustrative Emblem', desc: 'Organic sculptural symbol' },
 };
 
-type PreviewSurface = 'light' | 'dark' | 'brand';
-type MockupTab = 'icon' | 'card' | 'banner';
+/**
+ * The three surfaces the mark is checked against, shown together.
+ *
+ * A Light/Dark/Brand switcher made the user do the work of discovering the mark
+ * was legible on all three; showing the set at once is both denser and more
+ * informative, which is the point of a brand sheet.
+ */
+const SURFACES = [
+  { id: 'light', label: 'Light', tile: 'border-slate-200/90 bg-white text-slate-900' },
+  { id: 'dark', label: 'Dark', tile: 'border-slate-800 bg-slate-950 text-white' },
+  {
+    id: 'brand',
+    label: 'Brand',
+    tile: 'border-transparent bg-gradient-to-br from-brand-600 to-coral-500 text-white',
+  },
+] as const;
 
 /**
- * Step 5 artefact — the locked logo mark, previewed on real surfaces.
+ * Step 5 artefact — the locked mark, shown across surfaces and applications.
  *
- * The mark itself is the content: one large preview, its style name, and two
- * compact switches. Every control is self-labelling, so the uppercase section
- * headers around them were removed.
+ * Rebuilt because the previous version nested a self-backgrounded, fixed-size
+ * `LogoArtwork` inside padded rounded tiles. That produced two artifacts at
+ * once: a double-card edge where the artwork's own white box sat inside the
+ * tile, and a wordmark clipped by the tile's fixed height. The artwork now has a
+ * transparent `none` variant, so each tile owns its surface and the mark simply
+ * sits on it.
  */
 export const LogoArtworkCard: React.FC = () => {
   const { selectedName, selectedLogoStyle, openLogoModal } = useBrandStore();
-  const [surface, setSurface] = useState<PreviewSurface>('light');
-  const [mockup, setMockup] = useState<MockupTab>('icon');
-
   const info = STYLE_LABELS[selectedLogoStyle] ?? STYLE_LABELS.minimal;
+
+  const mark = { brand: selectedName, style: selectedLogoStyle } as const;
 
   return (
     <CardShell
       id="step-card-logo"
       step={5}
       variant="confirmed"
+      title={info.label}
+      subtitle={info.desc}
       actions={
         <>
           <Button variant="secondary" size="sm" onClick={openLogoModal}>
@@ -54,87 +71,106 @@ export const LogoArtworkCard: React.FC = () => {
         </>
       }
     >
-      <div className="space-y-4">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
-          <div
-            className={cn(
-              'flex h-40 w-full flex-shrink-0 items-center justify-center rounded-2xl border p-6 shadow-inner transition-colors duration-300 sm:w-44',
-              surface === 'dark' && 'border-slate-800 bg-slate-950 text-white',
-              surface === 'brand' && 'border-transparent bg-gradient-to-br from-brand-600 to-coral-500 text-white',
-              surface === 'light' && 'border-slate-200/80 bg-slate-50 text-slate-900',
-            )}
-          >
-            <LogoArtwork
-              brand={selectedName}
-              style={selectedLogoStyle}
-              variant={surface === 'brand' ? 'color' : surface}
-              size="md"
-            />
-          </div>
+      <div className="space-y-5">
+        {/* ---------------------------------------------------------------- */}
+        {/* On surface                                                        */}
+        {/* ---------------------------------------------------------------- */}
+        <section>
+          <h4 className="text-2xs font-bold uppercase tracking-wider text-slate-400">
+            On surface
+          </h4>
 
-          <div className="min-w-0 flex-1 space-y-3">
-            <div>
-              <h4 className="font-display text-base font-bold text-slate-900">{info.label}</h4>
-              <p className="mt-0.5 text-xs text-slate-500">{info.desc}</p>
-            </div>
+          <ul className="mt-2.5 grid grid-cols-3 gap-3">
+            {SURFACES.map((surface) => (
+              <li key={surface.id}>
+                <figure className="space-y-2">
+                  <div
+                    className={`grid min-h-[184px] place-items-center rounded-2xl border shadow-2xs ${surface.tile}`}
+                  >
+                    <LogoArtwork {...mark} variant="none" size="md" />
+                  </div>
+                  <figcaption className="text-center text-2xs font-semibold text-slate-500">
+                    {surface.label}
+                  </figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-            <SegmentedControl<PreviewSurface>
-              aria-label="Logo preview surface"
-              value={surface}
-              onChange={setSurface}
-              options={[
-                { value: 'light', label: 'Light' },
-                { value: 'dark', label: 'Dark' },
-                { value: 'brand', label: 'Brand' },
-              ]}
-            />
-          </div>
-        </div>
+        {/* ---------------------------------------------------------------- */}
+        {/* In use                                                            */}
+        {/* ---------------------------------------------------------------- */}
+        <section className="border-t border-slate-100 pt-5">
+          <h4 className="text-2xs font-bold uppercase tracking-wider text-slate-400">In use</h4>
 
-        <div className="space-y-3 border-t border-slate-100 pt-4">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <span className="text-2xs font-medium text-slate-400">Mockups</span>
-
-            <SegmentedControl<MockupTab>
-              aria-label="Touchpoint mockup"
-              value={mockup}
-              onChange={setMockup}
-              options={[
-                { value: 'icon', label: <Smartphone className="h-3 w-3" /> },
-                { value: 'card', label: <CreditCard className="h-3 w-3" /> },
-                { value: 'banner', label: <ImageIcon className="h-3 w-3" /> },
-              ]}
-            />
-          </div>
-
-          <div className="flex items-center justify-center rounded-2xl border border-slate-100 bg-slate-50/80 p-4">
-            {mockup === 'icon' && (
-              <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-tr from-slate-900 to-slate-800 p-2 text-white shadow-lg">
-                <LogoArtwork brand={selectedName} style={selectedLogoStyle} variant="dark" size="sm" />
-              </div>
-            )}
-
-            {mockup === 'card' && (
-              <div className="flex h-36 w-64 flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 shadow-md">
-                <LogoArtwork brand={selectedName} style={selectedLogoStyle} variant="light" size="sm" />
-                <div>
-                  <h5 className="text-sm font-bold text-slate-900">{selectedName.name}</h5>
-                  <p className="text-2xs italic text-slate-400">{selectedName.tagline}</p>
+          <ul className="mt-2.5 grid grid-cols-3 gap-3">
+            {/* App icon — glyph only, no wordmark, as a real icon would be. */}
+            <li>
+              <figure className="space-y-2">
+                <div className="grid h-[152px] place-items-center rounded-2xl border border-slate-200/90 bg-slate-50">
+                  <div className="grid h-[104px] w-[104px] place-items-center rounded-[1.75rem] bg-gradient-to-br from-slate-900 to-slate-800 text-white shadow-md">
+                    <LogoArtwork {...mark} variant="none" size="sm" showName={false} />
+                  </div>
                 </div>
-              </div>
-            )}
+                <figcaption className="text-center text-2xs font-semibold text-slate-500">
+                  App icon
+                </figcaption>
+              </figure>
+            </li>
 
-            {mockup === 'banner' && (
-              <div className="flex h-24 w-full items-center justify-between overflow-hidden rounded-2xl bg-gradient-to-r from-brand-900 via-slate-900 to-brand-950 p-3 text-white">
-                <div>
-                  <h5 className="text-lg font-black tracking-tight">{selectedName.name}</h5>
-                  <p className="text-xs text-brand-200">{selectedName.tagline}</p>
+            {/* Business card — mark, then the lockup set as text. */}
+            <li>
+              <figure className="space-y-2">
+                <div className="grid h-[152px] place-items-center rounded-2xl border border-slate-200/90 bg-slate-50 p-3">
+                  <div className="flex h-full w-full flex-col justify-between rounded-xl border border-slate-200 bg-white p-3 text-slate-900 shadow-2xs">
+                    {/* `self-start` keeps the mark left-aligned without
+                        collapsing the text block, which needs full width for
+                        its truncation to bite. */}
+                    <div className="self-start">
+                      <LogoArtwork {...mark} variant="none" size="sm" showName={false} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="truncate font-display text-xs font-bold text-slate-900">
+                        {selectedName.name}
+                      </p>
+                      <p className="mt-0.5 truncate text-3xs italic text-slate-400">
+                        {selectedName.tagline}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <LogoArtwork brand={selectedName} style={selectedLogoStyle} variant="dark" size="sm" />
-              </div>
-            )}
-          </div>
-        </div>
+                <figcaption className="text-center text-2xs font-semibold text-slate-500">
+                  Business card
+                </figcaption>
+              </figure>
+            </li>
+
+            {/* Cover — the lockup on the brand gradient. */}
+            <li>
+              <figure className="space-y-2">
+                <div className="grid h-[152px] place-items-center rounded-2xl border border-slate-200/90 bg-slate-50 p-3">
+                  <div className="flex h-full w-full items-center gap-3 overflow-hidden rounded-xl bg-gradient-to-br from-brand-700 via-brand-600 to-coral-500 p-3 text-white shadow-md">
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate font-display text-sm font-black leading-tight tracking-tight">
+                        {selectedName.name}
+                      </p>
+                      <p className="mt-1 line-clamp-2 text-3xs leading-snug text-white/80">
+                        {selectedName.tagline}
+                      </p>
+                    </div>
+                    <div className="flex-shrink-0">
+                      <LogoArtwork {...mark} variant="none" size="sm" showName={false} />
+                    </div>
+                  </div>
+                </div>
+                <figcaption className="text-center text-2xs font-semibold text-slate-500">
+                  Cover
+                </figcaption>
+              </figure>
+            </li>
+          </ul>
+        </section>
       </div>
     </CardShell>
   );
