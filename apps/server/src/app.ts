@@ -6,6 +6,9 @@ import helmet from 'helmet';
 import { rateLimiter } from './middleware/rateLimiter';
 import { errorHandler } from './middleware/errorHandler';
 import projectRoutes from './routes/project.routes';
+import brandRoutes from './routes/brand.routes';
+import domainRoutes from './routes/domain.routes';
+import logoRoutes from './routes/logo.routes';
 
 const app: Express = express();
 
@@ -33,8 +36,8 @@ app.use(
 );
 
 // ── Parsing Middleware ─────────────────────────────────────
-app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '15mb' }));
+app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 
 // ── Rate Limiting ──────────────────────────────────────────
 app.use(rateLimiter);
@@ -58,10 +61,11 @@ app.get('/api/health', (_req, res) => {
   });
 });
 
-// ── Routes Owned by Dev 4 ──────────────────────────────────
-// Supports both /api/projects and /api/brand (for POST /api/brand/save)
+// ── Application Routes ─────────────────────────────────────
 app.use('/api/projects', projectRoutes);
-app.use('/api/brand', projectRoutes);
+app.use('/api/brand', brandRoutes);
+app.use('/api/domain', domainRoutes);
+app.use('/api/logos', logoRoutes);
 
 // ── Error Handling Middleware (Must be registered last) ────
 app.use(errorHandler);

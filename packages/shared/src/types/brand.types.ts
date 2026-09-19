@@ -79,11 +79,39 @@ export type LogoStyle =
   | 'geometric'
   | 'illustrative';
 
+export type LogoArchetype =
+  | 'abstract'
+  | 'combination'
+  | 'emblems'
+  | 'lettermark'
+  | 'mascot'
+  | 'pictorial'
+  | 'wordmark';
+
+export type LogoMode = 'template' | 'scratch';
+
 export interface LogoConcept {
   id: string;                   // e.g. "logo_001"
-  url: string;                  // DALL-E image URL or placeholder
-  prompt: string;               // the exact DALL-E prompt used to generate it
-  style: LogoStyle;
+  url: string;                  // image URL or base64 data URI
+  prompt: string;               // the exact prompt used to generate it
+  style: LogoStyle | string;
+  model?: 'gemini' | 'flux';    // AI engine that generated it
+  mode?: LogoMode;              // generation mode
+}
+
+export interface LogoGenerationRequest {
+  projectId: string;
+  selectedName: BrandName;
+  mode: LogoMode;
+  archetypeId?: string;            // e.g. 'abstract', 'combination', 'wordmark'
+  exemplarBrandId?: string;        // e.g. 'chase-bank', 'spotify'
+  referenceImageBase64?: string;   // optional direct base64 image data
+  referenceImageMimeType?: string; // e.g. 'image/png', 'image/jpeg'
+  preferredColors?: string[];      // hex codes e.g. ['#117ACA', '#231F20']
+  fontStyle?: string;              // e.g. 'geometric sans-serif', 'serif'
+  styleKeywords?: string;          // e.g. 'minimalist, corporate'
+  industry?: string;
+  count?: number;                  // number of concepts (default: 2)
 }
 
 // ============================================================
