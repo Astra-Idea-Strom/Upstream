@@ -14,7 +14,6 @@ import {
   getTaglinesForBrand,
   INITIAL_CHAT_MESSAGES,
 } from '../mock/mockData';
-import confetti from 'canvas-confetti';
 
 export interface ChatActionOption {
   id: string;
@@ -46,6 +45,24 @@ export interface ProjectSession {
   industry: string;
   timestamp: string;
   activeBrandName?: string;
+}
+
+/**
+ * The single completion message for the flow.
+ *
+ * Both the manual path (`selectLogoStyle`) and the autonomous path
+ * (`runFullAutonomousPipeline`) end here, so the transcript finishes the same
+ * way however the user got there. Previously each path had its own wording and
+ * its own follow-up chips, which made the same event read as two events.
+ */
+function buildCompletionMessage(brand: BrandName, industry: string, tagline: string): ChatMessage {
+  return {
+    id: 'msg_complete_' + Date.now(),
+    sender: 'assistant',
+    text: `**${brand.name} is complete.**\n\n- Brief — ${industry}\n- Name — **${brand.name}**\n- Tagline — *"${tagline}"*\n- Visual — colour palette + font pairing\n- Logo — vector mark\n\nThe export kit is ready below.`,
+    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    suggestions: ['Use a quieter, more luxurious tone', 'Try a bolder direction', 'Start a new brand'],
+  };
 }
 
 interface BrandStore {
@@ -311,12 +328,12 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
     const botMsg: ChatMessage = {
       id: 'msg_bot_confirmed_' + Date.now(),
       sender: 'assistant',
-      text: `**Brief confirmed** — ${finalInput.industry}\n\nI've materialised the **Brief & Positioning** card on your canvas and generated five candidate names with domain and handle checks. Pick one to continue.`,
+      text: `**Brief captured** — ${finalInput.industry}\n\nFive candidate names are on the canvas, with domain availability for each. Pick one to continue.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       actionOptions: [
         {
           id: 'opt_auto_pilot',
-          label: 'Auto-pilot the remaining steps',
+          label: 'Complete the remaining steps',
           actionType: 'run_auto_pipeline',
         },
       ],
@@ -353,7 +370,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
     const botMsg: ChatMessage = {
       id: 'msg_bot_name_chosen_' + Date.now(),
       sender: 'assistant',
-      text: `**${name.name}** is locked in.\n\nI've materialised the name card with its domain and handle checks, and drafted four taglines for ${name.name}. Choose one to continue.`,
+      text: `**${name.name}** locked in.\n\nFour taglines are ready. Choose one to continue.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
 
@@ -377,7 +394,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
     const botMsg: ChatMessage = {
       id: 'msg_bot_tagline_' + Date.now(),
       sender: 'assistant',
-      text: `Tagline locked — *"${tagline}"*.\n\nI've built five chromatic harmonies for **${updated.name}**, each paired with a Google Font. Apply one to continue.`,
+      text: `Tagline locked — *"${tagline}"*.\n\nFive colour harmonies are ready, each with a font pairing. Apply one to continue.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
 
@@ -432,21 +449,14 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       step: 5,
     });
 
-    if (typeof window !== 'undefined') {
-      try {
-        confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
-      } catch (e) {
-        // Safe fallback if canvas not available
-      }
-    }
+    // The celebration is fired by BrandKitExportCard on mount — the one moment
+    // the identity is actually finished — so it is not duplicated here.
 
-    const botMsg: ChatMessage = {
-      id: 'msg_bot_logo_' + Date.now(),
-      sender: 'assistant',
-      text: `**Brand Identity Generation Complete!**\n\nAll 5 investor-ready cards have materialized on your workspace canvas:\n1. **Industry & Concept Card**\n2. **Brand Name & Tagline Card**\n3. **Visual Palette & Fonts Card**\n4. **Vector Logo Artwork Card**\n5. **Brand Kit Export Card**\n\nYou can toggle dark/light contrast modes, preview touchpoints, or download your complete Brand Kit PDF.`,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      suggestions: ['Download PDF Brand Card', 'Copy Design Tokens', 'Start New Project'],
-    };
+    const botMsg = buildCompletionMessage(
+      get().selectedName,
+      get().input.industry,
+      get().selectedName.tagline,
+    );
 
     set((state) => ({
       chatMessages: [...state.chatMessages, botMsg],
@@ -482,7 +492,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       const msg1: ChatMessage = {
         id: 'msg_auto_name_' + Date.now(),
         sender: 'assistant',
-        text: `[Autonomous Agent]: Synthesized and selected primary brand name **${chosenName.name}** (Match: 98/100). Materialized Brand Name Card.`,
+        text: `**${chosenName.name}** locked in.\n\nFour taglines are ready.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       set((state) => ({ chatMessages: [...state.chatMessages, msg1] }));
@@ -499,7 +509,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       const msg2: ChatMessage = {
         id: 'msg_auto_tagline_' + Date.now(),
         sender: 'assistant',
-        text: `[Autonomous Agent]: Calibrated strategic tagline: *"${chosenTagline}"* (${taglines[0]?.angle || 'Artisanal Craft'}).`,
+        text: `Tagline locked — *"${chosenTagline}"*\n\nFive colour harmonies are ready.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       set((state) => ({ chatMessages: [...state.chatMessages, msg2] }));
@@ -515,7 +525,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       const msg3: ChatMessage = {
         id: 'msg_auto_palette_' + Date.now(),
         sender: 'assistant',
-        text: `[Autonomous Agent]: Established 5-color harmony and calibrated typography pairing (Headline: ${chosenName.visualDirection?.fonts.headline || 'Outfit'}, Body: ${chosenName.visualDirection?.fonts.body || 'Inter'}). Materialized Visual Palette Card.`,
+        text: `Visual system applied to **${chosenName.name}**.\n\nFive logo directions are ready.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       set((state) => ({ chatMessages: [...state.chatMessages, msg3] }));
@@ -530,19 +540,14 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
         step: 5,
       });
 
-      if (typeof window !== 'undefined') {
-        try {
-          confetti({ particleCount: 90, spread: 75, origin: { y: 0.6 } });
-        } catch (e) {}
-      }
+      // Celebration is owned by BrandKitExportCard's mount effect, so both the
+      // manual and autonomous paths get exactly one burst.
 
-      const msg4: ChatMessage = {
-        id: 'msg_auto_complete_' + Date.now(),
-        sender: 'assistant',
-        text: `[Autonomous Agent]: **All 5 Brand Identity Artifacts Generated!**\n\n- Industry: ${get().input.industry}\n- Name: **${chosenName.name}**\n- Tagline: *"${chosenTagline}"*\n- Visual: 5-Color Harmony + Font Pairing\n- Logo: Architectural Vector Mark\n- Kit: PDF & PNG Export ready.`,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        suggestions: ['Download PDF Brand Card', 'Copy Design Tokens', 'Start New Project'],
-      };
+      const msg4 = buildCompletionMessage(
+        chosenName,
+        get().input.industry,
+        chosenTagline,
+      );
       set((state) => ({ chatMessages: [...state.chatMessages, msg4] }));
     }, 2200);
   },
@@ -674,6 +679,16 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
         return;
       }
 
+      // Explicit restart intent. Handled here so it never falls through to a
+      // "refinement" reply that would leave the finished brand on screen.
+      if (
+        /^(start (a )?new|new (project|brand|identity)|reset|start over)\b/i.test(text.trim())
+      ) {
+        set({ isChatTyping: false });
+        get().reset();
+        return;
+      }
+
       // Check if user explicitly provided a brand name in their prompt (Fast-Path)
       const explicitName = extractBrandName(text);
 
@@ -748,14 +763,57 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
 
       const names = getNamesForConcept(candidateInput.industry || detectedTheme);
 
+      // REFINEMENT PATH: once the identity is complete, a free-text message is
+      // a refinement, not a restart. Previously every message fell through to
+      // the default path below, which resets the four `hasConfirmed*` flags —
+      // so typing "make the tone more luxurious" after finishing would wipe
+      // four artefacts off the canvas and send the user back to name choice.
+      if (get().hasConfirmedLogo) {
+        // A refinement re-tunes the brief's tone and nothing else. Merging the
+        // full `candidateInput` here used to overwrite `industry` with the raw
+        // chat text, so "make the tone more luxurious" rewrote the Brief card's
+        // industry to "Make the tone more luxurious…".
+        const refinementTone: BrandTone = /luxur|quiet|elegant|premium|refined|understated|calm|sophisticat/.test(lower)
+          ? 'luxurious'
+          : /bold|energetic|loud|high-energy|punchy|striking|bolder/.test(lower)
+            ? 'bold'
+            : /minimal|clean|simple|restrained|quietly/.test(lower)
+              ? 'minimalist'
+              : /playful|fun|friendly|warm|cheerful/.test(lower)
+                ? 'playful'
+                : /tech|futur|digital|precise|engineer/.test(lower)
+                  ? 'tech-forward'
+                  : get().input.tone;
+
+        set({
+          input: { ...get().input, tone: refinementTone },
+          isChatTyping: false,
+        });
+
+        const botMsg: ChatMessage = {
+          id: 'msg_bot_refine_' + Date.now(),
+          sender: 'assistant',
+          text: `**Brief re-tuned to ${refinementTone}.** ${get().selectedName.name}'s confirmed cards are untouched — the Brief card now reflects the new tone.\n\nTo rework a specific piece, use **Change name**, **Change tagline** or **Palette** on the card you want to revisit.`,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          suggestions: ['Use a quieter, more luxurious tone', 'Try a bolder direction'],
+        };
+
+        set((state) => ({ chatMessages: [...state.chatMessages, botMsg] }));
+        return;
+      }
+
       // FAST PATH: If user already provided a brand name, skip 5-name generation and immediately suggest color palette & open Canva editor
       if (explicitName) {
         const cleanName = explicitName;
+        // Seed the tagline with the first real option for this name, so the name
+        // card previews an actual tagline rather than an invented placeholder.
+        const previewTagline =
+          getTaglinesForBrand(cleanName, detectedTheme)[0]?.tagline ?? 'Tagline pending.';
         const brandObj: BrandName = {
           id: 'custom_' + Date.now(),
           name: cleanName,
-          meaning: `Founder-specified brand identity curated for ${detectedTheme.toLowerCase()}.`,
-          tagline: `Crafted with distinction for ${detectedTheme.toLowerCase()}.`,
+          meaning: 'Named by you.',
+          tagline: previewTagline,
           domainAvailability: {
             com: true,
             io: true,
@@ -798,18 +856,18 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
           isChatTyping: false,
         });
 
-        reply = `**Brand name locked — ${cleanName}**\n\nYou already named the venture, so I've skipped name generation and kept **${cleanName}** as the primary candidate.\n\n- **Industry**: ${detectedTheme}\n- **Brief**: ${detectedAudience}\n\nNext I'll draft taglines for ${cleanName}. Pick one from the canvas to continue.`;
+        reply = `**Brand name locked — ${cleanName}**\n\nYou already named the venture, so **${cleanName}** is set as the primary candidate.\n\n- **Industry**: ${detectedTheme}\n- **Audience**: ${detectedAudience}\n\nFour taglines are ready. Pick one from the canvas to continue.`;
 
         actionOptions = [
           {
             id: 'opt_auto_pilot',
-            label: 'Auto-pilot the remaining steps',
+            label: 'Complete the remaining steps',
             actionType: 'run_auto_pipeline',
           },
         ];
 
         suggestions = [
-          'Make the tone more luxurious and quiet',
+          'Use a quieter, more luxurious tone',
           'Try a bolder, high-energy direction',
         ];
 
@@ -847,17 +905,17 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
         isChatTyping: false,
       });
 
-      reply = `**Brief captured** — ${detectedTheme}\n\nHere's how I read it:\n- **Tone**: ${detectedTone}\n- **Audience**: ${detectedAudience}\n\nI've materialised the **Brief & Positioning** card and generated five candidate names with domain and handle checks. Pick one on the canvas to continue.`;
+      reply = `**Brief captured** — ${detectedTheme}\n\n- **Tone**: ${detectedTone}\n- **Audience**: ${detectedAudience}\n\nFive candidate names are on the canvas. Pick one to continue.`;
 
       actionOptions = [
         {
           id: 'opt_auto_pilot',
-          label: 'Auto-pilot the remaining steps',
+          label: 'Complete the remaining steps',
           actionType: 'run_auto_pipeline',
         },
       ];
 
-      suggestions = ['Make the tone more luxurious and quiet', 'Use a bolder direction'];
+      suggestions = ['Use a quieter, more luxurious tone', 'Try a bolder direction'];
 
       const botMsg: ChatMessage = {
         id: 'msg_bot_' + Date.now(),

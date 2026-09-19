@@ -5,7 +5,7 @@ import { CardShell } from '../CardShell';
 import { Button } from '../../ui/primitives';
 import type { LogoStyle } from '@upstream/shared';
 import { cn } from '../../../lib/cn';
-import { Check, Zap } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 const LOGO_OPTIONS: { style: LogoStyle; label: string; desc: string }[] = [
   { style: 'minimal', label: 'Minimalist Glyph', desc: 'Continuous-line monogram with optical balance' },
@@ -27,7 +27,7 @@ export const LogoSelectionCard: React.FC = () => {
       id="step-card-logo"
       step={5}
       variant="choosing"
-      status={{ label: 'Awaiting selection', tone: 'warning', dot: true, pulse: true }}
+      status={{ label: 'Choose one', tone: 'warning', dot: true, pulse: true }}
       actions={
         <>
           {hasConfirmedLogo && (
@@ -38,15 +38,14 @@ export const LogoSelectionCard: React.FC = () => {
           <Button
             variant="outline"
             size="sm"
-            icon={<Zap className="h-3.5 w-3.5" />}
-            onClick={() => selectLogoStyle('minimal')}
+            onClick={() => selectLogoStyle(LOGO_OPTIONS[0].style)}
           >
-            Complete kit
+            Pick first
           </Button>
         </>
       }
       title={`Logo direction for ${selectedName.name}`}
-      subtitle="Scalable vector marks, calibrated for light and dark backgrounds."
+      subtitle="Vector marks for light and dark backgrounds."
     >
       <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
         {LOGO_OPTIONS.map((option) => {
@@ -61,7 +60,7 @@ export const LogoSelectionCard: React.FC = () => {
                 onClick={() => selectLogoStyle(option.style)}
                 aria-pressed={isSelected}
                 className={cn(
-                  'flex h-full w-full flex-col items-center gap-3 rounded-2xl border p-3.5 text-center transition-colors',
+                  'group flex h-full w-full flex-col items-center gap-3 rounded-2xl border p-3.5 text-center transition-colors',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45',
                   isSelected
                     ? 'border-brand-500 bg-brand-50/60 ring-1 ring-brand-500/20'
@@ -92,7 +91,7 @@ export const LogoSelectionCard: React.FC = () => {
                       : 'bg-slate-100 text-slate-600 group-hover:bg-brand-600 group-hover:text-white',
                   )}
                 >
-                  {isSelected ? 'Active mark' : 'Select style'}
+                  {isSelected ? 'Selected' : 'Select'}
                 </span>
               </button>
             </li>

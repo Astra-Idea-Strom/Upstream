@@ -4,7 +4,7 @@ import { getTaglinesForBrand, type BrandTaglineOption } from '../../../mock/mock
 import { CardShell } from '../CardShell';
 import { Button } from '../../ui/primitives';
 import { cn } from '../../../lib/cn';
-import { Check, Quote, Zap } from 'lucide-react';
+import { Check, Quote } from 'lucide-react';
 
 /**
  * Step 3, choosing state — strategic tagline options.
@@ -20,7 +20,7 @@ export const TaglineSelectionCard: React.FC = () => {
       id="step-card-tagline"
       step={3}
       variant="choosing"
-      status={{ label: 'Awaiting selection', tone: 'warning', dot: true, pulse: true }}
+      status={{ label: 'Choose one', tone: 'warning', dot: true, pulse: true }}
       actions={
         <>
           {hasConfirmedTagline && (
@@ -31,15 +31,14 @@ export const TaglineSelectionCard: React.FC = () => {
           <Button
             variant="outline"
             size="sm"
-            icon={<Zap className="h-3.5 w-3.5" />}
             onClick={() => taglines[0] && selectTagline(taglines[0].tagline)}
           >
-            Auto-pick
+            Pick first
           </Button>
         </>
       }
       title={`Tagline for ${selectedName.name}`}
-      subtitle="Positioning hooks calibrated to the brief. Pick one to lock it in."
+      subtitle="Four positioning statements."
     >
       <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
         {taglines.map((item) => {
@@ -60,7 +59,7 @@ export const TaglineSelectionCard: React.FC = () => {
                 )}
               >
                 <span className="flex items-center justify-between gap-2">
-                  <span className="rounded-md border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-2xs font-bold uppercase tracking-wider text-slate-600">
+                  <span className="rounded-md border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-2xs font-semibold text-slate-600">
                     {item.angle}
                   </span>
                   {isSelected && <Check className="h-3.5 w-3.5 flex-shrink-0 text-brand-600" />}

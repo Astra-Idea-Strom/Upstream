@@ -4,7 +4,7 @@ import { CardShell } from '../CardShell';
 import { DomainChip } from '../DomainChip';
 import { Button } from '../../ui/primitives';
 import { cn } from '../../../lib/cn';
-import { ArrowRight, Check, RefreshCw, Zap } from 'lucide-react';
+import { ArrowRight, Check, RefreshCw } from 'lucide-react';
 
 /**
  * Step 2, choosing state — the five candidate names.
@@ -27,7 +27,7 @@ export const NameSelectionCard: React.FC = () => {
       id="step-card-name"
       step={2}
       variant="choosing"
-      status={{ label: 'Awaiting selection', tone: 'warning', dot: true, pulse: true }}
+      status={{ label: 'Choose one', tone: 'warning', dot: true, pulse: true }}
       actions={
         <>
           {hasConfirmedName && (
@@ -47,15 +47,14 @@ export const NameSelectionCard: React.FC = () => {
           <Button
             variant="outline"
             size="sm"
-            icon={<Zap className="h-3.5 w-3.5" />}
             onClick={() => displayedNames[0] && selectName(displayedNames[0])}
           >
-            Auto-pick
+            Pick first
           </Button>
         </>
       }
       title="Choose a brand name"
-      subtitle="Five candidates with live domain availability. Pick one to lock it into the kit."
+      subtitle="Five candidates with domain availability."
     >
       <ul className="space-y-2">
         {displayedNames.map((brand, index) => {

@@ -5,7 +5,7 @@ import { CardShell } from '../CardShell';
 import { SwatchStrip } from '../SwatchStrip';
 import { Button } from '../../ui/primitives';
 import { cn } from '../../../lib/cn';
-import { Check, Zap } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 /**
  * Step 4, choosing state — chromatic harmony and type pairing.
@@ -19,7 +19,7 @@ export const PaletteSelectionCard: React.FC = () => {
       id="step-card-visual"
       step={4}
       variant="choosing"
-      status={{ label: 'Awaiting selection', tone: 'warning', dot: true, pulse: true }}
+      status={{ label: 'Choose one', tone: 'warning', dot: true, pulse: true }}
       actions={
         <>
           {hasConfirmedPalette && (
@@ -30,15 +30,14 @@ export const PaletteSelectionCard: React.FC = () => {
           <Button
             variant="outline"
             size="sm"
-            icon={<Zap className="h-3.5 w-3.5" />}
             onClick={() => selectPalette(DEFAULT_PALETTE_IDX)}
           >
-            Auto-pick
+            Pick first
           </Button>
         </>
       }
       title={`Colour direction for ${selectedName.name}`}
-      subtitle="Five calibrated harmonies, each with a Google Font pairing. Pick one to apply."
+      subtitle="Five harmonies, each with a font pairing."
     >
       <ul className="space-y-3">
         {PALETTE_OPTIONS.map((palette) => {
@@ -65,7 +64,7 @@ export const PaletteSelectionCard: React.FC = () => {
                     <span className="font-display text-sm font-bold text-slate-900">
                       {palette.name}
                     </span>
-                    <span className="rounded-full border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-2xs font-bold uppercase tracking-wider text-slate-600">
+                    <span className="rounded-full border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-2xs font-semibold text-slate-600">
                       {palette.tone}
                     </span>
                   </span>

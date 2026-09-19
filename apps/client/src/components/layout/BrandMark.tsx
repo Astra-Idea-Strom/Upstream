@@ -4,8 +4,6 @@ import { cn } from '../../lib/cn';
 export interface BrandMarkProps {
   /** Renders the UPSTREAM wordmark next to the glyph. */
   showWordmark?: boolean;
-  /** Renders the "Idea to Identity" descriptor next to the wordmark. */
-  showDescriptor?: boolean;
   size?: 'sm' | 'md';
   className?: string;
 }
@@ -29,7 +27,6 @@ const ICON_SIZES = {
  */
 export const BrandMark: React.FC<BrandMarkProps> = ({
   showWordmark = true,
-  showDescriptor = false,
   size = 'md',
   className,
 }) => (
@@ -57,15 +54,8 @@ export const BrandMark: React.FC<BrandMarkProps> = ({
     </span>
 
     {showWordmark && (
-      <span className="flex items-baseline gap-2">
-        <span className="font-display text-lg font-black tracking-tight text-slate-950">
-          UPSTREAM
-        </span>
-        {showDescriptor && (
-          <span className="hidden font-mono text-2xs font-semibold uppercase tracking-wider text-brand-600 sm:inline">
-            Idea to Identity
-          </span>
-        )}
+      <span className="font-display text-lg font-black tracking-tight text-slate-950">
+        UPSTREAM
       </span>
     )}
   </span>

@@ -19,7 +19,7 @@ export const Header: React.FC = () => {
           className="rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45 focus-visible:ring-offset-2"
           aria-label="Upstream home"
         >
-          <BrandMark showDescriptor />
+          <BrandMark />
         </a>
 
         <nav className="flex items-center gap-2">

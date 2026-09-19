@@ -10,7 +10,6 @@ import {
   Coffee,
   Gem,
   Check,
-  Zap,
 } from 'lucide-react';
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -28,26 +27,14 @@ export const PrebuiltThemesSection: React.FC = () => {
   return (
     <section className="px-4 sm:px-8 py-10 relative">
       <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-100 border border-brand-200 text-xs font-bold text-brand-800 mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-coral-500" />
-              <span>PRE-CONFIGURED BRAND ARCHETYPES</span>
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 tracking-tight">
-              Select an Industry Theme to Seed Your Brand
-            </h3>
-            <p className="text-sm text-slate-500 mt-1 max-w-xl">
-              Tap any curated archetype below. It pre-populates industry metrics, visual palettes,
-              and allows you to fine-tune your specific business nuances.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500 bg-white/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-brand-100 shadow-sm self-start md:self-auto">
-            <span className="w-2 h-2 rounded-full bg-brand-500" />
-            <span>6 Curated Starter Kits</span>
-          </div>
+        {/* Section header */}
+        <div className="mb-8">
+          <h3 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 tracking-tight">
+            Starter kits
+          </h3>
+          <p className="text-sm text-slate-500 mt-1 max-w-xl">
+            Pick a curated industry to seed the brief. Every field stays editable.
+          </p>
         </div>
 
         {/* Themed Cards Grid */}
@@ -120,7 +107,7 @@ export const PrebuiltThemesSection: React.FC = () => {
 
                   {/* Card Footer Action */}
                   <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                    <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+                    <span className="text-[11px] font-medium text-slate-500">
                       Tone: <strong className="text-slate-900 capitalize">{theme.defaultInput.tone}</strong>
                     </span>
 
