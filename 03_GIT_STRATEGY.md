@@ -6,61 +6,43 @@
 
 ---
 
-## Branch Structure
+## Branch Structure (Single-Branch-Per-Developer)
+
+To prevent merge conflicts and branch switching friction during the 12-hour hackathon, **each developer works exclusively on a single persistent branch**:
 
 ```
 main (protected - deployable at all times)
   │
-  ├── feature/setup-monorepo        ← Role 1 │ First 30 min │ CRITICAL PATH
-  ├── feature/shared-types           ← Role 1 │ Hour 1
-  │
-  ├── feature/client-scaffold        ← Role 2 │ Hour 1
-  ├── feature/brand-form-ui          ← Role 2 │ Hours 1–3
-  ├── feature/brand-results-ui       ← Role 2 │ Hours 3–5
-  ├── feature/logo-ui               ← Role 2 │ Hours 5–7
-  ├── feature/export-ui             ← Role 2 │ Hours 7–9
-  │
-  ├── feature/server-scaffold        ← Role 4 │ Hour 1
-  ├── feature/firebase-setup         ← Role 4 │ Hours 1–2
-  ├── feature/brand-routes           ← Role 4 │ Hours 2–4
-  ├── feature/middleware             ← Role 4 │ Hours 2–3
-  │
-  ├── feature/mock-data             ← Role 3 │ Hour 1–2
-  ├── feature/openai-service         ← Role 3 │ Hours 2–5
-  ├── feature/dalle-service          ← Role 3 │ Hours 4–6
-  └── feature/domain-check           ← Role 3 │ Hours 5–7
+  ├── dev/1-lead                    ← Dev 1 (PM / Lead / Shared Types / Infra)
+  ├── dev/2-client                  ← Dev 2 (UI / UX / React Frontend)
+  ├── dev/3-ai                      ← Dev 3 (AI / OpenAI / DALL-E / Mock Services)
+  └── dev/4-backend                 ← Dev 4 (Express Bootstrap / Middleware / Firebase)
 ```
 
 ### Why This Structure?
 
-- **`main` is sacred.** It is the only branch that gets deployed to Vercel/Render. It must always build without errors.
-- **One branch per feature/task.** This keeps PRs small, reviews fast, and conflicts minimal.
-- **No long-lived branches.** Every feature branch should be merged within a few hours of creation. Don't sit on code.
+- **Zero Merge Conflicts:** Each developer is strictly assigned isolated files and directories. Dev 2 owns `apps/client/`. In `apps/server/`, Dev 3 and Dev 4 own mutually exclusive files.
+- **No Branch Switching Overhead:** You check out your assigned branch once at the start of the hackathon and stay on it.
+- **Continuous Progress:** Commit and push frequently to your personal remote branch without waiting on anyone.
+- **Scheduled Syncs:** Code merges into `main` at 3 explicit milestones (Hour 0:45, Hour 5:00 SYNC 1, Hour 9:00 SYNC 2).
 
-### Naming Convention
+### Branch Assignment Matrix
 
-```
-feature/<scope>-<what-it-does>
-```
+| Developer | Branch Name | Scope / Directory | Primary Responsibility |
+|---|---|---|---|
+| **Dev 1** (Lead / PM) | `dev/1-lead` | Root, `packages/shared/`, `.github/`, Deploy infra | Monorepo config, shared types, PR reviews, Vercel/Render deployment |
+| **Dev 2** (UI / UX) | `dev/2-client` | `apps/client/**` (100% exclusive) | React 18 frontend, forms, results grid, Zustand store, PDF export |
+| **Dev 3** (AI / API) | `dev/3-ai` | `apps/server/src/services/openai*`, `dalle*`, `mock/`, AI routes/controllers | Mock data fixtures, GPT-4o brand generation, DALL-E 3 logos, caching |
+| **Dev 4** (Backend / DB) | `dev/4-backend` | `apps/server/` Express core, middleware, Firebase Admin, project storage | Server bootstrap, security middleware, Firestore persistence, health endpoint |
 
-| Part | Rule | Example |
-|------|------|---------|
-| `feature/` | Always prefix with this | `feature/` |
-| `<scope>` | Maps to app area | `client`, `server`, `shared`, `infra` |
-| `<what-it-does>` | Short kebab-case description | `brand-form-ui`, `openai-service` |
+### Synchronization Order (Milestones)
 
-**Never use:** `myfeature`, `test123`, your name as a branch name.
-
-### Merge Order (Critical)
-
-Some branches **must** merge before others can start. Follow this dependency order:
+Branches merge into `main` at 3 planned synchronization gates:
 
 ```
-1. feature/setup-monorepo  →  MERGE FIRST (unblocks everyone)
-2. feature/shared-types    →  MERGE SECOND (unblocks Roles 2, 3, 4 type imports)
-3. feature/client-scaffold →  MERGE before any client UI branches
-4. feature/server-scaffold →  MERGE before any server route branches
-5. All others              →  Can merge in any order after above are done
+1. Hour 0:45: dev/4-backend  →  Merge server boilerplate to main (Dev 3 then pulls main)
+2. Hour 5:00: SYNC 1         →  Merge dev/4-backend → dev/3-ai → dev/2-client into main
+3. Hour 9:00: SYNC 2         →  Merge all remaining polish/bugfixes into main for deploy
 ```
 
 ---
@@ -95,61 +77,63 @@ git push origin main
 
 ---
 
-### 2. Creating a Feature Branch
+### 2. Checking Out Your Assigned Branch (Do Once at Start)
 
-Always branch off of the latest `main`:
+Each developer checks out their assigned branch from the latest `main` once and works on it throughout the project:
 
 ```bash
 # Make sure you're on main and it's up to date
 git checkout main
 git pull origin main
 
-# Create and switch to your new feature branch
-git checkout -b feature/your-feature-name
+# Check out your specific assigned branch:
+# Role 1: git checkout -b dev/1-lead
+# Role 2: git checkout -b dev/2-client
+# Role 3: git checkout -b dev/3-ai
+# Role 4: git checkout -b dev/4-backend
 
-# Example:
-git checkout -b feature/brand-form-ui
+# Example for Dev 2:
+git checkout -b dev/2-client
+git push -u origin dev/2-client
 ```
 
-> **Rule:** Never branch off another person's feature branch. Always branch from `main`.
+> **Rule:** Never create separate feature branches. Always stay on your assigned `dev/<role>` branch.
 
 ---
 
 ### 3. Syncing With Main While Working
 
-If `main` has moved forward while you've been working (e.g., someone merged their PR), sync your branch:
+When `main` is updated at a sync point (e.g., after the H0:45 server scaffold or H5:00 SYNC 1), pull `main` into your persistent branch:
 
 ```bash
-# Fetch the latest state of origin without merging
+# Fetch latest commits from remote
 git fetch origin
 
-# Rebase your branch on top of the latest main
-git rebase origin/main
+# Merge main into your branch
+git merge origin/main
 ```
 
-**If you hit a conflict during rebase:**
+**If you hit a conflict during merge:**
 
 ```bash
 # Git will pause and show you the conflict files
 # Open each conflicted file, resolve the conflict markers:
 #   <<<<<<< HEAD        ← your changes
 #   =======
-#   >>>>>>> origin/main ← their changes
+#   >>>>>>> origin/main ← main changes
 
 # After resolving each file:
 git add <resolved-file>
 
-# Continue the rebase
-git rebase --continue
-
-# Repeat for each conflict until rebase is done
+# Complete the merge commit
+git commit -m "chore: sync with main"
 ```
 
-**If rebase is a disaster and you want to bail out:**
+**If merge has unexpected issues and you want to abort:**
 
 ```bash
-git rebase --abort
-# You'll be back to your original state before the rebase
+git merge --abort
+# You'll be back to your original state before the merge attempt
 ```
 
 ---
@@ -159,55 +143,49 @@ git rebase --abort
 ```bash
 # Stage everything (or specific files)
 git add .
-# or
-git add apps/client/src/components/BrandInputForm.tsx
 
-# Write a good commit message (see Commit Convention below)
+# Write a clear commit message (see Commit Convention below)
 git commit -m "feat(client): add BrandInputForm component"
 
-# Push to your feature branch on GitHub
-git push origin feature/your-feature-name
-
-# First push of a new branch — use -u to set upstream:
-git push -u origin feature/your-feature-name
+# Push to your persistent branch on GitHub
+git push origin dev/2-client
 ```
 
-> **Tip:** Commit often. Small commits are easier to revert and easier to review. Don't save all your work for one giant commit at the end.
+> **Tip:** Commit and push frequently to your remote branch. That backs up your code and allows team leads to review progress without interrupting your work.
 
 ---
 
-### 5. Opening a Pull Request (GitHub UI)
+### 5. Opening a Pull Request (At Sync Milestones)
+
+At synchronization checkpoints (H0:45, H5:00 SYNC 1, H9:00 SYNC 2):
 
 1. Go to the repo on **GitHub.com**
-2. You'll see a yellow banner: _"feature/your-feature-name had recent pushes"_ → click **"Compare & pull request"**
-3. Fill in the **PR template** (see PR Process section below)
-4. Set **base branch** to `main`
-5. Assign **Role 1** as the reviewer
-6. Add the appropriate **label** (`frontend`, `backend`, `ai`, etc.)
-7. Link the related **Issue** using `Closes #<issue-number>` in the description
+2. Click **"New pull request"**
+3. Set **base branch** to `main` and **compare branch** to your branch (e.g., `dev/2-client`)
+4. Fill in the **PR template**
+5. Assign **Dev 1 (Role 1)** as the reviewer
+6. Add the appropriate label (`frontend`, `backend`, `ai`, etc.)
+7. Link related Issues using `Closes #<issue-number>`
 8. Click **"Create pull request"**
 
 ---
 
-### 6. After Your PR Is Merged
+### 6. After Your PR Is Merged (Do NOT Delete Your Branch)
 
-Clean up your local machine:
+Because you have **one persistent branch for the entire hackathon**, do **NOT** delete your branch after merging:
 
 ```bash
-# Switch back to main
-git checkout main
+# Stay on your branch (e.g. dev/2-client)
+git checkout dev/2-client
 
-# Pull the merged changes
+# Pull the newly merged main into your branch to stay in sync
 git pull origin main
 
-# Delete the old feature branch locally (it's already deleted on GitHub)
-git branch -d feature/your-feature-name
+# Push the updated branch state to remote
+git push origin dev/2-client
 ```
 
-> If git says the branch wasn't fully merged (even though it was via squash merge), force delete:
-> ```bash
-> git branch -D feature/your-feature-name
-> ```
+> **Rule:** Never delete `dev/1-lead`, `dev/2-client`, `dev/3-ai`, or `dev/4-backend`. Keep working on your branch for the next milestone.
 
 ---
 
@@ -421,32 +399,31 @@ Go to **GitHub → Issues → Labels → New label** and create:
 
 ---
 
-## File Ownership Matrix
+## File Ownership Matrix (Zero-Conflict Policy)
 
-This table prevents merge conflicts. **If you don't own it, coordinate before touching it.**
+To eliminate merge conflicts when merging persistent branches into `main`, file ownership is strictly disjoint. **Never edit a file assigned to another developer.**
 
-| File / Directory | Owner | Policy |
-|------------------|-------|--------|
-| `package.json` (root) | Role 1 | Coordinate if others need root-level deps |
-| `pnpm-workspace.yaml` | Role 1 | **Do not touch** |
-| `tsconfig.base.json` | Role 1 | **Do not touch** |
-| `.gitignore` | Role 1 | **Do not touch** |
-| `.github/` | Role 1 | **Do not touch** |
-| `packages/shared/src/` | Role 1 initially, then ALL | Announce in chat before adding new types |
-| `packages/shared/src/types/brand.types.ts` | Role 1 approves changes | Types frozen after Hour 1 — see protocol below |
-| `apps/client/` (all files) | Role 2 | Role 1 or Role 3 may edit `store/` or `api.ts` with notice |
-| `apps/client/src/api/api.ts` | Role 2 primarily | Role 3 adds new API calls with notice |
-| `apps/server/src/index.ts` | Role 4 | **Do not touch** |
-| `apps/server/src/config/` | Role 4 | **Do not touch** |
-| `apps/server/src/middleware/` | Role 4 | **Do not touch** |
-| `apps/server/src/routes/` | Role 4 creates, Role 3 adds handlers | Communicate before adding new routes |
-| `apps/server/src/controllers/` | Role 4 stubs, Role 3 implements AI logic | Follow stub contract |
-| `apps/server/src/services/firebase.service.ts` | Role 4 | **Do not touch** |
-| `apps/server/src/services/openai.service.ts` | Role 3 | **Do not touch** |
-| `apps/server/src/services/dalle.service.ts` | Role 3 | **Do not touch** |
-| `apps/server/src/mock/` | Role 3 | **Do not touch** |
-
----
+| File / Directory | Owner Branch | Policy |
+|------------------|--------------|--------|
+| `package.json` (root), `pnpm-workspace.yaml`, `tsconfig.base.json`, `.gitignore`, `.github/` | `dev/1-lead` | Only Dev 1 manages root configurations |
+| `packages/shared/**` | `dev/1-lead` (approver) | All devs propose in chat; Dev 1 updates and merges to main |
+| `apps/client/**` (all frontend files) | `dev/2-client` | 100% exclusive to Dev 2. No other dev touches `apps/client` |
+| **`apps/server/` Foundation & Storage** | | |
+| `apps/server/package.json`, `tsconfig.json`, `.env.example` | `dev/4-backend` | Dev 4 sets up root server configs at H0:45 |
+| `apps/server/src/index.ts`, `src/app.ts` | `dev/4-backend` | Express app shell, middleware mounting & server bootstrap |
+| `apps/server/src/config/firebase.ts` | `dev/4-backend` | Firebase Admin SDK initialization |
+| `apps/server/src/middleware/**` (`errorHandler.ts`, `rateLimiter.ts`, `validateRequest.ts`) | `dev/4-backend` | All security & error handling middleware |
+| `apps/server/src/services/firebase.service.ts` | `dev/4-backend` | Firestore read/write operations |
+| `apps/server/src/routes/project.routes.ts` | `dev/4-backend` | Project save and retrieval routes |
+| `apps/server/src/controllers/project.controller.ts` | `dev/4-backend` | Project Firestore controller |
+| **`apps/server/` AI & Mock Services** | | |
+| `apps/server/src/config/openai.ts` | `dev/3-ai` | OpenAI API client setup |
+| `apps/server/src/mock/**` (`brandNames.mock.ts`, `domains.mock.ts`, `logos.mock.ts`) | `dev/3-ai` | Static fixtures unblocking frontend |
+| `apps/server/src/services/openai.service.ts` | `dev/3-ai` | GPT-4o brand generation logic |
+| `apps/server/src/services/dalle.service.ts` | `dev/3-ai` | DALL-E 3 image generation & polling |
+| `apps/server/src/services/domain.service.ts` | `dev/3-ai` | Domain availability logic & hashing |
+| `apps/server/src/routes/brand.routes.ts`, `logo.routes.ts`, `domain.routes.ts` | `dev/3-ai` | AI route endpoints |
+| `apps/server/src/controllers/brand.controller.ts`, `logo.controller.ts`, `domain.controller.ts` | `dev/3-ai` | AI controller logic |
 
 ## Shared Files Coordination Protocol
 
@@ -610,29 +587,30 @@ Print this and keep it on your screen during the hackathon:
 ┌─────────────────────────────────────────────────────────┐
 │                  UPSTREAM GIT QUICK REF                 │
 ├─────────────────────────────────────────────────────────┤
-│  Start new task:                                        │
+│  Start at project kickoff (do once):                    │
 │    git checkout main && git pull origin main            │
-│    git checkout -b feature/<scope>-<description>        │
+│    git checkout -b dev/<your-assigned-branch>           │
+│    git push -u origin dev/<your-assigned-branch>        │
 │                                                         │
-│  Save your work:                                        │
+│  Save your work (commit & push often):                  │
 │    git add . && git commit -m "type(scope): desc"       │
-│    git push origin feature/<your-branch>                │
+│    git push origin dev/<your-assigned-branch>           │
 │                                                         │
-│  Sync with main:                                        │
-│    git fetch origin && git rebase origin/main           │
+│  Sync with main (after sync merges):                    │
+│    git fetch origin && git merge origin/main            │
 │                                                         │
-│  Open PR → GitHub UI → Compare & pull request           │
-│  Assign Role 1 as reviewer                              │
+│  Open PR (at sync checkpoints: H0:45, H5:00, H9:00):    │
+│    GitHub UI → PR dev/<your-branch> into main           │
+│    Assign Dev 1 as reviewer                             │
 │                                                         │
-│  After merge:                                           │
-│    git checkout main && git pull origin main            │
-│    git branch -d feature/<your-branch>                  │
+│  After merge to main (DO NOT DELETE BRANCH):            │
+│    git checkout dev/<your-assigned-branch>              │
+│    git pull origin main                                 │
 │                                                         │
 │  Undo last commit (not pushed):                         │
 │    git reset HEAD~1 --soft                              │
 │                                                         │
-│  Commit types: feat | fix | chore | style | refactor    │
-│  Scopes:       client | server | shared | config | infra│
+│  Branches: dev/1-lead | dev/2-client | dev/3-ai | dev/4-backend│
 └─────────────────────────────────────────────────────────┘
 ```
 

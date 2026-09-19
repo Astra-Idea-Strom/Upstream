@@ -13,7 +13,7 @@
 |------|-------------------|----------------|-----------------|----------------------|
 | **H0:00–0:20** | Init monorepo, pnpm workspaces | — *(wait for scaffold)* | — *(wait for scaffold)* | — *(wait for scaffold)* |
 | **H0:20–0:45** | tsconfig.base.json, .gitignore, .env.example | Local env setup, wireframe sketch | Local env setup, review API design | Local env setup, Firebase console |
-| **H0:45–1:00** | GitHub repo, initial commit, branch protection | Branch `feat/ui-setup`, Vite scaffold | Branch `feat/ai-service`, server scaffold | Branch `feat/backend-setup`, Express scaffold |
+| **H0:45–1:00** | GitHub repo, initial commit, branch protection | Branch `dev/2-client`, Vite scaffold | Branch `dev/3-ai`, mock fixtures | Branch `dev/4-backend`, Express scaffold |
 | **H1:00–1:30** | GitHub Issues, labels, PR template | BrandInputForm skeleton | OpenAI SDK + `openai.service.ts` skeleton | Middleware stack (CORS, helmet, rate-limit) |
 | **H1:30–2:00** | `packages/shared` types, unblock all roles | BrandInputForm full (6 fields + validation) | `POST /api/brand/generate` implementation starts | Firebase Admin SDK + `firebase.service.ts` |
 | **H2:00–3:00** | Review & merge PRs (≤20 min each) | BrandNameCard + BrandResultsGrid (mock data) | `POST /api/brand/generate` complete | Route files + controller stubs |
@@ -35,7 +35,7 @@
 
 ### Role 1 – Git / Project Manager
 
-> **Branch Strategy:** `main` is protected (require PR + 1 approval). All work branches off `main` using `feat/<area>` naming.
+> **Branch Strategy:** `main` is protected (require PR + 1 approval). Each developer works on **one persistent branch** (`dev/1-lead`, `dev/2-client`, `dev/3-ai`, `dev/4-backend`) with strictly disjoint file boundaries to eliminate merge conflicts.
 
 | # | Time | Duration | Dependency | Branch | Task | Deliverable |
 |---|------|----------|------------|--------|------|-------------|
@@ -43,11 +43,11 @@
 | 2 | H0:20–0:45 | 25 min | Task 1 | `main` | Write `tsconfig.base.json` (strict mode), `.gitignore` (node_modules, dist, .env), `.env.example` with all required env var keys | Config files committed |
 | 3 | H0:45–1:00 | 15 min | Task 2 | `main` | Create GitHub repo `upstream-hackathon`, push initial commit, set `main` branch protection (require 1 PR review, no force push) | Remote repo live, all team members have push access via collaborator invite |
 | 4 | H1:00–1:30 | 30 min | Task 3 | `main` | Create 20+ GitHub Issues with labels (`ui`, `ai`, `backend`, `infra`, `bug`), write `.github/pull_request_template.md` | Issues visible to team, PR template active |
-| 5 | H1:30–2:00 | 30 min | Task 3 | `feat/shared-types` | Scaffold `packages/shared/src/types.ts` (BrandInput, BrandResult, DomainResult, LogoResult interfaces) and export via `index.ts` | Shared types installable by `apps/client` and `apps/server`; confirm Role 2, 3, 4 are unblocked |
-| 6 | H2:00–5:00 | 3 hr | Ongoing | Various | Continuously monitor open PRs. Review and merge within 20 min of submission. Resolve conflicts immediately (pull, rebase, repush). Message the team in Slack/Discord if a PR is blocked | All feature PRs merged before SYNC 1 |
-| 7 | H5:00–5:30 | 30 min | All core PRs | `main` | SYNC 1: Merge all remaining core PRs in dependency order (backend first, then AI, then UI), run `pnpm install && pnpm build` at root | Clean build on `main` |
-| 8 | H5:30–7:00 | 90 min | Task 7 | `feat/infra` | Set up Vercel project (connect GitHub, set `apps/client` as root, configure env vars). Set up Render service (connect GitHub, set `apps/server` as root, add env vars) | Both deployment configs saved and auto-deploy triggers confirmed |
-| 9 | H7:00–8:00 | 60 min | Task 8 | `feat/infra` | Trigger manual deploys on both platforms, verify health check endpoint (`GET /api/health`), test `POST /api/brand/generate` against the live Render URL using Postman | Staging URLs confirmed working |
+| 5 | H1:30–2:00 | 30 min | Task 3 | `dev/1-lead` | Scaffold `packages/shared/src/types.ts` (BrandInput, BrandResult, DomainResult, LogoResult interfaces) and export via `index.ts` | Shared types installable by `apps/client` and `apps/server`; confirm Role 2, 3, 4 are unblocked |
+| 6 | H2:00–5:00 | 3 hr | Ongoing | `main` | Monitor team branches. Review and merge sync PRs within 20 min of submission. Resolve conflicts immediately. Message team if blocked | Dev branches healthy before SYNC 1 |
+| 7 | H5:00–5:30 | 30 min | All core PRs | `main` | SYNC 1: Merge branches in dependency order (`dev/4-backend` → `dev/3-ai` → `dev/2-client`), run `pnpm install && pnpm build` at root | Clean build on `main` |
+| 8 | H5:30–7:00 | 90 min | Task 7 | `dev/1-lead` | Set up Vercel project (connect GitHub, set `apps/client` as root, configure env vars). Set up Render service (connect GitHub, set `apps/server` as root, add env vars) | Both deployment configs saved and auto-deploy triggers confirmed |
+| 9 | H7:00–8:00 | 60 min | Task 8 | `dev/1-lead` | Trigger manual deploys on both platforms, verify health check endpoint (`GET /api/health`), test `POST /api/brand/generate` against the live Render URL using Postman | Staging URLs confirmed working |
 | 10 | H8:00–9:00 | 60 min | Task 9 | `main` | Monitor Vercel + Render logs, fix any build errors, verify all env vars present (especially `OPENAI_API_KEY`, `FIREBASE_SERVICE_ACCOUNT`) | Zero deployment errors in logs |
 | 11 | H9:00–9:30 | 30 min | Task 10 | `main` | SYNC 2: Run full end-to-end test on staging with entire team; document any discovered bugs as GitHub Issues | All critical bugs triaged |
 | 12 | H9:30–11:00 | 90 min | Task 11 | `main` | Fix any staging deployment issues. Write/polish `README.md` (problem statement, tech stack, setup instructions, team, demo link) | README merged to `main` |
@@ -62,17 +62,17 @@
 
 | # | Time | Duration | Dependency | Branch | Task | Deliverable | Mock Data Used |
 |---|------|----------|------------|--------|------|-------------|----------------|
-| 1 | H0:00–0:30 | 30 min | Role 1 push (H0:20) | `feat/ui-setup` | `cd apps/client`, run `pnpm create vite . --template react-ts`, install Tailwind CSS + PostCSS + Autoprefixer, configure `tailwind.config.ts` (custom colors: `upstream-green`, `upstream-slate`), install Zustand + React Router + Axios | `apps/client` runs on `localhost:5173` |  None |
-| 2 | H0:30–1:00 | 30 min | Task 1 | `feat/ui-setup` | Create `src/store/brandStore.ts` (Zustand: `brandInput`, `brandResults`, `selectedBrand`, `isLoading` state + actions). Set up React Router in `App.tsx` (`/` → LandingPage, `/results` → ResultsPage). Create Axios instance in `src/api/client.ts` with base URL from `import.meta.env.VITE_API_URL` | Store and routing scaffold committed |  None |
-| 3 | H1:00–2:00 | 60 min | Task 2 | `feat/brand-input-form` | Build `BrandInputForm.tsx`: 6 fields → (1) Company Description (textarea, required), (2) Industry (select: Tech / Health / Finance / Retail / Other), (3) Target Audience (text), (4) Brand Vibe (multi-select: Modern / Minimal / Bold / Playful / Trustworthy / Eco-Conscious), (5) Competitor Names (text, optional), (6) Domain Extension Preference (.com / .io / .co). Add Zod validation. On submit, set `isLoading = true` and navigate to `/results` | Fully functional form, no API call yet | `setTimeout(3000)` fakes API delay |
-| 4 | H2:00–3:00 | 60 min | Task 3 | `feat/results-grid` | Build `BrandNameCard.tsx` (props: `name`, `tagline`, `score`, `isSelected`). Build `BrandResultsGrid.tsx` (renders 12 cards in a responsive 3×4 grid, accepts `brands: BrandResult[]`). Import mock data from `src/mocks/mockBrands.ts` (12 hardcoded objects) | Results grid renders with mock data | `src/mocks/mockBrands.ts` (12 brands) |
-| 5 | H3:00–4:00 | 60 min | Task 4 | `feat/visual-direction` | Build `VisualDirectionPanel.tsx` (expandable side panel: color palette, font pairing, brand adjectives). Build `ColorSwatch.tsx` (renders hex color circle + label). Build `DomainBadge.tsx` (props: `domain`, `available: boolean` → green ✓ or red ✗ badge) | Panel expands when a brand card is clicked | `src/mocks/mockVisualDirection.ts` |
-| 6 | H4:00–5:00 | 60 min | Task 5 | `feat/logo-gallery` | Build `LogoGallery.tsx` (2×2 grid of `<img>` tags, accepts `logos: string[]` URLs). Build `LoadingSpinner.tsx` (animated Tailwind spinner with label). Build `BrandIdentityCard.tsx` (summary card: selected name + tagline + palette + logo preview) | Complete results page layout renders with mock data | `src/mocks/mockLogos.ts` (4 placeholder image URLs) |
-| 7 | H5:00–5:30 | 30 min | SYNC 1 | `main` | Merge `feat/logo-gallery` into `main` via PR. Pull latest `main`. Participate in SYNC 1 build verification | Clean build confirmed |  — |
-| 8 | H5:30–7:00 | 90 min | SYNC 1 | `feat/api-wiring` | Replace mock imports with real Zustand actions that call Axios: (a) On form submit → `POST /api/brand/generate` → populate `brandResults`. (b) On brand card click → `POST /api/domain/check` → update `DomainBadge`. (c) On 'Generate Logos' click → `POST /api/brand/logos` → poll status, then show logos | All three API integrations functional |  None (real API) |
-| 9 | H7:00–8:00 | 60 min | Task 8 | `feat/pdf-export` | Install `jspdf` + `html2canvas`. Build `ExportButton.tsx`. On click: (1) `html2canvas` captures `#brand-identity-card`, (2) `jsPDF` creates A4 PDF, (3) adds canvas image + text (name, tagline, colors), (4) triggers `doc.save('upstream-brand.pdf')` | PDF downloads on click with brand identity content |  — |
-| 10 | H8:00–9:00 | 60 min | Task 9 | `feat/polish` | Add Tailwind `transition`, `animate-pulse` on loading, `hover:scale-105` on cards. Verify mobile breakpoints (`sm:`, `md:`, `lg:`). Add dark mode toggle (Tailwind `dark:` classes). Fix any layout overflow issues. Create a polished landing hero section | Production-quality UI |  — |
-| 11 | H9:00–11:00 | 120 min | SYNC 2 | `feat/fixes` | Fix all bugs found in SYNC 2. Re-test full user flow in Chrome, Firefox, Edge. Verify PDF on all three browsers | Zero critical UI bugs |  — |
+| 1 | H0:00–0:30 | 30 min | Role 1 push (H0:20) | `dev/2-client` | `cd apps/client`, run `pnpm create vite . --template react-ts`, install Tailwind CSS + PostCSS + Autoprefixer, configure `tailwind.config.ts` (custom colors: `upstream-green`, `upstream-slate`), install Zustand + React Router + Axios | `apps/client` runs on `localhost:5173` |  None |
+| 2 | H0:30–1:00 | 30 min | Task 1 | `dev/2-client` | Create `src/store/brandStore.ts` (Zustand: `brandInput`, `brandResults`, `selectedBrand`, `isLoading` state + actions). Set up React Router in `App.tsx` (`/` → LandingPage, `/results` → ResultsPage). Create Axios instance in `src/api/client.ts` with base URL from `import.meta.env.VITE_API_URL` | Store and routing scaffold committed |  None |
+| 3 | H1:00–2:00 | 60 min | Task 2 | `dev/2-client` | Build `BrandInputForm.tsx`: 6 fields → (1) Company Description (textarea, required), (2) Industry (select: Tech / Health / Finance / Retail / Other), (3) Target Audience (text), (4) Brand Vibe (multi-select: Modern / Minimal / Bold / Playful / Trustworthy / Eco-Conscious), (5) Competitor Names (text, optional), (6) Domain Extension Preference (.com / .io / .co). Add Zod validation. On submit, set `isLoading = true` and navigate to `/results` | Fully functional form, no API call yet | `setTimeout(3000)` fakes API delay |
+| 4 | H2:00–3:00 | 60 min | Task 3 | `dev/2-client` | Build `BrandNameCard.tsx` (props: `name`, `tagline`, `score`, `isSelected`). Build `BrandResultsGrid.tsx` (renders 12 cards in a responsive 3×4 grid, accepts `brands: BrandResult[]`). Import mock data from `src/mocks/mockBrands.ts` (12 hardcoded objects) | Results grid renders with mock data | `src/mocks/mockBrands.ts` (12 brands) |
+| 5 | H3:00–4:00 | 60 min | Task 4 | `dev/2-client` | Build `VisualDirectionPanel.tsx` (expandable side panel: color palette, font pairing, brand adjectives). Build `ColorSwatch.tsx` (renders hex color circle + label). Build `DomainBadge.tsx` (props: `domain`, `available: boolean` → green ✓ or red ✗ badge) | Panel expands when a brand card is clicked | `src/mocks/mockVisualDirection.ts` |
+| 6 | H4:00–5:00 | 60 min | Task 5 | `dev/2-client` | Build `LogoGallery.tsx` (2×2 grid of `<img>` tags, accepts `logos: string[]` URLs). Build `LoadingSpinner.tsx` (animated Tailwind spinner with label). Build `BrandIdentityCard.tsx` (summary card: selected name + tagline + palette + logo preview) | Complete results page layout renders with mock data | `src/mocks/mockLogos.ts` (4 placeholder image URLs) |
+| 7 | H5:00–5:30 | 30 min | SYNC 1 | `main` | Merge `dev/2-client` into `main` via PR. Pull latest `main`. Participate in SYNC 1 build verification | Clean build confirmed |  — |
+| 8 | H5:30–7:00 | 90 min | SYNC 1 | `dev/2-client` | Replace mock imports with real Zustand actions that call Axios: (a) On form submit → `POST /api/brand/generate` → populate `brandResults`. (b) On brand card click → `POST /api/domain/check` → update `DomainBadge`. (c) On 'Generate Logos' click → `POST /api/brand/logos` → poll status, then show logos | All three API integrations functional |  None (real API) |
+| 9 | H7:00–8:00 | 60 min | Task 8 | `dev/2-client` | Install `jspdf` + `html2canvas`. Build `ExportButton.tsx`. On click: (1) `html2canvas` captures `#brand-identity-card`, (2) `jsPDF` creates A4 PDF, (3) adds canvas image + text (name, tagline, colors), (4) triggers `doc.save('upstream-brand.pdf')` | PDF downloads on click with brand identity content |  — |
+| 10 | H8:00–9:00 | 60 min | Task 9 | `dev/2-client` | Add Tailwind `transition`, `animate-pulse` on loading, `hover:scale-105` on cards. Verify mobile breakpoints (`sm:`, `md:`, `lg:`). Add dark mode toggle (Tailwind `dark:` classes). Fix any layout overflow issues. Create a polished landing hero section | Production-quality UI |  — |
+| 11 | H9:00–11:00 | 120 min | SYNC 2 | `dev/2-client` | Fix all bugs found in SYNC 2. Re-test full user flow in Chrome, Firefox, Edge. Verify PDF on all three browsers | Zero critical UI bugs |  — |
 | 12 | H11:00–12:00 | 60 min | Task 11 | `main` | Support demo dry-runs, be ready to navigate the app live. Handle any last-minute UI emergency | Smooth demo delivery |  — |
 
 #### Mock Data Specification
@@ -105,15 +105,15 @@ export const mockVisualDirection = {
 
 | # | Time | Duration | Dependency | Branch | Task | Deliverable |
 |---|------|----------|------------|--------|------|-------------|
-| 1 | H0:00–0:30 | 30 min | Role 1 push (H0:20) | `feat/server-setup` | `cd apps/server`, run `pnpm init`, install `express`, `openai`, `dotenv`, `typescript`, `ts-node-dev`, `@types/express`. Create `src/app.ts`, `src/server.ts`. Create `src/mocks/` folder with `mockBrandResponse.json` and `mockDomainResponse.json` | Server boots on `localhost:3001`; mock JSON files ready |
-| 2 | H0:30–1:00 | 30 min | Task 1 | `feat/openai-service` | Install `openai` SDK. Create `src/services/openai.service.ts` with: (a) `createOpenAIClient()` factory using `process.env.OPENAI_API_KEY`, (b) skeleton `generateBrandIdentity()` function with TODO body, (c) skeleton `generateLogoConcepts()` function | OpenAI service file committed with proper typing |
-| 3 | H1:00–2:30 | 90 min | Task 2 + Shared types | `feat/brand-generate` | Implement `POST /api/brand/generate`. System prompt: `"You are a world-class brand strategist and naming consultant."` User prompt: inject all 6 input fields. Use `response_format: { type: 'json_object' }`. GPT-4o must return: 12 brand names, each with tagline, 3 adjectives, color palette (5 hex codes), font pairing (heading + body), domain suffixes to try. Validate JSON shape against `BrandResult[]` type before responding | Endpoint returns structured JSON matching `BrandResult[]` |
-| 4 | H2:30–3:30 | 60 min | Task 3 | `feat/domain-check` | Implement `POST /api/domain/check`. Input: `{ name: string, extensions: string[] }`. Logic: for each extension, generate a deterministic hash from `name+extension`, use `hash % 10 > 3` to simulate 70% availability. Add a 200ms artificial delay to simulate real DNS lookup. Return `DomainResult[]` | Endpoint returns availability data for all requested extensions |
-| 5 | H3:30–5:00 | 90 min | Task 3 | `feat/logo-generation` | Implement `POST /api/brand/logos`. Step 1: Generate 4 DALL-E 3 prompts using GPT-4o (given brand name + visual direction). Step 2: Call `openai.images.generate()` for each prompt with `size: '1024x1024'`, `quality: 'standard'`. Step 3: Return `{ jobId, status: 'processing' }` immediately. Step 4: Store results in `node-cache` keyed by `jobId`. Implement `GET /api/brand/logos/:jobId` polling endpoint | Logo generation endpoint + polling endpoint both functional |
-| 6 | H5:00–5:30 | 30 min | SYNC 1 | `main` | Merge all AI feature PRs. Participate in SYNC 1 verification. Confirm `POST /api/brand/generate` returns real GPT-4o data to Role 2 | Live data flowing to frontend |
-| 7 | H5:30–7:00 | 90 min | SYNC 1 | `feat/caching-prompts` | (a) Add `node-cache` with TTL=3600s for brand generation results (cache key = `SHA256(JSON.stringify(input))`). (b) A/B test 3 prompt variants on real inputs, choose best. (c) Add `temperature: 0.8` for name creativity, `temperature: 0.3` for visual direction consistency | Cache hit ratio > 50% for repeated similar queries |
-| 8 | H7:00–9:00 | 120 min | Task 7 | `feat/hardening` | (a) Add `express-rate-limit` (20 req/min per IP for generate, 60 req/min for domain check). (b) Wrap all OpenAI calls in try/catch, return structured errors `{ error: string, code: string }`. (c) Add `maxTokens: 4000` guard to prevent runaway costs. (d) Log all API call costs to console (`promptTokens × $0.000005 + completionTokens × $0.000015`) | Zero unhandled promise rejections; cost logging active |
-| 9 | H9:00–12:00 | 180 min | SYNC 2 | `feat/demo-support` | Fix edge cases found in SYNC 2 (empty results, GPT formatting errors). Pre-generate and cache 3 demo brand identities for demo safety. Monitor OpenAI dashboard during demo | Demo runs without live API failures |
+| 1 | H0:00–0:30 | 30 min | Role 1 push (H0:20) | `dev/3-ai` | `cd apps/server`, install `openai`, `node-cache`. Pull `main` once Dev 4 pushes server scaffold. Create `src/mock/` folder with `brandNames.mock.ts` and `domains.mock.ts` | Mock fixtures ready for frontend consumption |
+| 2 | H0:30–1:00 | 30 min | Task 1 | `dev/3-ai` | Create `src/config/openai.ts` and `src/services/openai.service.ts` with: (a) `createOpenAIClient()` factory using `process.env.OPENAI_API_KEY`, (b) skeleton `generateBrandIdentity()` function, (c) skeleton `generateLogoConcepts()` function | OpenAI service file committed with proper typing |
+| 3 | H1:00–2:30 | 90 min | Task 2 + Shared types | `dev/3-ai` | Implement `POST /api/brand/generate` in `brand.routes.ts` & `brand.controller.ts`. System prompt: `"You are a world-class brand strategist and naming consultant."` User prompt: inject all 6 input fields. GPT-4o returns 12 brand names matching `BrandName[]`. Validate against shared types | Endpoint returns structured JSON matching `BrandName[]` |
+| 4 | H2:30–3:30 | 60 min | Task 3 | `dev/3-ai` | Implement `POST /api/domain/check` in `domain.routes.ts` & `domain.controller.ts`. Input: `{ names: string[] }`. Deterministic hash to simulate 70% availability with 200ms delay. Return `DomainAvailability` map | Endpoint returns availability data for all requested domains |
+| 5 | H3:30–5:00 | 90 min | Task 3 | `dev/3-ai` | Implement `POST /api/brand/logos` in `logo.routes.ts` & `logo.controller.ts`. Generate 4 DALL-E 3 prompts using GPT-4o. Call `openai.images.generate()` (1024x1024). Return `{ jobId, status }`. Cache in `node-cache`. Implement polling endpoint | Logo generation endpoint + polling endpoint both functional |
+| 6 | H5:00–5:30 | 30 min | SYNC 1 | `main` | Merge `dev/3-ai` into `main` via PR. Participate in SYNC 1 verification. Confirm `POST /api/brand/generate` returns real GPT-4o data to Role 2 | Live data flowing to frontend |
+| 7 | H5:30–7:00 | 90 min | SYNC 1 | `dev/3-ai` | (a) Add `node-cache` with TTL=3600s for brand generation results. (b) A/B test 3 prompt variants on real inputs, choose best. (c) Add `temperature: 0.8` for name creativity, `temperature: 0.3` for visual direction consistency | Cache hit ratio > 50% for repeated similar queries |
+| 8 | H7:00–9:00 | 120 min | Task 7 | `dev/3-ai` | (a) Add rate limit guards (20 req/min per IP for generate). (b) Wrap all OpenAI calls in try/catch, return structured `ApiError`. (c) Add `maxTokens: 4000` guard. (d) Log API call costs to console | Zero unhandled promise rejections; cost logging active |
+| 9 | H9:00–12:00 | 180 min | SYNC 2 | `dev/3-ai` | Fix edge cases found in SYNC 2 (empty results, GPT formatting errors). Pre-generate and cache 3 demo brand identities for demo safety. Monitor OpenAI dashboard during demo | Demo runs without live API failures |
 
 ---
 
@@ -124,16 +124,16 @@ export const mockVisualDirection = {
 
 | # | Time | Duration | Dependency | Branch | Task | Deliverable |
 |---|------|----------|------------|--------|------|-------------|
-| 1 | H0:00–0:45 | 45 min | Role 1 push (H0:20) | `feat/backend-setup` | (Coordinate with Role 3 on shared `apps/server`). Create `src/app.ts` (Express instance, JSON body parser), `src/server.ts` (`app.listen(3001)`), `package.json`, `tsconfig.json` (extends `../../tsconfig.base.json`), `nodemon.json`. Add `GET /api/health` → `{ status: 'ok', timestamp }` | Server runs, `/api/health` returns 200 |
-| 2 | H0:45–1:30 | 45 min | Task 1 | `feat/middleware` | Install + configure: `cors` (allow `localhost:5173` + Vercel domain), `helmet` (security headers), `express-rate-limit` (100 req/15min global), `morgan` (HTTP request logging), custom async error handler middleware `src/middleware/errorHandler.ts` (catches thrown errors, returns `{ error, code, statusCode }`) | All middleware active; error handler tested with intentional throw |
-| 3 | H1:30–2:00 | 30 min | Task 2 | `feat/firebase` | Create `src/services/firebase.service.ts`. Install `firebase-admin`. Initialize with service account from `process.env.FIREBASE_SERVICE_ACCOUNT` (JSON string). Export `db = admin.firestore()`. Create Firestore collections plan: `brands` (generated results), `projects` (saved user projects) | Firebase connection verified with a test write/read |
-| 4 | H2:00–3:00 | 60 min | Task 3 + Shared types | `feat/route-stubs` | Create route files: `src/routes/brand.routes.ts`, `src/routes/domain.routes.ts`, `src/routes/project.routes.ts`. Create controller stubs: `src/controllers/brand.controller.ts`, `src/controllers/domain.controller.ts`, `src/controllers/project.controller.ts`. Each stub returns `{ status: 'stub', message: 'Not implemented' }`. Register all routes in `app.ts` | All route stubs registered and returning 200; Role 3 can now fill in controller bodies |
-| 5 | H3:00–4:00 | 60 min | Task 4 | `feat/brand-save` | Implement `POST /api/brand/save` controller: (a) Receive `{ brandInput: BrandInput, brandResult: BrandResult, selectedName: string }`, (b) Validate required fields, (c) Write document to Firestore `brands` collection with `{ ...payload, createdAt: Timestamp.now(), id: auto }`, (d) Return `{ projectId: doc.id }` | Brand data persists to Firestore; projectId returned |
-| 6 | H4:00–5:00 | 60 min | Task 5 | `feat/project-retrieve` | Implement `GET /api/projects/:id` controller: (a) Validate `:id` is non-empty string, (b) `db.collection('brands').doc(id).get()`, (c) If not found → `404 { error: 'Project not found' }`, (d) Return full document data as `{ project: BrandResult }` | Saved projects retrievable by ID |
-| 7 | H5:00–5:30 | 30 min | SYNC 1 | `main` | Merge all backend PRs into `main`. Participate in SYNC 1 verification. Confirm Firestore reads/writes work end-to-end | Backend endpoints all return real data |
-| 8 | H5:30–7:00 | 90 min | Task 7 | `feat/validation` | Add `express-validator` to all routes: (a) `POST /api/brand/generate` — validate `description` (string, 10–500 chars), `industry` (enum), `targetAudience` (string, 5–200 chars). (b) `POST /api/brand/save` — validate all required fields non-empty. (c) `GET /api/projects/:id` — validate `id` is alphanumeric. Return `422 { errors: ValidationError[] }` on failure | All endpoints reject malformed input with clear error messages |
-| 9 | H7:00–9:00 | 120 min | Task 8 | `feat/hardening` | (a) Load test with `autocannon` — confirm 50 req/sec sustained on `POST /api/brand/generate` without memory leak. (b) Test all error scenarios: missing env vars, Firestore timeout, invalid JSON body. (c) Add Firestore `.withConverter()` typed converter for `BrandResult` | No memory leaks; all error scenarios handled gracefully |
-| 10 | H9:00–12:00 | 180 min | SYNC 2 | — | Deploy support: monitor Render logs, restart dyno if needed. Support team with any CORS or auth errors. Keep Firestore usage under free tier limits (50k reads/20k writes/day) | Stable production deployment throughout demo |
+| 1 | H0:00–0:45 | 45 min | Role 1 push (H0:20) | `dev/4-backend` | Create `src/app.ts` (Express instance, JSON body parser), `src/server.ts` (`app.listen(3001)`), `package.json`, `tsconfig.json` (extends `../../tsconfig.base.json`). Add `GET /api/health`. PR into `main` at H0:45 to unblock Dev 3 | Server runs, `/api/health` returns 200, merged to unblock Dev 3 |
+| 2 | H0:45–1:30 | 45 min | Task 1 | `dev/4-backend` | Install + configure: `cors` (allow `localhost:5173` + Vercel domain), `helmet` (security headers), `express-rate-limit` (100 req/15min global), custom async error handler middleware `src/middleware/errorHandler.ts` | All security middleware active; error handler tested with intentional throw |
+| 3 | H1:30–2:00 | 30 min | Task 2 | `dev/4-backend` | Create `src/services/firebase.service.ts` & `src/config/firebase.ts`. Install `firebase-admin`. Initialize with service account credentials from env. Export Firestore instance | Firebase connection verified with a test write/read |
+| 4 | H2:00–3:00 | 60 min | Task 3 + Shared types | `dev/4-backend` | Create project routes `src/routes/project.routes.ts` and controller `src/controllers/project.controller.ts`. Mount route in `app.ts` | Project route registered and returning 200 |
+| 5 | H3:00–4:00 | 60 min | Task 4 | `dev/4-backend` | Implement `POST /api/brand/save` in `project.controller.ts`: Receive `{ brandInput, brandResult, selectedName }`, validate, write to Firestore `brands` collection. Return `{ projectId }` | Brand data persists to Firestore; projectId returned |
+| 6 | H4:00–5:00 | 60 min | Task 5 | `dev/4-backend` | Implement `GET /api/projects/:id` in `project.controller.ts`: Fetch from Firestore `brands` collection, handle 404, return full project data | Saved projects retrievable by ID |
+| 7 | H5:00–5:30 | 30 min | SYNC 1 | `main` | Merge `dev/4-backend` into `main` via PR. Participate in SYNC 1 verification. Confirm Firestore reads/writes work end-to-end | Backend endpoints all return real data |
+| 8 | H5:30–7:00 | 90 min | Task 7 | `dev/4-backend` | Add validation middleware: (a) validate required fields in save, (b) validate id is alphanumeric in project retrieve | Malformed inputs rejected with clear 422 errors |
+| 9 | H7:00–9:00 | 120 min | Task 8 | `dev/4-backend` | Hardening & edge cases: missing env vars, Firestore timeout, invalid JSON body. Add Firestore `.withConverter()` typed converter for `BrandResult` | No memory leaks; all error scenarios handled gracefully |
+| 10 | H9:00–12:00 | 180 min | SYNC 2 | `main` | Deploy support: monitor Render logs, restart dyno if needed. Support team with any CORS or auth errors. Keep Firestore usage under free tier limits | Stable production deployment throughout demo |
 
 ---
 
@@ -162,9 +162,9 @@ The key to moving fast in parallel is ensuring **Role 2 never waits for Roles 3 
 H0:00 ─── Role 1: pnpm init + workspace scaffold ──────── (~20 min)
               │
 H0:20 ──────►│── All others: branch off main ─────────────
-              │        Role 2: `feat/ui-setup`
-              │        Role 3: `feat/server-setup`
-              │        Role 4: `feat/backend-setup`
+              │        Role 2: `dev/2-client`
+              │        Role 3: `dev/3-ai`
+              │        Role 4: `dev/4-backend`
 ```
 
 **Role 1 must push the initial monorepo scaffold BEFORE others branch off `main`.** Estimated time: 20 minutes.
@@ -532,18 +532,10 @@ interface ProjectRetrieveResponse {
 **Goal:** Merge everything, verify the core loop works end-to-end.
 
 #### Pre-Merge Checklist (Role 1 verifies before calling SYNC)
-- [ ] `feat/brand-input-form` PR merged
-- [ ] `feat/results-grid` PR merged
-- [ ] `feat/visual-direction` PR merged
-- [ ] `feat/logo-gallery` PR merged
-- [ ] `feat/server-setup` PR merged
-- [ ] `feat/brand-generate` PR merged
-- [ ] `feat/domain-check` PR merged
-- [ ] `feat/backend-setup` PR merged
-- [ ] `feat/middleware` PR merged
-- [ ] `feat/firebase` PR merged
-- [ ] `feat/route-stubs` PR merged
-- [ ] `feat/brand-save` PR merged
+- [ ] `dev/4-backend` PR merged (Express server, middleware, Firebase Admin SDK, project endpoints)
+- [ ] `dev/3-ai` PR merged (OpenAI client, GPT-4o brand generation, mock fallback fixtures)
+- [ ] `dev/2-client` PR merged (React 18 frontend, forms, results grid, Zustand state store)
+- [ ] All 3 developers have pulled latest `main` into their persistent branches
 
 #### SYNC 1 Success Criteria
 - [ ] `pnpm install && pnpm build` succeeds at monorepo root with zero errors
@@ -635,35 +627,17 @@ All required across the project. Role 1 must populate `.env.example` at H0:30.
 
 ---
 
-## Branch Naming Convention
+## Branch Naming Convention (Single Persistent Branch per Developer)
 
 ```
 main                          ← protected, always deployable
-feat/ui-setup                 ← Role 2
-feat/brand-input-form         ← Role 2
-feat/results-grid             ← Role 2
-feat/visual-direction         ← Role 2
-feat/logo-gallery             ← Role 2
-feat/api-wiring               ← Role 2
-feat/pdf-export               ← Role 2
-feat/polish                   ← Role 2
-feat/server-setup             ← Role 3 + 4 (shared)
-feat/openai-service           ← Role 3
-feat/brand-generate           ← Role 3
-feat/domain-check             ← Role 3
-feat/logo-generation          ← Role 3
-feat/caching-prompts          ← Role 3
-feat/hardening                ← Role 3
-feat/backend-setup            ← Role 4
-feat/middleware               ← Role 4
-feat/firebase                 ← Role 4
-feat/route-stubs              ← Role 4
-feat/brand-save               ← Role 4
-feat/project-retrieve         ← Role 4
-feat/validation               ← Role 4
-feat/infra                    ← Role 1
-fix/<description>             ← any role, bug fixes
+dev/1-lead                    ← Dev 1 (PM / Lead / Shared Types / Infra)
+dev/2-client                  ← Dev 2 (Frontend UI/UX - apps/client/**)
+dev/3-ai                      ← Dev 3 (AI Services, OpenAI, DALL-E, Mocks - apps/server)
+dev/4-backend                 ← Dev 4 (Server Bootstrap, Middleware, Firebase - apps/server)
 ```
+
+> **Zero Merge Conflicts Principle:** Each developer stays on their assigned branch for the entire 12 hours. Dev 2 works exclusively in `apps/client/`. In `apps/server/`, Dev 3 and Dev 4 work on strictly disjoint files (see File Ownership Matrix in 03_GIT_STRATEGY.md). Continuous commits push to your assigned remote branch. Code merges into `main` only at planned sync points.
 
 ---
 

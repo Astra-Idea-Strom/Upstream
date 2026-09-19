@@ -186,7 +186,7 @@ Install: pnpm install
 Dev:     pnpm dev
 
 Shared types:  packages/shared/src/types/
-Your branch:   feature/[your-feature-name]
+Your branch:   dev/2-client (UI) | dev/3-ai (AI) | dev/4-backend (Backend)
 
 Read 05_ROLE_GUIDES.md for your specific instructions!
 ```
@@ -197,19 +197,19 @@ Confirm every teammate can clone and `pnpm install` successfully before moving o
 
 ### H1:30 – 5:00 | PR Management Mode
 
-For **every incoming PR**:
+For **every sync PR** (`dev/4-backend`, `dev/3-ai`, `dev/2-client`):
 
 1. Pull the branch locally:
    ```bash
-   git fetch && git checkout feature/branch-name
+   git fetch && git checkout dev/<role-branch>
    ```
 2. Run the build — it **must** pass:
    ```bash
    pnpm install && pnpm build
    ```
 3. Skim for obvious bugs or TypeScript errors.
-4. **Approve → Squash and merge → Delete branch.**
-5. Hard limit: **20 minutes per PR** — merge it anyway if time is up.
+4. **Approve → Squash and merge into main.** (⚠️ **DO NOT delete the branch** — it is persistent for the developer!)
+5. Remind the developer to run `git pull origin main` on their branch after the merge.
 
 ---
 
@@ -333,7 +333,8 @@ Each step is a full-screen view controlled by `step` in Zustand store.
 
 ```bash
 git checkout main && git pull
-git checkout -b feature/client-scaffold
+git checkout -b dev/2-client
+git push -u origin dev/2-client
 ```
 
 Scaffold the Vite app:
@@ -1424,7 +1425,8 @@ While Role 4 sets up Express, create mock data so Role 2 can start immediately.
 
 ```bash
 git checkout main && git pull
-git checkout -b feature/ai-services
+git checkout -b dev/3-ai
+git push -u origin dev/3-ai
 ```
 
 ---
@@ -1702,7 +1704,7 @@ Commit and push immediately so Role 2 can reference these:
 ```bash
 git add apps/server/src/mock/
 git commit -m "feat(mock): add brand names, logos, and domain mock data"
-git push origin feature/ai-services
+git push origin dev/3-ai
 ```
 
 ---
@@ -2040,7 +2042,8 @@ Build the Express foundation, wire up Firebase, and implement save/retrieve endp
 
 ```bash
 git checkout main && git pull
-git checkout -b feature/server-scaffold
+git checkout -b dev/4-backend
+git push -u origin dev/4-backend
 cd apps/server
 
 # Bootstrap package.json
@@ -2491,18 +2494,16 @@ apps/server/
     │   ├── rateLimiter.ts
     │   └── validation.ts
     ├── routes/
-    │   ├── brand.routes.ts
-    │   ├── logo.routes.ts
-    │   └── domain.routes.ts
+    │   └── project.routes.ts     ← Owned by Dev 4 (save & retrieve projects)
     ├── controllers/
-    │   └── brand.controller.ts   ← SHARED with Role 3 (coordinate on generateBrands!)
+    │   └── project.controller.ts ← Owned by Dev 4 (Firestore save/get operations)
     └── services/
         └── firebase.service.ts
 ```
 
 ---
 
-> **Coordination note with Role 3:** You own the `brand.controller.ts` file's structure and the Firebase-backed functions (`saveProject`, `getProject`). Role 3 will replace the `generateBrands` stub body only. When merging PRs, ensure both changes are present in the final controller file. Communicate via PR comments or team chat before either of you merges to `main`.
+> **Zero-Conflict Policy with Role 3:** You exclusively own `project.routes.ts`, `project.controller.ts`, and `firebase.service.ts`. Role 3 exclusively owns `brand.routes.ts`, `brand.controller.ts`, and AI services. By keeping your routes and controllers in separate files, neither developer ever modifies the other's files, guaranteeing zero merge conflicts when merging `dev/4-backend` and `dev/3-ai` into `main`.
 
 ---
 
