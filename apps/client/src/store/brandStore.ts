@@ -158,6 +158,17 @@ interface BrandStore {
   startIdentityCreation: (initialPrompt?: string) => void;
   regenerateNames: () => void;
   reset: () => void;
+
+  // Stretch Studio Features
+  activeStudioTab: 'all' | 'identity' | 'moodboard' | 'social' | 'competitors' | 'guidelines';
+  setActiveStudioTab: (tab: 'all' | 'identity' | 'moodboard' | 'social' | 'competitors' | 'guidelines') => void;
+  nameAlternativesMap: Record<string, { taglines: string[]; logoStyles: LogoStyle[] }>;
+  generateNameAlternatives: (brandId: string) => void;
+  applyAlternativeTagline: (brandId: string, tagline: string) => void;
+  applyAlternativeLogo: (brandId: string, style: LogoStyle) => void;
+  isGuidelinesModalOpen: boolean;
+  openGuidelinesModal: () => void;
+  closeGuidelinesModal: () => void;
 }
 
 const defaultInput: BrandInput = {
@@ -966,6 +977,61 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
       });
     }, 700);
   },
+
+  // Stretch Studio Features
+  activeStudioTab: 'all',
+  setActiveStudioTab: (tab) => set({ activeStudioTab: tab }),
+
+  nameAlternativesMap: {},
+  generateNameAlternatives: (brandId) => {
+    const state = get();
+    const brand = state.brandNames.find((b) => b.id === brandId) || state.selectedName;
+    const nameStr = brand.name || 'Brand';
+    
+    // Synthesize 3 distinct tailored taglines and 3 distinct logo styles
+    const altTaglines = [
+      `Pure Expression of ${nameStr}`,
+      `Architected for ${state.input.industry || 'Tomorrow'}`,
+      `Where Craft Meets Modern Distinction`,
+    ];
+    const altLogos: LogoStyle[] = ['minimal', 'wordmark', 'abstract'];
+
+    set((s) => ({
+      nameAlternativesMap: {
+        ...s.nameAlternativesMap,
+        [brandId]: {
+          taglines: altTaglines,
+          logoStyles: altLogos,
+        },
+      },
+    }));
+  },
+
+  applyAlternativeTagline: (brandId, tagline) => {
+    set((state) => {
+      const updatedNames = state.brandNames.map((b) =>
+        b.id === brandId ? { ...b, tagline } : b
+      );
+      const isCurrentSelected = state.selectedName?.id === brandId;
+      return {
+        brandNames: updatedNames,
+        selectedName: isCurrentSelected ? { ...state.selectedName, tagline } : state.selectedName,
+      };
+    });
+  },
+
+  applyAlternativeLogo: (brandId, style) => {
+    set((state) => {
+      const isCurrentSelected = state.selectedName?.id === brandId;
+      return {
+        selectedLogoStyle: isCurrentSelected ? style : state.selectedLogoStyle,
+      };
+    });
+  },
+
+  isGuidelinesModalOpen: false,
+  openGuidelinesModal: () => set({ isGuidelinesModalOpen: true }),
+  closeGuidelinesModal: () => set({ isGuidelinesModalOpen: false }),
 
   reset: () => {
     set({

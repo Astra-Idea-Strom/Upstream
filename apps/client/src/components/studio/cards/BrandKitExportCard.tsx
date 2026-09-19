@@ -62,21 +62,18 @@ export const BrandKitExportCard: React.FC = () => {
   return (
     <div
       id="brand-identity-onepager"
-      className="bg-gradient-to-br from-white via-brand-50/30 to-purple-50/40 rounded-3xl border-2 border-brand-300/80 p-6 sm:p-8 shadow-md relative overflow-hidden transition-all animate-in fade-in duration-300"
+      className="bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-7 shadow-xs relative text-left"
     >
-      <div className="absolute -top-20 -right-20 w-48 h-48 rounded-full bg-brand-300/20 blur-3xl pointer-events-none" />
-
-      <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-200/80 relative z-10">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-5 border-b border-slate-100 gap-3">
         <div>
-          <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-brand-100 text-brand-800 text-[10px] font-extrabold uppercase tracking-wider mb-1">
-            <Sparkles className="w-3 h-3 text-coral-500" />
-            <span>CARD 5: COMPLETE BRAND IDENTITY SPEC</span>
+          <span className="text-xs font-mono font-bold uppercase tracking-wider text-slate-400 block mb-1">
+            Asset Handoff
           </span>
-          <h3 className="text-xl font-display font-black text-slate-950 tracking-tight">
-            Investor-Ready Brand Specification
+          <h3 className="text-xl font-display font-bold text-slate-950 tracking-tight">
+            Investor Brand Kit
           </h3>
           <p className="text-xs text-slate-500 mt-0.5">
-            Your venture identity has been synthesized, harmonized, and verified.
+            Complete synchronized identity assets, vector tokens, and one-pager exports.
           </p>
         </div>
 
