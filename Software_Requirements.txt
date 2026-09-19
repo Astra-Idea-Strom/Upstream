@@ -1,0 +1,188 @@
+AI Brand Identity & Naming Generator – Hackathon Problem Brief
+1. Problem Context
+Early-stage entrepreneurs and solopreneurs have a great business idea but face a creative
+bottleneck: finding a memorable brand name, crafting a tagline, and defining visual identity
+(colors, fonts, logo direction) requires hiring expensive branding consultants or spending weeks
+researching on their own. They manually brainstorm names, check domain availability by hand,
+and piece together mood boards from Pinterest. Existing tools like Namelix or Brandmark handle
+naming or logo generation separately, but there's no unified, AI-powered experience that
+generates names, taglines, visual direction, and logo concepts all in one session. Early-stage
+founders need speed to validate their brand vision before investing in full rebrand design work.
+2. Objective
+Build a web application where users describe their business idea, and an AI instantly generates
+multiple brand name options, matching taglines, a visual direction (color palette and font pairing
+suggestions), and AI-generated logo concept sketches. Include domain availability checks so
+users can immediately assess whether their ideal name is actionable.
+3. Core Features (Must-Have)
+• Business Idea Input Form: Capture details—business/product name (if any), industry,
+target audience, key values/mission, tone (e.g., playful, professional, minimalist, bold),
+and any specific requirements ("must sound tech-forward," "must be short," "avoid
+animal names").
+• AI Brand Name Generation: Call an AI API (OpenAI) with the business description to
+generate 10–15 creative brand name options that fit the industry, tone, and constraints.
+Names should be diverse (punny, descriptive, invented words, etc.).
+• Tagline Generation: For each brand name, generate a matching short tagline (5–10
+words max) that reinforces the brand promise or mission.
+• Domain & Social Handle Availability Check: For each generated name, check if the
+.com domain is available using a WHOIS API or domain lookup service. Also suggest
+.io, .co, and check if the name is available on Twitter/Instagram (mock this if APIs are
+expensive).
+• Visual Direction Suggestions: Generate a visual brand guide for each name option—
+recommended color palette (3–5 hex colors with names), font pairing (headline font +
+body font suggestions), and a brief style description (e.g., "Modern and clean with warm
+accents").
+• AI Logo Concept Generation: For the user's selected name, generate 3–5 AI logo
+concept sketches using DALL-E or Stability AI that reflect the brand's vibe and visual
+direction.
+• Brand Identity Card Export: Create a downloadable PDF or image card showing the
+selected brand name, tagline, color palette, fonts, logo concepts, and domain availability
+summary—a one-pager founders can share with investors or co-founders.
+4. Stretch Features (Good-to-Have)
+• Interactive Brand Selection & Refinement: Allow users to click "Generate
+alternatives" for a specific name to see more taglines or logo concepts without
+regenerating the entire set.
+• Mood Board Generator: Curate a Pinterest-style visual mood board (using Unsplash
+API) that matches the selected brand's visual direction, showing design inspiration.
+• Social Media Preview: Show mockups of how the brand name and logo would look as a
+Twitter/LinkedIn header or Instagram profile.
+• Brand Guidelines Template: Generate a skeleton brand guidelines document (PDF)
+with logo usage rules, color specs, typography hierarchy, and tone-of-voice guidelines
+that founders can flesh out later.
+• Competitor Brand Comparison: Given the selected brand name, fetch and display 2–3
+competitor brands in the same space so users can assess differentiation.
+5. Suggested Tech Stack
+Frontend: React.js with TypeScript – Build an intuitive multi-step form (input → name results
+→ visual direction → logo selection → export). React's component model makes it easy to
+display and switch between brand options.
+Backend: Node.js + Express – Handle API orchestration (calls to OpenAI for naming, domain
+checking, logo generation), manage file exports, and store user sessions.
+Database: Firebase Firestore or MongoDB Atlas – Store user projects, generated brand options,
+and favorites. Firestore is good for quick prototyping and includes built-in auth.
+AI for Naming & Taglines: OpenAI GPT-3.5 or GPT-4 – Excellent at generating creative
+names and taglines that fit specific constraints and tones. Use function calling to structure output
+as JSON for easy parsing.
+AI for Logo Generation: DALL-E 3 API or Stability AI / Replicate API – DALL-E is more
+refined but pricier (~$0.08 per image); Stability/Replicate offers cheaper Stable Diffusion access.
+For hackathon, consider pre-generating a few logo styles and reusing them to save cost.
+Domain Availability Check:
+• Whois API (https://whois.api.com/) or Namecheap API – Checks .com availability
+programmatically.
+• Hunter.io API or RapidAPI Domain Check – Lightweight alternatives for domain
+lookups.
+• Mock Service – For hackathon speed, hardcode a list of "available" and "taken" domains
+to simulate checks without hitting rate limits.
+Social Handle Checker:
+• Twitter/X API (rate-limited, requires approval) or Bluesky API – Can check handle
+availability.
+• Mock Service – Simulate checks by returning random availability status during
+hackathon.
+PDF Export: jsPDF + html2canvas – Generate downloadable brand identity cards without
+backend complexity.
+Deployment: Vercel (frontend) + Render/Railway (backend) – Free tiers, instant git
+deployments.
+6. Suggested Approach / Step-by-Step Plan
+1. Project Setup (20 min): Initialize React frontend, Node/Express backend, Firebase
+project, and set up environment variables for OpenAI and domain check APIs.
+2. Design Database Schema (15 min): Plan collections: Users, BrandProjects (stores input
+details), GeneratedNames (stores AI-generated names, taglines, colors, fonts),
+LogoConcepts (stores image URLs). Keep it simple.
+3. Build Business Input Form (30 min): Create a multi-field form capturing industry,
+target audience, tone, values, and constraints. Save to database on submission. No AI yet.
+4. Implement Naming API Endpoint (45 min): Write /generate-names backend
+endpoint. Take business details, construct a detailed OpenAI prompt (e.g., "Generate 12
+brand names for a sustainable fashion startup targeting eco-conscious millennials. Names
+should be modern, memorable, and under 12 characters. Include a mix of descriptive,
+invented, and playful names. Return as JSON array with fields: name, meaning."), call
+OpenAI, parse response into JSON, and return to frontend.
+5. Build Tagline Generation (30 min): Create /generate-taglines endpoint that
+takes brand names and business description, calls OpenAI to generate matching taglines
+(1 per name), and returns structured data.
+6. Implement Domain Availability Check (30 min): Write /check-domains endpoint
+that takes brand names and pings a WHOIS API (or mocks it) to check .com
+availability. Return availability status for each name.
+7. Build Visual Direction API (30 min): Create /generate-visual-direction
+endpoint that takes a brand name and business vibe, calls OpenAI to suggest a color
+palette (return as hex codes with names) and font pairing (headline + body), formatted as
+JSON.
+8. Implement Logo Generation (45 min): Build /generate-logos endpoint that takes
+a brand name, visual direction, and vibe, calls DALL-E or Stable Diffusion API to
+generate 3–5 logo concepts. Store image URLs and display them. For cost control, cache
+logos and reuse for demo.
+9. Build Results Display & Selection UI (1 hour): Create a React component that shows
+generated names in a grid/list format, displays taglines, visual palettes, and domain
+availability. Let users click to select/favorite options and regenerate specific items
+(names, taglines, logos) without redoing the whole project.
+10. Implement Export & Polish (45 min): Build a branded PDF/image export showing
+selected name, tagline, colors, fonts, logos, and domain info. Test end-to-end, deploy, and
+prepare demo script.
+7. Sample Data / APIs to Use
+OpenAI API (https://platform.openai.com/) – For naming and tagline generation. Example
+prompt:
+"A user is building a [INDUSTRY] startup targeting [AUDIENCE].
+Their mission is: [MISSION].
+Brand tone: [TONE]. Constraints: [CONSTRAINTS].
+Generate 12 creative brand names that fit these criteria. For
+each name, provide:
+1. The name (max 12 characters)
+2. A one-line meaning/explanation
+Format as JSON array with keys: name, meaning."
+DALL-E 3 API (https://platform.openai.com/docs/guides/images) – For logo generation.
+Example prompt:
+"Create a logo concept for a brand called '[BRAND_NAME]'. The
+brand is in [INDUSTRY], targets [AUDIENCE],
+and has this visual direction: colors [COLOR_PALETTE], fonts
+[FONT_PAIRING], style [STYLE_DESCRIPTION].
+The logo should be modern, minimalist, and work on both white
+and dark backgrounds.
+Generate one cohesive logo concept that embodies the brand's
+identity."
+Whois API / Domain Checker (https://whois.api.com/ or via Namecheap) – Check .com, .io,
+.co availability for generated names.
+Unsplash API (https://unsplash.com/developers) – Optional: fetch color-matched reference
+images for the mood board (stretch feature).
+Mock Data for Testing:
+• Pre-create 5 sample brand projects with generated names, taglines, colors, fonts, and logo
+image URLs.
+• Hardcode domain availability (80% available, 20% taken) to simulate checker without
+API calls.
+• Pre-generate 10–15 sample logo images using Figma or Unsplash, tag them by style
+(modern, playful, corporate, minimal), and reuse during demo.
+8. Key Challenges to Anticipate
+Challenge 1: Brand Names Generated by AI Can Be Generic or Unmemorable
+GPT can produce technically correct names, but they sometimes lack personality or
+memorability. A name that sounds good on paper might not feel right as a brand. Tip: Refine
+your OpenAI prompt with specific examples of good brand names in the user's industry (e.g.,
+"like Spotify, Canva, Notion—modern, one-word, memorable"). Ask the model to rank names
+by memorability. Let users regenerate specific batches of names (e.g., "more playful names" or
+"more serious names") without regenerating taglines.
+Challenge 2: Domain Checker Rate Limits and Costs
+WHOIS APIs have rate limits and can be expensive. Checking 12 domains × 3 TLDs = 36 API
+calls per user can blow through free tiers. Tip: Batch all domain checks into a single endpoint
+call, cache results, and mock availability during development. For the hackathon demo, precheck 5–10 sample names and reuse their results. Consider only checking .com (most
+important) if hitting limits.
+Challenge 3: Image Generation (DALL-E) is Slow and Expensive
+Generating 5 logo concepts per user takes 30–60 seconds and costs ~$0.40–$0.50. Users might
+request regenerations, ballooning cost. Tip: Generate logos asynchronously after the user selects
+a final brand name, not for every name upfront. Show a loading state and set expectations
+("Generating your logo concepts—this takes ~30 seconds"). For the demo, pre-generate 2–3 logo
+sets and cache them; reuse the same logos for multiple demo runs to save money.
+Challenge 4: UI Complexity with Multiple Generations and Selections
+Managing state for 12 names × taglines × colors × fonts × logos can get messy. Users might want
+to mix-and-match (name from option 3, colors from option 7, logo from option 5). Tip: Use
+React state management (useState or Context) to track selections cleanly. Display all options in a
+grid/card layout with a "select this combination" button, or allow individual selections with a
+"custom combo" mode. Keep the UI simple for the hackathon—stick to sequential selections
+(pick name → pick colors → pick logo).
+9. What a Good Demo Looks Like
+A compelling demo shows a judge filling out a quick form: "Building a sustainable productivity
+app for remote teams, modern and eco-conscious vibe, must feel trustworthy." The app instantly
+displays 12 brand name options (e.g., "Watershed," "Drift," "Compass," "Bloom") in a grid, each
+with a tagline and domain availability status (✓ available, ✗ taken). The judge clicks on a name,
+and the app reveals a color palette (e.g., sage green, cream, deep blue), font recommendations
+(e.g., "Inter + Merriweather"), and a style description. The judge clicks "Generate Logo
+Concepts," and within 30 seconds, 4 logo sketches appear—modern, minimal, brand-appropriate.
+The judge selects their favorite combination and clicks "Export Brand Identity." A PDF
+downloads showing the selected name, tagline, color hex codes, fonts, logo concepts, and
+domain availability—ready to share with co-founders or investors. The entire flow takes under 2
+minutes, feels intuitive, and generates genuinely usable brand direction that doesn't require
+design experience.
