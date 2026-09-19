@@ -85,7 +85,6 @@ export const AgentWorkspace: React.FC = () => {
         {hasConfirmedName && (
           <div className="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5">
             {[
-              { id: 'all', label: 'All Deliverables' },
               { id: 'identity', label: 'Identity & Canva' },
               { id: 'moodboard', label: 'Mood Board' },
               { id: 'social', label: 'Social Mockups' },
@@ -221,8 +220,8 @@ export const AgentWorkspace: React.FC = () => {
           </div>
         ) : (
           <div className="max-w-3xl mx-auto space-y-6 pb-20">
-            {/* ================= IDENTITY DELIVERABLES ================= */}
-            {(activeStudioTab === 'all' || activeStudioTab === 'identity') && (
+            {/* ================= 1. IDENTITY & CANVA DELIVERABLES ================= */}
+            {activeStudioTab === 'identity' && (
               <>
                 {/* Step 1: Industry & Concept Card */}
                 {hasConfirmedIndustry && <IndustryConceptCard />}
@@ -258,32 +257,33 @@ export const AgentWorkspace: React.FC = () => {
                 ) : (
                   hasConfirmedLogo && <LogoArtworkCard />
                 )}
+
+                {/* Brand Kit Export Card */}
+                {(hasConfirmedLogo || step === 5) && <BrandKitExportCard />}
               </>
             )}
 
-            {/* ================= STRETCH FEATURE 1: MOOD BOARD GENERATOR ================= */}
-            {hasConfirmedName && (activeStudioTab === 'all' || activeStudioTab === 'moodboard') && (
+            {/* ================= 2. MOOD BOARD GENERATOR ================= */}
+            {activeStudioTab === 'moodboard' && (
               <BrandMoodBoardCard />
             )}
 
-            {/* ================= STRETCH FEATURE 2: SOCIAL MEDIA PREVIEWS ================= */}
-            {hasConfirmedName && (activeStudioTab === 'all' || activeStudioTab === 'social') && (
+            {/* ================= 3. SOCIAL MEDIA PREVIEWS ================= */}
+            {activeStudioTab === 'social' && (
               <SocialMediaPreviewCard />
             )}
 
-            {/* ================= STRETCH FEATURE 3: COMPETITOR BENCHMARK & 2X2 MAP ================= */}
-            {hasConfirmedName && (activeStudioTab === 'all' || activeStudioTab === 'competitors') && (
+            {/* ================= 4. COMPETITOR BENCHMARK & 2X2 MAP ================= */}
+            {activeStudioTab === 'competitors' && (
               <CompetitorComparisonCard />
             )}
 
-            {/* ================= STRETCH FEATURE 4: BRAND GUIDELINES MANUAL ================= */}
-            {hasConfirmedName && (activeStudioTab === 'all' || activeStudioTab === 'guidelines') && (
-              <BrandGuidelinesCard />
-            )}
-
-            {/* Final Export Kit */}
-            {(activeStudioTab === 'all' || activeStudioTab === 'identity') && (hasConfirmedLogo || step === 5) && (
-              <BrandKitExportCard />
+            {/* ================= 5. BRAND GUIDELINES MANUAL ================= */}
+            {activeStudioTab === 'guidelines' && (
+              <>
+                <BrandGuidelinesCard />
+                <BrandKitExportCard />
+              </>
             )}
 
             <div ref={workspaceEndRef} />

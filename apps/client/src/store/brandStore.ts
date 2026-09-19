@@ -160,8 +160,8 @@ interface BrandStore {
   reset: () => void;
 
   // Stretch Studio Features
-  activeStudioTab: 'all' | 'identity' | 'moodboard' | 'social' | 'competitors' | 'guidelines';
-  setActiveStudioTab: (tab: 'all' | 'identity' | 'moodboard' | 'social' | 'competitors' | 'guidelines') => void;
+  activeStudioTab: 'identity' | 'moodboard' | 'social' | 'competitors' | 'guidelines';
+  setActiveStudioTab: (tab: 'identity' | 'moodboard' | 'social' | 'competitors' | 'guidelines') => void;
   nameAlternativesMap: Record<string, { taglines: string[]; logoStyles: LogoStyle[] }>;
   generateNameAlternatives: (brandId: string) => void;
   applyAlternativeTagline: (brandId: string, tagline: string) => void;
@@ -979,7 +979,7 @@ export const useBrandStore = create<BrandStore>((set, get) => ({
   },
 
   // Stretch Studio Features
-  activeStudioTab: 'all',
+  activeStudioTab: 'identity',
   setActiveStudioTab: (tab) => set({ activeStudioTab: tab }),
 
   nameAlternativesMap: {},
