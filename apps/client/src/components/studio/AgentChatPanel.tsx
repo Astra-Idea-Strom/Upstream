@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Plus,
 } from 'lucide-react';
+import { ChatBrandNameCard } from './chat/ChatBrandNameCard';
 
 export const AgentChatPanel: React.FC = () => {
   const {
@@ -20,7 +21,9 @@ export const AgentChatPanel: React.FC = () => {
     sendChatMessage,
     handleActionOption,
     input,
+    brandNames,
     selectedName,
+    selectName,
     step,
     hasConfirmedIndustry,
     hasConfirmedName,
@@ -86,7 +89,35 @@ export const AgentChatPanel: React.FC = () => {
         </div>
       </div>
 
-      {/* Messages & Execution Log */}
+      {/* Sleek Milestone Pipeline Bar */}
+      <div className="px-4 py-2 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between text-[10px] font-mono text-slate-500 flex-shrink-0">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+          <span className={`px-2 py-0.5 rounded-md transition-colors ${hasConfirmedIndustry ? 'bg-emerald-100 text-emerald-800 font-bold' : 'bg-slate-200/70 text-slate-600'}`}>
+            1. Concept
+          </span>
+          <span className="text-slate-300">›</span>
+          <span className={`px-2 py-0.5 rounded-md transition-colors ${hasConfirmedName ? 'bg-emerald-100 text-emerald-800 font-bold' : step === 2 ? 'bg-amber-100 text-amber-900 font-bold ring-1 ring-amber-300 animate-pulse' : 'bg-slate-200/70 text-slate-600'}`}>
+            2. Names
+          </span>
+          <span className="text-slate-300">›</span>
+          <span className={`px-2 py-0.5 rounded-md transition-colors ${hasConfirmedTagline ? 'bg-emerald-100 text-emerald-800 font-bold' : step === 3 ? 'bg-amber-100 text-amber-900 font-bold ring-1 ring-amber-300 animate-pulse' : 'bg-slate-200/70 text-slate-600'}`}>
+            3. Tagline
+          </span>
+          <span className="text-slate-300">›</span>
+          <span className={`px-2 py-0.5 rounded-md transition-colors ${hasConfirmedPalette ? 'bg-emerald-100 text-emerald-800 font-bold' : step === 4 ? 'bg-amber-100 text-amber-900 font-bold ring-1 ring-amber-300 animate-pulse' : 'bg-slate-200/70 text-slate-600'}`}>
+            4. Palette
+          </span>
+          <span className="text-slate-300">›</span>
+          <span className={`px-2 py-0.5 rounded-md transition-colors ${hasConfirmedLogo ? 'bg-emerald-100 text-emerald-800 font-bold' : step === 5 ? 'bg-amber-100 text-amber-900 font-bold ring-1 ring-amber-300 animate-pulse' : 'bg-slate-200/70 text-slate-600'}`}>
+            5. Logo
+          </span>
+        </div>
+        <span className="text-slate-600 font-semibold hidden sm:inline">
+          {completedStepsCount}/5 Complete
+        </span>
+      </div>
+
+      {/* Messages & Execution Stream */}
       <div className="flex-1 overflow-y-auto p-4 space-y-3.5 text-xs bg-[#FBFBFE]">
         {/* Replit Agent Welcome Banner if awaiting concept */}
         {!hasConfirmedIndustry && (
@@ -142,49 +173,6 @@ export const AgentChatPanel: React.FC = () => {
           </div>
         )}
 
-        {/* Collapsible Execution Steps Log */}
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-3 shadow-2xs">
-          <button
-            onClick={() => setShowAgentLog(!showAgentLog)}
-            className="w-full flex items-center justify-between text-left text-slate-700 font-semibold text-[11px]"
-          >
-            <div className="flex items-center gap-1.5">
-              <Terminal className="w-3.5 h-3.5 text-brand-600" />
-              <span>Agent Execution Stream ({completedStepsCount}/5 Complete)</span>
-            </div>
-            {showAgentLog ? (
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
-            ) : (
-              <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            )}
-          </button>
-
-          {showAgentLog && (
-            <div className="mt-2.5 pt-2 border-t border-slate-100 space-y-1.5 font-mono text-[10px] text-slate-600">
-              <div className={`flex items-center gap-1.5 ${hasConfirmedIndustry ? 'text-emerald-700' : 'text-slate-400'}`}>
-                {hasConfirmedIndustry ? <Check className="w-3 h-3 text-emerald-600 flex-shrink-0" /> : <span className="w-3 h-3 text-center">•</span>}
-                <span>[1/5] Extract vision: {hasConfirmedIndustry ? input.industry : 'Awaiting concept'}</span>
-              </div>
-              <div className={`flex items-center gap-1.5 ${hasConfirmedName ? 'text-emerald-700' : 'text-slate-400'}`}>
-                {hasConfirmedName ? <Check className="w-3 h-3 text-emerald-600 flex-shrink-0" /> : <span className="w-3 h-3 text-center">•</span>}
-                <span>[2/5] Brand name: {hasConfirmedName ? selectedName.name : 'Pending'}</span>
-              </div>
-              <div className={`flex items-center gap-1.5 ${hasConfirmedTagline ? 'text-emerald-700' : 'text-slate-400'}`}>
-                {hasConfirmedTagline ? <Check className="w-3 h-3 text-emerald-600 flex-shrink-0" /> : <span className="w-3 h-3 text-center">•</span>}
-                <span>[3/5] Tagline: {hasConfirmedTagline ? `"${selectedName.tagline}"` : 'Pending'}</span>
-              </div>
-              <div className={`flex items-center gap-1.5 ${hasConfirmedPalette ? 'text-emerald-700' : 'text-slate-400'}`}>
-                {hasConfirmedPalette ? <Check className="w-3 h-3 text-emerald-600 flex-shrink-0" /> : <span className="w-3 h-3 text-center">•</span>}
-                <span>[4/5] 5-color harmony & Google Font pairing</span>
-              </div>
-              <div className={`flex items-center gap-1.5 ${hasConfirmedLogo ? 'text-emerald-700' : 'text-slate-400'}`}>
-                {hasConfirmedLogo ? <Check className="w-3 h-3 text-emerald-600 flex-shrink-0" /> : <span className="w-3 h-3 text-center">•</span>}
-                <span>[5/5] Vector logo & investor brand kit export</span>
-              </div>
-            </div>
-          )}
-        </div>
-
         {/* Conversation Thread */}
         {chatMessages.map((msg) => (
           <div
@@ -211,16 +199,18 @@ export const AgentChatPanel: React.FC = () => {
             {/* Interactive Action Option Buttons */}
             {msg.actionOptions && msg.actionOptions.length > 0 && (
               <div className="flex flex-col gap-1.5 mt-2 max-w-[95%] w-full">
-                {msg.actionOptions.map((opt) => (
-                  <button
-                    key={opt.id}
-                    onClick={() => handleActionOption(opt)}
-                    className="w-full bg-white hover:bg-brand-50 text-slate-800 hover:text-brand-800 border border-brand-200/80 rounded-xl px-3 py-2 text-xs font-bold transition-all text-left flex items-center justify-between shadow-2xs group"
-                  >
-                    <span>{opt.label}</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-brand-600 group-hover:translate-x-0.5 transition-transform" />
-                  </button>
-                ))}
+                {msg.actionOptions
+                  .filter((opt) => opt.actionType !== 'open_names_modal')
+                  .map((opt) => (
+                    <button
+                      key={opt.id}
+                      onClick={() => handleActionOption(opt)}
+                      className="w-full bg-white hover:bg-brand-50 text-slate-800 hover:text-brand-800 border border-brand-200/80 rounded-xl px-3 py-2 text-xs font-bold transition-all text-left flex items-center justify-between shadow-2xs group"
+                    >
+                      <span>{opt.label}</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-brand-600 group-hover:translate-x-0.5 transition-transform" />
+                    </button>
+                  ))}
               </div>
             )}
 
@@ -241,6 +231,35 @@ export const AgentChatPanel: React.FC = () => {
             )}
           </div>
         ))}
+
+        {/* Colorful Candidate Name Cards directly in the Chat Stream */}
+        {hasConfirmedIndustry && brandNames && brandNames.length > 0 && (
+          <div className="space-y-2.5 my-3 p-3.5 rounded-3xl bg-slate-50/90 border border-slate-200/90 shadow-2xs">
+            <div className="flex items-center justify-between px-1 mb-1">
+              <div className="flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-[#F97356]" />
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-900 font-mono">
+                  Curated Brand Candidates ({brandNames.length})
+                </span>
+              </div>
+              <span className="text-[10px] font-mono text-slate-500">
+                {hasConfirmedName ? `✓ Active: ${selectedName.name}` : 'Tap to select'}
+              </span>
+            </div>
+
+            <div className="space-y-2.5">
+              {brandNames.slice(0, 5).map((brandItem, bIdx) => (
+                <ChatBrandNameCard
+                  key={brandItem.id || bIdx}
+                  brand={brandItem}
+                  isSelected={selectedName.name === brandItem.name}
+                  onSelect={() => selectName(brandItem)}
+                  index={bIdx}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         {isChatTyping && (
           <div className="flex items-center gap-1.5 text-brand-600 bg-white p-2.5 rounded-2xl w-fit border border-slate-200 shadow-2xs">
